@@ -1,3 +1,4 @@
 \babel@toc {spanish}{}\relax 
 \contentsline {chapter}{\numberline {1}Introducción a la Programación Competitiva}{5}{chapter.1}%
 \contentsline {chapter}{\numberline {2}Entrada/Salida y Jueces en Línea}{13}{chapter.2}%
+\contentsline {chapter}{\numberline {3}Teoría de números}{15}{chapter.3}%

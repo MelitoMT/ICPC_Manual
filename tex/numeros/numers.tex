@@ -1,0 +1,107 @@
+En programación competitiva, el dominar o al menos tener buenas nociones de los conceptos principales de teoría de números no es un lujo, es una necesidad, el lector se dará cuenta a lo largo de este texto y en su aventura resolviendo problemas en la ICPC que muchos de los algoritmos usan alguna noción o idea de teoría de números.
+\\\\
+\textbf{Algoritmos básicos}
+\\\\
+Dados dos números $a$ y $b$, nuestra tarea será encontrar el mayor número que es divisor tanto de $a$ como de $b$, por ejemplo, si $a=6$ y $b=4$ tendriamos que el mcd (maximo común divisor) sería $2$. Ahora ya que no es práctico intentar todos los divisores, presentaremos un algoritmo llamado \textbf{algoritmo de euclides} que es más práctico para encontrar este número. Este algoritmo se centra en la afirmación de que dados dos números $a$ y $b$, de forma de $b$ no divida a $a$, si escribimos $a=bq+r$ entonces $mcd(a,b)=mcd(b,r)$, de aquí que podamos escribir lo siguiente:
+    \[a=bq+r_1\]
+    \[b=r_1q_1+r_2\]
+    \[\vdots\]
+    \[r_{n-1}=r_nq_n\]
+y por la afirmación anterior, $mcd(a,b)=mcd(b,r_1)=mcd(r_1,r_2)=\cdots =r_n$, nótese que además $r_1=a\, mod \,b$, de forma que algoritmicamente tendríamos que el $mcd(a,b)=a$ si $b=0$, de lo contrario $mcd(a,b)=mcd(b,a \, mod \, b)$ y así podemos escribir el siguiente código:
+\lstinputlisting[language=C++]{./tex/numeros/codes/mcd.cpp}
+Esta función no es necesario implementarla pues está incluido como función estándar desde C++ 17 con el nombre de $gcd$ (greatest common divisor).
+\\\\
+Además de obtener este código, este algoritmo nos dice que $mcd(a,b)=ax+by$ para algunos enteros $x$, $y$, es decir, $mcd(a,b)$ se puede ver como combinación lineal de $a$ y $b$, esto se le conoce como el lema de Bezout.
+\\\\Otra tarea que nos podría parecer interesante es dados dos números $a$ y $b$, cómo calcular el mínimo común múltiplo (denotado mcm), esto es, el número menor que es divisible por tanto $a$ como $b$. Este problema en realidad está casi resuelto con nuestro código de arriba, esto es por una propiedad importante del $mcd$:
+\[mcm=\frac{ab}{mcd(a,b)}\]
+de forma que nuestra implementación sería simplemente calcular la fórmula de arriba, sin embargo aquí un detalle importante a considerar es que si nuestros enteros son muy grandes, puede que tengamos un overflow al múltiplicar $ab$, de forma que podemos primero dividir y después multiplicar, tomar en cuenta que decisiones de esta indole aunque simples pueden evitarnos veridictos incorrectos en muchos problemas:
+\lstinputlisting[language=C++]{./tex/numeros/codes/mcm.cpp}
+\textbf{Aritmética modular}
+\\\\
+Iniciemos analizando un ejemplo.
+\\
+\\
+\textbf{Ejemplos}
+\textbf{[3.1] }Supongamos que hoy es Lunes, ¿qué día de la semana será dentro de 300 días?
+\\
+\textbf{Solución.} Podríamos hacer una lista de 300 números después del lunes, asignando cada día a cada número y ver cuál queda en el número 300, pero esto sería muy tardado y realmente innecesario, pues si notamos que cada 7 días se repite el mismo día, podemos ver que ya que al dividir 300 entre 7 nos da 42 y nos queda de residuo 6, por lo que sabemos que el día 264, es decir 42 veces 7, será Lunes y sólo tenemos que ver los restantes 6 días, que sabiendo que 6 días después de Lunes es Domingo, tendremos nuestra respuesta.
+\\\\\
+En este ejemplo vemos como la noción de que conjuntos de números se conformen de forma cíclica nos simplifica problemas. Si en el ejemplo anterior en lugar 300 días fueran 314 días, la respuesta sería la misma, podría parecer una afirmación fuerte, pero realmente al dividir 314 entre 7 como hicimos en el ejemplo notaremos que el residuo es el mismo, es decir 6, entonces el día 308, es decir 44 veces 7, será Lunes y tenemos nuevamente que ver los siguientes 6 días, esto nos lleva a pensar que si de días de la semana estamos hablando, dos días representan el mismo día de la semana si y sólo si tienen el mismo residuo al dividirlos entre 7.
+\\Resulta que esto mismo lo podemos hacer con cualquier número natural $n$, sea $n$ un número natural. Si $x$ y $y$ son dos números enteros tales que tienen mismo residuo al dividirles entre $n$ diremos que $x$ es congruente a $y$ módulo $n$ lo que podemos escribir con la siguiente notación:
+\[x \equiv y \quad mod \quad n\]
+Antes de ver ejemplos, veamos algunas propiedades de las congruencias, si $a\equiv b \, mod \, n$ y $c\equiv d \, mod \, n$ y $m$ es un entero positivo, entonces lo siguiente se cumple:
+\[a+c \equiv b+d \, mod \, n\]
+\[ac \equiv bd \, mod \, n\]
+\[a^m \equiv b^m \, mod \, n\]
+Como podemos notar, las congruencias respetan las sumas, productos y potencias como estamos acostumbrados, y en realidad para sumas y productos ocurre que cualquier número puede sustituirse por otro al que sea congruente en el módulo de la congruencia.
+\\\\
+\textbf{Inverso Multiplicativo Modular}
+\\
+\\Aunque pueda parecer que las operaciones con congruencias son muy flexibles, hay que tener cuidado, pues aún no hemos mencionado nada sobre la división. Suena natural querer definir un número que sea un inverso multiplicativo, es decir dado un número $a$ y un número $n$, encontrar un número $b$ tal que $ab \equiv 1 \quad mod \quad n$, a este lo denotaremos como $a^{-1}$. 
+\\
+Es importante mencionar que este inverso no siempre existe. Tomemos por ejemplo el caso de $n=4$ y $a=2$, es fácil ver que revisando todas las posibilidades de $b$ módulo $n$ no existe un número que cumpla lo pedido. Se puede probar que este inverso existe si y solo si $mcd(a,n)=1$. 
+\\
+Ahora, también podemos diseñar un algoritmo para encontrarle en caso de que exista, recordemos que arriba en esta sección vimos el algoritmo de euclides para poder encontrar el $mcd$ de dos números, y en particular teníamos que $mcd(a,b)=mcd(b, r_1)=\cdots=mcd(r_{n-1},r_{n})=mcd(r_{n},0)=r_{n}$, donde los $r_i$ eran los residuos, también por el lema de Bezout tenemos que existen $x$ y $y$ tal que $mcd(a,b)=ax+by$, pues bien, queremos encontrar esos coeficientes y notemos que tenemos ya una combinación lineal trivial con $r_n$ y $0$ de la que conocemos los coeficientes, pues de lo anterior
+\[mcd(a,b)=mcd(r_n,0)=1r_n+0\]
+entonces intentaremos usar ingenieria inversa de las ecuaciones del algoritmo de euclides para encontrar estos $x$ y $y$ para $a$ y $b$ iniciales, es decir si antes teníamos que en cada caso $a$ y $b$ pasaban a ser $b$ y $a \,mod \, b$, ahora queremos ver conociendo $x_i$ y $y_i$ en una ecuación $x_i b + y_i a\, mod \, b = mcd(a,b)$ quiénes son $x$ y $y$ en la ecuación $xa+yb=mcd(a,b)$, nótese que ya que $a \, mod \, b = a - (\lfloor\frac{a}{b}\rfloor*b)$ podemos sustituir y tenemos que 
+\[mcd(a,b)=x_i b + y_i (a - (\lfloor\frac{a}{b}\rfloor*b))= a y_i + b (x_i)\]
+Sin embargo, aunque el algoritmo anterior funciona, para algunos problemas será importante que podamos calcular este inverso en tiempo lineal, entonces presentaremos un método usando exponenciación binaria 
+
+\textbf{Métodos de factorización}
+
+\begin{center}
+    \textbf{Ejercicios}
+\end{center}
+%https://codeforces.com/problemset/problem/1553/A
+\textbf{[3.1]} Definamos $S(x)$ como la suma de digitos de un número $x$ en sistema decimal. Por ejemplo $S(11)=2$, $S(1002)=3$, $S(5)=5$.
+\\Diremos que un entero $x$ es interesante si $S(X+1)\leq S(X)$. En cada test se te dará un número $n$. Tu tarea es calcular cuántos números $x$ cumplen que $1\leq x \leq n$ y $x$ es interesante.
+\\\\
+\textbf{Input:}
+\\
+La primera línea contiene un entero $t$ ($1 \leq t \leq 1000$) — número de casos.
+\\
+Después le siguen $t$ líneas, la $i$-ésima línea contiene un número entero $n$ ($1\leq n \leq 10^9$).
+\\\\
+\textbf{Output:}
+\\
+Imprima $t$ enteros, el $i$-ésimo entero deberá ser la respuesta para el $i$-ésimo caso.
+\\\\
+\textbf{Ejemplos:}
+\begin{table}[h !]
+\begin{tabular}{lllll}
+\cline{1-2}
+\multicolumn{1}{|l|}{\textbf{Entrada}}                                                        & \multicolumn{1}{l|}{\textbf{Salida}}                                                  &  &  &  \\ \cline{1-2}
+\multicolumn{1}{|l|}{\begin{tabular}[c]{@{}l@{}}5\\ 1\\ 9\\ 10\\ 34\\ 880055535\end{tabular}} & \multicolumn{1}{l|}{\begin{tabular}[c]{@{}l@{}}0\\ 1\\ 1\\ 3\\ 88005553\end{tabular}} &  &  &  \\ \cline{1-2}
+                                                                                              &                                                                                       &  &  &  \\
+                                                                                              &                                                                                       &  &  & 
+\end{tabular}
+\end{table}
+\\
+%https://codeforces.com/contest/1916/problem/B
+\textbf{[3.2]} Un número $1\leq x \leq 10^9$ es elegido. Te darán dos enteros $a$ y $b$, los dos divisores más grandes del número $x$ y también se cumple que $1\leq a < b < x$.
+\\
+Para los números dados $a$, $b$ tienes que encontrar el valor de $x$.
+\\\\
+\textbf{Input:}
+\\
+Cada test contiene varios casos. La primera línea contiene un entero $t$ ($1\leq t \leq 10^4$), el número de casos. Luego la descripción de los casos.
+\\ La única línea de cada caso contiene dos enteros $a,b \, (1 \leq a < b \leq 10^9)$.
+\\ Se garantiza que $a,b$ son los divisores más grandes para algún número $1\leq x\leq 10^9$.
+\\\\
+\textbf{Output:}
+\\
+Para cada caso de prueba, imprime el número $x$, tal que $a$ y $b$ son los mayores divisores del número $x$.
+Si hay varias respuestas, imprime cualquiera de ellas.
+\\\\
+\textbf{Ejemplos:}
+\begin{table}[h !]
+\begin{tabular}{lllll}
+\cline{1-2}
+\multicolumn{1}{|l|}{\textbf{Entrada}}                                                                            & \multicolumn{1}{l|}{\textbf{Salida}}                                                            &  &  &  \\ \cline{1-2}
+\multicolumn{1}{|l|}{\begin{tabular}[c]{@{}l@{}}8\\ 2 3\\ 1 2\\ 3 11\\ 1 5\\ 5 10\\ 4 6\\ 3 9\\ 250000000 500000000\end{tabular}} & \multicolumn{1}{l|}{\begin{tabular}[c]{@{}l@{}}6\\ 4\\ 33\\ 25\\ 20\\ 12\\ 27\\ 1000000000\end{tabular}} &  &  &  \\ \cline{1-2}
+                                                                                                                  &                                                                                                 &  &  &  \\
+                                                                                                                  &                                                                                                 &  &  & 
+\end{tabular}
+\end{table}
+
+%https://codeforces.com/problemset/problem/2097/C

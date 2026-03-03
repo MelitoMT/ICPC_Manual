@@ -327,6 +327,15 @@ INPUT tex\codes\codeforces\231A.cpp
 INPUT .\tex\jueces\jueces.tex
 INPUT .\tex\jueces\jueces.tex
 INPUT tex\jueces\jueces.tex
+INPUT .\tex\numeros\numers.tex
+INPUT .\tex\numeros\numers.tex
+INPUT tex\numeros\numers.tex
+INPUT .\tex\numeros\codes\mcd.cpp
+INPUT .\tex\numeros\codes\mcd.cpp
+INPUT tex\numeros\codes\mcd.cpp
+INPUT .\tex\numeros\codes\mcm.cpp
+INPUT .\tex\numeros\codes\mcm.cpp
+INPUT tex\numeros\codes\mcm.cpp
 INPUT main.aux
 INPUT .\main.out
 INPUT .\main.out
@@ -350,6 +359,8 @@ INPUT C:\Users\maria\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmr9.pf
 INPUT C:\Users\maria\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmr9.pfb
 INPUT C:\Users\maria\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmsy10.pfb
 INPUT C:\Users\maria\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmsy10.pfb
+INPUT C:\Users\maria\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmsy8.pfb
+INPUT C:\Users\maria\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmsy8.pfb
 INPUT C:\Users\maria\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmtt10.pfb
 INPUT C:\Users\maria\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmtt10.pfb
 INPUT C:\Users\maria\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmtt9.pfb
