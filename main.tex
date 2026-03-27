@@ -1,4 +1,4 @@
-\documentclass[11pt]{book}
+\documentclass[11pt,openany]{book}
 
 \usepackage[a5paper,margin=1in]{geometry}
 \usepackage[T1]{fontenc}
@@ -11,6 +11,9 @@
 \usepackage{soul}
 \usepackage{xcolor,colortbl}
 \usepackage{changepage,threeparttable} 
+
+\usepackage{anysize}
+\marginsize{2cm}{2cm}{2cm}{2cm}
 
 \usepackage{amsmath,amssymb,amsthm,mathtools,bm}
 %codigo
@@ -44,6 +47,8 @@
 \lstset{style=mystyle}
 %
 \usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{comment}
 
 % Referencias (Revisar su uso)
 \usepackage{hyperref}
@@ -65,15 +70,9 @@
 \newcommand{\R}{\mathbb{R}}
 \setlength{\parindent}{12pt}
 
-%Cambiar portada
-\title{Guía de Matemáticas para ICPC}
-\author{}
-\date{}
-
-
 \begin{document}
-\maketitle
-\input{tex/intro_manual.tex}
+\input{tex/portada.tex}
+\input{tex/introduccion/agradecimientos.tex}
 
 
 %Arreglar formato de hojas extra
@@ -81,6 +80,8 @@
 \let\cleardoublepage\clearpage
 \tableofcontents
 \endgroup
+
+\input{tex/introduccion/intro_manual.tex}
 
 \chapter{Introducción a la Programación Competitiva}
 \input{tex/introduccion/introduccion.tex}

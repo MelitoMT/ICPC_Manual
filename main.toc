@@ -1,4 +1,10 @@
 \babel@toc {spanish}{}\relax 
-\contentsline {chapter}{\numberline {1}Introducción a la Programación Competitiva}{5}{chapter.1}%
-\contentsline {chapter}{\numberline {2}Entrada/Salida y Jueces en Línea}{13}{chapter.2}%
-\contentsline {chapter}{\numberline {3}Teoría de números}{15}{chapter.3}%
+\contentsline {chapter}{\numberline {1}Introducción}{4}{chapter.1}%
+\contentsline {chapter}{\numberline {2}Introducción a la Programación Competitiva}{5}{chapter.2}%
+\contentsline {section}{\numberline {2.1}¿Por qué hacer programación competitiva?}{7}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Beneficios Académicos}{7}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}Oportunidades laborales}{8}{subsection.2.1.2}%
+\contentsline {section}{\numberline {2.2}Otros concursos y plataformas}{8}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Ejercicios}{8}{subsection.2.2.1}%
+\contentsline {chapter}{\numberline {3}Entrada/Salida y Jueces en Línea}{10}{chapter.3}%
+\contentsline {chapter}{\numberline {4}Teoría de números}{11}{chapter.4}%

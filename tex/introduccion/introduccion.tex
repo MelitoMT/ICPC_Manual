@@ -1,3 +1,4 @@
+\begin{comment}
 El sitio oficial del Concurso Internacional Universitario de Programación (ICPC, por sus siglas en inglés) menciona que la ICPC es ``un concurso de programación algoritmica para estudiantes universitarios'', aunque esta definición es correcta, si el lector nunca ha participado en esta, es probable que no tenga clara cuál es la diferencia entre esta competencia y otras que existen en el mundo de la programación, por ejemplo hackatones famosos como ``Microsoft Global Hackaton'' o ``NASA Space Apps'', en los cuáles se pone enfásis en desarrollar soluciones a problemas también. La diferencia radica principalmente en que en las últimas se pone mucho enfásis en desarrollar proyectos completos o aplicaciones durante varios días que resuelven un gran problema, generalmente del mundo real y abierto a que los concursantes exploren diferentes perspectivas del mismo, por ejemplo en ``NASA Space Apps 2025'' uno de los problemas a resolver era el de buscar exoplanetas usando inteligencia artificial.
 \\\\
 Por otro lado en la ICPC y otras olimpiadas de programación lo que se busca es que los concursantes programen soluciones a problemas concretos, en los que la correctez de una solución se basa en si esta arroja la respuesta correcta a todos los casos de prueba propuestos, esto es evaluado por un juez, el cuál se explicará cómo funciona en el siguiente capítulo.
@@ -117,3 +118,99 @@ Si pueden pasar todos los niveles, imprime ``\texttt{I become the guy.}''.Si es 
                                                                                   &                                        &  &  & 
 \end{tabular}
 \end{table}
+\end{comment}
+
+La programación competitiva suele describirse como un deporte mental: exige constancia, disciplina y entrenamiento estructurado. El objetivo no es solamente encontrar una solución correcta, sino hacerlo con precisión y en el menor tiempo posible.
+\\\\
+Su filosofía se centra en la resolución eficiente de problemas clásicos de ciencias de la computación. En este contexto, los enunciados están diseñados para ser resolubles con técnicas y algoritmos conocidos; es decir, no se trata de problemas de investigación abierta, sino de retos que evalúan la capacidad de modelar, implementar y optimizar soluciones bajo presión de tiempo. Resolver un problema implica comprender el enunciado, elegir una estrategia algorítmica adecuada y traducirla a código en un lenguaje de programación. El componente competitivo aparece cuando, además de resolver correctamente, se debe hacerlo rápido y con la menor cantidad de intentos fallidos.
+\\\\
+En comparación con hackatones u otros concursos de desarrollo, donde se privilegia la construcción de productos completos durante varios días, la ICPC y competencias similares se enfocan en problemas puntuales con criterios estrictos de correctitud, tiempo y memoria. El sitio oficial de la ICPC la describe como una competencia algorítmica universitaria. En la práctica, esto significa que cada solución enviada es evaluada automáticamente por un programa llamado juez en línea que verifica si el programa responde correctamente a todos los casos de prueba y respeta los límites establecidos. Esta dinámica es una diferencia clave frente a concursos con evaluación más abierta y en ocasiones algo subjetiva, como los hackatones.
+\\\\
+La ICPC es actualmente la competencia universitaria más representativa en esta disciplina. Se compite en equipos de tres estudiantes de la misma institución y, según la región, el proceso se organiza en varias fases clasificatorias. En el caso de México, desde 2024 se introdujo una estructura de \textbf{cuatro etapas}; entre ellas, el Gran Premio de México, compuesto por tres fechas de competencia clasificatorias. En cada fecha se resuelve un conjunto de problemas, usualmente entre 9 y 13, en tiempo limitado y la clasificación considera tanto la cantidad de problemas resueltos como la penalización acumulada por tiempo e intentos incorrectos.
+\\\\
+Para hacerlo más claro e ilustrativo, tomemos como ejemplo el problema clásico de \href{https://codeforces.com/problemset/problem/231/A}{Codeforces 231A}.
+
+\begin{center}
+\fbox{
+\begin{minipage}{0.95\linewidth}
+\begin{center}
+\textbf{A. Team}\\
+\textbf{time limit per test:} 2 seconds\\
+\textbf{memory limit per test:} 256 megabytes
+\end{center}
+
+One day three best friends Petya, Vasya and Tonya decided to form a team and take part in programming contests. Participants are usually offered several problems during programming contests. Long before the start the friends decided that they will implement a problem if at least two of them are sure about the solution. Otherwise, the friends won't write the problem's solution.
+
+This contest offers $n$ problems to the participants. For each problem we know which friend is sure about the solution. Help the friends find the number of problems for which they will write a solution.
+
+\vspace{0.5em}
+\textbf{Input}\\
+The first input line contains a single integer $n$ $(1 \leq n \leq 1000)$, the number of problems in the contest. Then $n$ lines contain three integers each, each integer is either 0 or 1. If the first number equals 1, then Petya is sure about the problem's solution; otherwise he isn't sure. The second number shows Vasya's view, and the third number shows Tonya's view.
+
+\vspace{0.5em}
+\textbf{Output}\\
+Print a single integer: the number of problems the friends will implement on the contest.
+
+\vspace{0.5em}
+\textbf{Example}\\
+\textbf{Input}\\
+\texttt{3}\\
+\texttt{1 1 0}\\
+\texttt{1 1 1}\\
+\texttt{1 0 0}
+
+\textbf{Output}\\
+\texttt{2}
+\end{minipage}
+}
+\end{center}
+
+Como se observa en este ejemplo, usualmente todo problema de programación competitiva consta de las siguientes secciones:
+\begin{itemize}
+    \item \textbf{Tiempo límite:} tiempo máximo de ejecución permitido.
+    \item \textbf{Memoria límite:} memoria RAM máxima para la solución.
+    \item \textbf{Descripción:} contexto y tarea específica a resolver.
+    \item \textbf{Input (entrada):} formato exacto de los datos de entrada.
+    \item \textbf{Output (salida):} formato exacto de la respuesta esperada.
+    \item \textbf{Ejemplos:} casos de prueba para validar la interpretación.
+\end{itemize}
+
+Una pregunta valiosa para quien inicia es: \textit{¿entiendo lo que me pide el problema?}; y después, \textit{ya que entendí el problema, ¿puedo crear un código para resolverlo?}; finalmente, \textit{¿cuánto tiempo me tomaría escribir un código correcto y sin errores?}. Esta autoevaluación ayuda a medir el progreso real en programación competitiva y, sobre todo, a construir confianza con cada intento. Incluso cuando la primera solución no sale a la perfección, cada ajuste mejora la lectura de problemas, la precisión del código y la velocidad de respuesta en concurso. Entre más problemas se resuelven, mayor ``condición'' se desarrolla para identificar patrones, tipos de enunciados, técnicas y trucos frecuentes; en consecuencia, cada vez resulta más natural acercarse a una solución correcta desde el primer intento.
+
+La idea central para resolver el problema 231A es contar, en cada línea, cuántos valores son iguales a 1; si la suma es mayor o igual a 2, se incrementa el contador de problemas resueltos. Esta tarea permite practicar lectura de entrada, recorridos simples y condiciones lógicas. El código puede implementarse de forma directa:
+\lstinputlisting[language=C++]{./tex/codes/codeforces/231A.cpp}
+
+En este ejercicio también queremos exponer un detalle importante: en la salida se imprime \texttt{"\textbackslash n"}. Aunque parezca menor, el juez en línea suele comparar texto de forma estricta. Si el formato no coincide exactamente con lo esperado (por ejemplo, cuando el resultado debe ir en una línea y no se respeta), es posible recibir un veredicto \texttt{Wrong Answer} aun cuando la lógica sea correcta. Iniciar puede ser frustrante, pero después de superar esa curva de aprendizaje, este deporte se vuelve sumamente reconfortante.
+
+\section{¿Por qué hacer programación competitiva?}
+
+\subsection{Beneficios Académicos}
+La programación competitiva aporta beneficios académicos importantes para la formación en ciencias de la computación. En primer lugar, fortalece habilidades esenciales como el pensamiento algorítmico, el razonamiento lógico y la resolución eficiente de problemas. Al enfrentarse a ejercicios desafiantes, el estudiante aprende a descomponer tareas complejas en partes más pequeñas, detectar patrones y diseñar estrategias correctas y eficientes.
+
+Además, funciona como un puente entre la teoría y la práctica. Conceptos vistos en clase --como estructuras de datos, análisis de complejidad, teoría de números o técnicas de optimización-- dejan de ser abstractos cuando deben aplicarse para resolver problemas concretos bajo restricciones reales de tiempo y memoria.
+
+Otro beneficio clave es que fomenta el aprendizaje continuo. Cada problema nuevo expone al estudiante a ideas distintas y lo motiva a investigar enfoques alternativos, comparar soluciones y refinar su forma de pensar. Con el tiempo, esto fortalece hábitos académicos valiosos: validar casos límite, justificar la correctitud de una solución y mejorar progresivamente la claridad del código.
+
+\subsection{Oportunidades laborales}
+La práctica constante en programación competitiva también tiene impacto directo en el perfil profesional. Muchas empresas tecnológicas evalúan a sus candidatos mediante entrevistas técnicas centradas en resolución algorítmica de problemas; por ello, entrenar este tipo de pensamiento representa una ventaja real en procesos de selección para pasantías y puestos de tiempo completo.
+
+Durante estas evaluaciones no solo importa llegar a la respuesta correcta. También se observa cómo razona la persona candidata, cómo comunica sus ideas, cómo depura errores, cómo justifica la complejidad de su solución y cómo se adapta cuando cambian las condiciones del problema. Todas estas competencias se trabajan de forma natural en competencias de programación.
+
+Finalmente, la experiencia en concursos también puede aportar visibilidad profesional: buenos resultados, constancia y participación activa en comunidades técnicas suelen reflejar iniciativa, disciplina y capacidad de trabajo intelectual bajo presión, cualidades altamente valoradas en la industria.
+
+\section{Otros concursos y plataformas}
+
+Además de la ICPC, existen competencias en las que puede participar cualquier persona, sin necesidad de ser estudiante. Algunos ejemplos son \href{https://codingcompetitions.withgoogle.com/hashcode}{Google Hash Code}, \href{https://codingcompetitions.withgoogle.com/kickstart}{Google Kick Start} y \href{https://blogs.iteso.mx/acm/2022/01/19/convocatoria-y-agenda-del-icpcmastersmx2022/}{Mexico ICPC Masters}.
+
+También hay plataformas que organizan concursos de práctica de forma regular, como \href{https://codeforces.com}{Codeforces} y \href{https://atcoder.jp}{AtCoder}. Estos espacios son ideales para entrenar de manera constante, comparar enfoques con otras personas y acostumbrarse a resolver problemas bajo presión de tiempo.
+
+En resumen, existen muchos jueces en línea y miles de problemas disponibles para seguir practicando. Siempre habrá un nuevo reto esperándote.
+
+\subsection{Ejercicios}
+
+\begin{itemize}
+    \item \href{https://omegaup.com/arena/problem/Tabla-para-pastel/#problems}{Tabla para Pastel (omegaUp)}: Concurso FCiencias 2016.
+    \item \href{https://codeforces.com/problemset/problem/4/A}{Watermelon (Codeforces 4A)}: Determinar si una sandía de peso $w$ puede dividirse en dos partes pares positivas.
+    \item \href{https://codeforces.com/problemset/problem/2009/A}{Minimize (Codeforces 2009A)}: Para cada caso, hallar el mínimo de $(c-a)+(b-c)$ con $a \leq c \leq b$.
+    \item \href{https://codeforces.com/problemset/problem/469/A}{I Wanna Be the Guy (Codeforces 469A)}: Decidir si dos jugadores, combinando los niveles que cada uno puede pasar, cubren todos los niveles del juego.
+\end{itemize}
