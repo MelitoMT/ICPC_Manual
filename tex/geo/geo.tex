@@ -1,19 +1,19 @@
 En geometría computacional, necesitaremos una forma de representar a los objetos geométricos en código, a los puntos del plano los representaremos como un par de coordenadas de $(x,y)$ con las operaciones usuales aplicadas coordenada a coordenada, un punto y un vector son intercambiables cuando el contexto lo permite.
 
-\lstinputlisting[language=C++, firstline=4, lastline=12]{./tex/geo/codes/geo.cpp}
+\lstinputlisting[language=C++, firstline=4, lastline=20]{./tex/geo/codes/geo.cpp}
 Como definimos nuestra propia estructura es necesario que también definamos los comparadores para poder decidir si dos puntos son iguales o no.
-\lstinputlisting[language=C++, firstline=14, lastline=19]{./tex/geo/codes/geo.cpp}
+\lstinputlisting[language=C++, firstline=22, lastline=27]{./tex/geo/codes/geo.cpp}
 Nótese que el definir un comparador para decidir si un punto es ''menor'' a otro, no es tan fácil qué hacer por lo que usualmente dependiendo el caso los ordenaremos, frecuentemente nos convendrá ordenarlos de forma horaria o antihoraria de acuerdo a los vectores que corresponden los puntos, la pregunta ahora consiste en ¿cómo hacer esto?, antes de ver una técnica para hacerlo, recordaremos algunas operaciones que podemos hacer entre puntos.
 \section{Bases}
 En primer lugar tenemos el producto punto, dados dos puntos este nos ayuda a medir qué tanto dos vectores apuntan a la misma dirección, si el producto punto es positivo, los vectores apuntan a direcciones similares, si es cero, los vectores son perpendiculares y si es negativo, entonces los vectores apuntan en direcciones opuestas, en programación competitiva este se calcula simplemente con las coordenadas.
-\lstinputlisting[language=C++, firstline=30, lastline=32]{./tex/geo/codes/geo.cpp}
+\lstinputlisting[language=C++, firstline=38, lastline=40]{./tex/geo/codes/geo.cpp}
 Nótese que por como lo calculamos si hacemos el producto punto de un vector consigo mismo tendremos la norma de este al cuadrado.
 \\\\Otro concepto que nos será relevante recordar es el producto cruz entre dos vectores (denotado $a \times b$), este nos dará el área orientada del paralelogramo que forman dos vectores, con orientada nos referimos a que si calculamos $a \times b$ será el área del paralelogramo negativa, en cambio $b \times a$ nos la dará positiva, esto nos da una noción de si un vector está a la ''izquierda'' o ''derecha'' de otro.
 \begin{center}
 \includegraphics[scale=.5]{./tex/geo/pics/cross1.png}
 \end{center}
 la implementación también es sencilla y nos da una forma rápida de comprobar si tres puntos son colineales.
-\lstinputlisting[language=C++, firstline=34, lastline=36]{./tex/geo/codes/geo.cpp}
+\lstinputlisting[language=C++, firstline=42, lastline=44]{./tex/geo/codes/geo.cpp}
 Con lo anterior ya tenemos las herramientas suficientes para resolver nuestro problema de ordenar los puntos del plano de forma horaria o antihoraria alrededor de un punto.
 \\\\
 Supongamos que queremos ordenar los puntos del plano de forma antihoraria respecto al origen y con una referencia de ''inicio'' que tomaremos como $v=(0,1)$.
@@ -22,9 +22,9 @@ Supongamos que queremos ordenar los puntos del plano de forma antihoraria respec
 \includegraphics[scale=.5]{./tex/geo/pics/sort.png}
 \end{center}
 Entonces de aquí que digamos que para un punto $x$ en $A$, $x$ está en $N$ si y sólo si se cumple que $v\times x >0$ o $v\cdot x >0$ y además $v\times x=0$, estás siendo las operaciones de producto punto y cruz que vimos arriba, con esto podemos hacer una función que nos verifique si un punto de $A$ está o no en $N$ facilmente
-\lstinputlisting[language=C++, firstline=21, lastline=24]{./tex/geo/codes/geo.cpp}
+\lstinputlisting[language=C++, firstline=29, lastline=32]{./tex/geo/codes/geo.cpp}
 Una vez dividido en dos partes notemos que dados $x$ y $y$, podemos decir que $x < y$ si $x \in N$ y $y \in S$ o ambos están en la misma parte y además $x \times y >0$, para esto entonces sólo nos basta definir un operador como sigue que es más fácil de manipular, nótese entonces que este ordenamiento tiene complejidad $O(n log n)$ donde $n$ es la cantidad de puntos en $A$.
-\lstinputlisting[language=C++, firstline=26, lastline=28]{./tex/geo/codes/geo.cpp}
+\lstinputlisting[language=C++, firstline=34, lastline=36]{./tex/geo/codes/geo.cpp}
 \section{Intersecciones}
 En muchas ocasiones nos interesará saber si dados dos segmentos $AB$ y $CD$ estos se intersectan, existen varias formas de revisar esto; sin embargo para evitarnos los muchos casos extremos que pueden aparecer en otros métodos, lo que haremos será pensar que en lugar de segmentos, tenemos dos líneas, la primera parametrizada como $A+t(B-A)$ y la segunda parametrizada como $(x-C)\cdot(D-C)^{\perp}=0$\footnote{Recordemos que dado un vector $(x,y)$, $(x,y)^\perp = (-y,x)$, en este caso sería $(y_C-y_D,x_D-x_C)$}, estas se van a intersecar en un solo punto siempre que no sean paralelas, lo que podemos revisar facilmente verificando que el producto cruz sea diferente a $0$, entonces, si no son paralelas, buscaremos el punto de intersección, es decir, podemos sustituir la primera recta en la segunda y obtener $(A+t(B-A)-C)\cdot(D-C)^{\perp}=0$ de donde podemos despejar $t$
 \\
@@ -310,7 +310,7 @@ arriba.
 \\\\
 El mismo razonamiento elimina las aristas horizontales: si $y_{P_i} = y_{P_{i+1}} = y_Q$, 
 ninguna de las dos condiciones se satisface y la arista simplemente no se cuenta, ya explicado el algoritmo, la implementación quedaría:
-\lstinputlisting[language=C++, firstline=38, lastline=58]{./tex/geo/codes/geo.cpp}
+\lstinputlisting[language=C++, firstline=46, lastline=66]{./tex/geo/codes/geo.cpp}
 \section{Convex Hull}
 Dado un conjunto de puntos $S \subset \mathbb{R}^2$, su \textbf{cápsula convexa} (\textit{convex hull}) intuitivamente es la figura que se formaría si colocamos una liga estirada alrededor de todos los puntos, más formalmente es el polígono convexo más pequeño que los contiene a todos. En la imagen siguiente $S$ son todos los puntos negros y el hull sería es el polígono dibujado de verde.
 
@@ -345,7 +345,7 @@ Dado un conjunto de puntos $S \subset \mathbb{R}^2$, su \textbf{cápsula convexa
 Existen varios algoritmos para calcularlo. El más conocido es \textbf{Graham Scan}; sin embargo, este ordena los puntos por ángulo por lo que hay que tener cuidado con los casos delicados cuando varios puntos tienen el mismo ángulo polar. Por ello preferimos \textbf{Andrew's Monotone Chain}, ambos algoritmos tienen la misma complejidad $O(n \log n)$, misma idea para construir el convex hull, pero ordena por coordenada $x$ en lugar de ángulo, esto lo hace más fácil de implementar sin errores en un concurso.
 \\\\Nótese que para saber qué polígono es el hull, sólo tenemos que saber qué puntos forman parte de él y en qué orden. El algoritmo de Andrew construye el convex hull en dos pasadas sobre los puntos ordenados por $x$, primero se construye la parte inferior y luego la superior.
 \\\\Para la parte superior se van a recorrer los puntos de izquierda a derecha, y tendremos un vector $hull$ con la caracteristica que los últimos tres puntos siempre van a tener producto cruz es positivo, es decir dados $A,B,C$ tenemos que $(B-A)\times(C-A)>0$, inicialmente se agregan los dos primeros puntos a $hull$ y después cada que lleguemos a un nuevo punto $P$ si este cumple la condición se agrega, de lo contrario, se descarta el tope de la pila y después se agrega $P$ a $hull$. Para la parte inferior es exactamente el mismo procedimiento con la única diferencia que se recorre de derecha a izquierda. La implementación quedaría:
-\lstinputlisting[language=C++, firstline=60, lastline=91]{./tex/geo/codes/geo.cpp}
+\lstinputlisting[language=C++, firstline=68, lastline=99]{./tex/geo/codes/geo.cpp}
  La desigualdad $<=0$ descarta también los puntos colineales, de modo que el hull resultante solo contiene los vértices extremos. Si el problema requiere incluir los puntos colineales sobre las aristas del hull, podemos hacer la desigualdad estricta.
 \\\\\textbf{Ejercicio} Dado un conjunto de $n$ puntos, encontrar el par de puntos más lejanos (diámetro).
 \section{Algoritmos de barrido}
@@ -467,7 +467,7 @@ Propongamos el siguiente problema: Dados $n$ segmentos en el plano, decir si al 
 Si en cualquier punto encontramos una intersección, entonces terminamos el algoritmo pues ya resolvimos el problema. Es importante mencionar, que si hay varios eventos en un mismo $x$, primero procesaremos los inicios y depués los finales, así lograremos también comprobar intersecciones si los segmentos comparten vértices.
 \\\\La estructura que nos convendrá para este problema es un \texttt{set<pair<point,point>\>>} de C++ ordenado por la coordenada $y$ de cada segmento en la posición actual $x$ de la línea. El comparador para ordenar evalúa para cada segmento
 \[y(x) = y_1 + \frac{(y_2 - y_1)(x - x_1)}{x_2 - x_1}\]  al implementarlo hay que ser cuidadosos pues como estaremos trabajando con decimales al hacer comparaciones debemos agregar una tolerancia $\varepsilon$.
-\lstinputlisting[language=C++, firstline=103, lastline=205]{./tex/geo/codes/geo.cpp}
+\lstinputlisting[language=C++, firstline=111, lastline=213]{./tex/geo/codes/geo.cpp}
 Nótese que hay $2n$ eventos y cada evento realiza a lo más dos chequeos de intersección que cada uno tiene complejidad de $O(1)$ y una adición o eliminación con complejidad  $O(log n)$. Además ordenar inicialmente los segmentos tiene complejidad $O(nlogn)$ entonces la complejidad del algoritmo es $O(nlogn)$ que en efecto es más rápido que $O(n^2)$.
 \\\\En el problema que resolvimos bastaba con encontrar una intersección, podríamos preguntarnos qué sucede si queremos encontrar todas las intersecciones. El algoritmo que se usa para este caso se llama \textbf{Bentley-Ottmann} que encuentra todas las intersecciones en $O((n+k)logn)$ donde $k$ es el número de intersecciones. Podría parecer que la diferencia es sútil y sólo basta con seguir el algoritmo que estabamos usando antes sin detenerlo, pero recordemos que nuestro algoritmo dependía fuertemente en el orden de los segmentos para encontrar intersecciones, cuando sucede una intersección, el orden de dos segmentos se cambia esto provoca que cada que encontremos un cruce tendremos que cambiar el orden de la estructura y además revisar si los nuevos vecinos tienen cruces. Y no solo eso, si no que cada que agreguemos un segmento si encontramos una intersección tendremos que calcularla y agregarla a la cola de eventos.
 \\Mayores complicaciones de Bentley-Ottmann

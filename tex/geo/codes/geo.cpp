@@ -4,10 +4,18 @@ using namespace std;
 typedef double db;
 struct point {
     db x,y;
-    point operator+(point p) {return {x + p.x, y + p.y};}
-    point operator-(point p) {return {x - p.x, y - p.y};}
-    point operator*(db a) {return {x*a, y*a};}
-    point operator/(db a) {return {x/a, y/a};}
+    point operator+(point p) {
+        return {x + p.x, y + p.y};
+    }
+    point operator-(point p) {
+        return {x - p.x, y - p.y};
+    }
+    point operator*(db a) {
+        return {x*a, y*a};
+    }
+    point operator/(db a) {
+        return {x/a, y/a};
+    }
 
 };
 
@@ -39,7 +47,7 @@ int winding_number(vector<point> poly, point q) {
     int wn = 0;
     int n = poly.size();
     for (int i = 0; i < n; i++) {
-        P a = poly[i], b = poly[(i+1) % n];
+        point a = poly[i], b = poly[(i+1) % n];
         if (a.y <= q.y) {
             // arista cruza hacia arriba: b esta estrictamente sobre el rayo
             if (b.y > q.y && prodCruz(b-a,q-a) > 0)

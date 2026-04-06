@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2026.1.15)  26 MAR 2026 14:21
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2026.1.15)  5 APR 2026 22:37
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1090,23 +1090,19 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 ) [21] [22]
 Cap\'{\i }tulo 4.
-(tex/geo/geo.tex (tex/geo/codes/geo.cpp)
-Underfull \vbox (badness 2111) has occurred while \output is active []
+(tex/geo/geo.tex (tex/geo/codes/geo.cpp [23
 
- [23
-
-] (tex/geo/codes/geo.cpp) (tex/geo/codes/geo.cpp)
+]) (tex/geo/codes/geo.cpp) (tex/geo/codes/geo.cpp [24])
 Underfull \hbox (badness 10000) in paragraph at lines 10--12
 
  []
 
-[24]
-<./tex/geo/pics/cross1.png, id=236, 222.8325pt x 200.24812pt>
+<./tex/geo/pics/cross1.png, id=240, 222.8325pt x 200.24812pt>
 File: ./tex/geo/pics/cross1.png Graphic file (type png)
 <use ./tex/geo/pics/cross1.png>
 Package pdftex.def Info: ./tex/geo/pics/cross1.png  used on input line 13.
 (pdftex.def)             Requested size: 111.41597pt x 100.12381pt.
- (tex/geo/codes/geo.cpp)
+(tex/geo/codes/geo.cpp)
 Underfull \hbox (badness 10000) in paragraph at lines 17--21
 
  []
@@ -1117,12 +1113,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 17--21
  []
 
 [25 <./tex/geo/pics/cross1.png>]
-<./tex/geo/pics/sort.png, id=248, 325.96782pt x 328.22626pt>
+<./tex/geo/pics/sort.png, id=256, 325.96782pt x 328.22626pt>
 File: ./tex/geo/pics/sort.png Graphic file (type png)
 <use ./tex/geo/pics/sort.png>
 Package pdftex.def Info: ./tex/geo/pics/sort.png  used on input line 22.
 (pdftex.def)             Requested size: 162.9835pt x 164.11272pt.
- (tex/geo/codes/geo.cpp) [26 <./tex/geo/pics/sort.png>] (tex/geo/codes/geo.cpp)
+ (tex/geo/codes/geo.cpp [26 <./tex/geo/pics/sort.png>]) (tex/geo/codes/geo.cpp)
 Underfull \hbox (badness 10000) in paragraph at lines 29--31
 
  []
@@ -1244,17 +1240,17 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: 7AF6108CD06B32E276CD38A4CF10AD9B;1580.
  ) 
 Here is how much of TeX's memory you used:
- 30910 strings out of 474486
- 564520 string characters out of 5743755
+ 30916 strings out of 474486
+ 564628 string characters out of 5743755
  2264542 words of memory out of 5000000
- 52058 multiletter control sequences out of 15000+600000
+ 52056 multiletter control sequences out of 15000+600000
  685480 words of font info for 258 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  102i,17n,107p,1237b,2249s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx10.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx12.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx6.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmex10.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi10.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi6.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi8.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi9.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr10.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr17.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr6.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr8.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr9.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmri10.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy10.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy6.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy8.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy9.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt10.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt8.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt9.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on main.pdf (43 pages, 560994 bytes).
+Output written on main.pdf (43 pages, 562070 bytes).
 PDF statistics:
- 672 PDF objects out of 1000 (max. 8388607)
- 285 named destinations out of 1000 (max. 500000)
+ 682 PDF objects out of 1000 (max. 8388607)
+ 293 named destinations out of 1000 (max. 500000)
  69231 words of extra memory for PDF output out of 74296 (max. 10000000)
 
