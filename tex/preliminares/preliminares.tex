@@ -1,0 +1,208 @@
+\newcommand{\ioexample}[2]{%
+\noindent
+\begin{minipage}[t]{0.47\textwidth}
+\raggedright
+\textbf{Entrada ejemplo}
+
+{\ttfamily #1}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.47\textwidth}
+\raggedright
+\textbf{Salida ejemplo}
+
+{\ttfamily #2}
+\end{minipage}
+\par\medskip
+}
+
+\section{Primer contacto con la entrada y la salida}
+
+Lo primero que una persona suele aprender al hacer programación competitiva es manejar correctamente la entrada y la salida de un problema. Recordemos que los jueces en línea ejecutan nuestro programa y le proporcionan texto que corresponde a la entrada; ese texto puede venir en varios formatos, y por ello es importante estar atento a la manera en que se presentan los datos.
+
+La mayoría de los problemas trabajan con \textbf{entrada estándar} y \textbf{salida estándar}. Esto significa que el programa recibe los datos por medio de un flujo de entrada, por ejemplo \texttt{cin} en C++, y escribe su respuesta mediante un flujo de salida, asociado con \texttt{cout}. En un concurso no se acostumbra abrir archivos manualmente; el juez se encarga de proporcionar la entrada al programa y de capturar su salida para revisarla.
+
+Este estilo aparece con mucha frecuencia en concursos formales, donde justamente parte del trabajo consiste en leer correctamente la entrada y producir la salida con el formato exacto que pide el enunciado. En ese sentido, no basta con tener una buena idea: también hace falta traducirla a un programa que interprete bien los datos desde el primer momento.
+
+\section{Entrada estándar, salida estándar y funciones dadas}
+
+En muchos concursos y jueces clásicos, leer la entrada es parte explícita del problema. El programa debe reconocer cuántos datos vienen, en qué orden aparecen y cómo termina cada caso. Esto forma parte del entrenamiento, porque obliga a prestar atención no solo al algoritmo sino también al formato.
+
+Sin embargo, existen plataformas en las que este paso se simplifica. En algunos jueces en línea se proporciona una función ya definida y lo único que se espera es completar su implementación. En esos casos, el propio juez se encarga de interpretar la entrada, llamar a la función con los parámetros adecuados y revisar el resultado devuelto. Esto hace que la curva de aprendizaje inicial sea un poco más amable, pues ya no es necesario lidiar desde el principio con toda la parte de lectura y escritura.
+
+Ninguno de estos estilos es ``mejor'' que el otro: simplemente responden a objetivos distintos. Los concursos formales suelen exigir dominio de entrada y salida completas, mientras que otras plataformas buscan facilitar el enfoque directo sobre la lógica del problema.
+
+\section{Patrones comunes de entrada}
+
+Una de las habilidades más útiles al comenzar es reconocer rápidamente qué tipo de entrada se está usando. A continuación se presentan algunos patrones frecuentes, junto con ejemplos pequeños en C++.
+
+\subsection{Unicaso}
+
+En este patrón, hay un único caso de prueba cada vez que el juez ejecuta el programa. Se leen los datos una sola vez, se procesa la información y se imprime la respuesta.
+
+Por ejemplo, supongamos que la entrada se compone de un número, seguido de un espacio, seguido de otro número y finalmente un salto de línea.
+
+\ioexample{50 100}{150}
+
+En C++, la instrucción \verb|cin >> a >> b;| ignora automáticamente los espacios y saltos de línea entre enteros, por lo que no hace falta procesarlos de forma manual. 
+
+\begin{lstlisting}[language=C++]
+int main() {
+    int a, b;
+    cin >> a >> b;
+    cout << a + b << "\n";
+}
+\end{lstlisting}
+
+La misma idea puede verse con \texttt{scanf}, que también ignora espacios en blanco entre números cuando se usa un formato como \texttt{"\%d \%d"}.
+
+\begin{lstlisting}[language=C++]
+int main() {
+    int a, b;
+    scanf("%d %d", &a, &b);
+    printf("%d\n", a + b);
+}
+\end{lstlisting}
+
+\subsection{Multicaso específico}
+
+Aquí el número de casos de prueba aparece en la primera línea de la entrada. Después de leer ese número, se repite el mismo proceso para cada caso.
+
+Por ejemplo, si se tienen tres casos y en cada uno se pide sumar dos números, la entrada podría ser
+
+\ioexample{3\\1 2\\10 20\\50 100}{3\\30\\150}
+
+En este caso, primero se lee cuántos casos hay y luego se repite el mismo bloque de lectura y escritura ese número de veces.
+
+\begin{lstlisting}[language=C++]
+int main() {
+    int t;
+    cin >> t;
+
+    while (t--) {
+        int a, b;
+        cin >> a >> b;
+        cout << a + b << "\n";
+    }
+}
+\end{lstlisting}
+
+\subsection{Multicaso controlado por valores}
+
+En algunos problemas no se especifica cuántos casos hay, sino que se da una condición de parada. Un ejemplo clásico es seguir leyendo pares \texttt{a, b} hasta encontrar \texttt{a = 0} y \texttt{b = 0}.
+
+Por ejemplo, la entrada podría ser
+
+\ioexample{4 5\\10 20\\7 8\\0 0}{9\\30\\15}
+
+El último par \texttt{0 0} no se procesa: solo sirve para indicar que ya no hay más casos.
+
+\begin{lstlisting}[language=C++]
+int main() {
+    while (true) {
+        int a, b;
+        cin >> a >> b;
+
+        if (a == 0 && b == 0) break;
+
+        cout << a + b << "\n";
+    }
+}
+\end{lstlisting}
+
+\subsection{Multicaso controlado por EOF}
+
+Otro patrón clásico consiste en leer hasta encontrar el final del archivo, es decir, hasta \texttt{EOF}. Esto es muy común en jueces tradicionales y en problemas donde no se indica de antemano cuántos casos existen.
+
+Por ejemplo, si la entrada es
+
+\ioexample{8 2\\100 50\\7 13}{10\\150\\20}
+
+El programa sigue leyendo mientras todavía existan datos válidos en la entrada.
+
+\begin{lstlisting}[language=C++]
+int main() {
+    int a, b;
+    while (cin >> a >> b) {
+        cout << a + b << "\n";
+    }
+}
+\end{lstlisting}
+
+\subsection{Multicaso con salida numerada}
+
+En este esquema se especifica el número de casos, pero además la salida debe incluir un formato como ``Caso \#i: respuesta''. Es importante respetar exactamente la forma pedida por el enunciado.
+
+Por ejemplo, la entrada podría ser
+
+\ioexample{3\\2 3\\10 1\\7 8}{Caso \#1: 5\\Caso \#2: 11\\Caso \#3: 15}
+
+Aquí no basta con imprimir el resultado: también hay que numerar cada caso según el formato exigido.
+
+\begin{lstlisting}[language=C++]
+int main() {
+    int t;
+    cin >> t;
+
+    for (int caso = 1; caso <= t; caso++) {
+        int a, b;
+        cin >> a >> b;
+        cout << "Caso #" << caso << ": " << (a + b) << "\n";
+    }
+}
+\end{lstlisting}
+
+\subsection{Multicaso con datos en una línea}
+
+En algunos problemas, cada caso de prueba corresponde a una línea completa que contiene una cantidad arbitraria de enteros. En ese caso, además de leer, hace falta procesar la línea completa como una unidad.
+
+Por ejemplo, si la primera línea indica cuántos casos habrá y luego cada caso es una línea con una cantidad arbitraria de enteros, la entrada podría ser
+
+\ioexample{3\\1 2 3\\10 20\\7 8 9 10}{6\\30\\34}
+
+En este patrón ya no basta con hacer \verb|cin >> x| de forma fija, porque cada línea puede contener una cantidad distinta de números.
+
+\begin{lstlisting}[language=C++]
+int main() {
+    int t;
+    cin >> t;
+    cin.ignore();
+
+    while (t--) {
+        string linea;
+        getline(cin, linea);
+
+        stringstream ss(linea);
+        int x, suma = 0;
+        while (ss >> x) {
+            suma += x;
+        }
+
+        cout << suma << "\n";
+    }
+}
+\end{lstlisting}
+
+\subsection{Opción de función}
+
+Finalmente, hay jueces en los que no se escribe un programa completo, sino únicamente una función ya indicada. El propio sistema se encarga de leer la entrada, construir los parámetros y llamar a esa función.
+
+En una plataforma de este tipo, podría pensarse en un caso donde internamente el juez llama a una función con los valores \(50\) y \(100\), y espera como resultado \(150\). Desde la perspectiva del usuario, esa interacción muchas veces no aparece como entrada y salida estándar visibles, porque el propio sistema se encarga de esa parte.
+
+\ioexample{50 100\\(simulada por el juez)}{150}
+
+Para ilustrarlo de manera sencilla, se puede simular el comportamiento con el siguiente programa:
+
+\begin{lstlisting}[language=C++]
+class Solution {
+public:
+    int suma(int a, int b) {
+        return a + b;
+    }
+};
+\end{lstlisting}
+
+Este formato aparece con frecuencia en plataformas orientadas a entrevistas o práctica guiada. Aunque simplifica la interacción con la entrada y la salida, no sustituye la necesidad de entender los patrones clásicos, ya que estos siguen siendo fundamentales en programación competitiva.
+
+\section{Una observación práctica}
+
+Aprender entrada y salida no es un tema menor ni puramente mecánico. De hecho, es una de las primeras habilidades que distinguen a quien empieza a sentirse cómodo frente a un juez en línea. Leer con precisión, identificar el patrón de los datos y respetar exactamente el formato pedido ahorra muchos errores y permite concentrarse en lo verdaderamente importante: resolver el problema.

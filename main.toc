@@ -1,18 +1,37 @@
 \babel@toc {spanish}{}\relax 
-\contentsline {chapter}{\numberline {1}Introducción}{4}{chapter.1}%
-\contentsline {chapter}{\numberline {2}Introducción a la Programación Competitiva}{5}{chapter.2}%
-\contentsline {section}{\numberline {2.1}¿Por qué hacer programación competitiva?}{7}{section.2.1}%
-\contentsline {subsection}{\numberline {2.1.1}Beneficios Académicos}{7}{subsection.2.1.1}%
-\contentsline {subsection}{\numberline {2.1.2}Oportunidades laborales}{8}{subsection.2.1.2}%
-\contentsline {section}{\numberline {2.2}Otros concursos y plataformas}{8}{section.2.2}%
-\contentsline {subsection}{\numberline {2.2.1}Ejercicios}{8}{subsection.2.2.1}%
-\contentsline {chapter}{\numberline {3}Entrada/Salida y Jueces en Línea}{9}{chapter.3}%
-\contentsline {chapter}{\numberline {4}Teoría de números}{10}{chapter.4}%
-\contentsline {chapter}{\numberline {5}Geometría computacional}{14}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Bases}{15}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Intersecciones}{16}{section.5.2}%
-\contentsline {section}{\numberline {5.3}Polígonos}{17}{section.5.3}%
-\contentsline {section}{\numberline {5.4}Convex Hull}{19}{section.5.4}%
-\contentsline {section}{\numberline {5.5}Algoritmos de barrido}{21}{section.5.5}%
-\contentsline {section}{\numberline {5.6}Ejercicios}{25}{section.5.6}%
-\contentsline {section}{\numberline {5.7}Problemas}{25}{section.5.7}%
+\contentsline {chapter}{\numberline {1}Introducción}{5}{chapter.1}%
+\contentsline {chapter}{\numberline {2}Introducción a la Programación Competitiva}{6}{chapter.2}%
+\contentsline {section}{\numberline {2.1}¿Por qué hacer programación competitiva?}{8}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Beneficios Académicos}{8}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}Oportunidades laborales}{9}{subsection.2.1.2}%
+\contentsline {section}{\numberline {2.2}Otros concursos y plataformas}{9}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Ejercicios}{9}{subsection.2.2.1}%
+\contentsline {chapter}{\numberline {3}Jueces en Línea}{10}{chapter.3}%
+\contentsline {section}{\numberline {3.1}¿Qué hace un juez en línea?}{10}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}De la propuesta al veredicto}{10}{subsection.3.1.1}%
+\contentsline {section}{\numberline {3.2}Arquitectura general}{11}{section.3.2}%
+\contentsline {section}{\numberline {3.3}¿Cómo compara las respuestas?}{12}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Clarificaciones durante un concurso}{12}{section.3.4}%
+\contentsline {section}{\numberline {3.5}Algunos jueces y plataformas en línea}{13}{section.3.5}%
+\contentsline {section}{\numberline {3.6}Una observación importante}{13}{section.3.6}%
+\contentsline {chapter}{\numberline {4}Entrada/Salida}{14}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Primer contacto con la entrada y la salida}{14}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Entrada estándar, salida estándar y funciones dadas}{14}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Patrones comunes de entrada}{15}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Unicaso}{15}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Multicaso específico}{15}{subsection.4.3.2}%
+\contentsline {subsection}{\numberline {4.3.3}Multicaso controlado por valores}{16}{subsection.4.3.3}%
+\contentsline {subsection}{\numberline {4.3.4}Multicaso controlado por EOF}{16}{subsection.4.3.4}%
+\contentsline {subsection}{\numberline {4.3.5}Multicaso con salida numerada}{17}{subsection.4.3.5}%
+\contentsline {subsection}{\numberline {4.3.6}Multicaso con datos en una línea}{17}{subsection.4.3.6}%
+\contentsline {subsection}{\numberline {4.3.7}Opción de función}{18}{subsection.4.3.7}%
+\contentsline {section}{\numberline {4.4}Una observación práctica}{18}{section.4.4}%
+\contentsline {chapter}{\numberline {5}Teoría de números}{19}{chapter.5}%
+\contentsline {chapter}{\numberline {6}Geometría computacional}{23}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Bases}{24}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Intersecciones}{25}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Polígonos}{26}{section.6.3}%
+\contentsline {section}{\numberline {6.4}Convex Hull}{28}{section.6.4}%
+\contentsline {section}{\numberline {6.5}Algoritmos de barrido}{30}{section.6.5}%
+\contentsline {section}{\numberline {6.6}Ejercicios}{34}{section.6.6}%
+\contentsline {section}{\numberline {6.7}Problemas}{34}{section.6.7}%

@@ -1,6 +1,118 @@
+\begin{comment}
 En el capítulo anterior mencionamos los jueces en línea (online judges), a grandes razgos, estos son sistemas que reciben un programa enviado por un usuario, entonces ejecutan este con entradas predefinidas a las que se les llama casos y compara las respuestas arrojadas por el programa con las esperadas, y a partir de esto determina si la solución enviada es correcta o no.
 \\
 El funcionamiento de un juez en línea se puede ver de la siguiente manera:
 \begin{center}
     Cliente $\rightarrow$ Frontend $\rightarrow$ Backed $\rightarrow$ Evaluador
 \end{center} 
+\end{comment}
+
+Los jueces en línea son plataformas que reciben el código fuente de una solución, lo compilan, lo ejecutan con casos de prueba predefinidos y determinan automáticamente si el programa cumple con lo pedido en el problema. En programación competitiva, prácticamente toda la evaluación pasa por este tipo de sistemas.
+
+\section{¿Qué hace un juez en línea?}
+
+Cuando una persona concursante envía una solución, el juez no revisa si ``la idea parece correcta'', sino si el programa produce exactamente el comportamiento esperado. Para ello, utiliza un conjunto de casos de prueba preparados por quienes diseñaron el problema, junto con una salida correcta previamente validada.
+
+Antes de que un problema llegue al concurso, normalmente pasa por una etapa de preparación. En muchas competencias existe una convocatoria o proceso interno para proponer problemas; cada propuesta debe venir acompañada de una solución conocida, correcta y justificable. En otras palabras, no se plantean problemas de investigación abierta ni preguntas cuya solución todavía sea incierta: el comité necesita saber de antemano que el problema se puede resolver y bajo qué complejidad.
+
+Además del enunciado, quienes preparan el problema suelen entregar varios elementos técnicos: una o más soluciones de referencia, un conjunto de archivos de entrada con sus salidas esperadas, límites de tiempo y memoria, y en algunos casos un comparador especial. Estas piezas permiten construir la evaluación automática con suficiente confianza. Si el problema admite varias respuestas correctas, tolerancias numéricas o criterios más sutiles que una comparación literal, entonces el comparador también forma parte esencial del material del problema.
+
+En muchos casos, los archivos de prueba no se escriben uno por uno de manera artesanal, sino que se generan a partir de generadores y después se validan con soluciones de referencia. El objetivo es cubrir instancias pequeñas, casos borde y situaciones diseñadas para detectar errores frecuentes o algoritmos demasiado lentos. Así, el juez no solo revisa si una solución funciona en ejemplos sencillos, sino si se comporta correctamente en escenarios representativos y exigentes.
+
+\subsection{De la propuesta al veredicto}
+
+Una vez preparado el problema, el juez en línea sigue un proceso bien definido para evaluar cada envío. De manera general, recibe el programa de la persona concursante, lo compila si el lenguaje lo requiere, lo ejecuta con los casos de prueba ocultos y compara la salida producida con la respuesta esperada o con el criterio establecido por el comparador. Si además se respetan las restricciones de tiempo y memoria, la solución se acepta. De forma detallada, este proceso puede descomponerse en varias etapas:
+\begin{enumerate}
+    \item El concursante escribe su programa y lo envía a la plataforma.
+    \item El juez recibe el archivo y verifica que el envío sea válido para el lenguaje seleccionado.
+    \item Si el lenguaje lo requiere, el sistema compila el programa.
+    \item Si la compilación tiene éxito, el evaluador ejecuta la solución sobre los casos de prueba ocultos.
+    \item Para cada caso, el programa recibe una entrada determinada y produce una salida.
+    \item Esa salida se compara con la respuesta esperada, ya sea de forma estricta o mediante un comparador especial.
+    \item Al mismo tiempo, el juez controla el tiempo de ejecución, el uso de memoria y, en algunas plataformas, el volumen de salida.
+    \item Si todos los casos pasan correctamente y se respetan las restricciones, la solución recibe el veredicto \textbf{Accepted}.
+\end{enumerate}
+
+Como resultado de este proceso, el juez devuelve un veredicto. Los más frecuentes son los siguientes:
+\begin{itemize}
+    \item \textbf{Accepted (AC):} la solución produjo la respuesta correcta dentro de los límites establecidos.
+    \item \textbf{Wrong Answer (WA):} la salida no coincide con la esperada o no satisface el criterio del checker.
+    \item \textbf{Compilation Error (CE):} el programa no compiló correctamente.
+    \item \textbf{Run Time Error (RTE):} ocurrió un error durante la ejecución, como división entre cero o acceso inválido a memoria.
+    \item \textbf{Time Limit Exceeded (TLE):} la solución tardó más de lo permitido.
+    \item \textbf{Memory Limit Exceeded (MLE):} la solución usó más memoria de la disponible.
+    \item \textbf{Output Limit Exceeded (OLE):} el programa imprimió más salida de la permitida.
+    \item \textbf{Presentation Error (PE):} en algunas plataformas, la respuesta es esencialmente correcta pero el formato no coincide; en otras, este caso se reporta simplemente como \textbf{WA}.
+\end{itemize}
+
+\section{Arquitectura general}
+
+Aunque la implementación concreta puede variar entre plataformas, un juez en línea suele estar compuesto por varias partes que colaboran entre sí. En una versión un poco más realista, el envío pasa primero por un frontend, luego se registra como una solicitud de evaluación y entra en una cola. A partir de esa cola, uno o varios procesos trabajadores, o \textit{workers}, toman envíos pendientes, los compilan y los ejecutan dentro de un entorno aislado. Después, la salida producida se envía a un comparador, que decide si la respuesta debe aceptarse o no.
+
+Una forma simplificada de visualizarlo es la siguiente:
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[>=stealth, font=\small,
+    scale=0.64, transform shape,
+    box/.style={draw, rounded corners, align=center, minimum width=2.6cm, minimum height=1.0cm}]
+    \node[box] (usuario) at (0,1.7) {Usuario\\concursante};
+    \node[box] (frontend) at (4.1,1.7) {Frontend\\recibe el envio};
+    \node[box] (cola) at (8.2,1.7) {Cola de evaluacion\\requests pendientes};
+    \node[box] (comparador) at (16.4,1.7) {Comparador\\checker};
+    \node[box] (veredicto) at (20.5,1.7) {Veredicto\\final};
+
+    \node[box] (workers) at (8.2,-1.0) {Workers\\toman envios};
+    \node[box] (sandbox) at (12.3,-1.0) {Sandbox\\compila y ejecuta};
+
+    \draw[->] (usuario.east) -- (frontend.west);
+    \draw[->] (frontend.east) -- (cola.west);
+    \draw[->] (cola.south) -- node[right, fill=white, inner sep=1pt] {asignacion} (workers.north);
+    \draw[->] (workers.east) -- (sandbox.west);
+    \draw[->] (sandbox.north) -- ++(0,0.7) -| (comparador.south);
+    \draw[->] (comparador.east) -- (veredicto.west);
+    \draw[->] (veredicto.south) -- ++(0,-3.1) -| node[pos=0.25, below, fill=white, inner sep=1pt] {respuesta} (frontend.south);
+\end{tikzpicture}
+\caption{Esquema simplificado del flujo de evaluación en un juez en línea.}
+\end{figure}
+
+En este esquema, el \textbf{usuario o concursante} prepara y envía su solución; el \textbf{frontend} recibe ese envío y valida aspectos básicos antes de registrarlo; la \textbf{cola de evaluación} conserva los trabajos pendientes; los \textbf{workers} toman envíos de esa cola y coordinan su procesamiento; el \textbf{sandbox} compila y ejecuta el programa dentro de un entorno aislado y con recursos limitados; el \textbf{comparador o checker} contrasta la salida producida con la salida esperada, y en algunos casos puede ignorar diferencias de mayúsculas, normalizar texto o aplicar tolerancias numéricas; finalmente, el sistema devuelve un \textbf{veredicto} al usuario.
+
+\section{¿Cómo compara las respuestas?}
+
+El punto más delicado del proceso suele ser la comparación entre la salida esperada y la salida producida por el programa. En muchos problemas, esta comparación es estricta: el juez revisa carácter por carácter, por lo que una diferencia mínima en espacios, saltos de línea o formato puede hacer que una respuesta correcta en idea sea rechazada.
+
+Sin embargo, no todos los problemas usan exactamente el mismo criterio. Existen al menos tres escenarios comunes:
+\begin{itemize}
+    \item \textbf{Comparación estricta:} la salida debe coincidir exactamente con el formato esperado.
+    \item \textbf{Comparación con tolerancia:} se permiten pequeñas diferencias, por ejemplo en problemas con números reales donde se acepta cierto error absoluto o relativo.
+    \item \textbf{Comparación por equivalencia:} el juez acepta múltiples salidas válidas, por ejemplo cuando los elementos pueden aparecer en cualquier orden o cuando se usa un checker especial que verifica propiedades de la respuesta y no solo texto literal.
+\end{itemize}
+
+Por esta razón, leer con cuidado la sección de salida del problema es tan importante como diseñar el algoritmo. Muchas soluciones fallan no por un error matemático o lógico, sino por no respetar exactamente lo que el problema solicita imprimir.
+
+\section{Clarificaciones durante un concurso}
+
+En competencias oficiales, el juez en línea no trabaja de manera aislada: suele existir un comité de personas organizadoras que supervisa el comportamiento de la plataforma y atiende dudas sobre los enunciados. Si una persona concursante detecta una posible ambigüedad o un error, puede enviar una aclaración para que el comité revise el caso.
+
+Si se confirma un problema en el enunciado, en los datos o en el criterio de evaluación, el comité puede corregirlo y volver a juzgar las soluciones enviadas. En situaciones más delicadas, incluso puede retirarse un problema del concurso. Esto muestra que, aunque el juez automatiza la evaluación, el diseño y mantenimiento del concurso sigue dependiendo de una supervisión humana cuidadosa.
+
+\section{Algunos jueces y plataformas en línea}
+
+Existen muchas plataformas en las que es posible practicar, competir o simplemente familiarizarse con el estilo de evaluación automática. Cada una tiene su propio enfoque, comunidad y tipo de problemas. A continuación se mencionan algunas de las más conocidas:
+
+\begin{itemize}
+    \item \textbf{NetCode:} es una plataforma orientada a la práctica de programación y evaluación automática. Puede ser útil para entrenar con problemas y acostumbrarse al flujo básico de envío y veredicto. Se puede consultar en \href{https://netcode.dev}{https://netcode.dev}.
+    \item \textbf{LeetCode:} es una plataforma muy popular para practicar problemas algorítmicos, especialmente entre quienes se preparan para entrevistas técnicas. Cuenta con una modalidad de paga que da acceso, entre otras cosas, a editoriales y materiales adicionales. Su dirección es \href{https://leetcode.com}{https://leetcode.com}.
+    \item \textbf{Kattis:} es ampliamente utilizado tanto para práctica individual como en competencias universitarias. Su colección de problemas es extensa y su estilo de enunciados se parece mucho al de varios concursos formales. Puede consultarse en \href{https://open.kattis.com}{https://open.kattis.com}.
+    \item \textbf{omegaUp:} es una plataforma muy importante en el ámbito hispanohablante y particularmente en México. Permite practicar, organizar concursos y seguir rankings, por lo que ha sido una puerta de entrada para muchas personas que comienzan en programación competitiva. Su sitio es \href{https://omegaup.com}{https://omegaup.com}.
+    \item \textbf{Codeforces:} es una de las plataformas más activas de la comunidad internacional de programación competitiva. Ofrece concursos frecuentes, problemas clasificados por dificultad, editoriales y una comunidad muy dinámica. Puede consultarse en \href{https://codeforces.com}{https://codeforces.com}.
+\end{itemize}
+
+Explorar varias plataformas también ayuda a desarrollar flexibilidad, ya que no todas presentan los problemas del mismo modo ni usan exactamente el mismo estilo de juez. Con el tiempo, familiarizarse con estas diferencias hace más natural adaptarse a concursos y entornos diversos.
+
+\section{Una observación importante}
+
+Para quienes comienzan, uno de los mayores puntos de frustración es descubrir que un programa puede fallar aun cuando la idea general sea correcta. Un simple espacio extra, una línea faltante o un formato diferente al solicitado puede ser suficiente para recibir un veredicto negativo.
+
+Con la práctica, esta parte deja de parecer arbitraria y empieza a formar parte natural del proceso de resolución. Aprender a leer con precisión, imprimir exactamente lo pedido y revisar cuidadosamente la salida es también parte del entrenamiento en programación competitiva.
