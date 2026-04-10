@@ -27,11 +27,21 @@
 \contentsline {subsection}{\numberline {4.3.7}Opción de función}{18}{subsection.4.3.7}%
 \contentsline {section}{\numberline {4.4}Una observación práctica}{18}{section.4.4}%
 \contentsline {chapter}{\numberline {5}Teoría de números}{19}{chapter.5}%
-\contentsline {chapter}{\numberline {6}Geometría computacional}{23}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Bases}{24}{section.6.1}%
-\contentsline {section}{\numberline {6.2}Intersecciones}{25}{section.6.2}%
-\contentsline {section}{\numberline {6.3}Polígonos}{26}{section.6.3}%
-\contentsline {section}{\numberline {6.4}Convex Hull}{28}{section.6.4}%
-\contentsline {section}{\numberline {6.5}Algoritmos de barrido}{30}{section.6.5}%
-\contentsline {section}{\numberline {6.6}Ejercicios}{34}{section.6.6}%
-\contentsline {section}{\numberline {6.7}Problemas}{34}{section.6.7}%
+\contentsline {section}{\numberline {5.1}Bases}{19}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Aritmética modular}{20}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Números primos y criba de Eratóstenes}{21}{section.5.3}%
+\contentsline {section}{\numberline {5.4}Teorema de Bézout}{22}{section.5.4}%
+\contentsline {section}{\numberline {5.5}Pequeño teorema de Fermat}{22}{section.5.5}%
+\contentsline {section}{\numberline {5.6}Inverso multiplicativo modular}{23}{section.5.6}%
+\contentsline {section}{\numberline {5.7}Congruencias lineales y Teorema Chino del Residuo}{24}{section.5.7}%
+\contentsline {section}{\numberline {5.8}Funciones multiplicativas}{25}{section.5.8}%
+\contentsline {section}{\numberline {5.9}Logaritmo discreto y Baby-step Giant-step}{29}{section.5.9}%
+\contentsline {section}{\numberline {5.10}Ejercicios}{30}{section.5.10}%
+\contentsline {chapter}{\numberline {6}Geometría computacional}{32}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Bases}{33}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Intersecciones}{34}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Polígonos}{35}{section.6.3}%
+\contentsline {section}{\numberline {6.4}Convex Hull}{37}{section.6.4}%
+\contentsline {section}{\numberline {6.5}Algoritmos de barrido}{39}{section.6.5}%
+\contentsline {section}{\numberline {6.6}Ejercicios}{43}{section.6.6}%
+\contentsline {section}{\numberline {6.7}Problemas}{43}{section.6.7}%

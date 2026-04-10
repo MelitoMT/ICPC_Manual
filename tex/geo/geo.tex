@@ -38,36 +38,22 @@ Cuando somos más pequeños, se nos enseña que el área de un triángulo se cal
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}[scale=.5]
- 
-  % Coordenadas
   \coordinate (O)  at (0, 0);
   \coordinate (P1) at (2.5, 5.5);
   \coordinate (P2) at (6.5, 5.8);
   \coordinate (P3) at (8.0, 1.0);
- 
-  % Triangulos desde el origen (rellenos, orden importante: primero los rellenos)
   \fill[green!15]  (O) -- (P1) -- (P2) -- cycle;
   \fill[blue!10]   (O) -- (P2) -- (P3) -- cycle;
   \fill[orange!15] (O) -- (P3) -- (P1) -- cycle;
- 
-  % Bordes de los triangulos desde el origen
   \draw[green!50!black, thin] (O) -- (P1) -- (P2) -- cycle;
   \draw[blue!60!black,  thin] (O) -- (P2) -- (P3) -- cycle;
   \draw[red!40!black,   thin] (O) -- (P3) -- (P1) -- cycle;
- 
-  % Triangulo principal P1-P2-P3 (encima, mas grueso)
   \draw[black, thick] (P1) -- (P2) -- (P3) -- cycle;
- 
-  % Lineas punteadas desde el origen a los vertices
   \draw[gray, thin, dashed] (O) -- (P1);
   \draw[gray, thin, dashed] (O) -- (P2);
   \draw[gray, thin, dashed] (O) -- (P3);
- 
-  % Ejes
   \draw[gray!50, thin, ->] (-0.5, 0) -- (9.0, 0) node[right, font=\small] {$x$};
   \draw[gray!50, thin, ->] (0, -0.5) -- (0, 7.0) node[above, font=\small] {$y$};
- 
-  % Puntos
   \filldraw[black] (O)  circle (2pt) node[below left]  {$O$};
   \filldraw[black] (P1) circle (2pt) node[above left]  {$P_1$};
   \filldraw[black] (P2) circle (2pt) node[above right] {$P_2$};
@@ -86,8 +72,6 @@ con $P_{n+1}=P_1$. Esta fórmula funciona también para polígonos no convexos.
 \begin{center}
 \vspace{-.6cm}
 \begin{tikzpicture}[scale=0.9]
- 
-  % ---- FIGURA IZQUIERDA: Q adentro, 1 cruce ----
   \begin{scope}[xshift=0cm]
     \coordinate (A1) at (2.0, 4.2);
     \coordinate (A2) at (3.8, 3.2);
@@ -113,8 +97,6 @@ con $P_{n+1}=P_1$. Esta fórmula funciona también para polígonos no convexos.
     \node[draw, fill=green!10, rounded corners=4pt,
           inner sep=4pt, font=\small] at (2.0, -0.1) {$Q$ está adentro};
   \end{scope}
- 
-  % ---- FIGURA DERECHA: Q afuera, 2 cruces ----
   \begin{scope}[xshift=6cm]
     \coordinate (B1) at (2.0, 4.2);
     \coordinate (B2) at (3.8, 3.2);
@@ -150,8 +132,6 @@ este es un método sencillo para problemas donde sabemos con certeza no pasarán
  
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
- 
-  % ---- FIGURA IZQUIERDA: rayo pasa por un vértice ----
   \begin{scope}[xshift=0cm]
     \coordinate (R1) at (2.0, 4.5);
     \coordinate (R2) at (4.0, 2.5);
@@ -177,8 +157,6 @@ este es un método sencillo para problemas donde sabemos con certeza no pasarán
     \node[draw, fill=yellow!10, rounded corners=4pt,
           inner sep=4pt, font=\small] at (2.0, -1.35) {ambiguo};
   \end{scope}
- 
-  % ---- FIGURA DERECHA: arista horizontal ----
   \begin{scope}[xshift=6.5cm]
     \coordinate (H1) at (0.8, 4.2);
     \coordinate (H2) at (2.8, 4.2);
@@ -211,8 +189,6 @@ este es un método sencillo para problemas donde sabemos con certeza no pasarán
 Para resolver este problema, usamos un algoritmo que se llama ''winding number'', consiste en la misma idea de lanzar un rayo y contar intersecciones, pero en este se va a contar su orientación, nótese que en la primera la arista que intersecta va subiendo entonces se suma $1$, en el segundo caso, se resta $1$ porque la arista va bajando, si el resultado es diferente de $0$, el punto está adentro.
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
- 
-  % ---- FIGURA IZQUIERDA: Q adentro, winding = +1 ----
   \begin{scope}[xshift=0cm]
     \coordinate (A1) at (2.0, 4.2);
     \coordinate (A2) at (3.8, 3.2);
@@ -226,26 +202,20 @@ Para resolver este problema, usamos un algoritmo que se llama ''winding number''
     \foreach \v in {A1,A2,A3,A4,A5}
       \filldraw[green!60!black] (\v) circle (2.5pt);
  
-    % Q adentro
     \filldraw[blue!70!black] (1.4, 2.5) circle (4pt);
     \node[blue!70!black, left] at (1.25, 2.65) {\small $Q$};
  
-    % Rayo
     \draw[->, dashed, blue!70!black, thick] (1.4, 2.5) -- (4.6, 2.5);
  
-    % Cruce +1: arista A2-A3 cruza hacia arriba (de y=1.2 a y=3.2, va subiendo)
-    % flecha verde hacia arriba en x=3.55
     \draw[->, green!60!black, very thick] (3.55, 1.6) -- (3.55, 3.0);
     \filldraw[red!70!black] (3.55, 2.5) circle (4pt);
     \node[green!60!black] at (3.9, 2.8) {\small $+1$};
  
-    % Etiquetas
     \node[gray] at (2.0, 0.5) {\small winding $= +1 \neq 0$};
     \node[draw, fill=green!10, rounded corners=4pt,
           inner sep=4pt, font=\small] at (2.0, -0.1) {$Q$ está adentro};
   \end{scope}
  
-  % ---- FIGURA DERECHA: Q afuera, winding = -1 + 1 = 0 ----
   \begin{scope}[xshift=6.2cm]
     \coordinate (B1) at (2.0, 4.2);
     \coordinate (B2) at (3.8, 3.2);
@@ -259,25 +229,19 @@ Para resolver este problema, usamos un algoritmo que se llama ''winding number''
     \foreach \v in {B1,B2,B3,B4,B5}
       \filldraw[green!60!black] (\v) circle (2.5pt);
  
-    % Q afuera
     \filldraw[red!60!black] (-0.5, 2.5) circle (4pt);
     \node[red!60!black, left] at (-0.6, 2.65) {\small $Q$};
  
-    % Rayo
     \draw[->, dashed, red!60!black, thick] (-0.5, 2.5) -- (4.6, 2.5);
  
-    % Primer cruce -1: arista B4-B5 cruza hacia abajo (de y=3.2 a y=1.2, baja)
-    % flecha naranja hacia abajo en x=0.28
     \draw[->, orange!80!red, very thick] (0.28, 3.1) -- (0.28, 1.6);
     \filldraw[blue!60!black] (0.28, 2.5) circle (4pt);
     \node[orange!80!red] at (-0.1, 2.2) {\small $-1$};
  
-    % Segundo cruce +1: arista B2-B3 cruza hacia arriba
     \draw[->, green!60!black, very thick] (3.55, 1.6) -- (3.55, 3.0);
     \filldraw[red!70!black] (3.55, 2.5) circle (4pt);
     \node[green!60!black] at (3.9, 2.8) {\small $+1$};
  
-    % Etiquetas
     \node[gray] at (2.0, 0.5) {\small winding $= -1 + 1 = 0$};
     \node[draw, fill=red!8, rounded corners=4pt,
           inner sep=4pt, font=\small] at (2.0, -0.1) {$Q$ está afuera};
@@ -317,13 +281,11 @@ Dado un conjunto de puntos $S \subset \mathbb{R}^2$, su \textbf{cápsula convexa
 \begin{figure}[H]
   \centering
   \begin{tikzpicture}[scale=0.9]
-  % Hull relleno (coordenadas en cm, figura ~6x5cm)
   \filldraw[fill=green!10, draw=green!50!black, thick]
     (0.0, 1.2) -- (0.6, 0.0) -- (2.4, -0.3) -- (4.8, 0.4) --
     (6.0, 2.0) -- (5.6, 3.5) -- (3.6, 3.8) -- (1.2, 3.6) --
     (0.0, 2.8) -- cycle;
  
-  % Puntos interiores
   \foreach \x/\y in {
     1.7/2.0, 2.8/2.5, 3.2/1.4, 2.2/0.8,
     4.0/2.2, 1.2/1.6, 4.4/1.2, 3.6/2.9,
@@ -332,7 +294,6 @@ Dado un conjunto de puntos $S \subset \mathbb{R}^2$, su \textbf{cápsula convexa
     \filldraw (\x,\y) circle (1.8pt);
   }
  
-  % Vértices del hull
   \foreach \x/\y in {
     0.0/1.2, 0.6/0.0, 2.4/-0.3, 4.8/0.4,
     6.0/2.0, 5.6/3.5, 3.6/3.8, 1.2/3.6, 0.0/2.8
@@ -366,7 +327,7 @@ Propongamos el siguiente problema: Dados $n$ segmentos en el plano, decir si al 
   \item \textbf{Final} Este evento indica el fin de un segmento, entonces lo quitaremos de la estructura, pues ya no nos interesa. Sin embargo, hay que tener cuidado es necesario revisar si los dos vecinos (que al quitar el punto se vuelven adyacentes) se intersecan.
 \end{itemize}
 
- \newcommand{\ejes}{%
+ \newcommand{\ejes}{
   \draw[gray!40, thin] (0,0) -- (10.2,0);
   \draw[gray!40, thin] (0,0) -- (0,9.2);
 }
@@ -380,7 +341,6 @@ Propongamos el siguiente problema: Dados $n$ segmentos en el plano, decir si al 
 \begin{figure}[H]
 \centering
  
-% --- Fila 1 ---
 \begin{tikzpicture}[scale=0.25]
   \ejes \segs
   \draw[red!70, dashed] (0,0) -- (0,9);
@@ -401,7 +361,6 @@ Propongamos el siguiente problema: Dados $n$ segmentos en el plano, decir si al 
  
 \vspace{0.4cm}
  
-% --- Fila 2 ---
 \begin{tikzpicture}[scale=0.25]
   \ejes \segs
   \draw[red!70, dashed] (2,0) -- (2,9);
@@ -427,7 +386,6 @@ Propongamos el siguiente problema: Dados $n$ segmentos en el plano, decir si al 
  
 \vspace{0.4cm}
  
-% --- Fila 3 ---
 \begin{tikzpicture}[scale=0.25]
   \ejes \segs
   \draw[red!70, dashed] (7,0) -- (7,9);
@@ -452,7 +410,6 @@ Propongamos el siguiente problema: Dados $n$ segmentos en el plano, decir si al 
  
 \vspace{0.2cm}
  
-% Leyenda compacta
 \begin{tikzpicture}[scale=0.25]
   \draw[green!60!black,  thick] (0,0)--(2,0) node[right,font=\tiny]{S1};
   \draw[blue!70!black,   thick] (5,0)--(7,0) node[right,font=\tiny]{S2};
