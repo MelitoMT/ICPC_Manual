@@ -1,0 +1,88 @@
+Desde inicios de la civilización el contar ha sido de utilidad, y aunque para cosas simples como contar el cambio de una compra basta con contar moneda por moneda, cuando queremos contar cosas más grandes como el número de placas posibles en la ciudad de México o la cantidad de diferentes manos de poker que puedes tener, contar una por una no es un método eficiente ni confiable pues lo más probable es que cometamos un error, es aquí donde entra la necesidad de otras técnicas que estudiaremos a continuación.
+\section{Bases}
+\subsection*{Principio de multiplicación}
+Supongamos que vamos a comprar un helado en una tienda donde puedes escoger cono de sabor vainilla o chocolate, helado de fresa, mango o chicle y de toppings chispas de chocolate o cereal, ¿cuántas maneras diferentes hay de elegir un helado?
+\\\\Pensemos que así como podemos elegir la combinación {vainilla, fresa, chispitas} podemos elegir la combinación {chocolate, fresa, chispitas} o {vainilla, mango, cereal}, hay bastantes formas de combinar los sabores y notemos que el hecho de que elijamos un sabor de cono, no limita para nada nuestra eleccion de helado o de topping. Es así como llegamos a la conclusión que por cada sabor de cono podemos elegir cualquiera de los 3 helados y cualquiera de los 2 toppings, y cada combinación será diferente, de donde tendremos $2\times 3 \times 2=12$ formas de elegir un helado.
+\\\\Esto se llama \textbf{principio de multiplicación} y nos dice que si una tarea se divide en $k$ etapas \textbf{independientes}, es decir la elección de una etapa no limita las opciones de las demás, con $n_1, n_2, \ldots, n_k$ formas de realizar cada una, el número total de formas de completar la tarea es $n_1 \cdot n_2 \cdots n_k$.
+ 
+\subsection*{Principio de adición}
+ 
+Ahora supongamos que en la heladería nos dicen que además de los helados, ofrecen aguas frescas de 5 sabores, si quisieramos solamente comprar un solo artículo de la heladería, ¿de cuántas formas podríamos hacerlo? Pues bien, ya vimos que tenemos 12 helados diferentes, a esto le sumaremos las 5 opciones de agua pues al comprar un sólo artículo tenemos que elegir una de las dos opciones y así obtenemos que hay 17 formas diferentes de realizar la tarea.
+\\\\Esto se llama \textbf{principio de adición} y nos dice que si una tarea puede completarse de $A$ \textbf{o} de $B$ formas, donde $A$ y $B$ son mutuamente excluyentes, el total es $|A| + |B|$.
+ 
+\subsection*{Principio del complemento}
+
+Imaginemos que queremos comprar un helado que no sea de chicle, ¿de cuántas formas podemos hacerlo?, calcularlo directamente sería ver todas las opciones que no tienen chicle, a veces esta tarea es más complicada que calcular lo opuesto, es decir, vamos a contar cuántos helados diferentes tienen chicle, notemos que si el sbaor de helado esta fijo, tenemos 2 opciones de cono y 2 de toppings, es decir 4 opciones. Ahora podemos simplemente restar a los 12 que teníamos, la cantidad que sí teinen chicle, dejandonos con 8. Esta idea se llama \textbf{principio del complemento} y nos conviene usarla cuando los casos no deseados tienen una estructura más simple que los deseados.
+ 
+\subsection*{Principio del palomar}
+
+ En la heladería además hay una promoción para motivar la convivencia, si llegan dos personas con el mismo cumpleaños juntas, se les regalará a ambas personas un helado, ¿cuántas personas se necesitan para asegurar que alguien tendrá un helado gratis? Podríamos pensar que se necesitan muchisimas, pero en realidad solo necesitamos 367, esto porque en el peor caso cada una de las primeras 366 personas va a cumplir un día diferente (incluyendo 29 de febrero) y cuando llegue la persona número 367 como todos los cumpleaños ya tienen una persona que cumple ese día, forzosamente compartirá cumpleaños con alguien. Esto nos dice que en una escuela de 5000 estudiantes no solamente tendrá 2 personas que cumplan el mismo día, si no que pensando en el peor caso con la misma lógica de arriba, habrá 14 personas que compartan cumpleaños con alguien más. A esta idea se le llama \textbf{principio del palomar}.
+
+\section{Permutaciones}
+
+Supongamos que queremos escoger el nuevo CEO y VP de una lista de 5 candidatos y queremos saber de cuántas formas diferentes se puede hacer, a esto se le llama \textbf{permutación} 
+El número de permutaciones de tomar $r$ elementos tomados de un conjunto de $n$ distintos es:
+\[
+P(n, r) = n \cdot (n-1) \cdots (n-r+1) = \frac{n!}{(n-r)!}
+\]
+
+Esto es así porque pensemos que si tenemos $n$ opciones para la primera elección, una vez que lo escogimos, nos queda $n-1$ opciones y así hasta que hayamos hecho las $r$ elecciones. Nótese que cuando $n=r$ estamos calculando de cuántas formas se puede reordenar un conjunto completo y usando la fórmula se vuelve simplemente $n!$, esto nos dice que en el ejemplo de arriba las formas de escoger al CEO y VP son $P(5,2)=20$.
+ 
+\subsection*{Permutaciones con repetición}
+
+Hay casos donde los $n$ elementos de donde elegimos no son todos distintos, veamos por ejemplo la cantidad de formas distintas en que se puede reordenar la palabra \texttt{MISSISSIPPI}, 
+ 
+Si los $n$ elementos no son todos distintos, por ejemplo, hay $n_1$ copias del elemento 1, $n_2$ del elemento 2, etc., con $n_1 + n_2 + \cdots + n_k = n$, el número de permutaciones distintas es:
+\[
+\frac{n!}{n_1!\, n_2! \cdots n_k!}
+\]
+
+El denominador divide las repeticiones que no generan acomodos distintos, de forma que en el ejemplo de arriba notemos hay 11 letras, 1 M, 4 I, 4 S, 2 P, de donde las maneras de reordenarle son
+ \[\dfrac{11!}{1!\,4!\,4!\,2!} = 34\,650\]
+
+\section{Combinaciones}
+Si ahora quisieramos de los 5 empleados agarrar 2 para que formen parte de una brigada no podemos aplicar directamente lo que aprendimos en permutaciones porque aquí el orden no importa, si primero elegimos al número 4 y luego al 2, es lo mismo que si elegieramos al 2 y después al 4, no hay distincion pues ambos formaran parte de la brigada. Lo que si aprendimos es que las formas de permutar un conjunto de $r$ elementos es $r!$, entonces notemos que podemos calcular las permutaciones y luego dividir entre $r!$ que son los ordenamientos de cada selección que producen el mismo subconjunto, es decir si queremos hacer una selección de $r$ elementos de un conjunto de $n$ donde el orden no importa.El número de combinaciones es:
+\[
+\binom{n}{r} = \frac{P(n,r)}{r!} = \frac{n!}{r!\,(n-r)!}
+\]
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[every node/.style={font=\small}]
+  \node[align=center, font=\small\bfseries] at (-3, 3.2) {Permutaciones};
+  \node[align=center, font=\small\bfseries] at (3, 3.2)  {Combinaciones};
+  \foreach \i/\w in {1/ABC, 2/ACB, 3/BAC, 4/BCA, 5/CAB, 6/CBA} {
+    \node[draw, rounded corners=3pt, fill=teal!10,
+          minimum width=1.4cm, minimum height=0.5cm]
+      at (-3, 3-\i*0.55) {\texttt{\w}};
+  }
+ 
+  \node[draw, rounded corners=3pt, fill=coral!20,
+        minimum width=1.4cm, minimum height=0.5cm]
+    at (3, 0.75) {\texttt{\{A,B,C\}}};
+ 
+  \foreach \y in {2.45, 1.9, 1.35, 0.8, 0.25, -0.3} {
+    \draw[-latex, gray!60] (-2.25, \y) -- (2.3, 0.75);
+  }
+ 
+  \draw[decorate, decoration={brace, amplitude=5pt}, gray]
+    (-2.6, 2.65) -- (-2.6, -0.5)
+    node[midway, left=6pt, font=\scriptsize, gray] {$3!=6$};
+
+\end{tikzpicture}
+\end{figure}
+ 
+A las combinaciones también se les llama coeficientes binomiales porque son los coeficientes de la expresión $(a+b)^n$ de la siguiente forma:
+\[(a+b)^n=\binom{n}{0}a^n+\binom{n}{1}a^{n-1}b+\binom{n}{2}a^{n-2}b^2+\cdots + \binom{n}{n}b^n\]
+\\\\
+Algunas propiedades útiles para recordar son (se recomienda al lector intentar probar algunas de ellas):
+ 
+\begin{itemize}
+    \item Simetría: $\binom{n}{r} = \binom{n}{n-r}$
+    \item Factorizacion: $\binom{n}{r} = \frac{n}{k}\binom{n-1}{n-1}$
+    \item Identidad de pascal: $\binom{n-1}{r-1} + \binom{n-1}{r}$
+    \item Suma sobre k: $\sum_{k=0}^{n}\binom{n}{k}=2^n$
+    \item Suma sobre m: $\sum_{m=0}^{n}\binom{m}{k}=\binom{n+1}{k+1}$
+    \item Suma alternada: $\sum_{r=0}^{n} (-1)^r\binom{n}{r} = 0$
+    \item Suma de cuadrados: $\binom{n}{0}^2+\binom{n}{1}^2+\cdots+\binom{n}{n}^2=\binom{2n}{n}$
+\end{itemize}
