@@ -28,24 +28,24 @@
 \contentsline {section}{\numberline {4.4}Una observación práctica}{18}{section.4.4}%
 \contentsline {chapter}{\numberline {5}Teoría de números}{19}{chapter.5}%
 \contentsline {section}{\numberline {5.1}Bases}{19}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Aritmética modular}{20}{section.5.2}%
-\contentsline {section}{\numberline {5.3}Números primos y criba de Eratóstenes}{21}{section.5.3}%
-\contentsline {section}{\numberline {5.4}Teorema de Bézout}{22}{section.5.4}%
-\contentsline {section}{\numberline {5.5}Pequeño teorema de Fermat}{22}{section.5.5}%
-\contentsline {section}{\numberline {5.6}Inverso multiplicativo modular}{23}{section.5.6}%
-\contentsline {section}{\numberline {5.7}Congruencias lineales y Teorema Chino del Residuo}{24}{section.5.7}%
-\contentsline {section}{\numberline {5.8}Funciones multiplicativas}{25}{section.5.8}%
-\contentsline {section}{\numberline {5.9}Logaritmo discreto y Baby-step Giant-step}{29}{section.5.9}%
-\contentsline {section}{\numberline {5.10}Ejercicios}{30}{section.5.10}%
-\contentsline {chapter}{\numberline {6}Combinatoria y conteo}{32}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Bases}{32}{section.6.1}%
-\contentsline {section}{\numberline {6.2}Permutaciones}{33}{section.6.2}%
-\contentsline {section}{\numberline {6.3}Combinaciones}{34}{section.6.3}%
-\contentsline {chapter}{\numberline {7}Geometría computacional}{36}{chapter.7}%
-\contentsline {section}{\numberline {7.1}Bases}{37}{section.7.1}%
-\contentsline {section}{\numberline {7.2}Intersecciones}{38}{section.7.2}%
-\contentsline {section}{\numberline {7.3}Polígonos}{39}{section.7.3}%
-\contentsline {section}{\numberline {7.4}Convex Hull}{41}{section.7.4}%
-\contentsline {section}{\numberline {7.5}Algoritmos de barrido}{43}{section.7.5}%
-\contentsline {section}{\numberline {7.6}Ejercicios}{47}{section.7.6}%
-\contentsline {section}{\numberline {7.7}Problemas}{47}{section.7.7}%
+\contentsline {section}{\numberline {5.2}Aritmética modular}{21}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Números primos y criba de Eratóstenes}{23}{section.5.3}%
+\contentsline {section}{\numberline {5.4}Teorema de Bézout}{24}{section.5.4}%
+\contentsline {section}{\numberline {5.5}Inverso multiplicativo modular}{26}{section.5.5}%
+\contentsline {section}{\numberline {5.6}Pequeño teorema de Fermat}{28}{section.5.6}%
+\contentsline {section}{\numberline {5.7}Congruencias lineales y Teorema Chino del Residuo}{28}{section.5.7}%
+\contentsline {section}{\numberline {5.8}Funciones multiplicativas}{29}{section.5.8}%
+\contentsline {section}{\numberline {5.9}Logaritmo discreto y Baby-step Giant-step}{33}{section.5.9}%
+\contentsline {section}{\numberline {5.10}Ejercicios}{34}{section.5.10}%
+\contentsline {chapter}{\numberline {6}Combinatoria y conteo}{36}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Bases}{36}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Permutaciones}{37}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Combinaciones}{38}{section.6.3}%
+\contentsline {chapter}{\numberline {7}Geometría computacional}{40}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Bases}{41}{section.7.1}%
+\contentsline {section}{\numberline {7.2}Intersecciones}{42}{section.7.2}%
+\contentsline {section}{\numberline {7.3}Polígonos}{43}{section.7.3}%
+\contentsline {section}{\numberline {7.4}Convex Hull}{45}{section.7.4}%
+\contentsline {section}{\numberline {7.5}Algoritmos de barrido}{47}{section.7.5}%
+\contentsline {section}{\numberline {7.6}Ejercicios}{51}{section.7.6}%
+\contentsline {section}{\numberline {7.7}Problemas}{51}{section.7.7}%

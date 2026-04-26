@@ -1,26 +1,91 @@
-En programación competitiva, el dominar o al menos tener buenas nociones de los conceptos principales de teoría de números no es un lujo, es una necesidad, el lector se dará cuenta a lo largo de este texto y en su aventura resolviendo problemas en la ICPC que muchos de los algoritmos usan alguna noción o idea de teoría de números.
+En programación competitiva, dominar o al menos tener buenas nociones de los conceptos principales de teoría de números no es un lujo, sino una necesidad. A lo largo de este texto y en la práctica dentro de la ICPC, el lector encontrará problemas donde aparecen de manera natural ideas como divisibilidad, números primos, residuos, máximo común divisor y aritmética modular. En términos generales, la teoría de números estudia las propiedades de los enteros, y por ello ofrece un lenguaje muy útil para describir, simplificar y resolver muchos problemas clásicos de concurso.
 \section{Bases}
-Decimos que $a$ \textbf{divide} a $b$ (escrito $a \mid b$) si existe un entero $k$ tal que $b = ka$. Las propiedades que más se usan en competencia son:
- 
-\begin{itemize}
-    \item Si $a \mid b$ y $a \mid c$, entonces $a \mid (b \pm c)$.
-    \item Si $a \mid b$, entonces $a \mid bc$ para cualquier entero $c$.
-    \item Si $a \mid b$ y $b \mid c$, entonces $a \mid c$.
-\end{itemize}
+Decimos que $a$ \textbf{divide} a $b$ (escrito $a \mid b$) si existe un entero $k$ tal que $b = ka$. Por ejemplo, $4 \mid 20$ porque $20 = 4 \cdot 5$, de modo que aquí el entero que funciona es $k = 5$. En cambio, $6 \nmid 20$ porque no existe un entero $k$ tal que $20 = 6k$.
+
+Veamos ahora algunas propiedades de la divisibilidad que aparecen con frecuencia en competencia.
+
+\textbf{Propiedad 1.} Si un mismo número divide a otros dos, entonces también divide su suma y su diferencia.
+\[
+a \mid b \text{ y } a \mid c \implies a \mid (b \pm c)
+\]
+
+Por ejemplo, como $3 \mid 12$ y $3 \mid 21$, entonces también $3 \mid (21-12) = 9$ y $3 \mid (21+12) = 33$.
+
+\textbf{Propiedad 2.} Si un número divide a otro, entonces también divide cualquier múltiplo de ese segundo número.
+\[
+a \mid b \implies a \mid bc
+\]
+
+Por ejemplo, como $4 \mid 12$, también se cumple que $4 \mid (12 \cdot 5) = 60$.
+
+\textbf{Propiedad 3.} Si un número divide a un segundo y ese segundo divide a un tercero, entonces el primero divide al tercero.
+\[
+a \mid b \text{ y } b \mid c \implies a \mid c
+\]
+
+Por ejemplo, como $2 \mid 8$ y $8 \mid 40$, se sigue que $2 \mid 40$.
 
 
-El \textbf{máximo común divisor} de dos números $a$ y $b$, $\gcd(a,b)$ por sus siglas en inglés, es el mayor entero que divide a ambos. El \textbf{mínimo común múltiplo} $\text{lcm}(a,b)$ es el menor entero positivo divisible por ambos. Se relacionan ya que
+El \textbf{máximo común divisor} de dos números $a$ y $b$, $\gcd(a,b)$ por sus siglas en inglés, es el mayor entero que divide a ambos. El \textbf{mínimo común múltiplo} $\text{lcm}(a,b)$ es el menor entero positivo divisible por ambos.
+
+Por ejemplo, si tomamos $a = 12$ y $b = 18$, entonces los divisores de $12$ son
+\[
+\{1,2,3,4,6,12\}
+\]
+y los divisores de $18$ son
+\[
+\{1,2,3,6,9,18\}.
+\]
+Los divisores comunes son $\{1,2,3,6\}$, así que $\gcd(12,18) = 6$.
+
+De manera análoga, los primeros múltiplos positivos de $12$ son
+\[
+\{12,24,36,48,\dots\}
+\]
+y los de $18$ son
+\[
+\{18,36,54,\dots\}.
+\]
+El primero que aparece en ambas listas es $36$, por lo que $\text{lcm}(12,18) = 36$.
+
+Podemos registrar además la siguiente relación importante entre ambas cantidades.
+
+\textbf{Propiedad 4.} Para enteros positivos $a$ y $b$,
 \[
 \text{lcm}(a,b) = \frac{a \cdot b}{\gcd(a,b)}
 \]
 
-Podría parecer que esto nos da una implementación directa de $\text{lcm}$, pero estamos ignorando un factor que siempre hay que tener en cuenta al hacer programación competitiva y es manejar enteros muy grandes para evitar el overflow, recordemos que un tipo de dato int puede almacenar $32$ bits y un long long $64$ de forma que pueden almacenar números aproximadamente hasta $10^9$ y $10^{18}$ entonces si tuvieramos el caso donde $a=10^{10}$ y $b=10^9$, tendremos que $ab=10^{19}$ que no cabe en un int ni long long, por lo que se produciría un error llamado overflow, es por eso que el orden recomendado para realizar las operaciones es \texttt{$a / gcd(a,b) * b$}, es decir, primero dividir para hacer el numero menor.
+En el ejemplo anterior se obtiene
+\[
+\text{lcm}(12,18) = \frac{12 \cdot 18}{\gcd(12,18)} = \frac{216}{6} = 36.
+\]
 
-El algoritmo de Euclides calcula $\gcd(a,b)$ eficientemente usando la identidad:
+Podría parecer que esto nos da una implementación directa de $\text{lcm}$, pero aquí aparece una diferencia importante entre la teoría y la práctica. Matemáticamente,
+\[
+\text{lcm}(a,b) = \frac{a \cdot b}{\gcd(a,b)} = \left(\frac{a}{\gcd(a,b)}\right) \cdot b
+\]
+son expresiones equivalentes. Sin embargo, en una implementación real el orden de las operaciones sí importa. Si se usa un \texttt{int} de $32$ bits, normalmente se pueden representar valores entre $-2^{31}$ y $2^{31}-1$, es decir, aproximadamente hasta $10^9$ en magnitud. Con \texttt{long long}, que usualmente ocupa $64$ bits, el rango llega de $-2^{63}$ a $2^{63}-1$, aproximadamente hasta $10^{18}$.
+
+Por ejemplo, si $a = 10^{10}$ y $b = 10^9$, entonces el producto $ab = 10^{19}$ ya no cabe en un \texttt{long long}, y si intentáramos hacer esa multiplicación primero se produciría un \textit{overflow}.\footnote{En programación, \textit{overflow} significa que el resultado de una operación queda fuera del rango que el tipo de dato puede representar. Cuando eso ocurre, el valor almacenado deja de ser confiable.} Así, aunque la fórmula sea correcta en el papel, calcular primero $a \cdot b$ puede producir un error antes de que siquiera se haga la división. Por esta razón, la forma recomendada de implementarlo es
+\[
+\boxed{\texttt{lcm(a, b) = a / gcd(a, b) * b}}
+\]
+porque primero se divide y así se reduce el tamaño de los valores intermedios.
+
+Hasta este punto ya tenemos una relación entre $\text{lcm}(a,b)$ y $\gcd(a,b)$, pero todavía no hemos explicado cómo calcular alguna de estas dos cantidades. Empezaremos con el algoritmo de Euclides, que justamente permite obtener $\gcd(a,b)$ de manera eficiente.
+
 \[
 \gcd(a, b) = \gcd(b, a \bmod b)
 \]
-La idea es que cualquier divisor común de $a$ y $b$ también divide a $a \bmod b = a - \lfloor a/b \rfloor \cdot b$, y viceversa. Se repite hasta que el residuo es $0$, momento en que el divisor es el último valor no nulo, esto nos deja una implementación muy corta y directa:
+La idea es que cualquier divisor común de $a$ y $b$ también divide a $a \bmod b = a - \lfloor a/b \rfloor \cdot b$, y viceversa. Por ejemplo, si $a = 30$ y $b = 18$, entonces
+\[
+30 \bmod 18 = 12 = 30 - 1 \cdot 18.
+\]
+Los divisores comunes de $30$ y $18$ son $\{1,2,3,6\}$, y esos mismos números también dividen a $12$. De hecho,
+\[
+\gcd(30,18) = \gcd(18,12) = 6.
+\]
+Se repite este proceso hasta que el residuo es $0$, momento en que el divisor es el último valor no nulo. Esto nos deja una implementación muy corta y directa:
  
 \begin{lstlisting}[language=C++]
 long long gcd(long long a, long long b) {
@@ -39,22 +104,60 @@ Iniciemos analizando un ejemplo.
 \textbf{Ejemplos}
 \textbf{[3.1] }Supongamos que hoy es Lunes, ¿qué día de la semana será dentro de 300 días?
 \\
-\textbf{Solución.} Podríamos hacer una lista de 300 números después del lunes, asignando cada día a cada número y ver cuál queda en el número 300, pero esto sería muy tardado y realmente innecesario, pues si notamos que cada 7 días se repite el mismo día, podemos ver que ya que al dividir 300 entre 7 nos da 42 y nos queda de residuo 6, por lo que sabemos que el día 264, es decir 42 veces 7, será Lunes y sólo tenemos que ver los restantes 6 días, que sabiendo que 6 días después de Lunes es Domingo, tendremos nuestra respuesta.
+\textbf{Solución.} Podríamos hacer una lista de 300 números después del lunes, asignando cada día a cada número y ver cuál queda en el número 300, pero esto sería muy tardado y realmente innecesario, pues si notamos que cada 7 días se repite el mismo día, podemos ver que ya que al dividir 300 entre 7 nos da 42 y nos queda de residuo 6, por lo que sabemos que el día 294, es decir 42 veces 7, será Lunes y sólo tenemos que ver los restantes 6 días, que sabiendo que 6 días después de Lunes es Domingo, tendremos nuestra respuesta.
 \\\\\
 En este ejemplo vemos como la noción de que conjuntos de números se conformen de forma cíclica nos simplifica problemas. Si en el ejemplo anterior en lugar 300 días fueran 314 días, la respuesta sería la misma, podría parecer una afirmación fuerte, pero realmente al dividir 314 entre 7 como hicimos en el ejemplo notaremos que el residuo es el mismo, es decir 6, entonces el día 308, es decir 44 veces 7, será Lunes y tenemos nuevamente que ver los siguientes 6 días, esto nos lleva a pensar que si de días de la semana estamos hablando, dos días representan el mismo día de la semana si y sólo si tienen el mismo residuo al dividirlos entre 7.
-\\Resulta que esto mismo lo podemos hacer con cualquier número natural $n$, sea $n$ un número natural. Si $x$ y $y$ son dos números enteros tales que tienen mismo residuo al dividirles entre $n$ diremos que $x$ es congruente a $y$ módulo $n$ lo que podemos escribir con la siguiente notación:
+\\Resulta que esto mismo lo podemos hacer con cualquier número natural $n$. Si $x$ y $y$ son dos números enteros tales que tienen mismo residuo al dividirles entre $n$, diremos que $x$ es congruente a $y$ módulo $n$, lo que podemos escribir con la siguiente notación:
 \[x \equiv y \quad mod \quad n\]
-Antes de ver ejemplos, veamos algunas propiedades de las congruencias, si $a\equiv b \, mod \, n$ y $c\equiv d \, mod \, n$ y $m$ es un entero positivo, entonces lo siguiente se cumple:
-\[a+c \equiv b+d \, mod \, n\]
-\[ac \equiv bd \, mod \, n\]
-\[a^m \equiv b^m \, mod \, n\]
+Por ejemplo, $17 \equiv 5 \pmod{12}$ porque al dividir $17$ entre $12$ el residuo es $5$, y al dividir $5$ entre $12$ el residuo también es $5$. De manera similar, $31 \equiv 3 \pmod{7}$ porque ambos dejan residuo $3$ al dividirse entre $7$.
+
+Veamos ahora algunas propiedades de las congruencias. Si $a\equiv b \, mod \, n$ y $c\equiv d \, mod \, n$ y $m$ es un entero positivo, entonces lo siguiente se cumple:
+
+\textbf{Propiedad 1.} La congruencia respeta la suma.
+\[
+a+c \equiv b+d \, mod \, n
+\]
+Por ejemplo, como $17 \equiv 5 \pmod{12}$ y $8 \equiv 20 \pmod{12}$, se sigue que
+\[
+17 + 8 \equiv 5 + 20 \pmod{12}.
+\]
+
+\textbf{Propiedad 2.} La congruencia respeta el producto.
+\[
+ac \equiv bd \, mod \, n
+\]
+Por ejemplo, usando otra vez $17 \equiv 5 \pmod{12}$ y $8 \equiv 20 \pmod{12}$,
+\[
+17 \cdot 8 \equiv 5 \cdot 20 \pmod{12}.
+\]
+
+\textbf{Propiedad 3.} La congruencia respeta las potencias.
+\[
+a^m \equiv b^m \, mod \, n
+\]
+Por ejemplo, como $10 \equiv 3 \pmod{7}$, entonces
+\[
+10^2 \equiv 3^2 \pmod{7}.
+\]
 Como podemos notar, las congruencias respetan las sumas, productos y potencias como estamos acostumbrados, y en realidad para sumas y productos ocurre que cualquier número puede sustituirse por otro al que sea congruente en el módulo de la congruencia.
 \\\\
-Nótese que esto sirve justamente para evitar overflow, pues si estamos trabajando en algún módulo $m$ podemos sacar la congruencia de los números en cada paso para que no se vuelvan muy grandes, en C++, dado un $a$, podemos calcularlo escribiendo '$a\% m$'. Un uso que podemos darle es realizar exponenciación rápida, usualmente cuando hacemos potencias $a^b$ tenemos dos caminos ingenuos, uno es usar $pow(a,b)$ esto no se recomienda por errores de precisión y tiempo, el otro es directamente multiplicar $a$ $b$ veces, sin embargo esto cuesta $O(b)$. Usando la identidad:
+Nótese que las congruencias son especialmente útiles cuando queremos evitar \textit{overflow}. Si estamos trabajando módulo $m$, podemos ir reduciendo cada resultado intermedio a su residuo módulo $m$ para que los números no crezcan más de lo necesario. En C++, dado un valor $a$, esto suele hacerse escribiendo \texttt{a \% m}.
+
+Una aplicación fundamental de esta idea es la \textbf{exponenciación modular}, es decir, el problema de calcular $a^b \bmod m$ de manera eficiente. Si quisiéramos obtener, por ejemplo, $2^7$, una forma directa sería hacer
+\[
+2 \cdot 2 \cdot 2 \cdot 2 \cdot 2 \cdot 2 \cdot 2,
+\]
+lo cual requiere $6$ multiplicaciones. En cambio, si reutilizamos resultados intermedios, podemos hacer
+\[
+2^2 = 4, \qquad 2^4 = (2^2)^2 = 16, \qquad 2^7 = 2^4 \cdot 2^2 \cdot 2,
+\]
+y con ello reducimos notablemente el número de operaciones. Esta es la idea detrás de la exponenciación rápida: en lugar de construir la potencia multiplicando uno por uno, aprovechamos que podemos ir partiendo el exponente y recombinando resultados ya calculados.
+
+La identidad clave es:
 \[
 a^b = \begin{cases} (a^{b/2})^2 & \text{si } b \text{ es par} \\ a \cdot a^{b-1} & \text{si } b \text{ es impar} \end{cases}
 \]
-se obtiene un algoritmo $O(\log b)$. También se puede usar esta misma identidad para hacer exponenciación rápida dado un módulo:
+Gracias a esto se obtiene un algoritmo de complejidad $O(\log b)$. Además, en cada paso podemos tomar módulo $m$, lo que da lugar justamente a la exponenciación modular:
  
 \begin{lstlisting}[language=C++]
 long long power(long long a, long long b, long long mod) {
@@ -72,30 +175,93 @@ long long power(long long a, long long b, long long mod) {
 
 \section{Números primos y criba de Eratóstenes}
  
-Un número $p > 1$ es \textbf{primo} si sus únicos divisores son $1$ y $p$. Todo entero $n > 1$ se puede escribir de forma única como producto de primos (teorema fundamental de la aritmética).
+Un número $p > 1$ es \textbf{primo} si sus únicos divisores son $1$ y $p$. Por ejemplo, $2$, $3$, $5$, $7$ y $11$ son números primos, mientras que $4$ no lo es porque puede dividirse entre $1$, $2$ y $4$.
+
+\textbf{Teorema Fundamental de la Aritmética.} Todo entero $n > 1$ se puede escribir de forma única como producto de primos.
+
+Por ejemplo,
+\[
+12 = 2^2 \cdot 3
+\]
+y
+\[
+60 = 2^2 \cdot 3 \cdot 5.
+\]
+La unicidad significa que, salvo el orden de los factores, no existe otra forma de escribir estos números como producto de primos.
  
-Para verificar si $n$ es primo basta revisar divisores hasta $\sqrt{n}$, si ninguno divide a $n$, entonces es primo. Esto es $O(\sqrt{n})$.
+Para verificar si $n$ es primo basta revisar divisores hasta $\sqrt{n}$. La razón es la siguiente: si $n$ no fuera primo, entonces podría escribirse como $n = a \cdot b$ con $1 < a < n$ y $1 < b < n$. Si ocurriera que tanto $a > \sqrt{n}$ como $b > \sqrt{n}$, entonces
+\[
+a \cdot b > \sqrt{n}\cdot \sqrt{n} = n,
+\]
+lo cual es imposible. Por lo tanto, todo número compuesto tiene al menos un divisor menor o igual que $\sqrt{n}$.
+
+Por ejemplo, si $n = 91$, entonces
+\[
+91 = 7 \cdot 13.
+\]
+Aquí uno de los divisores, $7$, ya es menor que $\sqrt{91}$, así que basta revisar hasta ese rango para detectar que $91$ no es primo. En consecuencia, si ningún entero entre $2$ y $\lfloor \sqrt{n} \rfloor$ divide a $n$, entonces $n$ es primo. Esto da un algoritmo de complejidad $O(\sqrt{n})$.
  
 \begin{lstlisting}[language=C++]
 bool prime(long long n) {
     if (n < 2) return false;
-    for (long long i = 2; i * i <= n; i++)
+    if (n % 2 == 0) return n == 2;
+    for (long long i = 3; i * i <= n; i += 2) {
         if (n % i == 0) return false;
+    }
     return true;
 }
 \end{lstlisting}
  
-Para encontrar todos los primos hasta $n$, la \textbf{criba de Eratóstenes} es el método estándar. La idea central es tener una tabla de números y tachar los múltiplos de los números que ya sabemos que son primos, comenzando siempre por el 2, es decir, se toma el $2$, se declara número primo y se eliminan todos los múltiplos de ese número (como 4,6,8,...), cuando finalicemos, tomamos el siguiente en este caso $3$ y repetimos el proceso hasta que el cuadrado del número actual supera el límite de la lista. Este método funciona porque si un número no ha sido tachado por ningún primo más pequeño, es imposible que sea divisible por otros, por lo que debe ser primo.
+Para encontrar todos los primos hasta $n$, la \textbf{criba de Eratóstenes} es el método estándar. La idea central es mantener una tabla de números y tachar los múltiplos de cada primo que vayamos encontrando. Se comienza con el $2$, se reconocen como compuestos sus múltiplos $4,6,8,\dots$, luego se pasa al siguiente número que no haya sido tachado, que en este caso es $3$, y se repite el proceso.
+
+Por ejemplo, si quisiéramos trabajar hasta $12$, al inicio tendríamos:
+
+\begin{center}
+\small
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 \\
+\hline
+\end{tabular}
+\end{center}
+
+Después de procesar el primo $2$, se tachan sus múltiplos:
+
+\begin{center}
+\small
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+2 & 3 & \st{4} & 5 & \st{6} & 7 & \st{8} & 9 & \st{10} & 11 & \st{12} \\
+\hline
+\end{tabular}
+\end{center}
+
+Luego el siguiente número no tachado es $3$, por lo que ahora se eliminan sus múltiplos que todavía sigan activos, como $9$. Este método funciona porque si un número no ha sido tachado por ningún primo más pequeño, entonces no puede tener divisores primos menores y por lo tanto debe ser primo.
+
+Al terminar este proceso para los números hasta $12$, el estado final queda así:
+
+\begin{center}
+\small
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+2 & 3 & \st{4} & 5 & \st{6} & 7 & \st{8} & \st{9} & \st{10} & 11 & \st{12} \\
+\hline
+\end{tabular}
+\end{center}
+
+Los números que permanecen sin tachar son justamente los primos: $2,3,5,7,11$.
+
+Además, no es necesario revisar todos los números hasta $n$. Basta continuar mientras $i^2 \le n$. La razón es la misma que en la prueba de primalidad: si un número compuesto tiene un divisor mayor que $\sqrt{n}$, entonces el otro divisor correspondiente ya es menor que $\sqrt{n}$ y debió haberse encontrado antes.
+
+Tampoco hace falta empezar a tachar desde $2i$. Cuando llegamos al primo $i$, todos los múltiplos menores que $i^2$ ya fueron tachados por algún primo más pequeño. Por eso la implementación suele comenzar en $i^2$.
 
 \begin{lstlisting}[language=C++]
-vector<bool> prime(n+1,true);
-prime[0]=prime[1]=false;
-for(int i = 2; i <= n; i++) {
-    //tomamos el siguiente primo
-    if(primo[i] && i*i <= n) {
-        //revisamos los multiplos
-        for(int j = i  i; j <= n; j+= i){
-            prime=false;
+vector<bool> prime(n + 1, true);
+prime[0] = prime[1] = false;
+for (int i = 2; i * i <= n; i++) {
+    if (prime[i]) {
+        for (int j = i * i; j <= n; j += i) {
+            prime[j] = false;
         }
     }
 }
@@ -105,16 +271,36 @@ La complejidad es $O(n \log \log n)$, prácticamente lineal. Funciona bien hasta
 
 \section{Teorema de Bézout}
 
-Para cualesquiera enteros $a$ y $b$ no ambos cero, existen enteros $x$ e $y$ tales que:
+\textbf{Propiedad.} Para cualesquiera enteros $a$ y $b$ no ambos cero, existen enteros $x$ e $y$ tales que
 \[
 ax + by = \gcd(a, b)
 \]
+
+Por ejemplo, si $a = 12$ y $b = 18$, entonces $\gcd(12,18) = 6$ y una posible elección es
+\[
+12(-1) + 18(1) = 6.
+\]
+Así, en este caso los coeficientes de Bézout pueden ser $x = -1$ y $y = 1$.
  
 Los coeficientes $x$ e $y$ se llaman \textbf{coeficientes de Bézout} y no son únicos: si $(x_0, y_0)$ es una solución, entonces $(x_0 + k\frac{b}{\gcd}, \; y_0 - k\frac{a}{\gcd})$ también lo es para cualquier entero $k$.
  
-Una consecuencia directa: la ecuación $ax + by = c$ tiene solución entera si y sólo si $\gcd(a,b) \mid c$.
+\textbf{Propiedad.} La ecuación
+\[
+ax + by = c
+\]
+tiene solución entera si y sólo si $\gcd(a,b) \mid c$.
+
+Por ejemplo, la ecuación
+\[
+12x + 18y = 6
+\]
+sí tiene solución entera porque $\gcd(12,18) = 6$ y claramente $6 \mid 6$. En cambio,
+\[
+12x + 18y = 5
+\]
+no tiene solución entera, ya que $6 \nmid 5$.
  
-Los coeficientes de Bézout se calculan con el \textbf{algoritmo de Euclides extendido}, el algoritmo de Euclides calcula $\gcd(a,m)$. Su versión extendida además encuentra enteros $x, y$ tales que
+Los coeficientes de Bézout se calculan con el \textbf{algoritmo de Euclides extendido}. Mientras que el algoritmo de Euclides solo calcula $\gcd(a,m)$, su versión extendida además encuentra enteros $x, y$ tales que
 \[
 ax + my = \gcd(a,m)
 \] 
@@ -123,6 +309,46 @@ La idea del algoritmo extendido es seguir los mismos pasos que Euclides pero ras
 x_{i+1} = x_{i-1} - q_i \cdot x_i \qquad y_{i+1} = y_{i-1} - q_i \cdot y_i
 \]
 partiendo de $(x_0, y_0) = (1, 0)$ para $a$ y $(x_1, y_1) = (0, 1)$ para $m$.
+
+Veamos un ejemplo concreto con $a = 30$ y $m = 18$.
+
+\textbf{Paso 1.} Aplicamos el algoritmo de Euclides:
+\[
+30 = 1 \cdot 18 + 12
+\]
+\[
+18 = 1 \cdot 12 + 6
+\]
+\[
+12 = 2 \cdot 6 + 0.
+\]
+Como el último residuo no nulo es $6$, concluimos que
+\[
+\gcd(30,18) = 6.
+\]
+
+\textbf{Paso 2.} Escribimos ese $6$ en función de los residuos anteriores:
+\[
+6 = 18 - 1 \cdot 12.
+\]
+
+\textbf{Paso 3.} Sustituimos ahora la expresión de $12$ que apareció en el primer paso:
+\[
+12 = 30 - 1 \cdot 18.
+\]
+Al reemplazarla en la ecuación anterior, obtenemos
+\[
+6 = 18 - (30 - 18).
+\]
+
+\textbf{Paso 4.} Simplificamos:
+\[
+6 = -30 + 2 \cdot 18.
+\]
+Por lo tanto, una elección válida de coeficientes de Bézout es
+\[
+x = -1, \qquad y = 2.
+\]
  
 \begin{lstlisting}[language=C++]
 // calcula gcd(a,b) y encuentra x,y tales que ax + by = gcd(a,b)
@@ -142,30 +368,50 @@ long long gcdExt(long long a, long long b, long long &x, long long &y) {
  
 La complejidad es la misma que Euclides: $O(\log \min(a,b))$.
 
-\section{Pequeño teorema de Fermat}
-
-Si $p$ es primo y $\gcd(a, p) = 1$, entonces:
-\[
-a^{p-1} \equiv 1 \pmod{p}
-\]
- 
-Multiplicando ambos lados por $a^{-1}$ se obtiene $a^{p-2} \equiv a^{-1} \pmod{p}$, lo que da un método directo para calcular el inverso modular cuando el módulo es primo.
- 
-Una generalización importante es el \textbf{teorema de Euler}: si $\gcd(a,m)=1$ entonces $a^{\phi(m)} \equiv 1 \pmod{m}$, donde $\phi(m)$ es la función de Euler (cantidad de enteros en $[1,m]$ coprimos con $m$). El pequeño teorema de Fermat es el caso particular $m = p$ primo, donde $\phi(p) = p-1$.
-
 \section{Inverso multiplicativo modular}
  
-Aunque pueda parecer que las operaciones con congruencias son muy flexibles, hay que tener cuidado, pues aún no hemos mencionado nada sobre la división. En aritmética ordinaria, el inverso multiplicativo de un número $a$ es $\frac{1}{a}$, es decir, el número tal que $a \cdot \frac{1}{a} = 1$. En aritmética modular necesitamos algo análogo: dado $a$ y un módulo $m$, queremos encontrar un entero $a^{-1}$ tal que
+Aunque pueda parecer que las operaciones con congruencias son muy flexibles, hay que tener cuidado, pues aún no hemos mencionado nada sobre la división. En aritmética ordinaria, el inverso multiplicativo de un número $a$ es $\frac{1}{a}$, es decir, el número tal que $a \cdot \frac{1}{a} = 1$. Por ejemplo, el inverso multiplicativo de $2$ es $\frac{1}{2}$, ya que
+\[
+2 \cdot \frac{1}{2} = 1.
+\]
+En aritmética modular necesitamos algo análogo: dado $a$ y un módulo $m$, queremos encontrar un entero $a^{-1}$ tal que
 \[
 a \cdot a^{-1} \equiv 1 \pmod{m}
+\]
+Por ejemplo, el inverso de $3$ módulo $7$ es $5$, pues
+\[
+3 \cdot 5 = 15 \equiv 1 \pmod{7}.
 \]
 Esto es útil en el ICPC cada vez que necesitamos ``dividir'' dentro de una operación modular. Como la división directa no está definida en modulo $m$, la reemplazamos por multiplicar por el inverso:
 \[
 \frac{a}{b} \bmod m \;=\; a \cdot b^{-1} \bmod m
 \]
-Por ejemplo, al calcular combinaciones $\binom{n}{k} \bmod p$ necesitamos dividir factoriales, lo cual se hace multiplicando por sus inversos modulares.
+Por ejemplo, al calcular combinaciones
+\[
+\binom{n}{k} = \frac{n!}{k!(n-k)!}
+\]
+módulo un primo $p$, necesitamos dividir factoriales, y esa división se realiza multiplicando por inversos modulares. Si quisiéramos calcular, por ejemplo,
+\[
+\binom{5}{2} \bmod 7,
+\]
+no dividimos directamente entre $2!$ ni entre $3!$ dentro del módulo, sino que escribimos
+\[
+\binom{5}{2} \equiv 5! \cdot (2!)^{-1} \cdot (3!)^{-1} \pmod{7}.
+\]
+Este tipo de situaciones aparece con mucha frecuencia en ICPC, porque los números involucrados suelen crecer demasiado rápido y por eso es común trabajar módulo algún primo grande como $10^9+7$.
 \\\\
-Es importante mencionar que este inverso no siempre existe. Tomemos por ejemplo el caso de $m=4$ y $a=2$, es fácil ver que revisando todas las posibilidades de $b$ módulo $n$ no existe un número que cumpla lo pedido.
+Es importante mencionar que este inverso no siempre existe. Tomemos por ejemplo el caso de $m=4$ y $a=2$. Si existiera un inverso de $2$ módulo $4$, debería existir algún entero $b$ tal que
+\[
+2b \equiv 1 \pmod{4}.
+\]
+Pero si revisamos los posibles residuos módulo $4$, obtenemos:
+\[
+2 \cdot 0 \equiv 0,\qquad
+2 \cdot 1 \equiv 2,\qquad
+2 \cdot 2 \equiv 0,\qquad
+2 \cdot 3 \equiv 2 \pmod{4}.
+\]
+Es decir, al multiplicar por $2$ módulo $4$ solo pueden aparecer los residuos $0$ y $2$, nunca el residuo $1$. Por eso en este caso no existe inverso modular.
 \\\\El inverso de $a$ módulo $m$ existe si y sólo si $\gcd(a, m) = 1$, es decir, $a$ y $m$ son coprimos. Esto se puede probar facilmente, queremos $ax \equiv 1 \pmod{m}$, es decir, $ax - my = 1$ para algún entero $y$. Por el teorema de Bézout, esta ecuación tiene solución si y sólo si $\gcd(a,m) \mid 1$, lo que equivale a $\gcd(a,m) = 1$.
 \\\\
 Ahora, también podemos diseñar un algoritmo para encontrarle en caso de que exista, arriba vimos el algoritmo de euclides extendido, si lo aplicamos a $a$ y $m$, tenemos que como $\gcd(a,m) = 1$, esto nos da directamente $ax + my = 1$, es decir $ax \equiv 1 \pmod{m}$. Entonces $x$ es el inverso de $a$ módulo $m$. Entonces para implementar una función que nos de el inverso basta con llamar a \texttt{gcdExt}, es decir
@@ -198,6 +444,19 @@ vector<long long> inversos(int m, long long p) {
     return inv;
 }
 \end{lstlisting}
+
+\section{Pequeño teorema de Fermat}
+
+Diremos que dos enteros son \textbf{primos relativos} o \textbf{coprimos} si su máximo común divisor es $1$.
+
+\textbf{Propiedad.} Si $p$ es primo y $a$ es coprimo con $p$, es decir, si $\gcd(a, p) = 1$, entonces:
+\[
+a^{p-1} \equiv 1 \pmod{p}
+\]
+ 
+Multiplicando ambos lados por $a^{-1}$ se obtiene $a^{p-2} \equiv a^{-1} \pmod{p}$, lo que da un método directo para calcular el inverso modular cuando el módulo es primo.
+ 
+Una generalización importante es el \textbf{teorema de Euler}: si $\gcd(a,m)=1$ entonces $a^{\phi(m)} \equiv 1 \pmod{m}$, donde $\phi(m)$ es la función de Euler (cantidad de enteros en $[1,m]$ coprimos con $m$). El pequeño teorema de Fermat es el caso particular $m = p$ primo, donde $\phi(p) = p-1$.
 
 \section{Congruencias lineales y Teorema Chino del Residuo} 
 \subsection*{Congruencia lineal}
@@ -449,3 +708,32 @@ Si hay varias respuestas, imprime cualquiera de ellas.
 \end{table}
 
 %https://codeforces.com/problemset/problem/2097/C
+\textbf{[3.3]} Dado un entero $n$, calcula el $n$-ésimo número de Fibonacci módulo $10^9+7$. Recuerda que la sucesión de Fibonacci está dada por
+\[
+F_0 = 0,\qquad F_1 = 1,\qquad F_n = F_{n-1}+F_{n-2}\text{ para } n\ge 2.
+\]
+La idea de este ejercicio es resolverlo usando exponenciación rápida, en particular mediante la potencia de la matriz
+\[
+\begin{pmatrix}
+1 & 1 \\
+1 & 0
+\end{pmatrix},
+\]
+ya que esto permite obtener la respuesta en tiempo $O(\log n)$.
+\\\\
+\textbf{Input:}
+\\
+La única línea contiene un entero $n$ ($0 \leq n \leq 10^{18}$).
+\\\\
+\textbf{Output:}
+\\
+Imprime el valor de $F_n \bmod (10^9+7)$.
+\\\\
+\textbf{Ejemplos:}
+\begin{table}[h !]
+\begin{tabular}{lllll}
+\cline{1-2}
+\multicolumn{1}{|l|}{\textbf{Entrada}} & \multicolumn{1}{l|}{\textbf{Salida}} &  &  &  \\ \cline{1-2}
+\multicolumn{1}{|l|}{7}                & \multicolumn{1}{l|}{13}              &  &  &  \\ \cline{1-2}
+\end{tabular}
+\end{table}
