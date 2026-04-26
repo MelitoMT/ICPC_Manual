@@ -1,40 +1,103 @@
-En geometría computacional, necesitaremos una forma de representar a los objetos geométricos en código, a los puntos del plano los representaremos como un par de coordenadas de $(x,y)$ con las operaciones usuales aplicadas coordenada a coordenada, un punto y un vector son intercambiables cuando el contexto lo permite.
+En geometría computacional conviene representar los objetos en código de forma explícita. Un \textbf{punto} (o \textbf{vector}) en el plano se modela como un par $(x,y)$; las operaciones vectoriales usuales se aplican \emph{coordenada a coordenada}. Según el contexto, un punto y un vector son intercambiables (origen implícito).
+
+\paragraph{Estructura \texttt{Point}.}
 
 \lstinputlisting[language=C++, firstline=4, lastline=20]{./tex/geo/codes/geo.cpp}
-Como definimos nuestra propia estructura es necesario que también definamos los comparadores para poder decidir si dos puntos son iguales o no.
+
+\paragraph{Igualdad y comparadores.}
+
+Al definir una estructura propia conviene fijar cuándo dos puntos son iguales y, si hace falta, un criterio de orden total.
+
 \lstinputlisting[language=C++, firstline=22, lastline=27]{./tex/geo/codes/geo.cpp}
-Nótese que el definir un comparador para decidir si un punto es ''menor'' a otro, no es tan fácil qué hacer por lo que usualmente dependiendo el caso los ordenaremos, frecuentemente nos convendrá ordenarlos de forma horaria o antihoraria de acuerdo a los vectores que corresponden los puntos, la pregunta ahora consiste en ¿cómo hacer esto?, antes de ver una técnica para hacerlo, recordaremos algunas operaciones que podemos hacer entre puntos.
+
+\textbf{Observación.} Definir un ``menor que'' canónico entre puntos del plano no es único: en la práctica el orden depende del problema. Con frecuencia conviene ordenar alrededor de un centro por sentido horario o antihorario; para ello sirven las operaciones entre vectores que siguen.
+
 \section{Bases}
-En primer lugar tenemos el producto punto, dados dos puntos este nos ayuda a medir qué tanto dos vectores apuntan a la misma dirección, si el producto punto es positivo, los vectores apuntan a direcciones similares, si es cero, los vectores son perpendiculares y si es negativo, entonces los vectores apuntan en direcciones opuestas, en programación competitiva este se calcula simplemente con las coordenadas.
+
+\subsection*{Producto punto}
+
+\textbf{Definición (producto punto).} Dados vectores $a=(a_x,a_y)$ y $b=(b_x,b_y)$ (desde el origen), el \textbf{producto punto} es
+\[
+a \cdot b = a_x b_x + a_y b_y.
+\]
+Mide qué tan alineados están: si $a\cdot b>0$ apuntan a direcciones parecidas; si $a\cdot b=0$ son perpendiculares; si $a\cdot b<0$ forman un ángulo obtuso.
+
+\textbf{Ejemplo.} Sean $a=(2,1)$ y $b=(3,-1)$. Entonces
+\[
+a\cdot b = 2\cdot 3 + 1\cdot(-1) = 5 > 0,
+\]
+así que el ángulo entre $a$ y $b$ es agudo. Si $c=(-1,2)$, entonces $a\cdot c = 2\cdot(-1)+1\cdot 2 = 0$, luego $a$ y $c$ son perpendiculares. Si $d=(-3,0)$, se tiene $a\cdot d = -6 < 0$ (ángulo obtuso).
+
 \lstinputlisting[language=C++, firstline=38, lastline=40]{./tex/geo/codes/geo.cpp}
-Nótese que por como lo calculamos si hacemos el producto punto de un vector consigo mismo tendremos la norma de este al cuadrado.
-\\\\Otro concepto que nos será relevante recordar es el producto cruz entre dos vectores (denotado $a \times b$), este nos dará el área orientada del paralelogramo que forman dos vectores, con orientada nos referimos a que si calculamos $a \times b$ será el área del paralelogramo negativa, en cambio $b \times a$ nos la dará positiva, esto nos da una noción de si un vector está a la ''izquierda'' o ''derecha'' de otro.
+
+\textbf{Observación.} Con la implementación anterior, $a\cdot a$ es el cuadrado de la norma euclídea de $a$ (sin raíz).
+
+\textbf{Ejemplo.} Si $a=(3,4)$, entonces $a\cdot a = 3^2+4^2 = 25 = \|a\|^2$. La norma euclídea es $\|a\|=\sqrt{25}=5$, pero en código suele bastar comparar distancias con $a\cdot a$ y evitar la raíz.
+
+\subsection*{Producto cruz en el plano}
+
+\textbf{Definición (producto cruz $2$D).} Para $a=(a_x,a_y)$ y $b=(b_x,b_y)$,
+\[
+a \times b := a_x b_y - a_y b_x,
+\]
+el área \emph{orientada} del paralelogramo generado por $a$ y $b$ (equivalentemente, el doble del área orientada del triángulo con vértices $O$, $a$ y $b$). En particular, $a\times b$ cambia de signo al intercambiar $a$ y $b$, lo que codifica ``$b$ a la izquierda o a la derecha de $a$''.
+
+\textbf{Ejemplo.} Sean $a=(2,0)$ y $b=(1,2)$. Entonces
+\[
+a \times b = 2\cdot 2 - 0\cdot 1 = 4 > 0,
+\]
+así que, mirando desde el origen, $b$ queda a la \emph{izquierda} del rayo de $a$ (giro antihorario de $a$ hacia $b$). El paralelogramo de lados $a$ y $b$ tiene área $|a\times b|=4$. Al intercambiar,
+\[
+b \times a = 1\cdot 0 - 2\cdot 2 = -4 = -(a\times b).
+\]
+Si $c=(3,0)$ es colineal con $a$, entonces $a\times c = 2\cdot 0 - 0\cdot 3 = 0$ (tres puntos en una misma recta por el origen).
+
 \begin{center}
 \includegraphics[scale=.5]{./tex/geo/pics/cross1.png}
 \end{center}
-la implementación también es sencilla y nos da una forma rápida de comprobar si tres puntos son colineales.
+
+La implementación es corta y permite comprobar si tres puntos son colineales.
+
 \lstinputlisting[language=C++, firstline=42, lastline=44]{./tex/geo/codes/geo.cpp}
-Con lo anterior ya tenemos las herramientas suficientes para resolver nuestro problema de ordenar los puntos del plano de forma horaria o antihoraria alrededor de un punto.
-\\\\
-Supongamos que queremos ordenar los puntos del plano de forma antihoraria respecto al origen y con una referencia de ''inicio'' que tomaremos como $v=(0,1)$.
-\\\\Notemos que si tenemos un conjunto de puntos $A$, podemos dividir el plano en dos partes, la primera que llamaremos $N$ que tendrá a todos los puntos que estén a la izquierda de $v$ y todos los puntos que sean colineales apuntando a la misma dirección, la segunda se llamará $S$ y serán los restantes, es decir, aquellos a la derecha de $v$ y los colineales que apuntan en dirección opuesta es decir, los puntos en el área roja estarían en $N$ y los del área azul en $S$.
+
+\subsection*{Orden angular alrededor de un punto}
+
+Con producto punto y cruz podemos ordenar puntos del plano en sentido antihorario (o horario) respecto a un origen.
+
+Supongamos que queremos ordenar respecto al origen con dirección de referencia $v=(0,1)$.
+
+Si $A$ es un conjunto finito de puntos, partimos el plano en dos regiones: $N$ (puntos a la ``izquierda'' de $v$ en el sentido del cruz, más los colineales con $v$ en el mismo sentido) y $S$ (el resto: a la derecha de $v$ o colineales en sentido opuesto). En la figura, la zona roja corresponde a $N$ y la azul a $S$.
+
 \begin{center}
 \includegraphics[scale=.5]{./tex/geo/pics/sort.png}
 \end{center}
-Entonces de aquí que digamos que para un punto $x$ en $A$, $x$ está en $N$ si y sólo si se cumple que $v\times x >0$ o $v\cdot x >0$ y además $v\times x=0$, estás siendo las operaciones de producto punto y cruz que vimos arriba, con esto podemos hacer una función que nos verifique si un punto de $A$ está o no en $N$ facilmente
+
+Un punto $x \in A$ pertenece a $N$ si y sólo si $v\times x>0$, o bien $v\times x=0$ y $v\cdot x>0$ (usando las mismas rutinas de punto y cruz).
+
 \lstinputlisting[language=C++, firstline=29, lastline=32]{./tex/geo/codes/geo.cpp}
-Una vez dividido en dos partes notemos que dados $x$ y $y$, podemos decir que $x < y$ si $x \in N$ y $y \in S$ o ambos están en la misma parte y además $x \times y >0$, para esto entonces sólo nos basta definir un operador como sigue que es más fácil de manipular, nótese entonces que este ordenamiento tiene complejidad $O(n log n)$ donde $n$ es la cantidad de puntos en $A$.
+
+Para comparar $x,y \in A$, basta definir $x<y$ si $x\in N$ y $y\in S$, o si ambos caen en la misma región y $x\times y>0$. La ordenación cuesta $O(n\log n)$ con un \texttt{sort} estándar.
+
 \lstinputlisting[language=C++, firstline=34, lastline=36]{./tex/geo/codes/geo.cpp}
+
 \section{Intersecciones}
-En muchas ocasiones nos interesará saber si dados dos segmentos $AB$ y $CD$ estos se intersectan, existen varias formas de revisar esto; sin embargo para evitarnos los muchos casos extremos que pueden aparecer en otros métodos, lo que haremos será pensar que en lugar de segmentos, tenemos dos líneas, la primera parametrizada como $A+t(B-A)$ y la segunda parametrizada como $(x-C)\cdot(D-C)^{\perp}=0$\footnote{Recordemos que dado un vector $(x,y)$, $(x,y)^\perp = (-y,x)$, en este caso sería $(y_C-y_D,x_D-x_C)$}, estas se van a intersecar en un solo punto siempre que no sean paralelas, lo que podemos revisar facilmente verificando que el producto cruz sea diferente a $0$, entonces, si no son paralelas, buscaremos el punto de intersección, es decir, podemos sustituir la primera recta en la segunda y obtener $(A+t(B-A)-C)\cdot(D-C)^{\perp}=0$ de donde podemos despejar $t$
-\\
-\[t=\frac{(C-A)\cdot(D-C)^\perp}{(B-A)\cdot(D-C)^\perp}\]\\
-para sustituirlo en $A+t(B-A)$ y obtener el punto de  intersección y finalmente checar si este punto está sobre cada uno de los segmentos.
-\\\\\textbf{Ejercicio} Implementar  una función booleana que reciba cuatro puntos $A,B,C$ y $D$ y que nos diga si dos segmentos $AB$ y $CD$ se intersecan.
-\vspace{-1cm}
+
+Un problema recurrente es saber si dos segmentos $AB$ y $CD$ se intersectan. Hay muchos enfoques; aquí se evitan casos límite pensando primero en dos \emph{rectas}: la primera $A+t(B-A)$ con $t\in\mathbb{R}$, y la segunda dada en forma implícita por la normal $(D-C)^\perp$\footnote{Dado $(x,y)$, conviene $(x,y)^\perp = (-y,x)$; aquí $(D-C)^\perp = (y_C-y_D,\,x_D-x_C)$.}:
+\[
+(x-C)\cdot(D-C)^\perp = 0.
+\]
+Si $(B-A)\times(D-C)\neq 0$, las rectas no son paralelas y se cortan en un único punto. Sustituyendo $x=A+t(B-A)$ y despejando $t$,
+\[
+t=\frac{(C-A)\cdot(D-C)^\perp}{(B-A)\cdot(D-C)^\perp}.
+\]
+Sustituyendo $t$ en $A+t(B-A)$ se obtiene el punto de intersección de las rectas; falta comprobar que cae sobre \emph{ambos} segmentos (acotando $t$ y el parámetro del otro lado si se desea).
+
+\paragraph{Ejercicio.} Implementar una función booleana que, dados cuatro puntos $A,B,C,D$, indique si los segmentos $AB$ y $CD$ se intersectan.
 \section{Polígonos}
-Cuando somos más pequeños, se nos enseña que el área de un triángulo se calcula como ''base por altura sobre dos'', imaginemos que solamente nos dan las coordenadas de los tres puntos que definen un triángulo, para usar lo que nos enseñaron tendríamos que hacer varios calculos para encontrar puntos medios y distancias, nos gustaría encontrar una forma más directa que además se pueda generalizar para polígonos en general.
-\\Supongamos tenemos $P_1=(x_1,y_1)$, $P_2=(x_2,y_2)$, y $P_3=(x_3,y_3)$, los tres puntos que delimitan un triángulo, notemos que si consideramos al origen $(0,0)$ entonces el area buscada equivale a sumar el área de los triángulos $P_3OP_2$ y $P_2OP_1$ y restarles el área del triángulo $P_3OP_1$.
+
+Cuando somos pequeños, el área del triángulo se enseña como ``base por altura entre dos''; si solo tenemos coordenadas de los vértices, conviene una fórmula directa que generalice a polígonos.
+
+Supongamos $P_1=(x_1,y_1)$, $P_2=(x_2,y_2)$ y $P_3=(x_3,y_3)$. Tomando el origen $O=(0,0)$, el área buscada se puede ver como suma y resta de áreas orientadas de los triángulos $P_3OP_2$, $P_2OP_1$ y $P_3OP_1$.
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}[scale=.5]
