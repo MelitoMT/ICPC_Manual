@@ -1,4 +1,18 @@
+La geometría computacional es el área que estudia cómo resolver problemas geométricos con algoritmos eficientes (por ejemplo, intersecciones, áreas, orden angular o envolventes convexas).
+
 En geometría computacional conviene representar los objetos en código de forma explícita. Un \textbf{punto} (o \textbf{vector}) en el plano se modela como un par $(x,y)$; las operaciones vectoriales usuales se aplican \emph{coordenada a coordenada}. Según el contexto, un punto y un vector son intercambiables (origen implícito).
+
+\textit{Ejemplo.} Si $u=(2,4)$ y $v=(4,8)$, entonces las operaciones se hacen coordenada a coordenada:
+\[
+u+v=(2+4,\,4+8)=(6,12),
+\]
+\[
+v-u=(4-2,\,8-4)=(2,4),
+\]
+\[
+2u=(2\cdot 2,\,2\cdot 4)=(4,8),\qquad \frac{v}{2}=\left(\frac{4}{2},\,\frac{8}{2}\right)=(2,4).
+\]
+En el código, usamos directamente \verb|double| para las coordenadas reales, lo cual es útil cuando aparecen divisiones.
 
 \paragraph{Estructura \texttt{Point}.}
 
@@ -16,13 +30,13 @@ Al definir una estructura propia conviene fijar cuándo dos puntos son iguales y
 
 \subsection*{Producto punto}
 
-\textbf{Definición (producto punto).} Dados vectores $a=(a_x,a_y)$ y $b=(b_x,b_y)$ (desde el origen), el \textbf{producto punto} es
+\textbf{Producto punto}: Dados vectores $a=(a_x,a_y)$ y $b=(b_x,b_y)$ (desde el origen), el \textbf{producto punto} es
 \[
 a \cdot b = a_x b_x + a_y b_y.
 \]
 Mide qué tan alineados están: si $a\cdot b>0$ apuntan a direcciones parecidas; si $a\cdot b=0$ son perpendiculares; si $a\cdot b<0$ forman un ángulo obtuso.
 
-\textbf{Ejemplo.} Sean $a=(2,1)$ y $b=(3,-1)$. Entonces
+\textit{Ejemplo.} Sean $a=(2,1)$ y $b=(3,-1)$. Entonces
 \[
 a\cdot b = 2\cdot 3 + 1\cdot(-1) = 5 > 0,
 \]
@@ -32,17 +46,17 @@ así que el ángulo entre $a$ y $b$ es agudo. Si $c=(-1,2)$, entonces $a\cdot c 
 
 \textbf{Observación.} Con la implementación anterior, $a\cdot a$ es el cuadrado de la norma euclídea de $a$ (sin raíz).
 
-\textbf{Ejemplo.} Si $a=(3,4)$, entonces $a\cdot a = 3^2+4^2 = 25 = \|a\|^2$. La norma euclídea es $\|a\|=\sqrt{25}=5$, pero en código suele bastar comparar distancias con $a\cdot a$ y evitar la raíz.
+\textit{Ejemplo.} Si $a=(3,4)$, entonces $a\cdot a = 3^2+4^2 = 25 = \|a\|^2$. La norma euclídea es $\|a\|=\sqrt{25}=5$, pero en código suele bastar comparar distancias con $a\cdot a$ y evitar la raíz.
 
 \subsection*{Producto cruz en el plano}
 
-\textbf{Definición (producto cruz $2$D).} Para $a=(a_x,a_y)$ y $b=(b_x,b_y)$,
+\textbf{Producto cruz $2$D}: Para $a=(a_x,a_y)$ y $b=(b_x,b_y)$,
 \[
 a \times b := a_x b_y - a_y b_x,
 \]
 el área \emph{orientada} del paralelogramo generado por $a$ y $b$ (equivalentemente, el doble del área orientada del triángulo con vértices $O$, $a$ y $b$). En particular, $a\times b$ cambia de signo al intercambiar $a$ y $b$, lo que codifica ``$b$ a la izquierda o a la derecha de $a$''.
 
-\textbf{Ejemplo.} Sean $a=(2,0)$ y $b=(1,2)$. Entonces
+\textit{Ejemplo.} Sean $a=(2,0)$ y $b=(1,2)$. Entonces
 \[
 a \times b = 2\cdot 2 - 0\cdot 1 = 4 > 0,
 \]
