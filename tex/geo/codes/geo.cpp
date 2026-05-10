@@ -1,19 +1,18 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-typedef double db;
 struct point {
-    db x,y;
+    double x,y;
     point operator+(point p) {
         return {x + p.x, y + p.y};
     }
     point operator-(point p) {
         return {x - p.x, y - p.y};
     }
-    point operator*(db a) {
+    point operator*(double a) {
         return {x*a, y*a};
     }
-    point operator/(db a) {
+    point operator/(double a) {
         return {x/a, y/a};
     }
 
@@ -111,7 +110,7 @@ bool intersectan(const seg& a, const seg& b) {
 //representamos segmentos como pares de puntos
 using seg = pair<point, point>;
 //funcion que nos devuelve dado un segmento y un x, la y del segmento.
-db getY(const seg& s, db x) {
+double getY(const seg& s, double x) {
     if (abs(s.first.x - s.second.x) < 1e-9){
         return s.first.y;
     } 
@@ -121,12 +120,12 @@ db getY(const seg& s, db x) {
         / (s.second.x - s.first.x);
 }
 
-db sweepX;
+double sweepX;
 //Comparador para ordenar los segmentos por y
 struct cmp {
     bool operator()(const seg& a, const seg& b) const {
-        db ya = getY(a, sweepX);
-        db yb = getY(b, sweepX);
+        double ya = getY(a, sweepX);
+        double yb = getY(b, sweepX);
         if (abs(ya - yb) > 1e-9){
             return ya < yb;
         }
@@ -149,7 +148,7 @@ bool shamos_hoey(vector<seg> segs) {
     o fin respectivamente,
     el indice en el vector original
     */
-    vector<tuple<db,int,int>> eventos;
+    vector<tuple<double,int,int>> eventos;
     for (int i = 0; i < n; i++) {
         eventos.push_back(
             {segs[i].first.x,   1, i}
