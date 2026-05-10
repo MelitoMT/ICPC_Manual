@@ -57,7 +57,7 @@
 \usepackage{graphicx}
 \usepackage{tikz}
 \usepackage{comment}
-
+\usepackage{MnSymbol,bbding,pifont}
 % Referencias (Revisar su uso)
 \usepackage{hyperref}
 \usepackage[nameinlink,capitalise]{cleveref}
@@ -72,6 +72,7 @@
   \fancyhf{}
   \fancyfoot[R]{\thepage}
 }
+\usetikzlibrary{positioning}
 
 \newcommand{\Z}{\mathbb{Z}}
 \newcommand{\N}{\mathbb{N}}
@@ -100,8 +101,8 @@
 \chapter{Entrada/Salida}
 \input{tex/preliminares/preliminares.tex}
 
-%\chapter{Álgebra}
-%\input{tex/algebra.tex}
+\chapter{Álgebra}
+\input{tex/algebra/algebra.tex}
 
 \chapter{Teoría de números}
 \input{tex/numeros/numers.tex}
@@ -113,13 +114,7 @@
 \input{tex/geo/geo.tex}
 
 %\chapter{Teoría de gráficas}
-%\input{tex/graficas.tex}
+%\input{tex/grafos/grafos.tex}
 
-%\chapter{Temas adicionales}
-%\input{tex/adicionales.tex}
-
-%\appendix
-%\chapter{Miscelánea}
-%\input{tex/miscelanea.tex}
-
+\input{tex/bibliografia.tex}
 \end{document}

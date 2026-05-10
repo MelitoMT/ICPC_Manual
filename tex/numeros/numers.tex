@@ -174,6 +174,7 @@ long long inv(long long a, long long m) {
     long long x, y;
     gcdExt(a, m, x, y);
     return (x % m + m) % m;  
+}
 \end{lstlisting}
 Nótese que al final en lugar de devolver $x$, devolvemos $(x \% m + m) \% m$, esto es porque el coeficiente $x$ que devuelve \texttt{gcdExt} puede ser negativo. Por ejemplo, el inverso de $3$ módulo $7$ es $5$, pero el algoritmo puede devolver $x = -2$, que es equivalente pues $-2 \equiv 5 \pmod 7$. La expresión \texttt{(x \% m + m) \% m} convierte cualquier $x$ a un numero congruente a $x$ positivo en $[0, m)$.
 \\

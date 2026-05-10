@@ -86,3 +86,355 @@ Algunas propiedades útiles para recordar son (se recomienda al lector intentar 
     \item Suma alternada: $\sum_{r=0}^{n} (-1)^r\binom{n}{r} = 0$
     \item Suma de cuadrados: $\binom{n}{0}^2+\binom{n}{1}^2+\cdots+\binom{n}{n}^2=\binom{2n}{n}$
 \end{itemize}
+
+Si solo haremos calculos rápidos sin modulo y sin numeros grandes podemos implementar directamente
+\begin{lstlisting}[language=C++]
+ll nCr(ll n,ll k){
+    if(k>n-k)k=n-k;
+    ll comb=1;
+    for(ll i=0;i<k;i++)comb=comb*(n-i)/(i+1);
+    return comb;
+}
+\end{lstlisting}
+La implementacion anterior es corta, pero es importante ser cuidadosos con la implementación pues es muy fácil obtener overflow,
+en general lo más usual en programación competitiva es precalcular los factoriales
+\begin{lstlisting}[language=C++]
+long long fac[MX], invFac[MX], inv[MX];
+void precalcComb () {
+	fac[0] = inv[0] = 1;
+	for (int i = 1; i <= MX - 1; i++) {
+		fac[i] = fac[i - 1] * i % mod;
+	}
+	
+	inv[0] = inv[1] = 1;
+	for (int i = 2; i <= MX - 1; i++) {
+		inv[i] = inv[mod % i] * (mod - mod / i) % mod;
+	}
+	
+	inv_fac[0] = 1;
+	for (int i = 1; i <= MX - 1; i++) {
+		invFac[i] = invFac[i - 1] * inv[i] % mod;
+	}
+}
+\end{lstlisting}
+y después dependiendo de si queremos calcularlo con modulo o no utilizamos alguna de las siguientes implementaciones respectivamente
+\begin{lstlisting}[language=C++]
+long long nCr(long long n, long long r, long long mod){
+    if (r == 0) return 1;
+    long long num = fac[n];
+    long long den = (inverseMod(fac[r],mod) * inverseMod(fac[n-r],mod)) % mod;
+    return (num * den) % mod;
+}
+
+long long comb (int n, int k) {
+	if (n < 0 || k < 0 || n < k) return 0;
+	return fac[n] * inv_fac[k] % mod * inv_fac[n - k] % mod;
+}
+\end{lstlisting}
+\section{Principio de Inclusión-Exclusión}
+
+En ocasiones cuando tengamos conjuntos querremos saber cuántos elementos tiene su unión, podríamos pensar que si los conjuntos son $A$ y $B$ basta con hacer la suma $|A| +|B|$, sin embargo, es probable que los conjuntos no sean disjuntos, es decir, que haya elementos que pertenezcan tanto a $A$ como $B$, en ese caso, les estaríamos contando doble, es por esto que en realidad $|A \cup B|=|A| + |B| - |A \cap B|$, es decir, restamos una vez los que se están contando doble.
+\\\\Similarmente si tuviesemos tres conjuntos $A,B,C$, notemos que al sumar $|A|+|B|+|C|$ estamos contando los elementos que están en dos de los conjuntos doble como en el caso de dos conjuntos, pero no solo eso, pues los elementos que están en los tres conjuntos, están siendo contados tres veces, y al restar todas las intersecciones de dos conjuntos se están restando tres veces, por lo que habrá que sumarlos, es decir
+\[|A \cup B \cup C=|A|+|B|+|C|-|A \cap B|-|A \cap C|-|B \cap C|+|A \cap B \cap C|\]
+usando esta misma lógica para $n$ conjuntos nos da el llamado \textbf{principio de inclusión-exclusión}, este nos dice que si tenemos $A_1,\cdots, A_n$ conjuntos entonces tenemos que
+\[|\bigcup_{i=1}^{n}A_i|=\sum_{i=1}^{n}|A_i|-\sum_{i<j}|A_i \cap A_j|+\cdots+(-1)^{n+1}|A_1\cap \cdots \cap A_n|\]
+Esta fórmula podría parecer muy abstracta para utilizarse, por eso resolveremos un problema: Dados $N,L,R$ queremos calcular los números $x$ en el intervalo $[L,R]$ tal que $x$ es coprimo con $N$. 
+\\\\Nótese que si hacemos $f(X)$ el número de $x$ corpimos con $N$ en el intervalo $[1,X]$, la respuesta será $f(R)-f(L-1)$. Si bien podríamos intentar calcular la cantidad de números coprimos con $N$ en el intervalo, es más fácil calcular lo opuesto, es decir, cuántos comparten un factor primo con $N$. 
+\\\\Con la criba podemos encontrar todos los factores primos $p_1,p2_,\cdots,p_r$ de $N$. Ahora, sea $D_i$ los números divisibles por $p_i$ en el intervalo $[1,X]$, entonces $|D_i|=\lfloor \frac{X}{p_i} \rfloor$ por inclusión exclusión tenemos que:
+\[|D_1 \cup D_2 \cup \cdots \cup D_r|=\sum_{i}\lfloor \frac{X}{p_i} \rfloor - \sum_{i < j}\lfloor \frac{X}{p_i p_j} \rfloor + \sum_{i < j < k}\lfloor \frac{X}{p_i p_j p_k} \rfloor - \cdots\]
+y así tenemos que:
+\[f(X)=X-|D_1 \cup \cdots \cup D_r|\]
+de forma que ya solo tenemos que implementarlo, para esto, iteraremos sobre los $2^r$ subconjuntos de factores primos de $N$. Para este tipo de problemas es importante analizar la complejidad, nótese que $2 \times 3 \times 5 \times 7 \times 11 \times 13 \times 17 \times 19 > 10^6$, de forma que si $N \leq 10^9$, este tendrá a lo más $9$ factores primos, por lo que iterar sobre los $2^9=512$ subconjuntos sí es algo que se puede hacer rapidamente.
+\begin{lstlisting}[language=C++]
+ll f(ll X, vector<ll>& primes) {
+    int k = primes.size();
+    ll res = 0;
+    for (int mask = 1; mask < (1 << k); mask++) {
+        ll prod = 1;
+        int bits = __builtin_popcount(mask);
+        for (int i = 0; i < k; i++)
+            if (mask >> i & 1) prod *= primes[i];
+        if (bits % 2 == 1) res += X / prod;
+        else               res -= X / prod;
+    }
+    return X - res;
+}
+\end{lstlisting}
+\textbf{Ejercicio} Completar la implementación del problema 
+\href{https://acm.hdu.edu.cn/showproblem.php?pid=4135}{Co-prime (LCPC 2011)}
+\section{Barras y estrellas}
+ Supongamos tenemos $r$ niños y $n$ juguetes, ¿de cuántas formas podemos distribuir los juguetes entre los niños?, en este problema no hay restricciones, un niño puede tener 0 o todos los juguetes. Para resolver este problema usaremos ''palitos'' que separen los juguetes en secciones, por ejemplo, supongamos que tenemos 3 niños y 5 juguetes, entonces un acomodo donde el primer niño reciba dos juguetes, el segundo dos y tercero uno se puede representar de la siguiente forma
+ \[\includegraphics[scale=0.7]{imgs/image.png}\]
+ De la misma forma si quisieramos $r$ regiones, ocuparíamos $r-1$ palitos, y notemos que podemos permutar los palitos por $(n+r-1)!$ y después quitar las repeticiones dividiendo por $n!(r-1)!$ asi el número queda
+ \[\frac{(n+r-1)!}{n!(r-1)!}\]
+ esto también nos deja un resultado interesante y es que la ecuación $x_1+x_2+\cdots+x_r=n$ donde $0\leq x_i$ tiene una cantidad de soluciones $\frac{(n+r-1)!}{n!(r-1)!}$.
+
+\section{Lema de Burnside}
+
+Hay una clase de problemas de conteo donde la respuesta no es simplemente contar objetos, sino contar objetos \textbf{distintos bajo simetría}. Tomemos el ejemplo clásico: ¿cuántos collares distintos se pueden hacer con $n$ cuentas de $k$ colores, si dos collares son el mismo cuando uno se obtiene del otro por rotación? Contar directamente sobrecontea el mismo collar $n$ veces (una por cada rotación). El lema de Burnside resuelve exactamente esta clase de problemas.
+
+Para formalizar ``dos objetos son el mismo si uno se obtiene del otro por alguna simetría'', necesitamos el concepto de \textbf{acción de grupo}.
+
+Tenemos dos ingredientes:
+\begin{itemize}
+    \item Un conjunto $X$ de todos los objetos que queremos contar (por ejemplo, todas las coloraciones posibles de $n$ cuentas con $k$ colores, hay $k^n$ en total).
+    \item Un conjunto $G$ de \textbf{operaciones} (simetrías) que podemos aplicar. En el ejemplo de los collares, $G$ son las $n$ rotaciones posibles.
+\end{itemize}
+
+La acción de $G$ sobre $X$ es una función que a cada par $(g, x)$ le asigna un nuevo objeto $g \cdot x \in X$ — el resultado de aplicar la operación $g$ al objeto $x$. Para que sea una acción de grupo debe cumplir:
+\begin{itemize}
+    \item La operación identidad no cambia nada: $e \cdot x = x$.
+    \item Aplicar dos operaciones seguidas es lo mismo que aplicar su composición: $g_1 \cdot (g_2 \cdot x) = (g_1 \cdot g_2) \cdot x$.
+\end{itemize}
+
+Estas reglas básicamente dicen que la acción es compatible con la estructura del grupo y son fáciles de verificar en la práctica.
+
+\subsection{Órbitas y puntos fijos}
+
+La \textbf{órbita} de un objeto $x \in X$ es el conjunto de todos los objetos a los que puede llegar $x$ al aplicarle alguna operación de $G$:
+\[
+G \cdot x := \{g \cdot x \mid g \in G\}
+\]
+
+Esta es la noción clave, dos objetos son \emph{equivalentes} si están en la misma órbita. Nuestro objetivo es contar el número de órbitas $|X/G|$.
+
+Para cada operación $g \in G$, sus \textbf{puntos fijos} son los objetos que no cambian al aplicarla:
+\[
+X^g := \{x \in X \mid g \cdot x = x\}
+\]
+
+\textbf{Lema de Burnside:}
+\\El número de órbitas es igual al promedio del número de puntos fijos sobre todas las operaciones:
+\[
+|X/G| = \frac{1}{|G|} \sum_{g \in G} |X^g|
+\]
+La demostración completa puede consultarse en línea.\footnote{\url{https://artofproblemsolving.com/wiki/index.php/Burnside's_Lemma}}.
+
+Usemos este lema en el caso del problema de collares de $n$ cuentas con $k$ colores donde dos collares son iguales si uno se obtiene del otro por rotación. En este caso, $X$ son todas las coloraciones: $|X| = k^n$. 
+\\\\Nótese que si tenemos un collar con $n$ cuentas numeradas $1,2,\cdots, n$ en círculo con $k$ colores diferentes. La rotación por $r$ posiciones envía la cuenta $i$ a la posición $i+r (mod n)$ por lo que hay $n$ rotaciones distintas $r=0,1,\cdots, n-1$ donde $r=0$ es la identidad, es decir, no rotar. Dos formas de colorear las cuentas son las misma si alguna se obtiene de la otra bajo alguna rotación. Estas rotaciones serán precisamente nuestro grupo $G$ que actuara sobre $X$.
+
+Ahora, notemos que nos interesa saber el número de orbitas porque nos interesa la cantidad de collares diferentes y cada orbita es un collar diferente. Sabiendo esto queremos entonces aplicar el lema de burnside y para ello nos interesa saber cuántos objetos fija la rotación por $r$ posiciones. Notemos entonces que la rotación $r$ fija una coloración si y solo si esta es periodica con periodo $gcd(r,n)$ ya que la cuenta $i$ debe tener el mismo color que la cuneta $i+r$ y esto agrupa las cuentas en exactamente $gcd(r,n)$ clases donde todas las cuentas deben tener el mismo color. Y ya que cada una puede tener $k$ colores diferentes, tenemos que hay $k^{gcd(r,n)}$ coloraciones fijas. 
+\\\\
+Entonces por el lema de Burnside tenemos que:
+\[
+|X/G| = \frac{1}{n} \sum_{r=0}^{n-1} k^{\gcd(r,n)}
+\]
+La implementación entonces queda:
+\begin{lstlisting}[language=C++]
+long long collares(int n, int k, long long mod) {
+    long long res = 0;
+    for (int r = 0; r < n; r++)
+        res = (res + power(k, __gcd(r, n), mod)) % mod;
+    return res % mod * power(n, mod-2, mod) % mod;
+}
+\end{lstlisting}
+
+\section{Números de Catalan}
+¿De cuántas formas se puede triangular un polígono convexo de $n+2$ lados? Es decir, trazar $n-1$ diagonales que dividan el polígono en exactamente $n$ triángulos y que no se crucen entre sí.
+ 
+Para los primeros casos podemos revisar la cantidad a mano:
+ 
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.85]
+ 
+\begin{scope}[xshift=0cm]
+  \coordinate (A) at (0, 0.8);
+  \coordinate (B) at (-0.7, -0.4);
+  \coordinate (C) at (0.7, -0.4);
+  \draw[thick] (A)--(B)--(C)--cycle;
+  \node at (0,-1.0) {\small $1$ forma};
+  \node at (0,-1.5) {\small $n=1$};
+\end{scope}
+ 
+\begin{scope}[xshift=3cm]
+  \coordinate (A) at (-0.7, 0.7);
+  \coordinate (B) at (-0.7,-0.7);
+  \coordinate (C) at ( 0.7,-0.7);
+  \coordinate (D) at ( 0.7, 0.7);
+  \draw[thick] (A)--(B)--(C)--(D)--cycle;
+  \draw[teal, thick] (A)--(C);
+  \node at (1,-1.0) {\small $2$ formas};
+  \node at (1,-1.5) {\small $n=2$};
+\end{scope}
+ 
+\begin{scope}[xshift=5.5cm]
+  \coordinate (A) at (-0.7, 0.7);
+  \coordinate (B) at (-0.7,-0.7);
+  \coordinate (C) at ( 0.7,-0.7);
+  \coordinate (D) at ( 0.7, 0.7);
+  \draw[thick] (A)--(B)--(C)--(D)--cycle;
+  \draw[teal, thick] (B)--(D);
+\end{scope}
+ 
+\end{tikzpicture}
+\end{figure}
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.78]
+ 
+\begin{scope}[xshift=0cm]
+  \coordinate (A0) at (0, 0.9);
+  \coordinate (A1) at (-0.856, 0.278);
+  \coordinate (A2) at (-0.529,-0.728);
+  \coordinate (A3) at ( 0.529,-0.728);
+  \coordinate (A4) at ( 0.856, 0.278);
+  \draw[thick] (A0)--(A1)--(A2)--(A3)--(A4)--cycle;
+  \draw[teal,thick] (A0)--(A2);
+  \draw[teal,thick] (A0)--(A3);
+\end{scope}
+ 
+\begin{scope}[xshift=2.6cm]
+  \coordinate (B0) at (0, 0.9);
+  \coordinate (B1) at (-0.856, 0.278);
+  \coordinate (B2) at (-0.529,-0.728);
+  \coordinate (B3) at ( 0.529,-0.728);
+  \coordinate (B4) at ( 0.856, 0.278);
+  \draw[thick] (B0)--(B1)--(B2)--(B3)--(B4)--cycle;
+  \draw[teal,thick] (B0)--(B2);
+  \draw[teal,thick] (B2)--(B4);
+\end{scope}
+ 
+\begin{scope}[xshift=5.2cm]
+  \coordinate (C0) at (0, 0.9);
+  \coordinate (C1) at (-0.856, 0.278);
+  \coordinate (C2) at (-0.529,-0.728);
+  \coordinate (C3) at ( 0.529,-0.728);
+  \coordinate (C4) at ( 0.856, 0.278);
+  \draw[thick] (C0)--(C1)--(C2)--(C3)--(C4)--cycle;
+  \draw[teal,thick] (C0)--(C3);
+  \draw[teal,thick] (C1)--(C3);
+  \node at (0,-1.1) {\small $5$ formas};
+  \node at (0,-1.6) {\small $n=3$};
+\end{scope}
+ 
+\begin{scope}[xshift=7.8cm]
+  \coordinate (D0) at (0, 0.9);
+  \coordinate (D1) at (-0.856, 0.278);
+  \coordinate (D2) at (-0.529,-0.728);
+  \coordinate (D3) at ( 0.529,-0.728);
+  \coordinate (D4) at ( 0.856, 0.278);
+  \draw[thick] (D0)--(D1)--(D2)--(D3)--(D4)--cycle;
+  \draw[teal,thick] (D1)--(D3);
+  \draw[teal,thick] (D1)--(D4);
+\end{scope}
+ 
+\begin{scope}[xshift=10.4cm]
+  \coordinate (E0) at (0, 0.9);
+  \coordinate (E1) at (-0.856, 0.278);
+  \coordinate (E2) at (-0.529,-0.728);
+  \coordinate (E3) at ( 0.529,-0.728);
+  \coordinate (E4) at ( 0.856, 0.278);
+  \draw[thick] (E0)--(E1)--(E2)--(E3)--(E4)--cycle;
+  \draw[teal,thick] (E1)--(E4);
+  \draw[teal,thick] (E2)--(E4);
+\end{scope}
+ 
+\end{tikzpicture}
+\end{figure}
+
+Aunque pudimos hacer estos casos a mano, entre más lados tenga el polígono el número de triangulaciones se puede hacer muy grande, debido a esto es conveniente para nosotros buscar alguna otra forma de calcularlos.
+\\\\
+Sea $T_n$ el número de triangulaciones de un polígono de $n+2$ lados. Fijamos la arista que va del vértice $0$ al vértice $n+1$. Esa arista pertenece a exactamente un triángulo de cualquier triangulación, llamemos $k$ al tercer vértice de ese triángulo, con $k \in \{1, 2, \ldots, n\}$. Por ejemplo para $n=3$:
+ \begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1.2]
+  \coordinate (V0) at ( 0.000, 1.000);
+  \coordinate (V1) at ( 0.951, 0.309);
+  \coordinate (V2) at ( 0.588,-0.809);
+  \coordinate (V3) at (-0.588,-0.809);
+  \coordinate (V4) at (-0.951, 0.309);
+ 
+  \fill[teal!15]   (V0)--(V1)--(V2)--cycle;
+  \fill[orange!20]  (V0)--(V2)--(V4)--cycle;
+  \fill[yellow!25] (V2)--(V3)--(V4)--cycle;  
+
+  \draw[thick] (V0)--(V1)--(V2)--(V3)--(V4)--cycle;
+  \draw[orange, very thick] (V0)--(V4);
+  \draw[teal, thick] (V0)--(V2);
+  \draw[teal, thick] (V2)--(V4);
+ 
+  \node[above]       at (V0) {$0$};
+  \node[right]       at (V1) {$1$};
+  \node[below right] at (V2) {$k=2$};
+  \node[below left]  at (V3) {$3$};
+  \node[left]        at (V4) {$n+1=4$};
+ 
+  \node[black, font=\small]   at ( 0.60, 0.2)  {$T_{k-1}$};
+  \node[black, font=\small]  at (-0.35, -0.4)   {$T_{n-k}$};
+  \node[font=\scriptsize, orange] at (-1.0, 1.0) {arista fijada};
+ 
+\end{tikzpicture}
+\end{figure}
+Al fijar el triángulo que contiene la arista fijada con tercer vértice $k=2$, el polígono se divide en dos subpolígonos independientes: el subpolígono izquierdo (vértices $0,1,\ldots,k$) con $T_{k-1}$ triangulaciones, y el derecho (vértices $k, k+1,\ldots, n+1$) con $T_{n-k}$ triangulaciones.
+\\\\
+Notemos que los dos subpolígonos son independientes, es decir, la triangulación de uno no afecta al otro. Por lo tanto el número de triangulaciones con tercer vértice $k$ es exactamente su producto $T_{k-1} \cdot T_{n-k}$. Sumando sobre todas las elecciones posibles de $k$, tenemos que:
+\[
+T_n = \sum_{k=1}^{n} T_{k-1} \cdot T_{n-k}
+\]
+Esta secuencia de números se llama \textbf{números de Catalan} y se denota $C_n = T_n$. Otra forma de expresar estos números es:
+\[
+C_n = \frac{1}{n+1}\binom{2n}{n}
+\]
+Nótese que estos números nos serán útiles cuando estemos resolviendo un problema en el que haya una estructura de tamaño $n$ que se pueda dividir en dos partes independientes de tamaños $k-1$ y $n-k$ en donde las contribuciones de cada parte se multipliquen, algunos ejemplos de problemas donde se usan son:
+\begin{itemize}
+    \item Secuencias de $n$ paréntesis balanceados.
+    \item Árboles binarios completos con $n+1$ hojas.
+    \item Caminos reticulares de $(0,0)$ a $(n,n)$ que no cruzan la diagonal $y=x$.
+\end{itemize}
+\section{Números de Stirling de segundo tipo}
+ 
+Los \textbf{números de Stirling de segundo tipo} $S(n,k)$ cuentan el número de formas de partir un conjunto de $n$ elementos en exactamente $k$ subconjuntos no vacíos.
+ 
+Por ejemplo, $S(4,2) = 7$, las 7 formas de partir $\{1,2,3,4\}$ en 2 subconjuntos no vacíos son:
+\[
+\{1\}|\{2,3,4\},\quad \{2\}|\{1,3,4\},\quad \{3\}|\{1,2,4\},\quad \{4\}|\{1,2,3\},
+\]
+\[
+\{1,2\}|\{3,4\},\quad \{1,3\}|\{2,4\},\quad \{1,4\}|\{2,3\}
+\]
+Para calcularlos contamos con la recurrencia:
+\[
+S(n,k) = k \cdot S(n-1,k) + S(n-1,k-1)
+\]
+con $S(0,0) = 1$ y $S(n,0) = S(0,k) = 0$ para $n,k > 0$.
+ 
+La intuición detrás de esta recurrencia consiste en observar que el elemento $n$ tiene 2 opciones:
+\begin{itemize}
+    \item $n$ forma un subconjunto solo, en este caso partimos $\{1,\ldots,n-1\}$ en $k-1$ subconjuntos de $S(n-1,k-1)$ formas, y $\{n\}$ es el $k$-ésimo subconjunto.
+    \item $n$ comparte subconjunto con otros elementos, en este caso partimos $\{1,\ldots,n-1\}$ en $k$ subconjuntos de $S(n-1,k)$ formas, y agregamos $n$ a cualquiera de los $k$ subconjuntos existentes.
+\end{itemize}
+ 
+\section{Números de Bell}
+ 
+El $n$-ésimo \textbf{número de Bell} $B_n$ cuenta el total de particiones de un conjunto de $n$ elementos en subconjuntos no vacíos, sin importar cuántos subconjuntos haya:
+\[
+B_n = \sum_{k=0}^{n} S(n,k)
+\]
+ 
+Es decir, $B_n$ es la suma de números de stirling de segundo tipo. Sin embargo, calcular todos los números de stirling de segundo tipo para calcular los números de Bell puede ser muy costoso computacionalmente, hay una forma más eficiente de calcularlos por medio del \textbf{triángulo de Bell}, el cual es un triángulo de números que se construye así:
+\begin{itemize}
+    \item La primera entrada de cada fila es igual a la última entrada de la fila anterior: $T[i][0] = T[i-1][i-1]$.
+    \item El resto de la fila sigue la regla: $T[i][j] = T[i][j-1] + T[i-1][j-1]$.
+    \item El $n$-ésimo número de Bell es $T[n][0]$.
+\end{itemize}
+ 
+\begin{center}
+\begin{tabular}{ccccccc}
+$\mathbf{1}$ \\
+$\mathbf{1}$ & $2$ \\
+$\mathbf{2}$ & $3$ & $5$ \\
+$\mathbf{5}$ & $7$ & $10$ & $15$ \\
+$\mathbf{15}$ & $20$ & $27$ & $37$ & $52$ \\
+\end{tabular}
+\end{center}
+
+\section{Problemas}
+\begin{itemize}
+    %Barars y Estrellas
+    \item \href{https://codeforces.com/contest/1942/problem/E}{Farm Game (Codeforces 1942E)}
+    %Burnside Lema
+    \item \href{http://poj.org/problem?id=2888}{Magic Bracelet (Spoj 2888)}
+    %Burnside Lema
+    \item \href{https://codeforces.com/gym/101873/problem/B}{Buildings (2017-2018 ACM-ICPC GCPC)}
+\end{itemize}
