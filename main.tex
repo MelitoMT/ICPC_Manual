@@ -16,6 +16,11 @@
 \marginsize{2cm}{2cm}{2cm}{2cm}
 
 \usepackage{amsmath,amssymb,amsthm,mathtools,bm}
+\theoremstyle{definition}
+\newtheorem{definition}{Definición}[section]
+\theoremstyle{plain} 
+\theoremstyle{remark}
+\newtheorem{remark}{Nota}[section]
 %codigo
 \usepackage{listings}
 \usepackage{xcolor}
@@ -113,8 +118,8 @@
 \chapter{Geometría computacional}
 \input{tex/geo/geo.tex}
 
-%\chapter{Teoría de gráficas}
-%\input{tex/grafos/grafos.tex}
+\chapter{Teoría de gráficas}
+\input{tex/grafos/grafos.tex}
 
 \begin{thebibliography}{9}
 \bibitem{cpalg-sieve}
