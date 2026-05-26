@@ -876,72 +876,21 @@ long long bsgs(long long a, long long b, long long m) {
 \end{lstlisting}
 
 Para módulo no primo o cuando $\gcd(a,m) > 1$, hay variantes que reducen al caso coprimo; véase la referencia \cite{cpalg-discrete-log-general}.
-
 \section{Ejercicios}
-
-%https://codeforces.com/problemset/problem/1553/A
-\textbf{[3.1]} Definamos $S(x)$ como la suma de dígitos de un número $x$ en base decimal. Por ejemplo $S(11)=2$, $S(1002)=3$, $S(5)=5$.
-
-Diremos que un entero $x$ es \emph{interesante} si $S(x+1)\leq S(x)$. En cada test se da un entero $n$. Calcula cuántos enteros $x$ cumplen $1\leq x \leq n$ y $x$ es interesante.
-
-\textbf{Input.} La primera línea contiene un entero $t$ ($1 \leq t \leq 1000$), el número de casos. Luego siguen $t$ líneas; la $i$-ésima contiene un entero $n$ ($1\leq n \leq 10^9$).
-
-\textbf{Output.} Imprime $t$ enteros; el $i$-ésimo es la respuesta del $i$-ésimo caso.
-
-\textit{Ejemplos.}
-\begin{table}[h !]
-\begin{tabular}{lllll}
-\cline{1-2}
-\multicolumn{1}{|l|}{\textbf{Entrada}}                                                        & \multicolumn{1}{l|}{\textbf{Salida}}                                                  &  &  &  \\ \cline{1-2}
-\multicolumn{1}{|l|}{\begin{tabular}[c]{@{}l@{}}5\\ 1\\ 9\\ 10\\ 34\\ 880055535\end{tabular}} & \multicolumn{1}{l|}{\begin{tabular}[c]{@{}l@{}}0\\ 1\\ 1\\ 3\\ 88005553\end{tabular}} &  &  &  \\ \cline{1-2}
-                                                                                              &                                                                                       &  &  &  \\
-                                                                                              &                                                                                       &  &  & 
-\end{tabular}
-\end{table}
-
-%https://codeforces.com/contest/1916/problem/B
-\textbf{[3.2]} Se elige un entero $x$ con $1\leq x \leq 10^9$. Te dan dos enteros $a$ y $b$, que son los dos divisores propios más grandes de $x$, con $1\leq a < b < x$.
-
-Dados $a$ y $b$, halla $x$ (cualquier respuesta válida si hay varias).
-
-\textbf{Input.} La primera línea contiene $t$ ($1\leq t \leq 10^4$). Cada una de las siguientes $t$ líneas tiene dos enteros $a$ y $b$ con $1 \leq a < b \leq 10^9$. Se garantiza que provienen de algún $x$ en el rango indicado.
-
-\textbf{Output.} Por cada caso, imprime un entero $x$ cuyos dos mayores divisores propios sean $a$ y $b$.
-
-\textit{Ejemplos.}
-\begin{table}[h !]
-\begin{tabular}{lllll}
-\cline{1-2}
-\multicolumn{1}{|l|}{\textbf{Entrada}}                                                                            & \multicolumn{1}{l|}{\textbf{Salida}}                                                            &  &  &  \\ \cline{1-2}
-\multicolumn{1}{|l|}{\begin{tabular}[c]{@{}l@{}}8\\ 2 3\\ 1 2\\ 3 11\\ 1 5\\ 5 10\\ 4 6\\ 3 9\\ 250000000 500000000\end{tabular}} & \multicolumn{1}{l|}{\begin{tabular}[c]{@{}l@{}}6\\ 4\\ 33\\ 25\\ 20\\ 12\\ 27\\ 1000000000\end{tabular}} &  &  &  \\ \cline{1-2}
-                                                                                                                  &                                                                                                 &  &  &  \\
-                                                                                                                  &                                                                                                 &  &  & 
-\end{tabular}
-\end{table}
-
-%https://codeforces.com/problemset/problem/2097/C
-\textbf{[3.3]} Dado $n$, calcula $F_n \bmod (10^9+7)$, donde
-\[
-F_0 = 0,\qquad F_1 = 1,\qquad F_n = F_{n-1}+F_{n-2}\quad (n\ge 2).
-\]
-Un enfoque estándar es exponenciación rápida de la matriz
-\[
-\begin{pmatrix}
-1 & 1 \\
-1 & 0
-\end{pmatrix},
-\]
-lo que da tiempo $O(\log n)$.
-
-\textbf{Input.} Una línea con un entero $n$ ($0 \leq n \leq 10^{18}$).
-
-\textbf{Output.} El valor de $F_n \bmod (10^9+7)$.
-
-\textit{Ejemplos.}
-\begin{table}[h !]
-\begin{tabular}{lllll}
-\cline{1-2}
-\multicolumn{1}{|l|}{\textbf{Entrada}} & \multicolumn{1}{l|}{\textbf{Salida}} &  &  &  \\ \cline{1-2}
-\multicolumn{1}{|l|}{7}                & \multicolumn{1}{l|}{13}              &  &  &  \\ \cline{1-2}
-\end{tabular}
-\end{table}
+\begin{itemize}
+    \item \href{https://codeforces.com/contest/1542/problem/C}{Strange Function (Codeforces 1542C)}
+    \item \href{https://cses.fi/problemset/task/1082}{Sum of Divisors (CSES 1082)}
+    \item \href{https://lightoj.com/problem/monkey-tradition}{Monkey Tradition (Light OJ)}
+\end{itemize}
+\section{Problemas}
+\begin{itemize}
+    \item \href{https://cses.fi/problemset/task/1712}{Exponentiation II (CSES 1712)}
+    \item \href{https://codeforces.com/contest/1771/problem/C}{Hossam and Trainees (CSES 1771C)}
+    %CRT
+    \item \href{https://matcomgrader.com/problem/9547/fantastic-beasts/}{Fantastic Beasts (Latam Regional Contest 2028)}
+    \item \href{https://codeforces.com/problemset/problem/1553/A}{Digits Sum (Codeforces 1553A)}
+    \item \href{https://codeforces.com/contest/1916/problem/B}{Two Divisors (Codeforces 1916B)}
+    %CRT HHAAARD
+    \item \href{https://codeforces.com/problemset/problem/2097/C}{Bermuda Triangle (Codeforces 2097C)}
+    \item \href{https://codeforces.com/problemset/problem/1575/G}{GCD Festival (COMPFEST 13)}
+\end{itemize}
