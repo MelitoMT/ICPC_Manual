@@ -1,5 +1,5 @@
 El álgebra es, en esencia, el estudio de patrones numéricos, en la programación competitiva es muy común que ideas de soluciones se basen en propiedades algebraicas que veremos en esta sección.
-\\\\ Supongamos que queremos sumar los primeros $n$ números naturales, claramente si $N$ es un número pequeño como $4$, rapidamente sumaríamos los números del $1$ al $4$ y diriamos que la respuesta es $10$, sin embargo el sumar número por número no resulta practico cuando $n$ es un número muy grande como podría ser un millón, ¿habrá alguna forma de saber rapidamente la respuesta para cualquier $n$? La respuesta es sí,llamemosle $S$ a la suma de todos los números de $1$ a $n$, supongamos que ponemos en una fila todos los números a sumar, es decir 
+\\\\ Supongamos que queremos sumar los primeros $n$ números naturales, claramente si $N$ es un número pequeño como $4$, rapidamente sumaríamos los números del $1$ al $4$ y diriamos que la respuesta es $10$, sin embargo el sumar número por número no resulta practico cuando $n$ es un número muy grande como podría ser un millón, ¿habrá alguna forma de saber rapidamente la respuesta para cualquier $n$? La respuesta es sí, llamemosle $S$ a la suma de todos los números de $1$ a $n$, supongamos que ponemos en una fila todos los números a sumar, es decir 
 \[ 1 + 2 + 3 + 4 + 5 + \cdots + n\]
 ahora, junto a esta pongamos otra fila de los números a sumar al reves, notemos que sumarlos en un orden diferente no afecta el resultado
 \[\begin{array}{ccccccccc}
@@ -21,7 +21,7 @@ Esta suma es un ejemplo de \textbf{progresión aritmética}, más generalmente u
  llamemosle a la suma $S= 1 + r + r^2 + \cdots + r^{n}$, nótese que si multiplicamos ambos lados por $r$ tenemos que
  \[rS=r+r^2+\cdots+r^{n+1}\]
  ahora de ambos lados podemos restar $S$, es decir
-  \[rS-S=r+r^2+\cdots+r^n-S=r+r^2+\cdots+r^{n+1}-(1+r+r^2+cdots+r^n)\]
+  \[rS-S=r+r^2+\cdots+r^n-S=r+r^2+\cdots+r^{n+1}-(1+r+r^2+\cdots+r^n)\]
 notemos que del lado derecho la mayoría de los elementos se van a cancelar, de forma que finalmente nos queda, nótese que esto tiene sentido si $r\neq1$ de lo contrario estariammos dividiendo entre $0$.
 \[S=\frac{r^{n+1}-1}{r-1}\]
 
@@ -37,16 +37,17 @@ Las sumas no solo sirven para obtener la respuesta del problema, también nos ay
 \centering
 \renewcommand{\arraystretch}{1.6}
 \begin{tabular}{ll}
-$\displaystyle\sum_{i=1}^{n} i$          & $\dfrac{n(n+1)}{2}$ \\
-$\displaystyle\sum_{i=1}^{n} i^2$        & $\dfrac{n(n+1)(2n+1)}{6}$ \\
-$\displaystyle\sum_{i=1}^{n} i^3$        & $\left(\dfrac{n(n+1)}{2}\right)^2$ \\
-$\displaystyle\sum_{i=0}^{n-1} r^i$      & $\dfrac{r^n-1}{r-1}$ \quad ($r \neq 1$) \\
-$\displaystyle\sum_{i=1}^{n} \frac{1}{i}$& $ \ln n + \gamma$ \quad (armónica) \\
+$\displaystyle\sum_{i=1}^{n} i =$          & $\dfrac{n(n+1)}{2}$ \\
+$\displaystyle\sum_{i=1}^{n} i^2 = $        & $\dfrac{n(n+1)(2n+1)}{6}$ \\
+$\displaystyle\sum_{i=1}^{n} i^3 = $        & $\left(\dfrac{n(n+1)}{2}\right)^2$ \\
+$\displaystyle\sum_{i=0}^{n-1} r^i = $      & $\dfrac{r^n-1}{r-1}$ \quad ($r \neq 1$) \\
+$\displaystyle\sum_{i=1}^{n} \frac{1}{i} = $ & $ \ln n + \gamma$ \quad (armónica) \\
 
 \end{tabular}
-\caption{$\gamma \approx 0.5772$ es la constante de Euler-Mascheroni.}
+\caption{Principales identidades algebraicas}
 \end{table}
- 
+$\gamma \approx 0.5772$ es la constante de Euler-Mascheroni. 
+
 $\sum_{i=1}^{n} \lfloor n/i \rfloor \approx n \ln n$ porque $\sum_{i=1}^{n} n/i = n (ln(n)+\gamma)$. Esto explica por qué iterar sobre todos los divisores de todos los números hasta $n$ cuesta $O(n \log n)$.
  
 Una técnica muy poderosa es cambiar el orden de una doble sumatoria. La igualdad:
@@ -70,7 +71,7 @@ esto significa que $R_x$ depende de los anteriores $n$ términos, es decir es de
 \\\\Ahora nos surge una pregunta natural, dada una recurrencia lineal de orden $n$, ¿cómo encontramos el término $k$ ésimo?
 \\\\Existen varias formas de solucionar este problema, y cada uno nos arroja una complejidad diferente, no es que exista una mejor o peor forma de calcular la respuesta, porque todo dependerá de qué tan grandes con $k$ y $n$. 
 \subsection{Solucion DP}
-Se le llama programación dinámica (DP por sus siglas en inglés) cuando memorizamos datos que nos ayuden a evitar hacer dobles calculos, por ejemplo en fibonacci podemos almacenar los términos que vayamos obteniendo y así cuando lleguemos al término $n$ ya tendremos calculado $n-1$ y $n-2$ y no tendremos que volver a calcularlo. En el caso de una recurrencia lineal general la forma de implementarlo con DP es bastante simple, es como hacer fuerza fruta pero memorizando lo que ya calculamos, es decir
+Se le llama programación dinámica (DP por sus siglas en inglés) cuando memorizamos datos que nos ayuden a evitar hacer dobles calculos, por ejemplo en fibonacci podemos almacenar los términos que vayamos obteniendo y así cuando lleguemos al término $n$ ya tendremos calculado $n-1$ y $n-2$ y no tendremos que volver a calcularlo. En el caso de una recurrencia lineal general la forma de implementarlo con DP es bastante simple, es como hacer fuerza bruta pero memorizando lo que ya calculamos, es decir
 \begin{lstlisting}[language=C++]
 //necesitamos los primeros n terminos porque cada termino depende de los n anteriores
 for(int i = n; i <= k; i ++){
@@ -118,11 +119,11 @@ Un polinomio de grado $n$ se representa como un vector de $n+1$ coeficientes:
 \[
 p(x) = a_0 + a_1 x + a_2 x^2 + \cdots + a_n x^n
 \]
-Lo primemro que nos interesara será poder evaluarlo en algún punto de forma eficiente, para esto usaremos \textbf{método de Horner}, que simplemente consiste en reescribir el polinomio como:
+Lo primero que nos interesa será poder evaluarlo en algún punto de forma eficiente, para esto usaremos el \textbf{método de Horner}, que simplemente consiste en reescribir el polinomio como:
 \[
-p(x) = a_0 + x(a_1 + x(a_2 + \cdots + x(a_{n-1} + x \cdot a_n)\cdots))
+p(x) = a_0 + x(a_1 + x(a_2 + \cdots + x(a_{n-1} + x \cdot (0 + a_n))\cdots))
 \]
-Es decir, se empezará a calcular desde el coeficiente de mayor grado y se va acumulando de adentro hacia afuera, la implementación la haremos con módulo ya que es más usada, sin embargo si no se necesita basta con quitar ''mod'' del código.
+Es decir, se empezará a calcular desde el coeficiente de mayor grado y se va acumulando de adentro hacia afuera, la implementación la haremos con módulo ya que es la más usada, sin embargo si no se necesita basta con quitar ''mod'' del código.
  
 \begin{lstlisting}[language=C++]
 ll horner(vector<ll> a, ll x, ll mod) {
@@ -135,7 +136,7 @@ ll horner(vector<ll> a, ll x, ll mod) {
 
 Lo que querremos hacer en esta sección es dados $n$ puntos cualesquiera, encontrar un polinomio que pasa por todos ellos, a esto se le llama interpolación de Lagrange. 
 \\\\Es importante mencionar que dados  $n+1$ puntos distintos $(x_0, y_0), (x_1, y_1), \ldots, (x_n, y_n)$, existe un \textbf{único} polinomio de grado a lo más $n$ que pasa por todos ellos.
-\\\\El razonamiento detrás de por qué es sencillo, supongamos que no se cumple, es decir, que hay dos polinomios diferentes $p$ y $q$ de grado $\leq n$ que pasan por todos los puntos dados. Entonces tendremos que $p-q$ es un polinomio de grado $\leq n$ que tiene $n+1$ raíces (los $x_i$), pero sabemos que un polinomio no nulo de grado $\leq n$ tiene a lo más $n$ raíces, de donde tenemos que tiene que ser nulo, es decir $p-q=0$, por lo que $p=q$.
+\\\\El razonamiento detrás de por qué esto es cierto es sencillo, supongamos que no se cumple, es decir, que hay dos polinomios diferentes $p$ y $q$ de grado $\leq n$ que pasan por todos los puntos dados. Entonces tendremos que $p-q$ es un polinomio de grado $\leq n$ que tiene $n+1$ raíces (los $x_i$), pero sabemos que un polinomio no nulo de grado $\leq n$ tiene a lo más $n$ raíces, de donde tenemos que tiene que ser nulo, es decir $p-q=0$, por lo que $p=q$.
 \\\\
 Esto nos dice que $n+1$ puntos determinan completamente un polinomio de grado $n$. La pregunta es: ¿cómo construirlo?
  
@@ -154,6 +155,18 @@ p(x) = \sum_{i=0}^{n} y_i \cdot \ell_i(x)
 \]
  
 El polinomio pasa por todos los puntos pues en $x = x_i$, todos los $\ell_j(x_i) = 0$ excepto $\ell_i(x_i) = 1$, así que $p(x_i) = y_i$. Pasa exactamente por todos los puntos dados. Encontrar el polinomio nos lleva entonces tiempo $O(n^2)$.
+\\\\Veamos un ejemplo concreto con los puntos $(0,1)$, $(1,2)$ y $(2,5)$. Aquí $n=2$, así que buscamos un polinomio de grado a lo más $2$. Los polinomios base son
+\[
+\ell_0(x)=\frac{(x-1)(x-2)}{(0-1)(0-2)}=\frac{(x-1)(x-2)}{2},\quad
+\ell_1(x)=\frac{x(x-2)}{(1-0)(1-2)}=-x(x-2),\quad
+\ell_2(x)=\frac{x(x-1)}{(2-0)(2-1)}=\frac{x(x-1)}{2}.
+\]
+El interpolante queda entonces
+\[
+p(x)=1\cdot\ell_0(x)+2\cdot\ell_1(x)+5\cdot\ell_2(x)
+=\frac{(x-1)(x-2)}{2}-2x(x-2)+\frac{5x(x-1)}{2}=x^2+1.
+\]
+Comprobemos: $p(0)=1$, $p(1)=2$ y $p(2)=5$, como queríamos.
 \\\\En ocasiones podemos optimizar considerablemente este tiempo para casos en los que se nos pide calcular $f(x)$ dados $f(1),f(2),\cdots,f(n)$, ya que en este caso $x_i=i$ de forma que podemos sustituir para obtener
 \[
 p(x) = \sum_{i=0}^{n} f(i) \cdot \prod_{j \neq i} \frac{x - j}{i - j}
@@ -174,11 +187,15 @@ notemos que dividiendo en dos como arriba ambas partes de la multiplicación se 
 \] 
 para esto entonces nos interesara poder precalcular los inversos de los factoriales\footnote{Ver la sección de inversos con modulo} y así para cada $i$ también lo podemos calcular en $O(1)$.
 \\\\Como tenemos que calcular tanto numerador como denominador para cada $i$, calcular $f(x)$ nos cuesta $O(n)$, lo que es considerablemente mejor que el tiempo cuadratico de arriba.
-\\\\Para practicar el tema, resolvamos el siguiente problema, dados $n$ y $k$ tal que $0 \leq k \leq 10^6$ y $1 \leq n \leq 10^9$, calcular
+\\\\\textbf{Ejercicio.} Para practicar lo visto, resolvamos el siguiente problema: dados $n$ y $k$ tales que $0 \leq k \leq 10^6$ y $1 \leq n \leq 10^9$, calcular
 \[
 f(n)=\sum_{i=1}^{n} i^k
 \]
-Imprimir la respuesta modulo $10^9+7$.
+e imprimir la respuesta módulo $10^9+7$. Por ejemplo, si $n=4$ y $k=2$, se pide
+\[
+f(4)=1^2+2^2+3^2+4^2=1+4+9+16=30;
+\]
+con módulo $10^9+7$ la salida sería $30$.
 \\\\Nuestro primer instinto probablemente sea calcular el resultado sumando uno a uno los términos de esta suma, sin embargo aún si pudiesemos calcular las potencias $i^k$ de forma constante, tendríamos que sumar $n$ términos, es decir en el peor caso $10^9$ operaciones, lo que nos daría como veredicto TLE. 
 \\\\
 En realidad, podemos ver este problema desde otro enfoque, denotemos como $p_k(n)=\sum_{i=1}^{n} i^k$, lo primero que queremos saber es qué grado tiene el polinomio, para saber cuántos puntos necesitamos, esto lo haremos por inducción, nótese que si $k=1$, por lo visto antes, $p_1(n)=\frac{n(n+1)}{2}$, es decir es un polinomio de grado $k+1=2$, supongamos entonces que $p_{k-1}(n)$ tiene grado $k$, ahora consideremos $p_{k}(n)$ y saquemos su derivada, es decir $p^{'}_{k}(n)=kp_{k-1}(n)$ de donde como la derivada baja un grado, tenemos que $p_{k}(n)$ tiene grado $k+1$.

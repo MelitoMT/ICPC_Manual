@@ -78,9 +78,9 @@ La implementación es corta y permite comprobar si tres puntos son colineales.
 
 Con producto punto y cruz podemos ordenar puntos del plano en sentido antihorario (o horario) respecto a un origen.
 
-Supongamos que queremos ordenar respecto al origen con dirección de referencia $v=(0,1)$.
+Supongamos que queremos ordenar respecto al origen con dirección de referencia $v=(1,0)$.
 
-Si $A$ es un conjunto finito de puntos, partimos el plano en dos regiones: $N$ (puntos a la ``izquierda'' de $v$ en el sentido del cruz, más los colineales con $v$ en el mismo sentido) y $S$ (el resto: a la derecha de $v$ o colineales en sentido opuesto). En la figura, la zona roja corresponde a $N$ y la azul a $S$.
+Si $A$ es un conjunto finito de puntos, partimos el plano en dos regiones: $N$ (puntos a la ``izquierda'' de $v$ en el sentido del producto cruz, más los colineales con $v$ en el mismo sentido) y $S$ (el resto: a la derecha de $v$ o colineales en sentido opuesto). En la figura, la zona roja corresponde a $N$ y la azul a $S$.
 
 \begin{center}
 \includegraphics[scale=.5]{./tex/geo/pics/sort.png}
@@ -96,7 +96,16 @@ Para comparar $x,y \in A$, basta definir $x<y$ si $x\in N$ y $y\in S$, o si ambo
 
 \section{Intersecciones}
 
-Un problema recurrente es saber si dos segmentos $AB$ y $CD$ se intersectan. Hay muchos enfoques; aquí se evitan casos límite pensando primero en dos \emph{rectas}: la primera $A+t(B-A)$ con $t\in\mathbb{R}$, y la segunda dada en forma implícita por la normal $(D-C)^\perp$\footnote{Dado $(x,y)$, conviene $(x,y)^\perp = (-y,x)$; aquí $(D-C)^\perp = (y_C-y_D,\,x_D-x_C)$.}:
+\textbf{Definición (vector perpendicular en el plano).} Dado $v=(x,y)$, definimos
+\[
+v^\perp := (-y,x)
+\]
+(giro de $90^\circ$ en sentido antihorario respecto al origen). Si $C=(x_C,y_C)$ y $D=(x_D,y_D)$, entonces $D-C=(x_D-x_C,\,y_D-y_C)$ y
+\[
+(D-C)^\perp = (y_C-y_D,\,x_D-x_C).
+\]
+
+Un problema recurrente es saber si dos segmentos $AB$ y $CD$ se intersectan. Hay muchos enfoques; aquí se evitan casos límite pensando primero en dos \emph{rectas}: la primera $A+t(B-A)$ con $t\in\mathbb{R}$, y la segunda dada en forma implícita por la normal $(D-C)^\perp$:
 \[
 (x-C)\cdot(D-C)^\perp = 0.
 \]
@@ -104,6 +113,12 @@ Si $(B-A)\times(D-C)\neq 0$, las rectas no son paralelas y se cortan en un únic
 \[
 t=\frac{(C-A)\cdot(D-C)^\perp}{(B-A)\cdot(D-C)^\perp}.
 \]
+\textit{Ejemplo.} Sean $A=(0,0)$, $B=(1,0)$, $C=(0,1)$ y $D=(1,2)$. Entonces $B-A=(1,0)$, $D-C=(1,1)$ y $(D-C)^\perp=(-1,1)$; como $(B-A)\cdot(D-C)^\perp=-1\neq 0$, las rectas no son paralelas. Además $C-A=(0,1)$, luego
+\[
+t=\frac{(0,1)\cdot(-1,1)}{(1,0)\cdot(-1,1)}=\frac{1}{-1}=-1,
+\]
+y el punto común es $A+t(B-A)=(-1,0)$ (compruébese que satisface $(x-C)\cdot(D-C)^\perp=0$).
+
 Sustituyendo $t$ en $A+t(B-A)$ se obtiene el punto de intersección de las rectas; falta comprobar que cae sobre \emph{ambos} segmentos (acotando $t$ y el parámetro del otro lado si se desea).
 
 \paragraph{Ejercicio.} Implementar una función booleana que, dados cuatro puntos $A,B,C,D$, indique si los segmentos $AB$ y $CD$ se intersectan.
@@ -145,7 +160,10 @@ Nótese que no es necesario restar porque el producto cruz ya nos da el área co
 \\\\Resulta que esta misma lógica funciona para polígonos de $n$ vértices donde se suman $n$ triangulos haciendo que el exterior se cancele, la fórmula generalizada entonces quedaría
 \[A(P_1,\cdots,P_n)=\frac{|\sum_{i=1}^{n}P_i \times P_{i+1}|}{2}\]
 con $P_{n+1}=P_1$. Esta fórmula funciona también para polígonos no convexos.
-\\\\Otro problema que nos podemos encontrar al trabajar con polígonos es dado un punto $Q$ determinar si está afuera o adentro de un polígono dado. El método más usado para resolver este problema se llama ''ray casting'', la idea es que se lanza un rayo horizontal desde $Q$ hacia la derecha y contamos cuántas veces cruza el polígono, si lo cruza  un número impar de veces está adentro, de lo contrario está afuera.
+
+\subsection*{Punto dentro o fuera de un polígono}
+
+Otro problema que nos podemos encontrar al trabajar con polígonos es dado un punto $Q$ determinar si está afuera o adentro de un polígono dado. El método más usado para resolver este problema se llama ''ray casting'', la idea es que se lanza un rayo horizontal desde $Q$ hacia la derecha y contamos cuántas veces cruza el polígono, si lo cruza  un número impar de veces está adentro, de lo contrario está afuera.
 \begin{center}
 \vspace{-.6cm}
 \begin{tikzpicture}[scale=0.9]
@@ -263,7 +281,7 @@ este es un método sencillo para problemas donde sabemos con certeza no pasarán
  
 \end{tikzpicture}
 \end{center}
-Para resolver este problema, usamos un algoritmo que se llama ''winding number'', consiste en la misma idea de lanzar un rayo y contar intersecciones, pero en este se va a contar su orientación, nótese que en la primera la arista que intersecta va subiendo entonces se suma $1$, en el segundo caso, se resta $1$ porque la arista va bajando, si el resultado es diferente de $0$, el punto está adentro.
+Para resolver este problema, usamos un algoritmo que se llama ''winding number''; consiste en la misma idea de lanzar un rayo y contar intersecciones, pero aquí cada cruce aporta $+1$ o $-1$ según la orientación con la que la arista atraviesa el rayo. En la figura siguiente, en el panel de la \emph{izquierda} la arista que cruza el rayo va de abajo hacia arriba, así que se suma $1$; en el panel de la \emph{derecha}, la arista marcada con $-1$ va de arriba hacia abajo, así que se resta $1$, mientras que el otro cruce (marcado con $+1$) vuelve a sumar $1$. Si el resultado es diferente de $0$, el punto está adentro.
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
   \begin{scope}[xshift=0cm]
@@ -334,10 +352,11 @@ Para resolver este problema, usamos un algoritmo que se llama ''winding number''
 }
 \\\\
 Nótese que la dirección de cada arista que cruza el rayo se determina en dos pasos: 
+intuitivamente, ``subir'' o ``bajar'' al cruzar el nivel $y=y_Q$ corresponde al sentido en que crece o decrece la ordenada $y$ al recorrer la arista de $P_i$ a $P_{i+1}$ (para segmentos no verticales eso coincide con el signo de la pendiente $\Delta y/\Delta x$); formalmente, 
 primero verificamos que los extremos de la arista estén en lados opuestos del nivel 
 $y = y_Q$ usando las condiciones sobre las coordenadas $y$, y luego usamos 
 $\text{prodCruz}(P_{i+1}-P_i,\, Q-P_i)$ para saber si $Q$ queda a la izquierda o 
-derecha de la arista, lo que determina si el cruce suma $+1$ o $-1$. 
+derecha de la arista, lo que determina si el cruce suma $+1$ o $-1$ (y evita depender de divisiones cuando la arista es casi vertical).
 \\\\Ahora, el lector podrá preguntarse qué sucede con el caso donde el rayo intersecta 
 exactamente en un vértice $P_i$. En este algoritmo las condiciones para que una arista 
 cuente son asimétricas: para la arista $P_{i-1}P_i$ que \textit{llega} a $P_i$ se requiere
@@ -498,7 +517,10 @@ Propongamos el siguiente problema: Dados $n$ segmentos en el plano, decir si al 
 \end{tikzpicture}
  
 \end{figure}
-Si en cualquier punto encontramos una intersección, entonces terminamos el algoritmo pues ya resolvimos el problema. Es importante mencionar, que si hay varios eventos en un mismo $x$, primero procesaremos los inicios y depués los finales, así lograremos también comprobar intersecciones si los segmentos comparten vértices.
+
+\textit{Ejemplo (cómo leer la estructura).} \textbf{Nota:} lo que sigue interpreta \emph{la misma figura que queda inmediatamente arriba} (la secuencia de paneles \textbf{(a)}--\textbf{(f)} con los segmentos $S1$--$S4$, la vertical roja del barrido y la franja inferior con la leyenda \texttt{barrido} / \texttt{cruce} / \texttt{revisión}). En cada uno de esos paneles, entre corchetes se muestra el contenido del \texttt{set} en el instante en que la línea de barrido coincide con la vertical roja \emph{de ese} panel. La lista enumera los segmentos que \emph{cruzan} esa recta vertical, ordenados de \emph{abajo hacia arriba} según la ordenada del punto de corte con $X=x$ (los puntos resaltados sobre la vertical, unidos por trazos amarillos). En \textbf{(a)} solo $S1$ es activo: \texttt{[S1]}. En \textbf{(b)}, en $x=1$, el corte de $S1$ queda debajo del de $S2$, luego \texttt{[S1,S2]}. En \textbf{(c)} entra $S3$ por la izquierda y su intersección con la vertical es la más baja, después la de $S1$ y por último la de $S2$, de ahí \texttt{[S3,S1,S2]}. En \textbf{(d)} los cuatro segmentos ya cortan la vertical y se leen de abajo arriba como \texttt{[S3,S1,S2,S4]}. En \textbf{(e)} el evento de fin saca a $S2$; en \texttt{[S3,S1,S2,S4]} los vecinos de $S2$ eran $S1$ por abajo y $S4$ por arriba, y al retirarlo $S1$ y $S4$ quedan \emph{adyacentes} en \texttt{[S3,S1,S4]}, justo el par que el paso de borrado debe volver a examinar. En \textbf{(f)} $S1$ ya no es activo y solo quedan $S3$ y $S4$, adyacentes en \texttt{[S3,S4]}; al revisar ese par se encuentra la intersección.
+
+Si en cualquier punto encontramos una intersección, entonces terminamos el algoritmo pues ya resolvimos el problema. Es importante mencionar, que si hay varios eventos en un mismo $x$, primero procesaremos los inicios y después los finales, así lograremos también comprobar intersecciones si los segmentos comparten vértices.
 \\\\La estructura que nos convendrá para este problema es un \texttt{set<pair<point,point>\>>} de C++ ordenado por la coordenada $y$ de cada segmento en la posición actual $x$ de la línea. El comparador para ordenar evalúa para cada segmento
 \[y(x) = y_1 + \frac{(y_2 - y_1)(x - x_1)}{x_2 - x_1}\]  al implementarlo hay que ser cuidadosos pues como estaremos trabajando con decimales al hacer comparaciones debemos agregar una tolerancia $\varepsilon$.
 \lstinputlisting[language=C++, firstline=111, lastline=213]{./tex/geo/codes/geo.cpp}
@@ -510,7 +532,7 @@ Nótese que hay $2n$ eventos y cada evento realiza a lo más dos chequeos de int
   \item Si hay casos degenerados con tres segmentos o más que se intersectan en el mismo punto, hay que ser muy cuidadosos en que orden se procesan y cómo actualizamos la estructura usada.
   \item Si no sabemos con certeza una cota superior para la cantidad de intersecciones y se dé el peor caso ($n^2$), puede suceder que el algoritmo con complejidad $O(n^2logn)$ sea más lento que la fuerza bruta que era $O(n^2)$.
 \end{itemize}
-Usualmente no se necesita implementar Bentley Oattmann en concursos, ya que su implmentación son alrededor de 200 líneas con casos delicados de manejar, sería complicado encontrar bugs bajo pressión de tiempo, además que los problemas donde se requieren todas las intersecciones usualmente permiten fuerza bruta. Lo más usado es la idea en sí misma aplicado a problemas más sencillos como la unión de área de rectángulos como veremos en los ejemplos a continuación.
+Usualmente no se necesita implementar Bentley Oattmann en concursos, ya que su implementación son alrededor de 200 líneas con casos delicados de manejar, sería complicado encontrar bugs bajo pressión de tiempo, además que los problemas donde se requieren todas las intersecciones usualmente permiten fuerza bruta. Lo más usado es la idea en sí misma aplicado a problemas más sencillos como la unión de área de rectángulos como veremos en los ejemplos a continuación.
 
 \section{Ejercicios}
 \section{Problemas}
