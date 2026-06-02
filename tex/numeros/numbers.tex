@@ -106,6 +106,7 @@ La complejidad es $O(\log \min(a,b))$. En C++17 puedes usar directamente \texttt
 
 \section{Aritmética modular}
 
+
 \subsection*{Motivación: ciclos y residuos}
 
 El ejercicio \textbf{[3.1]} al final del capítulo pide: si hoy es lunes, ¿qué día será dentro de $300$ días?
@@ -143,7 +144,7 @@ a^m \equiv b^m \pmod{n}.
 En sumas y productos, cada término puede sustituirse por otro congruente módulo $n$ sin alterar la congruencia del resultado.
 
 Las congruencias ayudan a evitar \textit{overflow}: si trabajamos módulo $m$, conviene reducir cada resultado intermedio con \texttt{a \% m} (ajustando signos si hace falta).
-
+\label{sec:expbin}
 \paragraph{Exponenciación modular.} El problema de calcular $a^b \bmod m$ aparece constantemente. Por ejemplo, para $2^7$ una forma ingenua es
 \[
 2 \cdot 2 \cdot 2 \cdot 2 \cdot 2 \cdot 2 \cdot 2,
@@ -879,18 +880,71 @@ Para módulo no primo o cuando $\gcd(a,m) > 1$, hay variantes que reducen al cas
 \section{Ejercicios}
 \begin{itemize}
     \item \href{https://codeforces.com/contest/1542/problem/C}{Strange Function (Codeforces 1542C)}
-    \item \href{https://cses.fi/problemset/task/1082}{Sum of Divisors (CSES 1082)}
+    \\\\
+    Construyamos la siguiente tabla, en las filas colocaremos los valores de $i$ y en las columnas los valores de $k$ y pondremos una estrella en la celda $(i,j)$ si $f(i)\geq k$:
+    \[
+    \begin{array}{c|ccccc}
+    i & k=1 & k=2 & k=3 & \cdots & k=f(i) \\
+    \hline
+    1 & \filledstar & \filledstar & & & \\
+    2 & \filledstar & \filledstar & \filledstar & & \\
+    3 & \filledstar & \filledstar & & & \\
+    4 & \filledstar & \filledstar & \filledstar & & \\
+    \end{array}
+    \]
+    Ahora, tenemos dos formas de contar las estrellas de esta tabla, por filas o por columnas. Si contamos por filas lo que haremos será notar que en cada fila $i$ tenemos $f(i)$ estrellas de donde tendremos que la suma total de estrellas es la suma sobre todas las filas, es decir:
+    \[\sum_{i=1}^{n}f(i)\]
+    Por otro lado, si contamos por columnas, notaremos que cada columna $k$ tiene $|\{i \leq n | f(i)\geq k\}|$ porque asi definimos la tabla. De aquí que:
+    \[\sum_{i=1}^{n}f(i)=\sum_{i=1}^{\infty}|\{i \leq n | f(i)\geq k\}|\]
+    Otra observación importante es que dado $i$, $f(i) = k$ si y solo si $1, 2, \ldots, k-1$ dividen a $i$ pero $k$
+    no divide a $i$. Definamos $L_j = \text{mcm}(1, 2, \ldots, j)$ con $L_0 = 1$. Entonces:
+    \[
+    f(i) = k \iff L_{k-1} \mid i \text{ y } L_k \nmid i
+    \]
+    En particular, $f(i) \geq k$ si y solo si $L_{k-1} \mid i$, de aquí que el número de $i \leq n$ con $f(i) \geq k$ es $\lfloor n / L_{k-1} \rfloor$. Entonces:
+    \[
+    \sum_{i=1}^{n} f(i) = \sum_{k=1}^{\infty} \left\lfloor \frac{n}{L_{k-1}} \right\rfloor
+    = \sum_{j=0}^{\infty} \left\lfloor \frac{n}{L_j} \right\rfloor
+    \]
+    Esta suma puede parecer muy grande, sin embargo, $L_j$ crece muy rápido, pues por definición $L_j$ es divisible por todos los números hasta $j$. Para $n \leq 10^{16}$, basta calcular hasta $j = 40$ pues $L_{41} > 10^{16}$, haciendo que
+    los demás términos sean $0$. En la implementación, haremos la suma hasta encontrar el primer término $0$, ahí pararemos y ya tendremos el resultado.
+    \\\\
+    Ver \href{https://codeforces.com/contest/1542/submission/251341276}{código}.
+    \item \href{https://codeforces.com/problemset/problem/1725/H}{Hot Black Hot White (COMPFEST 14)}
+    \\\\Antes de indagar en cómo elegir $Z$ o cómo pintar las rocas mágicas, vamos a intentar simplificar la expresión que nos dan: $concat(A_i, A_j) \times concat(A_j, A_i) + A_i \times A_j \equiv Z \, mod 3$.
+    \\\\Veamos que si $k$ es la cantidad de digitos de $A_j$ entonces $concat(A_i, A_j)=A_i \times 10^k + A_j$ y más aún como $10^k \equiv 1^k \equiv 1\, mod 3$ tenemos que:
+    \[concat(A_j, A_i)\equiv A_i+A_j \, mod 3\]
+    Análogamente, $concat(A_i, A_j)\equiv A_j+A_i \, mod 3$ de donde:
+    \begin{align*}
+    concat(A_i, A_j) \times concat(A_j, A_i) + A_i \times A_j \equiv2(A_i+A_j)+A_i^2+A_j^2 + A_iA_j,\\
+    \equiv 3(A_i+A_j)+A_i^2+A_j^2\equiv A_i^2+A_j^2 \, mod3,
+    \end{align*}
+    Notemos que $0^2\equiv 0 \, mod 3$, $1^2 \equiv 1 \, mod 3$ y $2^2 \equiv 1 \, mod 3$. Si tenemos al menos $\frac{n}{2}$ piedras tal que $A_i^2\equiv 0 \, mod 3$, entonces podemos colorear $\frac{n}{2}$ de esas de un solo color, así cuando haya dos colores diferentes tendremos que $A_i^2+A_j^2\equiv 0^2 +A_j^2 \equiv A_j^2 \, mod 3$ y como ningún número al cuadrado es congruente con $2$ módulo $3$, podemos hacer $Z=2$. Por otro lado, si no hay al menos $\frac{n}{2}$ que lo cumplan, significa que hay al menos $\frac{n}{2}$ tal que $A_i^2 \equiv 1 \, mod 3$, entonces coloreamos $\frac{n}{2}$ de ellas de un mismo color y así no habrá ningún par de rocas de diferente color tal que ambas tengan $A_j^2 \equiv 0$. De donde podemos hacer $Z=0$.
+    \\\\
+    Ver \href{https://codeforces.com/contest/1725/submission/201205415}{código}.
+
     \item \href{https://lightoj.com/problem/monkey-tradition}{Monkey Tradition (Light OJ)}
+\\\\Notemos que si a un monito, le falto $r_i$ para llegar a la cima de su bambú dando saltos $p_i$, esto significa que la altura $L$ cumple que $L\equiv r_i \, mod \,p_i$, esto nos deja con un sistema de congruencias:
+\begin{align*}
+    L \equiv r_1 \, mod \, p_1 \\
+    L \equiv r_2 \, mod \, p_2 \\
+    L \equiv r_3 \, mod \, p_3 \\
+    \vdots \\
+    L \equiv r_n \, mod \, p_n \\
+\end{align*}
+el cual podemos resolver con el teorema chino del residuo directamente. La única observación relevante es que como todos son primos son distintos, todos los módulos son coprimos entre sí, lo que nos garantiza existe siempre la solución.
+\\\\
+Ver \href{https://lightoj.com/submission/3528823}{código}.
 \end{itemize}
 \section{Problemas}
 \begin{itemize}
-    \item \href{https://cses.fi/problemset/task/1712}{Exponentiation II (CSES 1712)}
-    \item \href{https://codeforces.com/contest/1771/problem/C}{Hossam and Trainees (CSES 1771C)}
-    %CRT
-    \item \href{https://matcomgrader.com/problem/9547/fantastic-beasts/}{Fantastic Beasts (Latam Regional Contest 2028)}
     \item \href{https://codeforces.com/problemset/problem/1553/A}{Digits Sum (Codeforces 1553A)}
     \item \href{https://codeforces.com/contest/1916/problem/B}{Two Divisors (Codeforces 1916B)}
-    %CRT HHAAARD
-    \item \href{https://codeforces.com/problemset/problem/2097/C}{Bermuda Triangle (Codeforces 2097C)}
-    \item \href{https://codeforces.com/problemset/problem/1575/G}{GCD Festival (COMPFEST 13)}
+    \item \href{https://cses.fi/problemset/task/1712}{Exponentiation II (CSES 1712)}
+    \item \href{https://codeforces.com/problemset/problem/1512/G}{Short Task (Codeforces 1512G)}
+    %CRT
+    \item \href{https://matcomgrader.com/problem/9547/fantastic-beasts/}{Fantastic Beasts (Latam Regional Contest 2028)}
+    \item \href{https://codeforces.com/group/DH4HPwQlLU/contest/689800/problem/C}{Sushi Lovers}
+    \item \href{https://codeforces.com/group/DH4HPwQlLU/contest/689800/problem/F}{Pociones Locas}
+
 \end{itemize}

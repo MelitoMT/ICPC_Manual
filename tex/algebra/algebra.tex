@@ -82,7 +82,7 @@ for(int i = n; i <= k; i ++){
 }
 \end{lstlisting}
 este procedimiento tiene una complejidad $O(nk)$, es recomendable por simplicidad usarse en casos donde $nk<1e7$ para evitar TLE.
-\subsection{Solución Exponenciación de Matrices}
+\subsection{Solución con Matrices}
 De la solución con programación dinámica notemos que para cada paso sólo nos importa tener la información de los últimos $n$ términos y todos los demás, podemos olvidarlos. Si guardamos los $n$ ultimos elementos en una matriz columna, podemos aplicarle una transformación lineal para obtener los siguientes elementos, es decir si originalmente teníamos los elementos $\{R_1,R_2,\cdots,R_n\}$, después de la transformación lineal tendremos los elementos $\{R_{2},R_{3},\cdots,R_{n+1}\}$, la transformación lineal es relativamente sencilla y consiste en multiplicar por una matriz cuadrada como sigue
 
 \[
@@ -110,7 +110,6 @@ R_2\\
 \end{bmatrix}
 \]
 podríamos entonces pensar que ya que cada multiplicacion cambia los indices en uno, tendríamos que hacer $k-n$ multiplicaciones para obtener el término $k$, podríamos hacerlo, pero hacer esto nos implicaría una complejidad $O(n^3(k-n))$, en realidad podemos multiplicar la matriz cuadrada por si misma $k-n$ veces usando exponenciación binaria\footnote{Ver sección de exponenciación binaria} de esta forma obtenemos el $k$ ésimo término en tiempo $O(n^3log(k-n))$.
-\\\\Existe otra forma de resolver de recurrencias lineales, pero necesitamos herramientas más elaboradas por lo que lo abordaremos en la sección de transformada rápida de fourier.
 
 %https://codeforces.com/gym/103443/problem/E
 \section{Polinomios e interpolación de Lagrange}
@@ -195,7 +194,7 @@ ll lagrangeInt(int n, int k) {
 		return res;
 	}
 	vector<ll> pre(k + 2), suf(k + 2), inv(k + 2);
-	inver[0] = 1;
+	inv[0] = 1;
 	pre[0] = n;
 	suf[k + 1] = n - (k + 1);
     //precalcular prefijos
@@ -208,7 +207,7 @@ ll lagrangeInt(int n, int k) {
     }
     //precalcular inversos
 	for (int i = 1; i <= k + 1; i ++){
-        inv[i] = inv[i - 1] * inv(i) % mod;
+        inv[i] = inv[i - 1] * inv[i] % mod;
     }
 
 	int yi = 0;
@@ -235,7 +234,7 @@ ll lagrangeInt(int n, int k) {
             res += (yi * num % mod) * denom % mod; 
         }
 		else{
-            ans -= (yi * num % mod) * denom % mod;
+            res -= (yi * num % mod) * denom % mod;
         }
  
         //evitar que el resultado sea negativo
@@ -406,8 +405,42 @@ vector<ll> multiply_fft(vector<ll> a, vector<ll> b) {
     \begin{itemize}
         %Recurrence
         \item \href{https://cses.fi/problemset/task/1722}{Fibonacci Numbers (CSES 1722)}
+\\\\
+En este problema nos dan la recurrencia:
+\[F_n = F_{n-2}+F_{n-1}\]
+Notemos que tiene la forma $F_n = C_1 F_{n-1} + C_2 F_{n-2}$ con $C_1 = C_2 = 1$, de donde la matriz de transición es:
+\[
+\begin{pmatrix} F_n \\ F_{n-1} \end{pmatrix}
+= \begin{pmatrix} C_1 & C_2 \\ 1 & 0 \end{pmatrix}
+\begin{pmatrix} F_{n-1} \\ F_{n-2} \end{pmatrix}
+=\begin{pmatrix} 1 & 1 \\ 1 & 0 \end{pmatrix}
+\begin{pmatrix} F_{n-1} \\ F_{n-2} \end{pmatrix}
+\]
+Entonces si queremos encontrar $F_n$, con $n\geq 1$ podemos elevar la matriz a la $n-1$ potencia y realizar el producto.
+\[
+\begin{pmatrix} F_n \\ F_{n-1} \end{pmatrix}
+= 
+\begin{pmatrix} 1 & 1 \\ 1 & 0 \end{pmatrix}^{n-1}
+\begin{pmatrix} F_1 \\ F_0 \end{pmatrix}
+=\begin{pmatrix} 1 & 1 \\ 1 & 0 \end{pmatrix}^{n-1}
+\begin{pmatrix} 1 \\ 0 \end{pmatrix}
+\]
+La potencia se calcula de la misma forma que la exponenciación binaria (sección~\ref{sec:expbin}), pero aplicada a matrices. En lugar de multiplicar números, multiplicamos matrices $2\times2$ en cada paso. El caso $n=0$ se maneja directamente regresando $0$.
+Notemos que como  $n \leq 10^{18}$, todas las multiplicaciones deben hacerse módulo $10^9 + 7$ usando \texttt{long long} para evitar
+overflow.
+\\\\Ver \href{https://cses.fi/paste/9daa72fef9f7cb2910720a3/}{código}.
         %Binary Exponentiation
         \item \href{https://cses.fi/problemset/task/1723}{Graph Paths I (CSES 1723)}
+\\\\En este problema nos dan una gráfica dirigida, notemos que esta podemos expresarla por medio de una matriz de adyacencia $M$. Esta tendrá $M[i][j]=1$ si hay una arista de $i$ a $j$, de lo contrario, tendrá $0$. Podríamos pensar que este es un problema en el que necesitamos algún algoritmo de gráficas, pero la realidad es que podemos resolverlo con exponenciación de matrices. 
+\\\\Cuando calculamos $M^2$ lo que hacemos es:
+\[(M^2)[i][j] = \sum_{k=1}^{n} M[i][k] \cdot M[k][j]\]
+Se va a sumar $M[i][k] \cdot M[k][j]$ por vértice $k$ tal que exista la arista $i$-$k$ y la arista $k$-$j$, por lo que $M^2[i][j]$ cuenta los caminos de longitud $2$ de $i$ a $j$. Veamos que esto se cumple para cualquier $k$ positivo por inducción. Supongamos que $M^{k-1}[i][j]$ cuenta los caminos de longitud $k-1$ de $i$ a $j$, entonces 
+\[
+(M^k)[i][j] = \sum_{m=1}^{n} (M^{k-1})[i][m] \cdot M[m][j]
+\]
+notemos que $M^k$ suma para cada posible penultimo vértice $m$ en el camino de $i$ a $j$, el número de caminos de longitud $k-1$ de $i$ a $m$ multiplicado por $M[m][j]$ es decir, solo se cuentan los caminos si existe alguna arista $m$-$j$, pues de lo contrario no podría existir ese camino.
+\\\\La respuesta al problema es entonces $M^k[1][n]$, que se calcula con exponenciación de matrices. Como los valores pueden ser grandes, se calculan módulo $10^9+7$.
+\\\\Ver \href{https://cses.fi/paste/9d5c79555ee5bd881072387/}{código}.
     \end{itemize}
 \section{Problemas}
 
@@ -419,9 +452,9 @@ vector<ll> multiply_fft(vector<ll> a, vector<ll> b) {
     %Lagrange interpolation
     \item \href{https://codeforces.com/contest/995/problem/F}{Cowmpany Cowmpensation (Codeforces 995F)}
     %Fourier transofrmation
+    \item \href{https://codeforces.com/group/DH4HPwQlLU/contest/689800/problem/A}{Proyecto Hali Mary $\filledstar$}
     \item \href{https://codeforces.com/contest/993/problem/E}{Nikita and Order Statistics (Codeforces 993E)}
     %Fourier tranformation
     \item \href{https://codeforces.com/contest/1398/problem/G}{Running Competition (Codeforces 1398G)}
-    \item \href{https://codeforces.com/group/DH4HPwQlLU/contest/689800/problem/A}{Proyecto Hali Mary $\filledstar$}
     \item  \href{https://codeforces.com/group/DH4HPwQlLU/contest/689800/problem/B}{Rumbo al Mundial $\filledstar$}
 \end{itemize}
