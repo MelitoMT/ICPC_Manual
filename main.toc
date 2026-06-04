@@ -28,7 +28,7 @@
 \contentsline {section}{\numberline {4.4}Una observación práctica}{20}{section.4.4}%
 \contentsline {chapter}{\numberline {5}Álgebra}{21}{chapter.5}%
 \contentsline {section}{\numberline {5.1}Recurrencias}{23}{section.5.1}%
-\contentsline {subsection}{\numberline {5.1.1}Solucion DP}{23}{subsection.5.1.1}%
+\contentsline {subsection}{\numberline {5.1.1}Solución DP}{23}{subsection.5.1.1}%
 \contentsline {subsection}{\numberline {5.1.2}Solución con Matrices}{23}{subsection.5.1.2}%
 \contentsline {section}{\numberline {5.2}Polinomios e interpolación de Lagrange}{24}{section.5.2}%
 \contentsline {section}{\numberline {5.3}Transformada de Fourier rápida (FFT) y NTT}{28}{section.5.3}%
@@ -46,7 +46,7 @@
 \contentsline {section}{\numberline {6.6}Congruencias lineales y Teorema Chino del Residuo}{42}{section.6.6}%
 \contentsline {section}{\numberline {6.7}Funciones multiplicativas}{44}{section.6.7}%
 \contentsline {paragraph}{Cálculo de $\phi (n)$ por factorización.}{45}{section*.20}%
-\contentsline {paragraph}{Criba de totientes en $[1,n]$.}{45}{section*.21}%
+\contentsline {paragraph}{Criba de phi en $[1,n]$.}{45}{section*.21}%
 \contentsline {paragraph}{Criba de $\mu $.}{47}{section*.23}%
 \contentsline {section}{\numberline {6.8}Logaritmo discreto y Baby-step Giant-step}{48}{section.6.8}%
 \contentsline {paragraph}{Fuerza bruta.}{48}{section*.24}%
