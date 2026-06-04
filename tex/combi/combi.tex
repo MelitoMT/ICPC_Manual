@@ -64,11 +64,6 @@ Si ahora quisieramos de los 5 empleados agarrar 2 para que formen parte de una b
   \foreach \y in {2.45, 1.9, 1.35, 0.8, 0.25, -0.3} {
     \draw[-latex, gray!60] (-2.25, \y) -- (2.3, 0.75);
   }
- 
-  \draw[decorate, decoration={brace, amplitude=5pt}, gray]
-    (-2.6, 2.65) -- (-2.6, -0.5)
-    node[midway, left=6pt, font=\scriptsize, gray] {$3!=6$};
-
 \end{tikzpicture}
 \end{figure}
  
@@ -80,7 +75,7 @@ Algunas propiedades útiles para recordar son (se recomienda al lector intentar 
 \begin{itemize}
     \item Simetría: $\binom{n}{r} = \binom{n}{n-r}$
     \item Factorizacion: $\binom{n}{r} = \frac{n}{k}\binom{n-1}{n-1}$
-    \item Identidad de pascal: $\binom{n-1}{r-1} + \binom{n-1}{r}$
+    \item Identidad de pascal: $\binom{n-1}{r-1} + \binom{n-1}{r}=\binom{n}{r}$
     \item Suma sobre k: $\sum_{k=0}^{n}\binom{n}{k}=2^n$
     \item Suma sobre m: $\sum_{m=0}^{n}\binom{m}{k}=\binom{n+1}{k+1}$
     \item Suma alternada: $\sum_{r=0}^{n} (-1)^r\binom{n}{r} = 0$
@@ -213,7 +208,7 @@ La demostración completa puede consultarse en línea.\footnote{\url{https://art
 Usemos este lema en el caso del problema de collares de $n$ cuentas con $k$ colores donde dos collares son iguales si uno se obtiene del otro por rotación. En este caso, $X$ son todas las coloraciones: $|X| = k^n$. 
 \\\\Nótese que si tenemos un collar con $n$ cuentas numeradas $1,2,\cdots, n$ en círculo con $k$ colores diferentes. La rotación por $r$ posiciones envía la cuenta $i$ a la posición $i+r (mod n)$ por lo que hay $n$ rotaciones distintas $r=0,1,\cdots, n-1$ donde $r=0$ es la identidad, es decir, no rotar. Dos formas de colorear las cuentas son las misma si alguna se obtiene de la otra bajo alguna rotación. Estas rotaciones serán precisamente nuestro grupo $G$ que actuara sobre $X$.
 
-Ahora, notemos que nos interesa saber el número de orbitas porque nos interesa la cantidad de collares diferentes y cada orbita es un collar diferente. Sabiendo esto queremos entonces aplicar el lema de burnside y para ello nos interesa saber cuántos objetos fija la rotación por $r$ posiciones. Notemos entonces que la rotación $r$ fija una coloración si y solo si esta es periodica con periodo $gcd(r,n)$ ya que la cuenta $i$ debe tener el mismo color que la cuneta $i+r$ y esto agrupa las cuentas en exactamente $gcd(r,n)$ clases donde todas las cuentas deben tener el mismo color. Y ya que cada una puede tener $k$ colores diferentes, tenemos que hay $k^{gcd(r,n)}$ coloraciones fijas. 
+Ahora, notemos que nos interesa saber el número de orbitas porque nos interesa la cantidad de collares diferentes y cada orbita es un collar diferente. Sabiendo esto queremos entonces aplicar el lema de burnside y para ello nos interesa saber cuántos objetos fija la rotación por $r$ posiciones. Notemos entonces que la rotación $r$ fija una coloración si y solo si esta es periodica con periodo $gcd(r,n)$ ya que la cuenta $i$ debe tener el mismo color que la cuenta $i+r$ y esto agrupa las cuentas en exactamente $gcd(r,n)$ clases donde todas las cuentas deben tener el mismo color. Y ya que cada una puede tener $k$ colores diferentes, tenemos que hay $k^{gcd(r,n)}$ coloraciones fijas. 
 \\\\
 Entonces por el lema de Burnside tenemos que:
 \[
@@ -455,17 +450,17 @@ $\mathbf{15}$ & $20$ & $27$ & $37$ & $52$ \\
 \end{itemize}
 \section{Problemas}
 \begin{itemize}
-    %Barars y Estrellas
-    \item \href{https://codeforces.com/contest/1942/problem/E}{Farm Game (Codeforces 1942E)}
+      %Burnside Lema
+    \item \href{https://codeforces.com/gym/101873/problem/B}{Buildings (2017-2018 ACM-ICPC GCPC)}
+    %Catalan numbers
+    \item \href{https://codeforces.com/group/DH4HPwQlLU/contest/689800/problem/D}{Blue Lock gone wild $\star$}
     %Barars y Estrellas
     \item \href{https://codeforces.com/contest/1942/problem/E}{Farm Game (Codeforces 1942E)}
     %Burnside Lema
     \item \href{http://poj.org/problem?id=2888}{Magic Bracelet (Spoj 2888)}
-    %Burnside Lema
-    \item \href{https://codeforces.com/gym/101873/problem/B}{Buildings (2017-2018 ACM-ICPC GCPC)}
+
     %inclusion exclusion
     \item \href{https://cses.fi/problemset/task/2185}{Prime Multiples (CSES 2185)}
    
-    %Catalan numbers
-    \item \href{https://codeforces.com/group/DH4HPwQlLU/contest/689800/problem/D}{Blue Lock gone wild $\star$}
+    
 \end{itemize}

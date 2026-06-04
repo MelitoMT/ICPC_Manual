@@ -285,6 +285,8 @@ La elección de los $n$ puntos es lo que hace eficientes el algoritmo. FFT elige
 Para la demostración completa del algoritmo y todos los detalles de implementación referimos al blog de Codeforces de \texttt{leanderKortmann}, que tras leer bastantes recursos, parece ser la referencia más clara y amigable disponible para competencia.\footnote{\url{https://codeforces.com/blog/entry/111371}}
 
 $FFT$ aparece disfrazado en muchos problemas de competencia, especialmente cuando hay que contar pares con cierta suma. Reconocer que el problema se reduce a multiplicar polinomios es lo más importante en este tipo de problemas ya que usualmente basta con usar la misma plantilla de $FFT$.
+
+La \textbf{Transformada Teórica de Números} (NTT, por sus siglas en inglés) es una variante de FFT que opera en aritmética modular en lugar de números complejos. La idea es reemplazar las raíces $n$-ésimas de la unidad $\omega = e^{2\pi i/n}$ por una raíz primitiva $n$-ésima de la unidad módulo un primo $p$, es decir, un elemento $g$ tal que $g^n \equiv 1 \pmod{p}$ y $g^k \not\equiv 1 \pmod{p}$ para $0 < k < n$. Esto es posible cuando $p$ es un primo de la forma $p = c \cdot 2^k + 1$ con $2^k \geq n$, lo que garantiza que existen raíces de la unidad de cualquier orden potencia de dos. El primo más común en competencia es $p = 998244353 = 119 \cdot 2^{23} + 1$. Al trabajar enteramente con enteros módulo $p$, NTT evita los errores de punto flotante y produce resultados exactos.
  
 \subsection*{FFT vs NTT: cuándo usar cada una}
  

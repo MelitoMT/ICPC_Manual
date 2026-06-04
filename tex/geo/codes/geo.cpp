@@ -64,7 +64,7 @@ bool dentro(vector<point> poly, point q) {
     return winding_number(poly, q) != 0;
 }
 
-vector<point> convex_hull(vector<point> pts) {
+vector<point> convexHull(vector<point> pts) {
     int n = pts.size();
     if (n < 2) return pts;
     sort(pts.begin(), pts.end());
@@ -82,7 +82,7 @@ vector<point> convex_hull(vector<point> pts) {
  
     /*construimos hull superior
     derecha a izquierda*/ 
-    int lower_size = hull.size() + 1;
+    int lower_size = hull.size();
     for (int i = n-2; i >= 0; i--) {
         while (hull.size() >= lower_size &&
                 /*producto cruz entre
