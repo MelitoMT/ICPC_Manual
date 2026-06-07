@@ -1,0 +1,71 @@
+# LaTeX build artifacts
+*.aux
+*.lof
+*.log
+*.lot
+*.fls
+*.out
+*.toc
+*.fmt
+*.fot
+*.cb
+*.cb2
+.*.lb
+
+# Bibliography
+*.bbl
+*.bcf
+*.blg
+*-blx.aux
+*-blx.bib
+*.run.xml
+
+# Build tool metadata
+*.fdb_latexmk
+*.synctex
+*.synctex(busy)
+*.synctex.gz
+*.synctex.gz(busy)
+*.pdfsync
+
+# Beamer
+*.nav
+*.pre
+*.snm
+*.vrb
+
+# Glossaries / acronyms
+*.acn
+*.acr
+*.glg
+*.glo
+*.gls
+*.glsdefs
+*.lzo
+*.lzs
+*.slg
+*.slo
+*.sls
+
+# Index
+*.idx
+*.ilg
+*.ind
+*.ist
+
+# Minipages / memoize
+*.dpth
+*.md5
+*.auxlock
+
+# Output PDF (regenerate with pdflatex/latexmk)
+*.pdf
+
+# latexmk
+latex.out
+
+# Editor / OS
+.DS_Store
+*~
+*.swp
+*.swo

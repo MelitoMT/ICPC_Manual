@@ -1,6 +1,11 @@
-Una gráfica $G = (V, E)$ consiste en un conjunto de \textbf{vértices} $V$ y un conjunto de \textbf{aristas} $E \subseteq \binom{V}{2}$. Asumimos familiaridad con las definiciones básicas: vecindad, grado, caminos, ciclos, conectividad. Esta sección se enfoca en resultados matemáticos que fundamentan el resto del capítulo y que raramente se ven en cursos de computación.
+Una gráfica $G = (V, E)$ consiste en un conjunto de \textbf{vértices} $V$ y un conjunto de \textbf{aristas} $E \subseteq \binom{V}{2}$. Partimos de las nociones elementales de vecindad, grado, caminos, ciclos y conectividad, sin repetirlas aquí. Esta sección se enfoca en resultados matemáticos que fundamentan el resto del capítulo y que raramente se ven en cursos de computación.
 \\\\
-Recordemos que hay dos representaciones estándar de una gráfica, las cuáles tienen complejidades muy distintas por lo que sirven para diferentes problemas. En general, la lista de adyacencia es preferible cuando $E \ll V^2$; la matriz cuando se necesita consultar aristas individuales en $O(1)$ o cuando $V$ es pequeño ($V \leq 500$) y se necesitan consultas en $O(1)$.
+Existen dos representaciones estándar de una gráfica, con complejidades muy distintas:
+\begin{itemize}
+    \item \textbf{Lista de adyacencia}: conviene cuando el grafo es \emph{disperso}, es decir, cuando $E \ll V^2$.
+    \item \textbf{Matriz de adyacencia}: conviene cuando se necesitan consultas de aristas en $O(1)$, o cuando $V$ es pequeño ($V \leq 500$) y ese costo de espacio es aceptable.
+\end{itemize}
+La tabla resume las operaciones más frecuentes en cada representación.
 
 \begin{table}[H]
 \centering
@@ -17,6 +22,8 @@ Agregar arista             & $O(1)$      & $O(1)$ \\
 \end{tabular}
 \end{table}
 \section{Lema de los apretones de mano}
+Si en una reunión cada persona estrecha la mano con algunos asistentes, podemos contar las ``manos involucradas'' de dos formas: sumando cuántas veces saludó cada persona, o bien contando cada apretón dos veces (una por cada extremo). El lema traduce esa idea a grafos: cada arista aporta $1$ al grado de cada uno de sus dos extremos.
+\\\\
 En todo grafo $G = (V, E)$:
 \[
 \sum_{v \in V} \deg(v) = 2|E|
@@ -129,14 +136,13 @@ es un subconjunto maximo de vértices $C$ tal que para todo par
 $u, v \in C$ existe un camino de $u$ a $v$ y un camino de $v$ a $u$.
 \end{definition}
 \subsection{Algoritmo de Kosaraju}
-El algoritmo de Kosaraju encuentra todas las SCCs en $O(V + E)$ con dos DFS. El algoritmo se basa en una observación sobre el \textbf{grafo transpuesto} $G^T$ (el mismo grafo pero con todas las aristas invertidas). Las SCCs de $G$ y $G^T$ son \textbf{exactamente las mismas}, invertir las aristas no cambia qué nodos se alcanzan mutuamente dentro de una SCC. Pero el orden en que las SCCs se ``descubren'' sí cambia.
+El algoritmo de Kosaraju encuentra todas las SCCs en $O(V + E)$ con dos DFS. Se apoya en el \textbf{grafo transpuesto} $G^T$ (mismos nodos, aristas invertidas). Las SCCs de $G$ y $G^T$ son las mismas, aunque cambia el orden en que conviene descubrirlas.
 \\\\
-El primer DFS lo hacemos en $G$ y anotamos el orden en que terminan (orden de salida). El
-último nodo en terminar pertenece a la SCC que no tiene aristas entrantes desde otras SCCs.
-\\\\
-El segundo DFS lo haremos en $G^T$ procesando los nodos en orden inverso
-al de salida. Cada DFS que se pueda iniciar desde un nodo no visitado
-encontrará exactamente una SCC.
+El procedimiento tiene dos pasos:
+\begin{enumerate}
+    \item \textbf{DFS en $G$.} Al terminar de explorar cada nodo, lo añadimos al final de una lista \texttt{order}. Un nodo se registra tarde cuando aún quedaban descendientes por visitar; por eso el último de la lista pertenece a una SCC sin aristas entrantes desde otras componentes.
+    \item \textbf{DFS en $G^T$, en orden inverso.} Recorremos \texttt{order} de atrás hacia adelante. Cada vez que encontramos un nodo sin componente asignada, lanzamos un DFS en $G^T$ desde ahí. Ese DFS descubre \emph{exactamente} una SCC: en $G^T$ las aristas que salían hacia otras componentes se volvieron entradas, así que no podemos salir de la componente actual.
+\end{enumerate}
  
 \begin{figure}[H]
 \centering
@@ -172,12 +178,20 @@ encontrará exactamente una SCC.
 \end{tikzpicture}
 \end{figure}
  
-Este algoritmo funciona porque en el segundo DFS sobre $G^T$, empezamos
-por el nodo con mayor tiempo de salida. Desde ese nodo en $G^T$ solo
-podemos alcanzar nodos de su propia SCC porque las aristas que salían
-de esa SCC en $G$ ahora entran a ella en $G^T$, y las aristas que
-entraban ahora salen, por lo que los nodos alcanzables desde él en
-$G^T$ forman su SCC.
+En el ejemplo de la figura las SCCs son $\{a,b,c\}$ y $\{d,e,f\}$. Veamos el algoritmo paso a paso suponiendo que los nodos se numeran $a=0,b=1,c=2,d=3,e=4,f=5$ y que el primer DFS recorre $G$ en ese orden.
+
+\textbf{Paso 1 (DFS en $G$).} Empezamos en $a$: visitamos $a \to b \to c$; desde $c$ seguimos a $d$, luego $d \to e \to f$, y al retroceder registramos cada nodo al terminar:
+\[
+\texttt{order} = [f,\, e,\, d,\, c,\, b,\, a].
+\]
+El último en la lista es $a$, de la componente $\{a,b,c\}$. Intuitivamente, al explorar desde $a$ ``empujamos'' todo el triángulo $\{d,e,f\}$ antes de cerrar $a$.
+
+\textbf{Paso 2 (DFS en $G^T$, orden inverso).} Procesamos \texttt{order} de derecha a izquierda:
+\begin{itemize}
+    \item Desde $a$ (primero en este orden): en $G^T$ solo podemos retroceder por aristas invertidas dentro de $\{a,b,c\}$ (ciclo $a \to c \to b \to a$). Las flechas $b \to d$ y $c \to d$ de $G$ se vuelven $d \to b$ y $d \to c$ en $G^T$, pero $d$ aún no se visita desde $a$ porque esas aristas \emph{entran} a $\{a,b,c\}$, no salen de $a$. Resultado: $\{a,b,c\}$ recibe \texttt{comp} $= 0$.
+    \item Los nodos $b$ y $c$ ya tienen componente; el siguiente libre es $d$. Desde $d$ en $G^T$ alcanzamos $e \to f \to d$ y también los predecesores $b,c$ (ya visitados). Solo se agrega $\{d,e,f\}$ con \texttt{comp} $= 1$.
+\end{itemize}
+Así cada llamada a \texttt{dfs2} aísla exactamente una SCC.
  
 \begin{lstlisting}[language=C++]
 vector<int> adj[MAXN], radj[MAXN];
@@ -253,13 +267,19 @@ condensación}, una gráfica donde cada nodo representa una SCC y hay una arista
 La gráfica de condensación es útil porque permite aplicar programación
 dinámica sobre el DAG para resolver preguntas sobre la gráfica original.
 \section{2-SAT}
-Motivemos esta sección con este problema: \href{https://codeforces.com/problemset/problem/776/D}{The door problem}. Se nos dice que hay $n$ personas atrapadas en $n$ cuartos. Cada cuarto tiene una puerta que puede estar bloqueada o desbloqueada. Hay $m$ interrumptores, activar o desactivar el interrumptor cambia el estado de las puertas que controla. Cada puerta es controlada por dos interrumptores. ¿Es posible operar los
+Motivemos esta sección con este problema: \href{https://codeforces.com/problemset/problem/776/D}{The door problem}. Se nos dice que hay $n$ personas atrapadas en $n$ cuartos (una puerta por cuarto). Hay $m$ interrumptores; en general $m$ puede ser mayor, igual o menor que $n$, y no hay relación fija entre ambos. Activar o desactivar un interrumptor cambia el estado de las puertas que controla. Cada puerta es controlada por exactamente dos interrumptores. ¿Es posible operar los
 interruptores para que todas las puertas queden desbloqueadas al mismo
 tiempo?
 \\\\
 Para resolver este problema, usaremos componentes fuertemente conexas, en este momento puede que el lector no vea la relación entre las $SCC$ y el problema, pero esta sección buscará reducir el problema a $SCC$.
 \\\\
-Supongamos tenemos $n$ variables, cada una puede ser verdadera o falsa. Ahora, estas variables teinen restricciones, por ejemplo $x_1$ es verdadero o $x_2$ es verdadero. La pregunta es, ¿existe una asignación de verdadero/falso a todas las variables que satisfaga todas las restricciones?
+Supongamos que tenemos $n$ variables booleanas, cada una puede ser verdadera ($V$) o falsa ($F$). Las \textbf{restricciones} exigen que ciertas condiciones se cumplan; cada una involucra dos literales (una variable o su negación) unidos por ``o''. Por ejemplo, con $n = 3$:
+\begin{itemize}
+    \item $(x_1 \lor x_2)$: al menos uno de $x_1$, $x_2$ debe ser verdadero.
+    \item $(\neg x_1 \lor x_3)$: si $x_1$ es falso, entonces $x_3$ debe ser verdadero.
+    \item $(\neg x_2 \lor \neg x_3)$: $x_2$ y $x_3$ no pueden ser verdaderos a la vez.
+\end{itemize}
+La asignación $x_1 = V,\; x_2 = F,\; x_3 = V$ satisface las tres. En general, la pregunta es: ¿existe una asignación de verdadero/falso a \emph{todas} las variables que cumpla \emph{todas} las restricciones?
 \\\\
 A diferencia del problema general de satisfacibilidad (que es
 NP-completo), cuando cada restricción involucra \textbf{exactamente
@@ -688,7 +708,7 @@ Dado un árbol con raíz, el \textbf{ancestro común más bajo} (LCA) de dos vé
   \node[draw=none, font=\scriptsize, teal] at (3, 0.5) {$\text{LCA}(u,v) = d$};
 \end{tikzpicture}
 \end{figure}
-La solución más directa que podríamos pensar es ver qué nodo está más bajo o profundo y llevarLo al mismo nivel que el otro subiendo de a un paso, luego subir ambos juntos hasta que coincidan. Por ejemplo para $c$ y $u$ en la figura de arriba, primero subiríamos $u$ a su ancestro $d$ y ya que ambos $d$ y $c$ estpan en el mismo nivel, los subiriamos a su ancestro $a$ que como coincide, diríamos que este es su $LCA$.
+La solución más directa que podríamos pensar es ver qué nodo está más bajo o profundo y llevarlo al mismo nivel que el otro subiendo de a un paso, luego subir ambos juntos hasta que coincidan. Por ejemplo para $c$ y $u$ en la figura de arriba, primero subiríamos $u$ a su ancestro $d$ y ya que ambos $d$ y $c$ estpan en el mismo nivel, los subiriamos a su ancestro $a$ que como coincide, diríamos que este es su $LCA$.
 \\\\
 Imaginemos que tenemos un árbol en forma de cadena ($1 - 2 - 3 - \cdots - n$), calcular $\text{LCA}(1, n)$ cuesta $O(n)$ pasos. Con $m$ queries, el costo total es $O(mn)$, lo que nos deja con el mismo problema que teníamos antes, necesitamos algo más eficiente. En lugar de subir de $1$ en $1$, ¿podríamos subir de a $2^k$ niveles de una vez?
 \\\\

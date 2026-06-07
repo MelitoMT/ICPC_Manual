@@ -1,4 +1,10 @@
-\section*{Algebra}
+\newcommand{\editorialsep}{%
+  \par\vspace{0.5em}%
+  \noindent\rule{\linewidth}{0.4pt}%
+  \par\vspace{0.8em}%
+}
+
+\section{Algebra}
 \subsection*{Throwing Dice (CSES 1092)}
 \textbf{Hint1}
 \\\\
@@ -46,6 +52,7 @@ La complejidad es $O(6^3 \log n) = O(\log n)$.
 \\\\
 Ver \href{https://cses.fi/paste/48e6570bd3a36951107242d/}{código}.
 
+\editorialsep
 \subsection*{Cowmpany Compensation (Codeforces 995F)}
 \textbf{Hint1}
 \\\\
@@ -94,6 +101,7 @@ para evitar repetir cálculos. Con $n+1$ puntos evaluados en $x=1,2,\ldots,n+1$ 
 \textbf{Código}
 Ver \href{https://codeforces.com/problemset/submission/995/375695448}{código}.
 
+\editorialsep
 \subsection*{Hail Mary}
 \textbf{Hint1}
 \\\\
@@ -133,6 +141,7 @@ todos los valores de IDF con una sola FFT en $O((n+m)\log(n+m))$. Finalmente eva
 \\\\
 Ver \href{https://codeforces.com/group/DH4HPwQlLU/contest/689800/submission/375949012}{código}.
 
+\editorialsep
 \subsection*{Nikita and Order Statistics (Codeforces 993E)}
 \textbf{Hint1}
 \\\\
@@ -175,6 +184,7 @@ cuenta todos los pares $(i,j)$ con $s_i = s_j$ sin restricción de orden incluye
 Ver \href{https://codeforces.com/contest/993/submission/375820964}{código}.
 
 
+\editorialsep
 \subsection*{Running Competition (Codeforces 1398G)}
 \textbf{Hint1}
 \\\\
@@ -200,6 +210,7 @@ Finalmente, tenemos que responder las queries, para cada etapa $l_t$, queremos e
 Ver \href{https://codeforces.com/contest/1398/submission/375853380}{código}.
 
 \newpage
+\editorialsep
 \subsection*{Rumbo al Mundial}
 \textbf{Hint1}
 \\\\
@@ -239,7 +250,8 @@ Ver \href{https://codeforces.com/group/DH4HPwQlLU/contest/689800/submission/3759
 
 
 
-\section*{Teoría de números}
+\editorialsep
+\section{Teoría de números}
 \subsection*{Digits Sum (Codeforces 1553A)}
 \subsubsection*{Hint1}
 ¿Qué pasa si el último dígito de un número es $9$?
@@ -251,6 +263,7 @@ Notemos que para cualquier número $x$, si su último dígito no es $9$ entonces
 \\\\
 Ver \href{https://codeforces.com/contest/1553/submission/376093836}{código}.
 
+\editorialsep
 \subsection*{Two Divisors (Codeforces 1916B)}
 \subsection*{Hint1}
 Si $b$ es el mayor divisor de $x$ diferente de $x$, entonces $\frac{x}{b}$ es el menor divisor de $x$ mayor a $1$. Es decir, es el primo más pequeño que divide a $x$.
@@ -261,6 +274,7 @@ Primero veamos el caso donde $a$ no divide a $b$. Podemos sacar $m=mcm(a,b)$, es
 \textbf{Código}
 \\\\Ver \href{https://codeforces.com/contest/1916/submission/376094814}{código.}
 
+\editorialsep
 \subsection*{Exponentiation II (CSES 712)}
 \subsubsection*{Hint 1}
 ¿Tienen $a$ y $10^9+7$ algún divisor en común?
@@ -281,6 +295,7 @@ Ahora, podemos calcular $b^c \, mod (p-1)$, con exponenciación binaria, de form
 \\\\
 Ver \href{https://cses.fi/paste/59f7146d402d82ade95b1e/}{código}.
 
+\editorialsep
 \section*{Short Task (Codeforces 1512G)}
 \subsection*{Hint1}
 ¿Qué información podemos guardar para responder las queries en $O(1)$?
@@ -293,6 +308,7 @@ En lugar de calcular $d(n)$ para cada $n$ individualmente, podemos calcularlo pa
 \\\\
 Ver \href{https://codeforces.com/contest/1512/submission/196458896}{código}.
 
+\editorialsep
 \section*{Fantastic Beasts (Latin American Regional 2018)}
 \subsubsection*{Hint 1}
 Como hay $Z \leq 100$ zoológicos, después de $100$ unidades de tiempo, la bestia se estará moviendo en ciclo.
@@ -314,6 +330,7 @@ La idea del problema es sencilla; sin embargo se recomienda tener cuidado con la
 \\\\
 Ver \href{https://matcomgrader.com/submission/187329/}{código.}
 
+\editorialsep
 \section*{Sushi Lovers}
 \subsubsection*{Hint 1}
 El chef $i$ está disponible en la hora $t$ si y solo si
@@ -375,6 +392,7 @@ Verificar esto para cada querie y cada rollo tendría una complejidad de $O(MQ) 
 \textbf{Código}
 \\\\Ver \href{https://codeforces.com/group/DH4HPwQlLU/contest/689800/submission/376221450}{código}.
 
+\editorialsep
 \subsection*{Pociones Locas}
 \subsubsection*{Hint1}
 Los libros se comportan de forma ciclica módulo $mcm(p_1, p_2, p_3, p_4)$.
@@ -390,8 +408,8 @@ Ahora notemos que los libros se van a comportar de forma cíclica módulo $p_t$ 
 Ver \href{https://codeforces.com/group/DH4HPwQlLU/contest/689800/submission/376335430}{solución}.
  
 
-\section*{Combinatoria}
-
+\editorialsep
+\section{Combinatoria}
 \subsection*{Buildings (2017-2018 ACM-ICPC GCPC)}
 \subsubsection*{Hint1}
 Si cada pared lo contamos como una cuenta de un solo color, ¿se parece a algún problema que ya hayamos resuelto?
@@ -410,6 +428,7 @@ Ahora, notemos que varios valores de $r$ tendrán el mismo $gcd(r,m)$, entonces 
 \subsubsection*{Código}
 Ver \href{https://codeforces.com/gym/101873/submission/377209650}{código}.
 
+\editorialsep
 \subsection*{Blue Lock Gone Wild}
 \subsubsection*{Hint1}
 Podemos traducir el problema a un problema de caminos que no pasan la diagonal.
@@ -422,6 +441,7 @@ Nótese que entonces tenemos que calcular el $n$-ésimo número de Catalán.
 \subsubsection*{Código}
 Ver \href{https://codeforces.com/group/DH4HPwQlLU/contest/689800/submission/377211921}{código}.
 
+\editorialsep
 \subsection*{El torneo de los 3 magos (here we go again)}
 \subsubsection*{Hint1}
 \subsubsection*{Solución}
@@ -483,7 +503,8 @@ dp[j+1][\pi'] \mathrel{+}= dp[j][\pi]
 Ver \href{https://codeforces.com/group/DH4HPwQlLU/contest/689800/submission/377214365}{código}.
 
 
-\section*{Geometría}
+\editorialsep
+\section{Geometría}
 \subsection*{Beyblades por decena}
 \subsubsection*{Hint1}
 El estadio mínimo que contiene todas las trayectorias de todos los
@@ -534,6 +555,7 @@ beyblades y $k$ el número máximo de vértices por beyblade.
 \subsubsection*{Código}
 Ver \href{https://codeforces.com/group/DH4HPwQlLU/contest/689800/submission/377230507}{código}.
 
+\editorialsep
 \subsection*{Poligon.io}
 \subsubsection*{Hint 1}
 ¿Basta con verificar si los vértices de un polígono están dentro de otro? Pensar en ejemplos con polígonos no convexos.
