@@ -233,7 +233,7 @@ Después de procesar el primo $2$, se tachan sus múltiplos:
 \end{tabular}
 \end{center}
 
-Luego el siguiente número no tachado es $3$, por lo que ahora se eliminan sus múltiplos que todavía sigan activos, como $9$. Este método funciona porque si un número no ha sido tachado por ningún primo más pequeño, entonces no puede tener divisores primos menores y por lo tanto debe ser primo.
+Luego el siguiente número no tachado es $3$, por lo que ahora se eliminan sus múltiplos que todavía sigan activos, como $9$. Este método funciona porque si un número no ha sido tachado por ningún primo más pequeño, entonces no puede tener divisores primos menores, por lo tanto, debe ser primo.
 
 Al terminar este proceso para los números hasta $12$, el estado final queda así:
 
@@ -283,19 +283,19 @@ es decir $x = -1$, $y = 1$. Otra elección válida es $12(2) + 18(-1) = 6$, o se
 \]
 también es solución de $ax + by = g$.
 
-\textbf{Propiedad (solvabilidad de $ax+by=c$).} La ecuación
+\textbf{Propiedad (solubilidad de $ax+by=c$).} La ecuación
 \[
 ax + by = c
 \]
-tiene solución $(x,y)$ en enteros si y sólo si $\gcd(a,b) \mid c$.
+tiene solución $(x,y)$ en enteros si y solo si $\gcd(a,b) \mid c$.
 
-\textit{Ejemplo.} La ecuación $12x + 18y = 6$ tiene solución porque $\gcd(12,18)=6$ divide $6$. En cambio $12x + 18y = 5$ no tiene solución en enteros, pues $6 \nmid 5$.
+\textit{Ejemplo.} La ecuación $12x + 18y = 6$ tiene solución porque $\gcd(12,18)=6$ divide $6$. En cambio, $12x + 18y = 5$ no tiene solución en enteros, pues $6 \nmid 5$.
 
 \textbf{Algoritmo de Euclides extendido}: calcula $\gcd(a,b)$ y además encuentra $x,y$ con
 \[
 ax + by = \gcd(a,b)
 \] 
-La idea del algoritmo extendido es seguir los mismos pasos del Algoritmo de Euclides pero rastrear cómo se expresa cada residuo como combinación lineal de $a$ y $m$. En cada paso de la división $r_{i-1} = q_i \cdot r_i + r_{i+1}$ se actualizan los coeficientes:
+La idea del algoritmo extendido es seguir los mismos pasos del Algoritmo de Euclides, pero rastrear cómo se expresa cada residuo como combinación lineal de $a$ y $m$. En cada paso de la división $r_{i-1} = q_i \cdot r_i + r_{i+1}$ se actualizan los coeficientes:
 \[
 x_{i+1} = x_{i-1} - q_i \cdot x_i \qquad y_{i+1} = y_{i-1} - q_i \cdot y_i
 \]
@@ -403,7 +403,7 @@ Este enfoque aparece con frecuencia en la ICPC con módulos primos grandes (por 
 \]
 y el residuo $1$ nunca aparece al multiplicar por $2$ módulo $4$.
 
-\textbf{Propiedad (existencia del inverso).} El inverso de $a$ módulo $m$ existe si y sólo si $\gcd(a, m) = 1$.
+\textbf{Propiedad (existencia del inverso).} El inverso de $a$ módulo $m$ existe si y solo si $\gcd(a, m) = 1$.
 
 En efecto, las siguientes afirmaciones son equivalentes:
 \begin{enumerate}
@@ -428,7 +428,7 @@ long long inv(long long a, long long m) {
     return (x % m + m) % m;
 }
 \end{lstlisting}
-Nótese que al final en lugar de devolver $x$, devolvemos \verb|(x % m + m) % m|, esto es porque el coeficiente $x$ que devuelve \texttt{gcdExt} puede ser negativo. Por ejemplo, el inverso de $3$ módulo $7$ es $5$, pero el algoritmo puede devolver $x = -2$, que es equivalente pues $-2 \equiv 5 \pmod 7$. La expresión \verb|(x % m + m) % m| convierte cualquier $x$ a un número congruente a $x$ positivo en $[0, m)$.
+Nótese que al final en lugar de devolver $x$, devolvemos \verb|(x % m + m) % m|, esto es porque el coeficiente $x$ que devuelve \texttt{gcdExt} puede ser negativo. Por ejemplo, el inverso de $3$ módulo $7$ es $5$, pero el algoritmo puede devolver $x = -2$, que es equivalente, pues $-2 \equiv 5 \pmod 7$. La expresión \verb|(x % m + m) % m| convierte cualquier $x$ a un número congruente a $x$ positivo en $[0, m)$.
 
 Cuando $m = p$ es primo y $\gcd(a,p)=1$, el pequeño teorema de Fermat implica que
 \[
@@ -529,7 +529,7 @@ Si $g = 1$, entonces $\gcd(a,m)=1$ y $a$ tiene inverso módulo $m$. Multiplicand
 x \equiv b\,a^{-1} \pmod{m}.
 \]
 
-Si $g > 1$ pero aún $g \mid b$, escribimos $a = g a'$, $m = g m'$ y $b = g b'$ con enteros $a'$, $m'$ y $b'$. Se cumple $\gcd(a',m') = 1$ (al dividir $a$ y $m$ por su máximo común divisor). Además, $m \mid (ax-b)$ si y sólo si $m' \mid (a'x-b')$, es decir
+Si $g > 1$, pero $g \mid b$, escribimos $a = g a'$, $m = g m'$ y $b = g b'$ con enteros $a'$, $m'$ y $b'$. Se cumple $\gcd(a',m') = 1$ (al dividir $a$ y $m$ por su máximo común divisor). Además, $m \mid (ax-b)$ si y solo si $m' \mid (a'x-b')$, es decir
 \[
 a' x \equiv b' \pmod{m'},
 \]
@@ -544,7 +544,7 @@ que es el caso coprimo y se resuelve multiplicando por el inverso de $a'$ módul
 x &\equiv a_1 \pmod{n_1}, \\
 x &\equiv a_2 \pmod{n_2},
 \end{align*}
-tiene solución si y sólo si $a_1 \equiv a_2 \pmod{\gcd(n_1,n_2)}$. Cuando hay solución, es única módulo $\text{lcm}(n_1,n_2)$.
+tiene solución si y solo si $a_1 \equiv a_2 \pmod{\gcd(n_1,n_2)}$. Cuando hay solución, es única módulo $\text{lcm}(n_1,n_2)$.
 
 La construcción que sigue obtiene una solución explícita y explica cómo fusionar las dos congruencias.
 
@@ -561,7 +561,7 @@ En particular, tomando $b_1 = x'(a_2 - a_1)/d$ se satisface $n_1 b_1 \equiv a_2 
 x = a_1 + n_1 b_1 = a_1 + n_1 x' \frac{a_2 - a_1}{d}.
 \]
 
-Si $x_1$ y $x_2$ son dos soluciones, entonces $x_1 \equiv x_2 \pmod{n_1}$ y $x_1 \equiv x_2 \pmod{n_2}$, luego $x_1 - x_2$ es múltiplo de $n_1$ y de $n_2$, y por tanto de $\text{lcm}(n_1,n_2)$. Es decir, las soluciones son únicas módulo $\text{lcm}(n_1,n_2)$ (y en particular hay infinitas soluciones en $\mathbb{Z}$ si las hay).
+Si $x_1$ y $x_2$ son dos soluciones, entonces $x_1 \equiv x_2 \pmod{n_1}$ y $x_1 \equiv x_2 \pmod{n_2}$, luego $x_1 - x_2$ es múltiplo de $n_1$ y de $n_2$, por tanto, de $\text{lcm}(n_1,n_2)$. Es decir, las soluciones son únicas módulo $\text{lcm}(n_1,n_2)$ (y en particular hay infinitas soluciones en $\mathbb{Z}$ si las hay).
 
 En implementaciones conviene reducir módulo $\text{lcm}(n_1,n_2)$ (o módulos intermedios) en cada paso para controlar el \textit{overflow}.
 
@@ -644,7 +644,7 @@ long long phi(long long n) {
 }
 \end{lstlisting}
 
-\paragraph{Criba de totientes en $[1,n]$.} A veces necesitamos $\phi(i)$ para todo $1\le i\le n$. Repetir el algoritmo anterior para cada $i$ cuesta $O(n\sqrt{n})$. Con la misma idea que en la criba de Eratóstenes, para cada primo $p$ recorremos sus múltiplos $j$ y actualizamos $\texttt{phi[j]}$ restando la contribución del factor $p$. La complejidad es $O(n\log\log n)$.
+\paragraph{Criba de phi en $[1,n]$.} A veces necesitamos $\phi(i)$ para todo $1\le i\le n$. Repetir el algoritmo anterior para cada $i$ cuesta $O(n\sqrt{n})$. Con la misma idea que en la criba de Eratóstenes, para cada primo $p$ recorremos sus múltiplos $j$ y actualizamos $\texttt{phi[j]}$ restando la contribución del factor $p$. La complejidad es $O(n\log\log n)$.
 
 \begin{lstlisting}[language=C++]
 vector<long long> cribaPhi(int n) {
@@ -690,7 +690,7 @@ $\texttt{phi}[i]$ & $1$ & $1$ & $2$ & $2$ & $4$ & $2$ & $6$ & $4$ & $6$ & $4$ \\
 \end{center}
 que coincide con $\phi(1),\ldots,\phi(10)$ (por ejemplo $\phi(10)=4$ porque $1$, $3$, $7$ y $9$ son coprimos con $10$).
 
-\textbf{Conexión con exponenciación modular.} Más arriba en este capítulo vimos el teorema de Euler: si $\gcd(a,m)=1$ y $m \ge 2$, entonces $a^{\phi(m)} \equiv 1 \pmod{m}$. Cuando $m$ es primo, $\phi(m)=m-1$ se reduce a el pequeño teorema de Fermat. Por eso, al calcular $a^n \bmod m$ con $n$ grande, en la práctica aparece a menudo $\phi(m)$ al reducir exponentes.
+\textbf{Conexión con exponenciación modular.} Más arriba en este capítulo vimos el teorema de Euler: si $\gcd(a,m)=1$ y $m \ge 2$, entonces $a^{\phi(m)} \equiv 1 \pmod{m}$. Cuando $m$ es primo, $\phi(m)=m-1$ se reduce al pequeño teorema de Fermat. Por eso, al calcular $a^n \bmod m$ con $n$ grande, en la práctica aparece a menudo $\phi(m)$ al reducir exponentes.
 
 \subsection*{Función de Möbius $\mu$}
 
@@ -896,7 +896,7 @@ Para módulo no primo o cuando $\gcd(a,m) > 1$, hay variantes que reducen al cas
     \[\sum_{i=1}^{n}f(i)\]
     Por otro lado, si contamos por columnas, notaremos que cada columna $k$ tiene $|\{i \leq n | f(i)\geq k\}|$ porque asi definimos la tabla. De aquí que:
     \[\sum_{i=1}^{n}f(i)=\sum_{i=1}^{\infty}|\{i \leq n | f(i)\geq k\}|\]
-    Otra observación importante es que dado $i$, $f(i) = k$ si y solo si $1, 2, \ldots, k-1$ dividen a $i$ pero $k$
+    Otra observación importante es que dado $i$, $f(i) = k$ si y solo si $1, 2, \ldots, k-1$ dividen a $i$, pero $k$
     no divide a $i$. Definamos $L_j = \text{mcm}(1, 2, \ldots, j)$ con $L_0 = 1$. Entonces:
     \[
     f(i) = k \iff L_{k-1} \mid i \text{ y } L_k \nmid i
@@ -906,7 +906,7 @@ Para módulo no primo o cuando $\gcd(a,m) > 1$, hay variantes que reducen al cas
     \sum_{i=1}^{n} f(i) = \sum_{k=1}^{\infty} \left\lfloor \frac{n}{L_{k-1}} \right\rfloor
     = \sum_{j=0}^{\infty} \left\lfloor \frac{n}{L_j} \right\rfloor
     \]
-    Esta suma puede parecer muy grande, sin embargo, $L_j$ crece muy rápido, pues por definición $L_j$ es divisible por todos los números hasta $j$. Para $n \leq 10^{16}$, basta calcular hasta $j = 40$ pues $L_{41} > 10^{16}$, haciendo que
+    Esta suma puede parecer muy grande, sin embargo, $L_j$ crece muy rápido, pues por definición $L_j$ es divisible por todos los números hasta $j$. Para $n \leq 10^{16}$, basta calcular hasta $j = 40$, pues $L_{41} > 10^{16}$, haciendo que
     los demás términos sean $0$. En la implementación, haremos la suma hasta encontrar el primer término $0$, ahí pararemos y ya tendremos el resultado.
     \\\\
     Ver \href{https://codeforces.com/contest/1542/submission/251341276}{código}.

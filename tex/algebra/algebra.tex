@@ -1,7 +1,7 @@
 El álgebra es, en esencia, el estudio de patrones numéricos, en la programación competitiva es muy común que ideas de soluciones se basen en propiedades algebraicas que veremos en esta sección.
-\\\\ Supongamos que queremos sumar los primeros $n$ números naturales, claramente si $N$ es un número pequeño como $4$, rapidamente sumaríamos los números del $1$ al $4$ y diriamos que la respuesta es $10$, sin embargo el sumar número por número no resulta practico cuando $n$ es un número muy grande como podría ser un millón, ¿habrá alguna forma de saber rapidamente la respuesta para cualquier $n$? La respuesta es sí, llamemosle $S$ a la suma de todos los números de $1$ a $n$, supongamos que ponemos en una fila todos los números a sumar, es decir 
+\\\\ Supongamos que queremos sumar los $n$ primeros números naturales, claramente si $N$ es un número pequeño como $4$, rápidamente sumaríamos los números del $1$ al $4$ y diríamos que la respuesta es $10$; sin embargo, el sumar número por número no resulta práctico cuando $n$ es un número muy grande como podría ser un millón, ¿habrá alguna forma de saber rápidamente la respuesta para cualquier $n$? La respuesta es sí, llamemos $S$ a la suma de todos los números de $1$ a $n$, supongamos que ponemos en una fila todos los números a sumar, es decir 
 \[ 1 + 2 + 3 + 4 + 5 + \cdots + n\]
-ahora, junto a esta pongamos otra fila de los números a sumar al reves, notemos que sumarlos en un orden diferente no afecta el resultado
+ahora, junto a esta pongamos otra fila de los números a sumar al revés, notemos que sumarlos en un orden diferente no afecta el resultado
 \[\begin{array}{ccccccccc}
 S &=& 1 &+& 2 &+& \cdots &+& n \\
 S &=& n &+& (n-1) &+& \cdots &+& 1 \\
@@ -13,16 +13,16 @@ notemos que si sumamos cada columna tenemos que cada una suma $n+1$ y nótese qu
  
 Esta suma es un ejemplo de \textbf{progresión aritmética}, más generalmente una progresión aritmética es una sucesión de números $\{a_1,a_2, a_3 \cdots \}$ tal que cualquier término se puede obtener del anterior al sumarle una cantidad fija $d$. Usando la idea de arriba podemos deducir que para cualquier progresión aritmética
 \[a_1+\cdots + a_n = \frac{n(a_1+a_n)}{2}\]
-\textbf{Ejercicio}: Si en lugar de $1 + 2 + 3 + \cdots + n$ tuvieramos $1^2 + 2^2 + 3^3 + \cdots + n^2$ cuál sería el resultado?
+\textbf{Ejercicio}: Si en lugar de $1 + 2 + 3 + \cdots + n$ tuviéramos $1^2 + 2^2 + 3^3 + \cdots + n^2$ cuál sería el resultado?
 \\\\Ahora supongamos que queremos saber cuánto es la siguiente suma
 \[
 \sum_{i=0}^{n} r^i = 1 + r + r^2 + \cdots + r^{n}
 \]
- llamemosle a la suma $S= 1 + r + r^2 + \cdots + r^{n}$, nótese que si multiplicamos ambos lados por $r$ tenemos que
+ llamemos a la suma $S= 1 + r + r^2 + \cdots + r^{n}$, nótese que si multiplicamos ambos lados por $r$ tenemos que
  \[rS=r+r^2+\cdots+r^{n+1}\]
  ahora de ambos lados podemos restar $S$, es decir
   \[rS-S=r+r^2+\cdots+r^n-S=r+r^2+\cdots+r^{n+1}-(1+r+r^2+\cdots+r^n)\]
-notemos que del lado derecho la mayoría de los elementos se van a cancelar, de forma que finalmente nos queda, nótese que esto tiene sentido si $r\neq1$ de lo contrario estariammos dividiendo entre $0$.
+notemos que del lado derecho la mayoría de los elementos se van a cancelar, de forma que finalmente nos queda, nótese que esto tiene sentido si $r\neq1$ de lo contrario estariamos dividiendo entre $0$.
 \[S=\frac{r^{n+1}-1}{r-1}\]
 
 
@@ -54,7 +54,7 @@ Una técnica muy poderosa es cambiar el orden de una doble sumatoria. La igualda
 \[
 \sum_{i=1}^{n}\sum_{j=i}^{n} f(i,j) = \sum_{j=1}^{n}\sum_{i=1}^{j} f(i,j)
 \]
-parece trivial pero frecuentemente transforma una suma difícil en una fácil.
+parece trivial, pero frecuentemente transforma una suma difícil en una fácil.
 
 \textbf{Ejemplo} Calcular $\displaystyle\sum_{i=1}^{n}\sum_{j=i}^{n}\frac{1}{j}$. Cambiando el orden:
 \[
@@ -63,15 +63,15 @@ parece trivial pero frecuentemente transforma una suma difícil en una fácil.
 Lo que parecía difícil se vuelve más sencillo al cambiar el orden.
 
 \section{Recurrencias}
-La sucesión ${0,1,1,2,3,5,8,\cdots}$ es muy famosa y es conocida como la suecesión de fibonacci, la forma en la que se nos enseña a definirla es haciendo el primer término $F_0=0$, el segundo $F_1=1$ y desde ahí calcular los siguientes con la recurrencia 
+La sucesión ${0,1,1,2,3,5,8,\cdots}$ es muy famosa y es conocida como la sucesión de Fibonacci, la forma en la que se nos enseña a definirla es haciendo el primer término $F_0=0$, el segundo $F_1=1$ y desde ahí calcular los siguientes con la recurrencia 
 \[F_n=F_{n-1}+F_{n+2}\]
 Más generalmente una recurrencia lineal se ve de la siguiente forma
 \[R_x=\sum_{i=1}^{n}C_iR_{x_1}\]
-esto significa que $R_x$ depende de los anteriores $n$ términos, es decir es de orden $n$ y cada término puede tener una constante $C_i$ multiplicandole. Por ejemplo, la recurrencia de Fibonacci es de orden $2$ y la constante en cada uno de los términos es $1$.
+esto significa que $R_x$ depende de los $n$ términos anteriores, es decir es de orden $n$ y cada término puede tener una constante $C_i$ que le multiplica. Por ejemplo, la recurrencia de Fibonacci es de orden $2$ y la constante en cada uno de los términos es $1$.
 \\\\Ahora nos surge una pregunta natural, dada una recurrencia lineal de orden $n$, ¿cómo encontramos el término $k$ ésimo?
 \\\\Existen varias formas de solucionar este problema, y cada uno nos arroja una complejidad diferente, no es que exista una mejor o peor forma de calcular la respuesta, porque todo dependerá de qué tan grandes con $k$ y $n$. 
-\subsection{Solucion DP}
-Se le llama programación dinámica (DP por sus siglas en inglés) cuando memorizamos datos que nos ayuden a evitar hacer dobles calculos, por ejemplo en fibonacci podemos almacenar los términos que vayamos obteniendo y así cuando lleguemos al término $n$ ya tendremos calculado $n-1$ y $n-2$ y no tendremos que volver a calcularlo. En el caso de una recurrencia lineal general la forma de implementarlo con DP es bastante simple, es como hacer fuerza bruta pero memorizando lo que ya calculamos, es decir
+\subsection{Solución DP}
+Se le llama programación dinámica (DP por sus siglas en inglés) cuando memorizamos datos que nos ayuden a evitar hacer dobles cálculos, por ejemplo en Fibonacci podemos almacenar los términos que vayamos obteniendo y así cuando lleguemos al término $n$ ya tendremos calculado $n-1$ y $n-2$ y no tendremos que volver a calcularlo. En el caso de una recurrencia lineal general la forma de implementarlo con DP es bastante simple, es como hacer fuerza bruta, pero memorizando lo que ya calculamos, es decir
 \begin{lstlisting}[language=C++]
 //necesitamos los primeros n terminos porque cada termino depende de los n anteriores
 for(int i = n; i <= k; i ++){
@@ -84,7 +84,7 @@ for(int i = n; i <= k; i ++){
 \end{lstlisting}
 este procedimiento tiene una complejidad $O(nk)$, es recomendable por simplicidad usarse en casos donde $nk<1e7$ para evitar TLE.
 \subsection{Solución con Matrices}
-De la solución con programación dinámica notemos que para cada paso sólo nos importa tener la información de los últimos $n$ términos y todos los demás, podemos olvidarlos. Si guardamos los $n$ ultimos elementos en una matriz columna, podemos aplicarle una transformación lineal para obtener los siguientes elementos, es decir si originalmente teníamos los elementos $\{R_1,R_2,\cdots,R_n\}$, después de la transformación lineal tendremos los elementos $\{R_{2},R_{3},\cdots,R_{n+1}\}$, la transformación lineal es relativamente sencilla y consiste en multiplicar por una matriz cuadrada como sigue
+De la solución con programación dinámica notemos que para cada paso solo nos importa tener la información de los $n$ últimos términos y todos los demás, podemos olvidarlos. Si guardamos los $n$ últimos elementos en una matriz columna, podemos aplicarle una transformación lineal para obtener los siguientes elementos, es decir si originalmente teníamos los elementos $\{R_1,R_2,\cdots,R_n\}$, después de la transformación lineal tendremos los elementos $\{R_{2},R_{3},\cdots,R_{n+1}\}$, la transformación lineal es relativamente sencilla y consiste en multiplicar por una matriz cuadrada como sigue
 
 \[
 \begin{bmatrix}
@@ -110,7 +110,7 @@ R_{n-1}\\
 R_2\\
 \end{bmatrix}
 \]
-podríamos entonces pensar que ya que cada multiplicacion cambia los indices en uno, tendríamos que hacer $k-n$ multiplicaciones para obtener el término $k$, podríamos hacerlo, pero hacer esto nos implicaría una complejidad $O(n^3(k-n))$, en realidad podemos multiplicar la matriz cuadrada por si misma $k-n$ veces usando exponenciación binaria\footnote{Ver sección de exponenciación binaria} de esta forma obtenemos el $k$ ésimo término en tiempo $O(n^3log(k-n))$.
+podríamos entonces pensar que, ya que cada multiplicación cambia los índices en uno, tendríamos que hacer $k-n$ multiplicaciones para obtener el término $k$, podríamos hacerlo, pero hacer esto nos implicaría una complejidad $O(n^3(k-n))$, en realidad podemos multiplicar la matriz cuadrada por si misma $k-n$ veces usando exponenciación binaria\footnote{Ver sección de exponenciación binaria} de esta forma obtenemos el $k$ ésimo término en tiempo $O(n^3log(k-n))$.
 
 %https://codeforces.com/gym/103443/problem/E
 \section{Polinomios e interpolación de Lagrange}
@@ -122,7 +122,7 @@ Lo primero que nos interesa será poder evaluarlo en algún punto de forma efici
 \[
 p(x) = a_0 + x(a_1 + x(a_2 + \cdots + x(a_{n-1} + x \cdot (0 + a_n))\cdots))
 \]
-Es decir, se empezará a calcular desde el coeficiente de mayor grado y se va acumulando de adentro hacia afuera, la implementación la haremos con módulo ya que es la más usada, sin embargo si no se necesita basta con quitar ''mod'' del código.
+Es decir, se empezará a calcular desde el coeficiente de mayor grado y se va acumulando de adentro hacia afuera, la implementación la haremos con módulo, ya que es la más usada; sin embargo, si no se necesita basta con quitar ''mod'' del código.
  
 \begin{lstlisting}[language=C++]
 ll horner(vector<ll> a, ll x, ll mod) {
@@ -135,7 +135,7 @@ ll horner(vector<ll> a, ll x, ll mod) {
 
 Lo que querremos hacer en esta sección es dados $n$ puntos cualesquiera, encontrar un polinomio que pasa por todos ellos, a esto se le llama interpolación de Lagrange. 
 \\\\Es importante mencionar que dados  $n+1$ puntos distintos $(x_0, y_0), (x_1, y_1), \ldots, (x_n, y_n)$, existe un \textbf{único} polinomio de grado a lo más $n$ que pasa por todos ellos.
-\\\\El razonamiento detrás de por qué esto es cierto es sencillo, supongamos que no se cumple, es decir, que hay dos polinomios diferentes $p$ y $q$ de grado $\leq n$ que pasan por todos los puntos dados. Entonces tendremos que $p-q$ es un polinomio de grado $\leq n$ que tiene $n+1$ raíces (los $x_i$), pero sabemos que un polinomio no nulo de grado $\leq n$ tiene a lo más $n$ raíces, de donde tenemos que tiene que ser nulo, es decir $p-q=0$, por lo que $p=q$.
+\\\\El razonamiento detrás de por qué esto es cierto es sencillo, supongamos que no se cumple, es decir, que hay dos polinomios diferentes $p$ y $q$ de grado $\leq n$ que pasan por todos los puntos dados. Entonces tendremos que $p-q$ es un polinomio de grado $\leq n$ que tiene $n+1$ raíces (los $x_i$), pero sabemos que un polinomio no nulo de grado $\leq n$ tiene a lo más $n$ raíces, de donde tenemos que debe ser nulo, es decir $p-q=0$, por lo que $p=q$.
 \\\\
 Esto nos dice que $n+1$ puntos determinan completamente un polinomio de grado $n$. La pregunta es: ¿cómo construirlo?
  
@@ -174,7 +174,7 @@ podríamos preguntarnos por qué esto es una optimización, nótemos que
 \[
 \prod_{j \neq i} x-j=(x-1)(x-2)\cdots(x-(i-1))(x-(i+1))\cdots(x-n)
 \] 
-entonces al menos para el numerador podemos precalcular los prefijos, es decir guardamos en un vector $x-1$, $(x-1)(x-2)$, $(x-1)(x-2)(x-3)$, $\cdots$, $(x-1)(x-2)\cdots(x-n)$ y los sufijos, que es lo mismo pero del ultimo elemento al primero, es decir $(x-n)$, $(x-n)(x-(n-1))$ y así hasta $(x-n)(x-(n-1))\cdots(x-1)$, de forma que cuando queramos hacer la multiplicación de arriba podamos hacerlo en tiempo $O(1)$ multiplicando el prefijo $(x-1)\cdots(x-(i-1))$ con el prefijo $(x-n)\cdots(x-(i+1))$.
+entonces al menos para el numerador podemos precalcular los prefijos, es decir guardamos en un vector $x-1$, $(x-1)(x-2)$, $(x-1)(x-2)(x-3)$, $\cdots$, $(x-1)(x-2)\cdots(x-n)$ y los sufijos, que es lo mismo pero del último elemento al primero, es decir $(x-n)$, $(x-n)(x-(n-1))$ y así hasta $(x-n)(x-(n-1))\cdots(x-1)$, de forma que cuando queramos hacer la multiplicación de arriba podamos hacerlo en tiempo $O(1)$ multiplicando el prefijo $(x-1)\cdots(x-(i-1))$ con el prefijo $(x-n)\cdots(x-(i+1))$.
 \\\\Nótese que en el caso de no tener módulo podemos simplemente precalcular $(x-1)(x-2)\cdots (x-n)$ y dividir entre $(x-i)$ cuando ocupemos calcularlo para un $i$.
 \\\\Para el denominador también podemos hacer algo similar, pues
 \[
@@ -184,8 +184,8 @@ notemos que dividiendo en dos como arriba ambas partes de la multiplicación se 
 \[
 =(i-1)!(-1)^{n-i}(n-i)!
 \] 
-para esto entonces nos interesara poder precalcular los inversos de los factoriales\footnote{Ver la sección de inversos con modulo} y así para cada $i$ también lo podemos calcular en $O(1)$.
-\\\\Como tenemos que calcular tanto numerador como denominador para cada $i$, calcular $f(x)$ nos cuesta $O(n)$, lo que es considerablemente mejor que el tiempo cuadratico de arriba.
+para esto entonces nos interesara poder precalcular los inversos de los factoriales\footnote{Ver la sección de inversos con módulo} y así para cada $i$ también lo podemos calcular en $O(1)$.
+\\\\Como tenemos que calcular tanto numerador como denominador para cada $i$, calcular $f(x)$ nos cuesta $O(n)$, lo que es considerablemente mejor que el tiempo cuadrático de arriba.
 \\\\\textbf{Ejercicio.} Para practicar lo visto, resolvamos el siguiente problema: dados $n$ y $k$ tales que $0 \leq k \leq 10^6$ y $1 \leq n \leq 10^9$, calcular
 \[
 f(n)=\sum_{i=1}^{n} i^k
@@ -195,10 +195,10 @@ e imprimir la respuesta módulo $10^9+7$. Por ejemplo, si $n=4$ y $k=2$, se pide
 f(4)=1^2+2^2+3^2+4^2=1+4+9+16=30;
 \]
 con módulo $10^9+7$ la salida sería $30$.
-\\\\Nuestro primer instinto probablemente sea calcular el resultado sumando uno a uno los términos de esta suma, sin embargo aún si pudiesemos calcular las potencias $i^k$ de forma constante, tendríamos que sumar $n$ términos, es decir en el peor caso $10^9$ operaciones, lo que nos daría como veredicto TLE. 
+\\\\Nuestro primer instinto probablemente sea calcular el resultado sumando uno a uno los términos de esta suma; sin embargo, aun si se pudiera calcular las potencias $i^k$ de forma constante, tendríamos que sumar $n$ términos, es decir en el peor caso $10^9$ operaciones, lo que nos daría como veredicto TLE. 
 \\\\
 En realidad, podemos ver este problema desde otro enfoque, denotemos como $p_k(n)=\sum_{i=1}^{n} i^k$, lo primero que queremos saber es qué grado tiene el polinomio, para saber cuántos puntos necesitamos, esto lo haremos por inducción, nótese que si $k=1$, por lo visto antes, $p_1(n)=\frac{n(n+1)}{2}$, es decir es un polinomio de grado $k+1=2$, supongamos entonces que $p_{k-1}(n)$ tiene grado $k$, ahora consideremos $p_{k}(n)$ y saquemos su derivada, es decir $p^{'}_{k}(n)=kp_{k-1}(n)$ de donde como la derivada baja un grado, tenemos que $p_{k}(n)$ tiene grado $k+1$.
-\\\\De lo anterior concluimpos que necesitemos $k+2$ puntos por los que pase el polinomio para determinarlo, estos podemos encontrarlos facilmente pues $f(0)=0$ y de ahí $f(x)=f(x-1)+x^k$. Traes esto ocuparemos la interpolación vista arriba para calcular $f(n)$, de forma que la implementación nos quedaría
+\\\\De lo anterior concluimos que necesitemos $k+2$ puntos por los que pase el polinomio para determinarlo, estos podemos encontrarlos fácilmente, pues $f(0)=0$ y de ahí $f(x)=f(x-1)+x^k$. Traes esto ocuparemos la interpolación vista arriba para calcular $f(n)$, de forma que la implementación nos quedaría
 \begin{lstlisting}[language=C++]
 const ll mod = 1e9 + 7;
 ll lagrangeInt(int n, int k) {
@@ -266,7 +266,7 @@ int main() {
 }
 \end{lstlisting}
 
-\textbf{Ejercicio} Optimizar la interpolación de lagrange como lo hicimos cuando los puntos son $1, 2, 3, \cdots, n$, para cualquier progresión aritmética.
+\textbf{Ejercicio} Optimizar la interpolación de Lagrange como lo hicimos cuando los puntos son $1, 2, 3, \cdots, n$, para cualquier progresión aritmética.
 \\
  
 \section{Transformada de Fourier rápida (FFT) y NTT}
@@ -284,7 +284,9 @@ La elección de los $n$ puntos es lo que hace eficientes el algoritmo. FFT elige
  
 Para la demostración completa del algoritmo y todos los detalles de implementación referimos al blog de Codeforces de \texttt{leanderKortmann}, que tras leer bastantes recursos, parece ser la referencia más clara y amigable disponible para competencia.\footnote{\url{https://codeforces.com/blog/entry/111371}}
 
-$FFT$ aparece disfrazado en muchos problemas de competencia, especialmente cuando hay que contar pares con cierta suma. Reconocer que el problema se reduce a multiplicar polinomios es lo más importante en este tipo de problemas ya que usualmente basta con usar la misma plantilla de $FFT$.
+$FFT$ aparece disfrazado en muchos problemas de competencia, especialmente cuando hay que contar pares con cierta suma. Reconocer que el problema se reduce a multiplicar polinomios es lo más importante en este tipo de problemas, ya que, usualmente basta con usar la misma plantilla de $FFT$.
+
+La \textbf{Transformada Teórica de Números} (NTT, por sus siglas en inglés) es una variante de FFT que opera en aritmética modular en lugar de números complejos. La idea es reemplazar las raíces $n$-ésimas de la unidad $\omega = e^{2\pi i/n}$ por una raíz primitiva $n$-ésima de la unidad módulo un primo $p$, es decir, un elemento $g$ tal que $g^n \equiv 1 \pmod{p}$ y $g^k \not\equiv 1 \pmod{p}$ para $0 < k < n$. Esto es posible cuando $p$ es un primo de la forma $p = c \cdot 2^k + 1$ con $2^k \geq n$, lo que garantiza que existen raíces de la unidad de cualquier orden potencia de dos. El primo más común en competencia es $p = 998244353 = 119 \cdot 2^{23} + 1$. Al trabajar enteramente con enteros módulo $p$, NTT evita los errores de punto flotante y produce resultados exactos.
  
 \subsection*{FFT vs NTT: cuándo usar cada una}
  
@@ -455,7 +457,7 @@ Se va a sumar $M[i][k] \cdot M[k][j]$ por vértice $k$ tal que exista la arista 
 \[
 (M^k)[i][j] = \sum_{m=1}^{n} (M^{k-1})[i][m] \cdot M[m][j]
 \]
-notemos que $M^k$ suma para cada posible penultimo vértice $m$ en el camino de $i$ a $j$, el número de caminos de longitud $k-1$ de $i$ a $m$ multiplicado por $M[m][j]$ es decir, solo se cuentan los caminos si existe alguna arista $m$-$j$, pues de lo contrario no podría existir ese camino.
+notemos que $M^k$ suma para cada posible penúltimo vértice $m$ en el camino de $i$ a $j$, el número de caminos de longitud $k-1$ de $i$ a $m$ multiplicado por $M[m][j]$ es decir, solo se cuentan los caminos si existe alguna arista $m$-$j$, pues de lo contrario no podría existir ese camino.
 \\\\La respuesta al problema es entonces $M^k[1][n]$, que se calcula con exponenciación de matrices. Como los valores pueden ser grandes, se calculan módulo $10^9+7$.
 \\\\Ver \href{https://cses.fi/paste/9d5c79555ee5bd881072387/}{código}.
     \end{itemize}

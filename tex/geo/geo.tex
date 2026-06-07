@@ -159,7 +159,7 @@ Estas áreas de los triángulos ya las sabemos calcular, pues recordemos que el 
 Nótese que no es necesario restar porque el producto cruz ya nos da el área con signo, entonces el signo de menos ya está incluido en la suma.
 \\\\Resulta que esta misma lógica funciona para polígonos de $n$ vértices donde se suman $n$ triangulos haciendo que el exterior se cancele, la fórmula generalizada entonces quedaría
 \[A(P_1,\cdots,P_n)=\frac{|\sum_{i=1}^{n}P_i \times P_{i+1}|}{2}\]
-con $P_{n+1}=P_1$. Esta fórmula funciona también para polígonos no convexos.
+con $P_{n+1}=P_1$. Esta fórmula llamada comúnmente \textbf{shoelace} funciona también para polígonos no convexos.
 
 \subsection*{Punto dentro o fuera de un polígono}
 
@@ -371,6 +371,10 @@ arriba.
 El mismo razonamiento elimina las aristas horizontales: si $y_{P_i} = y_{P_{i+1}} = y_Q$, 
 ninguna de las dos condiciones se satisface y la arista simplemente no se cuenta, ya explicado el algoritmo, la implementación quedaría:
 \lstinputlisting[language=C++, firstline=45, lastline=66]{./tex/geo/codes/geo.cpp}
+\subsection*{Teorema de Pick}
+Si tenemos un polígono cuyos vértices están todos en coordenadas enteras, se cumple la siguiente fórmula:
+\[A=I+\frac{B}{2}-1\]
+donde $A$ es el área del polígono, $I$ son los puntos con coordenadas enteras dentro del polígono y $B$ los puntos con coordenadas enteras que están sobre el perímetro del polígono.\footnote{Ver \href{https://www.gaussianos.com/el-teorema-de-pick/}{demostración}}.
 \section{Convex Hull}
 Dado un conjunto de puntos $S \subset \mathbb{R}^2$, su \textbf{cápsula convexa} (\textit{convex hull}) intuitivamente es la figura que se formaría si colocamos una liga estirada alrededor de todos los puntos, más formalmente es el polígono convexo más pequeño que los contiene a todos. En la imagen siguiente $S$ son todos los puntos negros y el hull sería es el polígono dibujado de verde.
 
@@ -526,7 +530,7 @@ Si en cualquier punto encontramos una intersección, entonces terminamos el algo
 \lstinputlisting[language=C++, firstline=110, lastline=213]{./tex/geo/codes/geo.cpp}
 Nótese que hay $2n$ eventos y cada evento realiza a lo más dos chequeos de intersección que cada uno tiene complejidad de $O(1)$ y una adición o eliminación con complejidad  $O(log n)$. Además ordenar inicialmente los segmentos tiene complejidad $O(nlogn)$ entonces la complejidad del algoritmo es $O(nlogn)$ que en efecto es más rápido que $O(n^2)$.
 \\\\En el problema que resolvimos bastaba con encontrar una intersección, podríamos preguntarnos qué sucede si queremos encontrar todas las intersecciones. El algoritmo que se usa para este caso se llama \textbf{Bentley-Ottmann} que encuentra todas las intersecciones en $O((n+k)logn)$ donde $k$ es el número de intersecciones. Podría parecer que la diferencia es sútil y sólo basta con seguir el algoritmo que estabamos usando antes sin detenerlo, pero recordemos que nuestro algoritmo dependía fuertemente en el orden de los segmentos para encontrar intersecciones, cuando sucede una intersección, el orden de dos segmentos se cambia esto provoca que cada que encontremos un cruce tendremos que cambiar el orden de la estructura y además revisar si los nuevos vecinos tienen cruces. Y no solo eso, si no que cada que agreguemos un segmento si encontramos una intersección tendremos que calcularla y agregarla a la cola de eventos.
-\\Mayores complicaciones de Bentley-Ottmann
+\\Mayores complicaciones de Bentley-Ottmann:
 \begin{itemize}
   \item Cuando dos segmentos cambian de orden, nuestro \texttt{set} ordenado por $y$ ya no es correcto, pues el comparador de este cambia con el tiempo dependiendo de $x$, tendríamos que manualmente extraer e insertar los elementos necesarios.
   \item Si hay casos degenerados con tres segmentos o más que se intersectan en el mismo punto, hay que ser muy cuidadosos en que orden se procesan y cómo actualizamos la estructura usada.
@@ -536,3 +540,7 @@ Usualmente no se necesita implementar Bentley Oattmann en concursos, ya que su i
 
 \section{Ejercicios}
 \section{Problemas}
+\begin{itemize}
+  \item \href{https://codeforces.com/group/DH4HPwQlLU/contest/689800/problem/G}{Beyblades por decena (Codeforces)}
+  \item \item \href{https://codeforces.com/group/DH4HPwQlLU/contest/689800/problem/H}{Poligon.io (Codeforces)}
+\end{itemize}
