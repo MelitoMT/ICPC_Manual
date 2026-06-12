@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1781275593.15622 "main.tex" "main.pdf" "main" 1781275597.22279 0
+["pdflatex"] 1781276389.67068 "main.tex" "main.pdf" "main" 1781276393.68524 0
   "/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc" 1254269338 2375 baa924870cfb487815765f9094cf3728 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc" 1202520719 2405 5dcf2c1b967ee25cc46c58cd52244aed ""
   "/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc" 1202520719 2327 9d6df24f9c4f7368395224341a95523a ""
@@ -318,15 +318,15 @@
   "imgs/UNAM.png" 1775567656.4893 14993 83465bdd05c61bbf47f6f1e3d8b1e26b ""
   "imgs/fciencias.png" 1775567656.48964 15071 e3698369a0a55bffa0ae73c5adc5e4c4 ""
   "imgs/image.png" 1779111269.44474 7952 ccfe11113b88621b385a4a2eb46ad534 ""
-  "main.aux" 1781275596.91962 16577 7e129d4dc080fbac04f3f5af8c18aa4b "pdflatex"
-  "main.out" 1781275596.92202 15217 b712f7feec4ead3cbeaadd1c106916d0 "pdflatex"
+  "main.aux" 1781276393.39525 16577 7e129d4dc080fbac04f3f5af8c18aa4b "pdflatex"
+  "main.out" 1781276393.39752 15217 b712f7feec4ead3cbeaadd1c106916d0 "pdflatex"
   "main.tex" 1780860421.61554 3160 d71e637a46822683bd77656558d63b2d ""
-  "main.toc" 1781275596.92278 8454 8ed7859810c7c058e74a2b8c7a7408de "pdflatex"
+  "main.toc" 1781276393.39784 8454 8ed7859810c7c058e74a2b8c7a7408de "pdflatex"
   "tex/algebra/algebra.tex" 1781274908.72361 28119 14873d86766fe54e56160779ab700efc ""
   "tex/bibliografia.tex" 1780845726.61188 5468 0e770173e83ce43abb1876ad2db3e0ac ""
   "tex/codes/codeforces/231A.cpp" 1775567656.49488 378 27b05cd760ad2f54395728fff85672e9 ""
   "tex/combi/combi.tex" 1780861320.21943 37258 7198848a4a2bee9741d52e054ea5cbd3 ""
-  "tex/conclusiones.tex" 1781275244.11218 7310 89bc8529c824c778eb63d4dc0217f775 ""
+  "tex/conclusiones.tex" 1781276372.72136 7236 bfaef806bdf7530396cf8e0de2be0f49 ""
   "tex/editorial/editorial.tex" 1780860621.55478 35706 3f8ac259c0d10d95e60be1ffa6172b91 ""
   "tex/editorial/editorialLinks.tex" 1780845726.61587 2211 84e5b8b607439d336eb63b2f30e2bbbe ""
   "tex/geo/codes/geo.cpp" 1780845726.61765 5744 10777824e1a4c93a9f53582d77746859 ""
