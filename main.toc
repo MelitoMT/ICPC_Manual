@@ -100,3 +100,4 @@
 \contentsline {section}{\numberline {10.3}Combinatoria}{119}{section.10.3}%
 \contentsline {section}{\numberline {10.4}Geometría}{122}{section.10.4}%
 \contentsline {chapter}{\numberline {11}Conclusiones y Próximos pasos}{125}{chapter.11}%
+\contentsline {section}{\numberline {11.1}Trabajo futuro}{127}{section.11.1}%

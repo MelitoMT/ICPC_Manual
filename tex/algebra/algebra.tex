@@ -286,7 +286,11 @@ Para la demostración completa del algoritmo y todos los detalles de implementac
 
 $FFT$ aparece disfrazado en muchos problemas de competencia, especialmente cuando hay que contar pares con cierta suma. Reconocer que el problema se reduce a multiplicar polinomios es lo más importante en este tipo de problemas, ya que, usualmente basta con usar la misma plantilla de $FFT$.
 
-La \textbf{Transformada Teórica de Números} (NTT, por sus siglas en inglés) es una variante de FFT que opera en aritmética modular en lugar de números complejos. La idea es reemplazar las raíces $n$-ésimas de la unidad $\omega = e^{2\pi i/n}$ por una raíz primitiva $n$-ésima de la unidad módulo un primo $p$, es decir, un elemento $g$ tal que $g^n \equiv 1 \pmod{p}$ y $g^k \not\equiv 1 \pmod{p}$ para $0 < k < n$. Esto es posible cuando $p$ es un primo de la forma $p = c \cdot 2^k + 1$ con $2^k \geq n$, lo que garantiza que existen raíces de la unidad de cualquier orden potencia de dos. El primo más común en competencia es $p = 998244353 = 119 \cdot 2^{23} + 1$. Al trabajar enteramente con enteros módulo $p$, NTT evita los errores de punto flotante y produce resultados exactos.
+En muchos problemas la respuesta se pide \textbf{módulo un primo} $p$ (típicamente $998244353$). La FFT opera en $\mathbb{C}$ y puede acumular errores de redondeo; en esos casos conviene la \textbf{NTT} (\emph{Number Theoretic Transform}, transformada teórica de números): la misma idea algorítmica de la FFT, pero trabajando en $\mathbb{Z}_p$ en lugar de los complejos.
+
+\begin{definition}[NTT]
+La \textbf{transformada teórica de números} es una variante de la FFT que evalúa e interpola polinomios en aritmética modular. Sustituye las raíces $n$-ésimas de la unidad $\omega = e^{2\pi i/n}$ por una \textbf{raíz primitiva $n$-ésima módulo $p$}: un entero $g$ tal que $g^n \equiv 1 \pmod{p}$ y $g^k \not\equiv 1 \pmod{p}$ para $0 < k < n$. Esto es posible cuando $p$ es primo de la forma $p = c \cdot 2^k + 1$ con $2^k \geq n$; el primo más usado en competencia es $p = 998244353 = 119 \cdot 2^{23} + 1$. Al operar solo con enteros módulo $p$, la NTT calcula convoluciones en $O(n \log n)$ con resultados exactos. Las raíces primitivas módulo $p$ son el mismo concepto que aparece en teoría de números (Cap.~6).
+\end{definition}
  
 \subsection*{FFT vs NTT: cuándo usar cada una}
  
@@ -306,7 +310,7 @@ Uso típico        & Scores, correlaciones, valores grandes & Conteos módulo pr
 \bottomrule
 \end{tabular}
 \end{table}
-Se recomienda usar $FFT$ cuando los coeficientes pueden superar el módulo de $NTT \approx 10^9$; y $NNT$ cuando la respuesta se pide módulo un primo $p$ que se comporte bien; esto es, si $p-1$ tiene un factor de $2$ suficientemente grande, garantizando raíces primitivas de la unidad módulo $p$ para tamaños potencia de 2. El más usado en competencia es $998244353 = 119 \cdot 2^{23} + 1$, que soporta transformadas de hasta $2^{23} \approx 8 \times 10^6$ elementos.
+Se recomienda usar $FFT$ cuando los coeficientes pueden superar el módulo de $NTT \approx 10^9$; y $NTT$ cuando la respuesta se pide módulo un primo $p$ que se comporte bien; esto es, si $p-1$ tiene un factor de $2$ suficientemente grande, garantizando raíces primitivas de la unidad módulo $p$ para tamaños potencia de 2. El más usado en competencia es $998244353 = 119 \cdot 2^{23} + 1$, que soporta transformadas de hasta $2^{23} \approx 8 \times 10^6$ elementos.
 \\\\
 Las implementaciones de FFT y NTT que se usan en los problemas de este capítulo se dejan aquí para referencia:
 \\\\FFT
@@ -343,7 +347,7 @@ void fft(vector<cd>& a, bool inv) {
         for (auto& x : a) x /= n;
 }
 \end{lstlisting}
-NNT
+NTT
 \begin{lstlisting}[language=C++]
 const ll MOD = 998244353;
 const ll PRIM = 3;
@@ -465,15 +469,15 @@ notemos que $M^k$ suma para cada posible penúltimo vértice $m$ en el camino de
 
 \begin{itemize}
      %Recurrence
-    \item \href{https://cses.fi/problemset/task/1096}{Throwing Dice (CSES 1092)}
+    \item \href{https://cses.fi/problemset/task/1096}{Throwing Dice (CSES 1092)}: Contar formas de obtener suma $n$ lanzando un dado de seis caras, con recurrencia y exponenciación de matrices.
     %Binary Exponentiation
-    \item \href{https://cses.fi/problemset/task/1724}{Graph Paths II (CSES 1724)}
+    \item \href{https://cses.fi/problemset/task/1724}{Graph Paths II (CSES 1724)}: Camino de peso mínimo con exactamente $k$ aristas en un grafo dirigido ponderado, vía exponenciación de matrices.
     %Lagrange interpolation
-    \item \href{https://codeforces.com/contest/995/problem/F}{Cowmpany Cowmpensation (Codeforces 995F)}
+    \item \href{https://codeforces.com/contest/995/problem/F}{Cowmpany Cowmpensation (Codeforces 995F)}: Contar asignaciones de salarios válidas en un árbol usando DP e interpolación de Lagrange.
     %Fourier transofrmation
-    \item \href{https://codeforces.com/group/DH4HPwQlLU/contest/689800/problem/A}{Proyecto Hali Mary $\filledstar$}
-    \item \href{https://codeforces.com/contest/993/problem/E}{Nikita and Order Statistics (Codeforces 993E)}
+    \item \href{https://codeforces.com/group/DH4HPwQlLU/contest/689800/problem/A}{Proyecto Hali Mary $\filledstar$}: Localizar regiones de un genoma similares a una secuencia dada, con convolución (FFT).
+    \item \href{https://codeforces.com/contest/993/problem/E}{Nikita and Order Statistics (Codeforces 993E)}: Contar pares ordenados con restricciones de orden en arreglos, usando FFT e inclusión-exclusión.
     %Fourier tranformation
-    \item \href{https://codeforces.com/contest/1398/problem/G}{Running Competition (Codeforces 1398G)}
-    \item  \href{https://codeforces.com/group/DH4HPwQlLU/contest/689800/problem/B}{Rumbo al Mundial $\filledstar$}
+    \item \href{https://codeforces.com/contest/1398/problem/G}{Running Competition (Codeforces 1398G)}: Maximizar la distancia de vuelta en una pista, contando diferencias de posiciones con FFT.
+    \item  \href{https://codeforces.com/group/DH4HPwQlLU/contest/689800/problem/B}{Rumbo al Mundial $\filledstar$}: Contar configuraciones de semáforos cuya suma de tiempos supera un umbral, con funciones generadoras y FFT.
 \end{itemize}
