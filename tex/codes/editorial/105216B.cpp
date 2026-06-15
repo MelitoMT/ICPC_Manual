@@ -1,10 +1,11 @@
 #include <bits/stdc++.h>
 using namespace std;
 typedef long long ll;
+
 ll cross(pair<ll,ll> o, pair<ll,ll> a, pair<ll,ll> b) {
     return (a.first-o.first)*(b.second-o.second) - (a.second-o.second)*(b.first-o.first);
 }
- 
+
 vector<pair<ll,ll>> convexHull(vector<pair<ll,ll>> pts) {
     sort(pts.begin(), pts.end());
     pts.erase(unique(pts.begin(), pts.end()), pts.end());
@@ -25,28 +26,39 @@ vector<pair<ll,ll>> convexHull(vector<pair<ll,ll>> pts) {
     hull.pop_back();
     return hull;
 }
+
+ll divNeg(ll a, ll b) {
+    ll q = a / b, r = a % b;
+    if (r != 0 && ((r < 0) != (b < 0))) q--;
+    return q;
+}
+
 int main() {
-    ios::sync_with_stdio(0);
-    cin.tie(0);
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
 
     int P, N; cin >> P >> N;
-    vector<pair<ll,ll>> punt(P);
-    for (auto& p : punt) cin >> p.first >> p.second;
-    vector<pair<ll,ll>> poly = convexHull(punt);
+    vector<pair<ll,ll>> raw(P);
+    for (auto& p : raw) cin >> p.first >> p.second;
+
+    vector<pair<ll,ll>> poly = convexHull(raw);
     P = poly.size();
+
     int m = N - 1;
     const int MAXX = 5001;
+
     if (m > 5000) {
         cout << 0 << "\n";
         return 0;
     }
 
-    ll area = 0;
+    ll area2 = 0;
     for (int i = 0; i < P; i++) {
         auto& a = poly[i]; auto& b = poly[(i+1)%P];
-        area += a.first*b.second - b.first*a.second;
+        area2 += a.first*b.second - b.first*a.second;
     }
-    bool ccw = area > 0;
+    bool ccw = area2 > 0;
+
     vector<ll> yLo(MAXX), yHi(MAXX);
     vector<bool> has(MAXX, false);
 
@@ -66,7 +78,7 @@ int main() {
                 continue;
             }
             ll num = dy*(x-x1);
-            ll yfloor = y1 + num/dx;
+            ll yfloor = y1 + divNeg(num, dx);
             ll yceil = (num % dx == 0) ? yfloor : yfloor + 1;
 
             bool wantGE = ccw ? (dx > 0) : (dx < 0);
@@ -78,7 +90,7 @@ int main() {
         }
     }
 
-    vector<vector<ll>> classCount(m, vector<ll>(m, 0));
+    vector<vector<int>> classCount(m, vector<int>(m, 0));
     for (ll x = 0; x <= 5000; x++) {
         if (!has[x]) continue;
         for (ll y = yLo[x]; y <= yHi[x]; y++)

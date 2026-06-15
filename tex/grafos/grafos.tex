@@ -1594,3 +1594,82 @@ mínimo (o máximo), se usa el \textbf{algoritmo Húngaro} (Kuhn-Munkres),
 con complejidad $O(n^3)$. Aparece en problemas de asignación óptima: dados
 $n$ trabajadores, $n$ tareas, y costos $c_{ij}$ de asignar el trabajador
 $i$ a la tarea $j$, minimizar el costo total. La mejor referencia que he encontrado para este algoritmo es este \href{https://www.topcoder.com/thrive/articles/Assignment%20Problem%20and%20Hungarian%20Algorithm}{blog}.
+
+\section{Ejercicios}
+\subsection*{9.10.1 \href{https://codeforces.com/problemset/problem/808/F}{Card Game (Codeforces)}}
+Si un conjunto de cartas con $l_i \leq L$ permite alcanzar potencia $\geq k$, entonces
+también lo permite cualquier nivel mayor (hay más cartas disponibles). Podemos hacer búsqueda binaria sobre el nivel necesario.
+
+Dado un nivel $L$, construimos una gráfica $G$ donde cada carta disponible (con $l_i \leq L$) es un vértice, con peso $p_i$, y conectamos dos
+cartas $i,j$ con una arista si $c_i+c_j$ es primo es decir, si no pueden estar juntas en el mazo. Un subconjunto $S$ es un mazo válido si y solo si $S$ es un conjunto independiente en $G$ (no contiene ninguna arista).
+
+Sea $P$ la suma de potencias de todas las cartas disponibles (con $l_i \leq L$). Buscamos un subconjunto $S$ sin pares prohibidos con $\sum_{i\in S} p_i \geq k$. Esto es equivalente a encontrar el conjunto descartado $D = V\setminus S$ de peso mínimo  tal que $D$ sea una cobertura de vértices de todas las aristas prohibidas, es decir, toda pareja prohibida tiene al menos un extremo en $D$ (así $S$ queda libre de conflictos). La condición para verificar que es un conjunto válido es
+$P - \text{peso}(D) \geq k$.
+ 
+Por el teorema de König, la covertura de vértices de peso mínimo en una gráfica bipartita es igual al matching máximo.
+ 
+Notemos que si $c_i+c_j$ es un primo mayor que 2, entonces $c_i+c_j$ es impar, así que $c_i$ y $c_j$ tienen paridades distintas. Esto
+sugiere separar las cartas en dos grupos — pares e impares y las aristas prohibidas solo conectarían cartas de grupos distintos, dando un gráfica bipartita.
+ 
+Lo anterior tiene un caso especial si $c_i=1$, pues el único primo par es 2, y $1+1=2$. Entonces dos cartas con $c_i=c_j=1$ son
+mutuamente prohibidas, pero ambas caen en el lado "impar", haciendo que la gráfica no sea bipartita. Para solucionar esto, notemos que si tomamos dos o más cartas con $c=1$, hay
+un par prohibido entre ellas siempre. Por lo
+tanto, en el conjunto óptimo $S$, a lo más puede haber una carta con $c=1$. Por lo que para cada $L$, si hubiera varias cartas con $c=1$ disponibles, tomaremos la de mayor potencia.
+ 
+Sean $A$ las cartas con $c_i$ impar, y $B$ las
+cartas con $c_i$ par disponibles con nivel $L$:
+ 
+\begin{itemize}
+    \item \textbf{Fuente $\to$ carta} $\in A$, con capacidad $p_i$.
+    \item \textbf{Carta} $j \in B \to$ \textbf{Sumidero}, con capacidad $p_j$.
+    \item \textbf{Carta} $i \to$ \textbf{Carta} $j$ (impar a par), con capacidad $\infty$, si $c_i+c_j$ es primo.
+\end{itemize}
+ 
+Un corte finito en esta red nunca incluye aristas $\infty$ (impar$\to$par), esas aristas garantizan que si una carta impar $i$ y una carta par $j$ tienen $c_i+c_j$ primo, al menos
+una de las dos aristas (fuente$\to i$ o $j\to$sumidero) debe estar en el corte. Es decir, el corte mínimo identifica exactamente el conjunto $D$ de cartas a descartar con peso mínimo que rompe todas las parejas prohibidas. Por max-flow = min-cut, basta entonces calcular el maxFlow de la gráfica construida y ver si:
+\[
+P - \text{maxFlow} \geq k
+\]
+ 
+La complejidad es $O(\log n)$ para las iteraciones de búsqueda binaria, cada una con un max flow en una red de $O(n)$ nodos y $O(n^2)$ aristas.
+
+Ver \href{https://codeforces.com/contest/808/submission/273807670}{código}.
+
+\subsection*{9.10.2 \href{https://www.spoj.com/problems/QTREE2/}{Query on a tree III (SPOJ)}}
+ Para resolver el primer tipo de consulta notemos que el camino de $a$ a $b$ pasa por su LCA $L$, y se descompone en el camino $a \to L$ más el camino $L \to b$. Si guardamos para cada vértice la distancia acumulada desde la raíz
+(\texttt{distRoot}), entonces:
+\[
+\text{dist}(a,b) = \text{distRoot}(a) + \text{distRoot}(b) -
+2\cdot\text{distRoot}(L)
+\]
+La resta de $2\cdot\text{distRoot}(L)$ elimina el camino duplicado desde la raíz hasta $L$, que está contado una vez en $\text{distRoot}(a)$ y otra vez en $\text{distRoot}(b)$.
+ 
+Para el segundo tipo de consulta, veamos que el camino de $a$ a $b$ (en número de vértices) se compone de dos partes, el camino $a \to L$, con $\text{depth}(a) - \text{depth}(L) + 1$ vértices (incluyendo $a$ y $L$), y del camino $L \to b$ (sin repetir $L$), con $\text{depth}(b) - \text{depth}(L)$ vértices adicionales.
+ 
+Sea $\text{len}_A = \text{depth}(a) - \text{depth}(L)$ (número
+de \textbf{aristas} de $a$ a $L$).
+ 
+\begin{itemize}
+    \item Si $k-1 \leq \text{depth}(a)- \text{depth}(L)$:
+    
+          El $k$-ésimo vértice está en el camino $a \to L$, a $k-1$ aristas de
+          distancia de $a$ hacia arriba, es decir es el $(k-1)$-ésimo ancestro de $a$.
+ 
+    \item En caso contrario:
+    
+          El $k$-ésimo nodo está en el camino
+          $L \to b$. El nodo está a:
+          \[\text{s} = dist(a,b)-(k-1)\]
+          aristas de distancia de $b$ hacia arriba, es decir, el $\text{s}$-ésimo ancestro de $b$.
+\end{itemize}
+ Para ambos casos es eficiente recuperar el ancestro con binary lifting (la técnica de descomponer los niveles que queremos subir en potencias de dos).
+
+ Ver \href{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/qtree2.cpp}{código}.
+
+\section{Problemas}
+\begin{itemize}
+  \item[9.11.1] \href{https://cses.fi/problemset/task/2079}{Finding a Centroid (Codeforces)}
+  \item[9.11.2] \href{https://codeforces.com/group/DH4HPwQlLU/contest/689800/problem/I}{Zuko vs Aang (Autoría)}
+  \item[9.11.3] \href{https://codeforces.com/problemset/problem/652/E}{Pursuit for artifacts (Codeforces 652E)}
+  \item[9.11.4] \href{https://codeforces.com/contest/1404/problem/E}{Bricks (Codeforces 1404E)}
+\end{itemize}

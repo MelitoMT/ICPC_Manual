@@ -423,9 +423,8 @@ $\mathbf{15}$ & $20$ & $27$ & $37$ & $52$ \\
 \end{tabular}
 \end{center}
 \section{Ejercicios}
-\begin{itemize}
-    \item \href{https://codeforces.com/contest/1795/problem/D}{Triangle Coloring (Codeforces 1795D)}
-    \\\\En cualquiera de las triangulaciones, la máxima cantidad de aristas que apoyarán al peso máximo son dos, ya que podemos colorear $2$ vértices de un color y el tercero del otro color. La forma en la que maximizamos el peso entonces será haciendo que la excluida sea la de menor peso.
+\subsection*{7.10.1 \href{https://codeforces.com/contest/1795/problem/D}{Triangle Coloring (Codeforces 1795D)}}
+    En cualquiera de las triangulaciones, la máxima cantidad de aristas que apoyarán al peso máximo son dos, ya que podemos colorear $2$ vértices de un color y el tercero del otro color. La forma en la que maximizamos el peso entonces será haciendo que la excluida sea la de menor peso.
     \\\\
     Ahora, un triángulo coloreado de forma que se maximice el peso puede aportar $1$ o $2$ rojos, llamemosle de tipo $A$ o tipo $B$ respectivamente. Notemos que tenemos $\frac{n}{3}$ triángulos,por lo que si hay $x$ triángulos coloreados de tipo $A$ tenemos $\frac{n}{3}-x$ de tipo $B$. Como queremos que haya $\frac{n}{2}$ vértices coloreados rojos tenemos que:
     \[x+2(\frac{n}{3}-x)=\frac{n}{2}\]
@@ -435,10 +434,10 @@ $\mathbf{15}$ & $20$ & $27$ & $37$ & $52$ \\
     \\\\
     Código
     \\\\
-    Ver \href{https://codeforces.com/contest/1795/submission/252680982}{solución}.
-     %Catalan numbers
-    \item \href{https://cses.fi/problemset/task/2064}{Bracket Squences I (CSES 2064)}
-  \\\\Nótese que una secuencia de $n=2m$ brackets es válida si tiene $m$ brackets de apertura, $m$ de cierre y para cualquier posición la cantidad de brackets de apertura hasta esa posición, es decir en el prefijo, es mayor o igual a la de cierre.
+    Ver \href{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/1795D.cpp}{solución}.
+
+\subsection*{7.10.2 \href{https://cses.fi/problemset/task/2064}{Bracket Squences I (CSES 2064)}}
+  Nótese que una secuencia de $n=2m$ brackets es válida si tiene $m$ brackets de apertura, $m$ de cierre y para cualquier posición la cantidad de brackets de apertura hasta esa posición, es decir en el prefijo, es mayor o igual a la de cierre.
   \\\\Notemos que si no tuvieramos ninguna restricción sobre los prefijos entonces la cantidad total de secuencias sería simplemente la forma de colocar $m$ aperturas en $n$ posiciones, es decir: $\binom{n}{m}$. Entonces nos interesa encotnrar cuál es la cantidad de secuencias inválidas para restarlas de las secuencias totales y encotnrar cuántas secuencias válidas hay. Tomemos una secuencia de brackets inválida cualquiera, notemos que entonces esta tiene un prefijo donde los cierres son mayores a las aperturas. En ese prefijo, cambiemos todos los brackets de apertura por los de cierre y los de cierre por los de apertura. Notemos que entonces la secuencia nueva tiene $m+1$ aperturas y $m-1$ cierres. Esto nos da una biyección entre las secuencias inválidas de $m$ aperturas y $m$ cierres y todas las secuencias posibles con $m+1$ aperturas y $m-1$ cierres que son $\binom{n}{m+1}$ de donde tenemos que:
   \[\binom{2m}{m}-\binom{2m}{m+1}=\frac{1}{m+1}\binom{2m}{m}\]
   Notemos que esta fórmula es exactametne la fórmula de los números de Catalán, por lo que para calcular las secuencias válidas de $n$ brackets, basta con calcular el $n$-ésimo número de Catalán.
@@ -446,20 +445,13 @@ $\mathbf{15}$ & $20$ & $27$ & $37$ & $52$ \\
     Código
     \\\\
     Ver \href{https://cses.fi/paste/a095f196a9c6a0561095b74/}{código.}
-\end{itemize}
 \section{Problemas}
 \begin{itemize}
+    \item[7.11.1] \href{https://cses.fi/problemset/task/1715/}{String Distribution (CSES 1715)}
       %Burnside Lema
-    \item \href{https://codeforces.com/gym/101873/problem/B}{Buildings (2017-2018 ACM-ICPC GCPC)}
+    \item[7.11.2] \href{https://codeforces.com/gym/101873/problem/B}{Buildings (2017-2018 ACM-ICPC GCPC)}
     %Catalan numbers
-    \item \href{https://codeforces.com/group/DH4HPwQlLU/contest/689800/problem/D}{Blue Lock gone wild $\star$}
-    %Barars y Estrellas
-    \item \href{https://codeforces.com/contest/1942/problem/E}{Farm Game (Codeforces 1942E)}
-    %Burnside Lema
-    \item \href{http://poj.org/problem?id=2888}{Magic Bracelet (Spoj 2888)}
-
-    %inclusion exclusion
-    \item \href{https://cses.fi/problemset/task/2185}{Prime Multiples (CSES 2185)}
-   
-    
+    \item[7.11.3] \href{https://codeforces.com/group/DH4HPwQlLU/contest/689800/problem/D}{Blue Lock gone wild (Autoría $\filledstar$)}
+    \item[7.11.4] \href{https://codeforces.com/group/DH4HPwQlLU/contest/689800/problem/E}{El torneo de los 3 magos (here we go again) (Autoría $\filledstar$)}
+    \item[7.11.5] \href{https://codeforces.com/problemset/problem/690/D2}{The Wall (medium) (Helvetic Coding Contest 2016)}  
 \end{itemize}

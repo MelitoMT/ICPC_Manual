@@ -539,8 +539,30 @@ Nótese que hay $2n$ eventos y cada evento realiza a lo más dos chequeos de int
 Usualmente no se necesita implementar Bentley Oattmann en concursos, ya que su implementación son alrededor de 200 líneas con casos delicados de manejar, sería complicado encontrar bugs bajo pressión de tiempo, además que los problemas donde se requieren todas las intersecciones usualmente permiten fuerza bruta. Lo más usado es la idea en sí misma aplicado a problemas más sencillos como la unión de área de rectángulos como veremos en los ejemplos a continuación.
 
 \section{Ejercicios}
+\subsection*{8.6.1 \href{https://acm.timus.ru/problem.aspx?space=1&num=1469}{No Smoking! (Timus)}}
+Este problema es una aplicación directa del algoritmo de
+Shamos-Hoey descrito en esta sección, con una pequeña aidción, además de detectar si existe una intersección, necesitamos imprimir cuáles dos segmentos se intersectan.
+ 
+Para esto basta guardar el índice de cada segmento en la
+estructura y retornarlo cuando se detecta la intersección.
+ 
+Ver \href{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/tim1469.cpp}{código}.
+
+\subsection*{8.7.2 \href{https://acm.timus.ru/problem.aspx?space=1&num=1418}{Military Story (Ural State University Championship 2005)}}
+La cerca más exterior que podemos construir con un conjunto de puntos es su convex hull. Una vez construida esa cerca, los puntos que la forman quedan usados. La siguiente cerca más exterior (adentro de la anterior) es el convex hull de los puntos restantes, y así
+sucesivamente.
+ 
+Por lo tanto, la respuesta es el número de veces que podemos calcular el convex hull del conjunto restante y obtener un polígono con área positiva, pues una cerca debe ser un polígono que tenga área no $0$ y que no se intersecte a si mismo.
+
+Un detalle importante de implementación es que el convex hull debe incluir los puntos colineales en el borde, si hay tres puntos en línea recta en el hull, los tres deben usarse. Para esto, en el algoritmo de Andrew que vimos, podemos cambiar $\leq 0$ por $< 0$.
+
+No olvidar verificar que el área de cada polígono es no nula.
+
+Ver \href{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/tim1418.cpp}{código}.
 \section{Problemas}
 \begin{itemize}
-  \item \href{https://codeforces.com/group/DH4HPwQlLU/contest/689800/problem/G}{Beyblades por decena (Codeforces)}
-  \item \item \href{https://codeforces.com/group/DH4HPwQlLU/contest/689800/problem/H}{Poligon.io (Codeforces)}
+  \item[8.7.1] \href{https://codeforces.com/gym/101473}{Balloon (2013-2014 ICPC Brazil Subregional)}
+  \item[8.7.2] \href{https://codeforces.com/group/DH4HPwQlLU/contest/689800/problem/G}{Beyblades por decena (Autoría $\filledstar$)}
+  \item[8.7.3] \href{https://codeforces.com/group/DH4HPwQlLU/contest/689800/problem/H}{Poligon.io (Autoría $\filledstar$)}
+  \item[8.7.4] \href{https://codeforces.com/gym/105216/problem/B}{Birthday Cake (2024 ICPC Gran Premio de México 2da Fecha)}
 \end{itemize}

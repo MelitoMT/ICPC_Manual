@@ -878,9 +878,7 @@ long long bsgs(long long a, long long b, long long m) {
 
 Para módulo no primo o cuando $\gcd(a,m) > 1$, hay variantes que reducen al caso coprimo; véase la referencia \cite{cpalg-discrete-log-general}.
 \section{Ejercicios}
-\begin{itemize}
-    \item \href{https://codeforces.com/contest/1542/problem/C}{Strange Function (Codeforces 1542C)}
-    \\\\
+\subsection*{6.9.1 \href{https://codeforces.com/contest/1542/problem/C}{Strange Function (Codeforces 1542C)}}
     Construyamos la siguiente tabla, en las filas colocaremos los valores de $i$ y en las columnas los valores de $k$ y pondremos una estrella en la celda $(i,j)$ si $f(i)\geq k$:
     \[
     \begin{array}{c|ccccc}
@@ -910,8 +908,8 @@ Para módulo no primo o cuando $\gcd(a,m) > 1$, hay variantes que reducen al cas
     los demás términos sean $0$. En la implementación, haremos la suma hasta encontrar el primer término $0$, ahí pararemos y ya tendremos el resultado.
     \\\\
     Ver \href{https://codeforces.com/contest/1542/submission/251341276}{código}.
-    \item \href{https://codeforces.com/problemset/problem/1725/H}{Hot Black Hot White (COMPFEST 14)}
-    \\\\Antes de indagar en cómo elegir $Z$ o cómo pintar las rocas mágicas, vamos a intentar simplificar la expresión que nos dan: $concat(A_i, A_j) \times concat(A_j, A_i) + A_i \times A_j \equiv Z \, mod 3$.
+\subsection*{6.9.2 \href{https://codeforces.com/problemset/problem/1725/H}{Hot Black Hot White (COMPFEST 14)}}
+    Antes de indagar en cómo elegir $Z$ o cómo pintar las rocas mágicas, vamos a intentar simplificar la expresión que nos dan: $concat(A_i, A_j) \times concat(A_j, A_i) + A_i \times A_j \equiv Z \, mod 3$.
     \\\\Veamos que si $k$ es la cantidad de digitos de $A_j$ entonces $concat(A_i, A_j)=A_i \times 10^k + A_j$ y más aún como $10^k \equiv 1^k \equiv 1\, mod 3$ tenemos que:
     \[concat(A_j, A_i)\equiv A_i+A_j \, mod 3\]
     Análogamente, $concat(A_i, A_j)\equiv A_j+A_i \, mod 3$ de donde:
@@ -922,9 +920,8 @@ Para módulo no primo o cuando $\gcd(a,m) > 1$, hay variantes que reducen al cas
     Notemos que $0^2\equiv 0 \, mod 3$, $1^2 \equiv 1 \, mod 3$ y $2^2 \equiv 1 \, mod 3$. Si tenemos al menos $\frac{n}{2}$ piedras tal que $A_i^2\equiv 0 \, mod 3$, entonces podemos colorear $\frac{n}{2}$ de esas de un solo color, así cuando haya dos colores diferentes tendremos que $A_i^2+A_j^2\equiv 0^2 +A_j^2 \equiv A_j^2 \, mod 3$ y como ningún número al cuadrado es congruente con $2$ módulo $3$, podemos hacer $Z=2$. Por otro lado, si no hay al menos $\frac{n}{2}$ que lo cumplan, significa que hay al menos $\frac{n}{2}$ tal que $A_i^2 \equiv 1 \, mod 3$, entonces coloreamos $\frac{n}{2}$ de ellas de un mismo color y así no habrá ningún par de rocas de diferente color tal que ambas tengan $A_j^2 \equiv 0$. De donde podemos hacer $Z=0$.
     \\\\
     Ver \href{https://codeforces.com/contest/1725/submission/201205415}{código}.
-
-    \item \href{https://lightoj.com/problem/monkey-tradition}{Monkey Tradition (Light OJ)}
-\\\\Notemos que si a un monito, le falto $r_i$ para llegar a la cima de su bambú dando saltos $p_i$, esto significa que la altura $L$ cumple que $L\equiv r_i \, mod \,p_i$, esto nos deja con un sistema de congruencias:
+\subsection*{6.9.3 \href{https://lightoj.com/problem/monkey-tradition}{Monkey Tradition (Light OJ)}}
+Notemos que si a un monito, le falto $r_i$ para llegar a la cima de su bambú dando saltos $p_i$, esto significa que la altura $L$ cumple que $L\equiv r_i \, mod \,p_i$, esto nos deja con un sistema de congruencias:
 \begin{align*}
     L \equiv r_1 \, mod \, p_1 \\
     L \equiv r_2 \, mod \, p_2 \\
@@ -934,17 +931,16 @@ Para módulo no primo o cuando $\gcd(a,m) > 1$, hay variantes que reducen al cas
 \end{align*}
 el cual podemos resolver con el teorema chino del residuo directamente. La única observación relevante es que como todos son primos son distintos, todos los módulos son coprimos entre sí, lo que nos garantiza existe siempre la solución.
 \\\\
-Ver \href{https://lightoj.com/submission/3528823}{código}.
-\end{itemize}
+Ver \href{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/monkeyTradition.cpp}{código}.
 \section{Problemas}
 \begin{itemize}
-    \item \href{https://codeforces.com/problemset/problem/1553/A}{Digits Sum (Codeforces 1553A)}
-    \item \href{https://codeforces.com/contest/1916/problem/B}{Two Divisors (Codeforces 1916B)}
-    \item \href{https://cses.fi/problemset/task/1712}{Exponentiation II (CSES 1712)}
-    \item \href{https://codeforces.com/problemset/problem/1512/G}{Short Task (Codeforces 1512G)}
+    \item[6.10.1] \href{https://codeforces.com/problemset/problem/1553/A}{Digits Sum (Codeforces 1553A)}
+    \item[6.10.2] \href{https://codeforces.com/contest/1916/problem/B}{Two Divisors (Codeforces 1916B)}
+    \item[6.10.3] \href{https://cses.fi/problemset/task/1712}{Exponentiation II (CSES 1712)}
+    \item[6.10.4] \href{https://codeforces.com/problemset/problem/1512/G}{Short Task (Codeforces 1512G)}
     %CRT
-    \item \href{https://matcomgrader.com/problem/9547/fantastic-beasts/}{Fantastic Beasts (Latam Regional Contest 2028)}
-    \item \href{https://codeforces.com/group/DH4HPwQlLU/contest/689800/problem/C}{Sushi Lovers}
-    \item \href{https://codeforces.com/group/DH4HPwQlLU/contest/689800/problem/F}{Pociones Locas}
+    \item[6.10.5] \href{https://matcomgrader.com/problem/9547/fantastic-beasts/}{Fantastic Beasts (Latam Regional Contest 2028)}
+    \item[6.10.6] \href{https://codeforces.com/group/DH4HPwQlLU/contest/689800/problem/C}{Sushi Lovers}
+    \item[6.10.7] \href{https://codeforces.com/group/DH4HPwQlLU/contest/689800/problem/F}{Pociones Locas}
 
 \end{itemize}

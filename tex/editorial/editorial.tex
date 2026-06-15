@@ -1,15 +1,9 @@
-\section*{Algebra}
-\subsection*{Throwing Dice (CSES 1092)}
-\textbf{Hint1}
-\\\\
+\section*{5.5.1 Throwing Dice (CSES 1092)}
+\subsection*{Hint1}
 Llamemos $f(n)$ son las formas de obtener suma $n$ lanzando el dado. Notemos que $f(n-1)$ son las formas de obtener $f(n)$ si el último dado sale $1$.
-\\\\
-\textbf{Hint2}
-\\\\
+\subsection*{Hint2}
 ¿La observación de $f(n-1)$ también se cumple para $f(n-2)$? ¿Qué hay de $f(n-3)$?
-\\\\
-\textbf{Solución}
-\\\\
+\subsection*{Solución}
 A primer vistazo, este problema parece de combinatoria o DP, pero en realidad este problema se resuelve usando recurrencias. El último dado tiene $6$ resultados diferentes, si el último dado muestra $1$, la suma de los lanzamientos anteriores debe ser $n-1$ o de lo contrario nuestra suma final no podría ser $n$. Esto se cumple para todos los resultados del dado, es decir, que si nos sale $6$, la suma acumulada debería ser $n-6$. Esta observación nos sugiere que
 \[f(n)=f(n-1)+f(n-2)+f(n-3)+f(n-4)+f(n-5)+f(n-6)\]
 Como $n\leq10^{18}$ no podemos calcular $f(n)$ iterativametne. Aplicando exponenciación de matrices, la matriz de transición es:
@@ -41,27 +35,17 @@ Sólo hay $1$ forma de obtener $1$ como suma (y $0$ formas para números negativ
 \begin{pmatrix} 1\\ 0\\ 0\\ 0\\ 0\\ 0 \end{pmatrix}
 \]
 La complejidad es $O(6^3 \log n) = O(\log n)$.
-\\\\
-\textbf{Código}
-\\\\
+\subsection*{Código}
 Ver \href{https://cses.fi/paste/48e6570bd3a36951107242d/}{código}.
-
-\subsection*{Cowmpany Compensation (Codeforces 995F)}
-\textbf{Hint1}
-\\\\
+\section*{5.5.2 Cowmpany Compensation (Codeforces 995F)}
+\subsection*{Hint1}
 Considera una función $f(v,x)$, el número de formas de asignar salarios al subárbol $v$ asignando salario $x$ a $v$. ¿De qué depende el valor de $f(v,x)$?
 \\\\Notemos que si $v$ es una hoja, $f(v,x)=1$.
-\\\\
-\textbf{Hint2}
-\\\\
+\subsection*{Hint2}
  Si $v$ es un vértice cuyos únicos $k$ hijos son hojas, $f(v,x)=\prod_{1}^{k} \sum_{i}^{x} f(s_k,i)$, donde $s_k$ es el $k$-ésimo hijo de $v$
-\\\\
-\textbf{Hint3}
-\\\\
+\subsection*{Hint3}
 Podemos calcular $f(v,x)$ para $x \in \{1,2,...,n+1\}$ con $n\leq 3000$ en tiempo. Sin embargo, $d\leq 10^9$, como evaluamos polinomios para valores muy grandes en $O(n)$?
-\\\\
-\textbf{Solución}
-\\\\
+\subsection*{Solución}
 Definimos $f(v,x)$ como el número de formas de asignar salarios al
 subárbol de $v$ dado que $v$ tiene salario $x$:
 \[
@@ -90,24 +74,18 @@ Por lo tanto $\deg(g(1,x)) = n$ el número total de vértices.
 \\\\
 Podemos calcular $g(1,1), g(1,2), \ldots, g(1,n+1)$ en $O(n^2)$ con DP procesando los nodos de hojas a raíz. Para cada nodo $v$ y cada $x$, calculamos $f(v,x) = \prod_{i=1}^{k} g(s_i,x)$ y luego $g(v,x) = g(v,x-1) + f(v,x)$, guardando ambos valores en memoria
 para evitar repetir cálculos. Con $n+1$ puntos evaluados en $x=1,2,\ldots,n+1$ (puntos consecutivos), aplicamos interpolación de Lagrange con la simplificación para puntos consecutivos para evaluar el polinomio en $d$ en $O(n)$.
-\\\\
-\textbf{Código}
+\subsection*{Código}
 Ver \href{https://codeforces.com/problemset/submission/995/375695448}{código}.
 
-\subsection*{Hail Mary}
-\textbf{Hint1}
-\\\\
+\section*{5.5.3 Hail Mary (Autoría $\filledstar$)}
+\subsection*{Hint1}
 Para cada posición $i$
 \[IDF[i]=\sum_{j=0}^{m-1} s_j \cdot r_{i+j}\]
 ¿Se parece esta suma a alguna que hayas visto antes?
-\\\\
-\textbf{Hint2}
-\\\\
+\subsection*{Hint2}
 Si recorremos $s$ al revés, es decir $s^{\text{rev}}[j] = s[m-1-j]$ . ¿Puedes
 expresar $\text{IDF}[i]$ usando $s^{\text{rev}}$?
- \\\\
-\textbf{Solución}
-\\\\
+\subsection*{Solución}
 Cuando hay que multiplicar dos arreglos eficientemente, puede ser una señal de que FFT puede ser útil, este problmema es un claro ejemplo.
 El IDF en la posición $i$ es:
 \[
@@ -128,26 +106,17 @@ Notemos entonces que si $i = k-m+1$ (es decir $k = m-1+i$):
 \]
 lo que se ve como una convolución tradicional para calcular con FFT. Tenemos entonces que $\text{IDF}[i] = (s^{\text{rev}} * r)[m-1+i]$. Calculamos
 todos los valores de IDF con una sola FFT en $O((n+m)\log(n+m))$. Finalmente evaluamos para cada indice $i$ si cae en  $[\,F, \infty)$ (feliz), en $[1, E]$ (enojado) o ninguna.
-\\\\\
-\textbf{Código}
-\\\\
-Ver \href{https://codeforces.com/group/DH4HPwQlLU/contest/689800/submission/375949012}{código}.
+\subsection*{Código}
+Ver \href{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/hailMary.cpp}{código}.
 
-\subsection*{Nikita and Order Statistics (Codeforces 993E)}
-\textbf{Hint1}
-\\\\
+\section*{5.5.4 Nikita and Order Statistics (Codeforces 993E)}
+\subsection*{Hint1}
 ¿Realmente importa qué número es $a_i$ o sólo si es menor o mayor que $x$? Piensa en $1$s y $0$s.
-\\\\
-\textbf{Hint2}
-\\\\
+\subsection*{Hint2}
 Consideremos un arreglo $b$ de $1$s y $0$s, donde $b_i=1$ si $a_i < x$. ¿Cómo contamos eficientemente para cada intervalo $(l,j)$ cuántos números menores a $x$ hay? Correcto, con prefijos (por eso es útil que sea un arreglo de $1$s y $0$s).
- \\\\
-\textbf{Hint3}
-\\\\
+\subsection*{Hint3}
 Piensa en $f[v]$ como la cantidad de veces que aparece $v$ en los prefijos, dado un $k$ ¿qué cuenta $f[v] \cdot  f[v+k]?$
-\\\\ 
-\textbf{Solución}
-\\\\
+\subsection*{Solución}
 Lo primero que tenemos que hacer es definir nuestro arreglo $b$ de $1$s y $0$s y calcular los prefijos, es decir un arreglo $s$ tal que $s_i=b_0+b_1+\cdots+b_i$. Notemos entonces que para un $k$ la respuesta a la que llamaremos $\text{res}[k]$ es la cantidad de pares $(i,j)$ tal que $i < j$ y $s_j-s_i=k$.
 \\\\
 Definimos $f[v]$ como la cantidad de $i$ tal que $s_i=v$, esto lo podemos calcular rapidamente al mismo tiempo que calculamos los $s_i$, para cada uno simplemente incrementamos $f[s_i]$ en $1$. Para $k>0$, como los prefijos son no decrecientes (es una suma acumulada de $0$s y $1$s), $s_j - s_i = k > 0$ implica $j > i$, entonces:
@@ -171,21 +140,16 @@ cuenta todos los pares $(i,j)$ con $s_i = s_j$ sin restricción de orden incluye
 \[
 \text{ans}[0] = \frac{(f * \tilde{f})[n] - (n+1)}{2}
 \]
-\textbf{Código}
+\subsection*{Código}
 Ver \href{https://codeforces.com/contest/993/submission/375820964}{código}.
 
 
-\subsection*{Running Competition (Codeforces 1398G)}
-\textbf{Hint1}
-\\\\
+\section*{5.5.5 Running Competition (Codeforces 1398G)}
+\subsection*{Hint1}
 Cualquier vuelta es un rectángulo, es decir $L=2y+2(a_j-a_i)$ con $i < j$, de donde $l_i$ tiene que ser par porque $2y$ y $2(a_j-a_i)$ son ambos pares. Es decir, queremos el mayor $d$ tal que $d+y$ divida a $\frac{l_i}{2}$ y existan $i$ y $j$ tal que $d=a_j-a_i$.
-\\\\
-\textbf{Hint2}
-\\\\
+\subsection*{Hint2}
 Queremos todas las diferencias de pares...¿Qué algoritmo usamos cuando queremos contar pares con cierta suma rápido?
- \\\\
-\textbf{Solución}
-\\\\
+\subsection*{Solución}
 Definimos $f[v]=1$ si $v\in \{a_0, \cdots, a_n\}$, de lo contrario $f[v]=0$. Definamos $\tilde{f}[i]=f[x-i]$ y calculemos la convolución $f * \tilde{f}$:
 \[
 (f * \tilde{f})[x-d] = \sum_{v} f[v] \cdot f[v+d]
@@ -194,23 +158,15 @@ Notemos que este valor es positivo si y solo si existe algún par $(a_i, a_j)$
 con $a_j - a_i = d$. Encontrar esto para todas las diferencias $d \in \{1, \ldots, x-1\}$ en $O(x \log x)$ se calcula eficientemente con FFT.
 \\\\
 Finalmente, tenemos que responder las queries, para cada etapa $l_t$, queremos el mayor divisor de $l_t' = l_t/2$ de la forma $d + y$ donde $d$ es una diferencia válida. Llamemosle $D = d + y$, entonces $D$ es un divisor válido si $D-y=d$ es una diferencia válida. Este último cambio de variable nos permite buscar directamente divisores de $l_t'$ y verificar en $O(1)$ si son válidos.\\\\A continuación, iteraremos sobre los divisores de $l_t'$ en orden decreciente, esto lo hacemos revisando los enteros de $1$ a $\sqrt{l_t'}$ y agregando los que le dividan a un arreglo, recordemos que es mejor usar la condición $i*i<l_t'$ que $i<\sqrt{l_t'}$ para no meternos con decimales. Tras esto, verificaremos en $O(1)$ si $D - y$ es diferencia válida usando el arreglo obtenido de la convolucion. Es decir, revisaremos que $D>y$ y que la posición $D-y$ no sea $0$.
-\\\\
-\textbf{Código}
-\\\\
+\subsection*{Código}
 Ver \href{https://codeforces.com/contest/1398/submission/375853380}{código}.
 
-\newpage
-\subsection*{Rumbo al Mundial}
-\textbf{Hint1}
-\\\\
+\section*{5.5.6 Rumbo al Mundial}
+\subsection*{Hint1}
 Ignoremos por un momento que hay varios semáforos. Si los conductores solamente tuvieran que pasar por un único semáforo. ¿De cuántas formas podría ocurrir que el tiempo de espera sea $k$? ¿Qué sucede si hay dos semáforos?
-\\\\
-\textbf{Hint2}
-\\\\
+\subsection*{Hint2}
 Puede que se necesite multiplicar más de dos polinomios, ¿cómo podemos organizarlos para hacerlo eficientemente?
-\\\\
-\textbf{Solución}
-\\\\
+\subsection*{Solución}
 Si solamente hubiera un semáforo con tiempo $t_1$, hay exactamente una forma en la que el conductor espera cada uno de los tiempos. Entonces dado un $k$ la cantidad de formas en las que la suma total de espera de $1$ semáforo sea $k$ (a lo que denotaremos $f_{t_1}[k]$)la podemos ver como:
 \[
 f_{t_1}[k] = \begin{cases} 1 & \text{si } 0 \leq k \leq t_1 - 1 \\ 0 & \text{en otro caso} \end{cases}
@@ -232,43 +188,33 @@ Nótese que $f_{S1}$ y $f_{S_2}$ se calculan como hicimos arriba para dos semáf
 Esto nos sugiere que dado un conjunto de semáforos $S={t_1,t_2,\cdots,t_m}$, podemos dividir a $S$ a la mitad y calcular la solución para una de las mitades. En cada mitad lo que haremos será volver a dividir a la mitad y así consecutivamente hasta quedarnos con el problema de conjuntos de $1$ o $2$ semáforos que ya sabemos resolver. ¿Por qué esto es más eficiente? En lugar de hacer $m$ productos de tamaño creciente, hacemos $O(log m)$ multiplicaciones. Consierando que el tamaño total de los polinomios en cada nivel es $W=t_1+t_2+\cdots+t_m$, la complejidad total es $O( W log^2 W)$.
 \\\\
 Finalmente iteramos un contador $j$ de $1$ a $T$ y acumulamos en una suma cuántas formas tienen suma $j$, así, podemos refilledstarlo a $W$ y obtener cuántas formas tienen suma mayor a $T$.
-\\\\\
-\textbf{Código}
-Ver \href{https://codeforces.com/group/DH4HPwQlLU/contest/689800/submission/375961337}{código}.
+\subsection*{Código}
+Ver \href{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/mundial.cpp}{código}.
 
-
-
-
-\section*{Teoría de números}
-\subsection*{Digits Sum (Codeforces 1553A)}
-\subsubsection*{Hint1}
+\section*{6.10.1 Digits Sum (Codeforces 1553A)}
+\subsection*{Hint1}
 ¿Qué pasa si el último dígito de un número es $9$?
-\subsubsection*{Solución}
+\subsection*{Solución}
 Notemos que para cualquier número $x$, si su último dígito no es $9$ entonces $f(x+1)=f(x)+1$. En el caso en el que el último dígito sea $9$, tendremos que al sumarle $1$, el último dígito se convertirá en $0$, de forma que $f(x+1)< f(x)$. Solamente tenemos que contar cuántos números terminan en $9$ de $1$ a $n$. Como solo hay uno cada $10$ tenemos que la respuesta es:
 \[\lfloor \frac{n+1}{10} \rfloor\]
-\\\\
-\textbf{Código}
-\\\\
+\subsection*{Código}
 Ver \href{https://codeforces.com/contest/1553/submission/376093836}{código}.
 
-\subsection*{Two Divisors (Codeforces 1916B)}
+\section*{6.10.2 Two Divisors (Codeforces 1916B)}
 \subsection*{Hint1}
 Si $b$ es el mayor divisor de $x$ diferente de $x$, entonces $\frac{x}{b}$ es el menor divisor de $x$ mayor a $1$. Es decir, es el primo más pequeño que divide a $x$.
 \subsection*{Solución}
 Primero veamos el caso donde $a$ no divide a $b$. Podemos sacar $m=mcm(a,b)$, este será el entero más pequeño que es divisible tanto por $a$ como por $b$, como $b$ no es múltiplo de $a$, $m$ es más grande que ambos. Además, como $a$ y $b$ son los mayores divisores de $x$ el siguiente número que ambos dividan es $x$ mismo, por lo que $m$ es la respuesta.
 \\\\Para el caso donde $a$ divide a $b$, tenemos que $b=ap$ con $p$ el primo más pequeño que divide a $x$ de donde $x=bp=b\frac{b}{a}$.
-\\\\
-\textbf{Código}
-\\\\Ver \href{https://codeforces.com/contest/1916/submission/376094814}{código.}
+\subsection*{Código}
+Ver \href{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/1916B.cpp}{código.}
 
-\subsection*{Exponentiation II (CSES 712)}
-\subsubsection*{Hint 1}
+\section*{6.10.3 Exponentiation II (CSES 712)}
+\subsection*{Hint 1}
 ¿Tienen $a$ y $10^9+7$ algún divisor en común?
- 
-\subsubsection*{Hint 2}
+\subsection*{Hint 2}
 ¿Podemos sustituir $b^c$ por algo más pequeño y manejable usando algún teorema?
-
-\subsubsection*{Solución}
+\subsection*{Solución}
 La primera observación importante es que $a,b,c$ son a lo más $10^9$, por lo que $b^c$ puede ser enorme, de forma que calcular $a^{b^c}$ directamente usando exponenciación binaria sería muy lento.
 \\\\
 Notemos que $a\leq 10^9$ por lo que como $10^9+7$ es primo, son coprimos entre sí. Lo anterior, nos permite usar el pequeño teorema de fermat que nos dice que si $\text{mcd}(a,p)=1$:
@@ -276,32 +222,26 @@ Notemos que $a\leq 10^9$ por lo que como $10^9+7$ es primo, son coprimos entre s
 De lo anterior tenemos que
 \[a^{b^c} \equiv a^{b^c \text{mod (p-1)}} \text{mod } p\]
 Ahora, podemos calcular $b^c \, mod (p-1)$, con exponenciación binaria, de forma que nos queda un número $x\leq 10^9+6$, y ahora podemos calcular $a^x$ de la misma forma. Debemos tener cuidado con el caso $a=0$, en este caso $a^{b^c}=0$.
-\\\\
-\textbf{Código}
-\\\\
+\subsection*{Código}
 Ver \href{https://cses.fi/paste/59f7146d402d82ade95b1e/}{código}.
 
-\section*{Short Task (Codeforces 1512G)}
+\section*{6.10.4 Short Task (Codeforces 1512G)}
 \subsection*{Hint1}
 ¿Qué información podemos guardar para responder las queries en $O(1)$?
 \subsection*{Solución}
 Notemos que calcular $n$ para cada querie es muy costoso en cuestión de tiempo. ¿Qué información necesitamos para responder una querie rápido? Notemos que si tuvieramos calculado $d(n)$ para cada $n\leq 10^7$, podríamos recorrerlo una única vez para guardar para cada entero $x$ menor o igual a $10^7$ el menor $n$ tal que $d(n)=x$. Esto nos permitiría contestar la querie directamente porque ya tendríamos la respuesta guardada en un arreglo. La pregunta resulta entonces, ¿cómo calcular $d(n)$ para cada $n \leq 10^7$ eficientemente?
 \\\\
 En lugar de calcular $d(n)$ para cada $n$ individualmente, podemos calcularlo para todos a la vez, es decir, para $k \in [1, 10^7]$ sumaremos $k$ a todos sus múltiplos porque eso es lo que contribuye a $d()$ de cada múltiplo. Este proceso es una idea parecida a la criba de Eratóstenes, y similarmente su complejidad es $O(n log n)$.
-\\\\
-\textbf{Código}
-\\\\
+\subsection*{Código}
 Ver \href{https://codeforces.com/contest/1512/submission/196458896}{código}.
 
-\section*{Fantastic Beasts (Latin American Regional 2018)}
-\subsubsection*{Hint 1}
+\section*{6.10.5 Fantastic Beasts (Latin American Regional 2018)}
+\subsection*{Hint 1}
 Como hay $Z \leq 100$ zoológicos, después de $100$ unidades de tiempo, la bestia se estará moviendo en ciclo.
- 
-\subsubsection*{Hint 2}
+\subsection*{Hint 2}
 Para un zoológico $z$, los tiempos en que la bestia $i$
 está en $z$ (si es que llega a estar) se pueden ver como una congruencia.
- 
-\subsubsection*{Solución}
+\subsection*{Solución}
 Notemos que como después de $Z$ unidades de tiempo, todas las bestias se estarán moviendo en ciclos, entonces lo primero que podemos hacer es revisar para cada una de las primeras $Z$ unidades dónde está cada bestia, si al menos dos no están en el mismo zoológico, significa que en esa unidad no están todas juntas, entonces nos pasamos a la siguiente. Si encontramos una unidad de tiempo donde todas las bestias están en el mismo zoólogico ya tenemos nuestra respuesta.
 \\\\
 En caso de que no hayamos encontrado nuestra respuesta en las primeras $Z$ unidades de tiempo, ahora todos los movimientos de las bestias serán en ciclo, para cada una tenemos que encontramos en qué tiempo está en cada uno de los zoólogicos y nótese que para un zoólogico $z_i$ si una bestia $j$ que se mueve en un ciclo de longitud $c_j$ lo visita en la unidad de tiempo $t$, también lo visitará en la unidad de tiempo $t+c_j$, es decir la bestia estará en ese zoólogico en una unidad de tiempo $x$ si:
@@ -309,24 +249,19 @@ En caso de que no hayamos encontrado nuestra respuesta en las primeras $Z$ unida
 \\\\Para cada zoólogico $z_i$ revisaremos que todas las bestias pasen por él en algun momento de su ciclo (de lo contrario ese zoólogico no puede ser la respuesta) y después, para cada bestia obtendremos la congruencia usando el tiempo en el que visitó el zoólogico y la longitud de su ciclo. Aplicaremos el teorema chino del residuo para resolver el sistema de congruencias lo que nos devolverá el menor tiempo posible en el que todas las bestias están en $z_i$ a la vez (o $-1$ en caso de que nunca pueda pasar). La respuesta será el menor tiempo sobre todos los zoólogicos.
 \\\\
 La idea del problema es sencilla; sin embargo se recomienda tener cuidado con la implementación para poder indicar correctamente cuando un zoólogico no aparece en un ciclo.
-\\\\
-\textbf{Código}
-\\\\
-Ver \href{https://matcomgrader.com/submission/187329/}{código.}
+\subsection*{Código}
+Ver \href{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/9547.cpp}{código.}
 
-\section*{Sushi Lovers}
-\subsubsection*{Hint 1}
+\section*{6.10.6 Sushi Lovers (Autoría $\filledstar$)}
+\subsection*{Hint 1}
 El chef $i$ está disponible en la hora $t$ si y solo si
 $t \equiv r_i \pmod{d_i}$. Para preparar un rollo, todos sus
 chefs deben coincidir en la misma hora. ¿Cómo resolvemos un sistema de congruencias eficientemente?
- 
-\subsubsection*{Hint 2}
+\subsection*{Hint 2}
 Los $d_i$ son potencias de 2 con $d_i \leq 2^{20}$, así que
 solo hay 21 periodos posibles. ¿Cómo podemos responder
 cada query en $O(\log M)$ en lugar de $O(M)$?
- 
-\subsubsection*{Solución}
- 
+\subsection*{Solución}
 El chef $i$ está disponible en la hora $t$ si y solo si:
 \[
 t \equiv r_i \pmod{d_i}
@@ -372,32 +307,50 @@ Verificar esto para cada querie y cada rollo tendría una complejidad de $O(MQ) 
     \item Si $\ell < L$, necesitamos contar cuántos $t$ están en $[h \text{ mod } L,\ (h+\ell)\text{ mod } L]$. Esto lo podemos hacer con búsqueda binaria siguiendo las condiciones vistas arriba.
           
 \end{itemize}
-\textbf{Código}
-\\\\Ver \href{https://codeforces.com/group/DH4HPwQlLU/contest/689800/submission/376221450}{código}.
+\subsection*{Código}
+Ver \href{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/sushiLovers.cpp}{código}.
 
-\subsection*{Pociones Locas}
-\subsubsection*{Hint1}
+\section*{6.10.7 Pociones Locas (Autoría $\filledstar$)}
+\subsection*{Hint1}
 Los libros se comportan de forma ciclica módulo $mcm(p_1, p_2, p_3, p_4)$.
-\subsubsection*{Hint2}
+\subsection*{Hint2}
 ¿Podemos precalcular información para resolver las queries en tiempo constante?
-\subsubsection*{Solución}
+\subsection*{Solución}
 Para resolver este prpblema en tiempo, tenemos que precalcular información.  Para cada uno de los $n$ libros podemos calcular $S(x)$ en $log(n)$ simplemente sumando cada dígito. Si guardamos un arreglo $f$ de días por cada tipo de libro, podemos sumar $1$ a la posición $f[t][S(x) \text{ mod } p[t]]$.
 \\\\
 Ahora notemos que los libros se van a comportar de forma cíclica módulo $p_t$ donde $t$ es el tipo de cada libro. Sin embargo, nos intersa encontrar un periodo en el cuál todos los libros se muevan de forma cíclica con respecto a el, este periodo será $L=mcm(p_1, p_2, p_3, p_4)$, nótese que como los $p_i$ pueden compartir divisores esto es mucho de forma general a $p_1p_2p_3p_4$. Véase el caso para $p=(4,6,4,6)$, si hacemos el producto es $576$, pero $L=12$.
 \\\\Podemos mantener un arreglo $m[i]$ que acumule para cada día $i$ el índice donde se ha alcanzado el máximo hasta el día $i$. Este arreglo tiene longitud $L$ pues después se comportara igual módulo $L$, es decir, no se alcanzará un máximo que no se haya alcanzado ya.
 \\\\Para cada consulta $k$ revisaremos, si $k \geq L$ entonces se alcanza el máximo de todo el ciclo, es decir $m[L-1]$ nos dará en índice de día donde se alcanza el máximo. En otro caso, simplemente revisaremos $m[k-1]$ pues ya lo tenemos calculado. Una vez obtenido el día donde se alcanza el máximo simplemente multiplicaremos cuántos hay de cada tipo ese día, es decir, lo que guardamos en nuestro arreglo $f$.
-\subsubsection*{Código}
-Ver \href{https://codeforces.com/group/DH4HPwQlLU/contest/689800/submission/376335430}{solución}.
+\subsection*{Código}
+Ver \href{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/pociones.cpp}{solución}.
  
-
-\section*{Combinatoria}
-
-\subsection*{Buildings (2017-2018 ACM-ICPC GCPC)}
-\subsubsection*{Hint1}
+\section*{7.11.1 String Distribution (CSES 1715)}
+\subsection*{Hint 1}
+Si todos los carácteres fueran distintos, ¿cuántas permutaciones habría?
+\subsection*{Solución}
+Si todos los $n$ caracteres fueran distintos, habría $n!$ permutaciones posibles. Sin embargo, cuando un carácter aparece $f_i$ veces, las $f_i!$ formas de permutar esas copias entre sí producen cadenas idénticas, por lo que estamos contando cada cadena distinta exactamente $f_1!
+\cdot f_2! \cdots f_{26}!$ veces.
+ 
+Por lo tanto, el número de cadenas distintas es:
+\[
+\frac{n!}{f_1! \cdot f_2! \cdots f_{26}!}
+\]
+donde $f_i$ es la frecuencia de la $i$-ésima letra.
+Como se nos pide la respuesta módulo $10^9+7$ que es primo, la división $\frac{n!}{\prod f_i!}$ se calcula como:
+\[
+n! \cdot \left(\prod_{i} f_i!\right)^{-1} \bmod p
+\]
+usando el inverso modular $a^{-1} \equiv a^{p-2} \pmod{p}$ por el
+pequeño teorema de Fermat.
+\subsection*{Código}
+Ver \href{https://cses.fi/paste/9cb680d81b74829410ac8df/}{código}.
+ 
+\section*{7.11.2 Buildings (2017-2018 ACM-ICPC GCPC)}
+\subsection*{Hint1}
 Si cada pared lo contamos como una cuenta de un solo color, ¿se parece a algún problema que ya hayamos resuelto?
-\subsubsection*{Hint2}
+\subsection*{Hint2}
 Cada pared se puede colorear de $c^{n^2}$ formas.
-\subsubsection*{Solución}
+\subsection*{Solución}
 En este problema tenemos un polígono de $m$ lados, cada pared tiene $n\times n$ cuadros coloreados de $c$ colores. Llamemos $X$ a todas las combinaciones posibles de asignar los colores a todos los cuadros de los $m$ lados. Por el lema de Burnside tenemos que los diseños distintos serán:
 \[\frac{1}{m} \sum_{r=0}^{m-1}|X^{g_r}|\]
 donde $|X^{g_r}|$ son la cantidad de diseños fijos bajo la rotación de $r$ posiciones.
@@ -407,24 +360,24 @@ por lo que la respuesta es
 \[\frac{1}{m}\sum_{r=0}^{m-1}(c^{n^2})^{gcd(r,m)}\]
 Ahora, notemos que varios valores de $r$ tendrán el mismo $gcd(r,m)$, entonces $r=d\cdot k$ con $gcd(k,m/d)=1$ y $0 < k <m/d$, la cantidad de esos $k$ es exactamente $\phi(m/d)$, por lo que podemos agrupar por $gcd$, es decir:
 \[\frac{1}{m}\sum_{d|m}\phi(m/d)\cdot c^{n^2 \cdot d}\]
-\subsubsection*{Código}
-Ver \href{https://codeforces.com/gym/101873/submission/377209650}{código}.
+\subsection*{Código}
+Ver \href{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/101873B.cpp}{código}.
 
-\subsection*{Blue Lock Gone Wild}
-\subsubsection*{Hint1}
+\section*{7.11.3 Blue Lock Gone Wild}
+\subsection*{Hint1}
 Podemos traducir el problema a un problema de caminos que no pasan la diagonal.
-\subsubsection*{Solución}
+\subsection*{Solución}
 Pensemos que los duelos ganados y perdidos de Isagi se pueden representar en una gráfica, en el eje $x$ tendremos la cantidad de juegos ganados y en $y$ la cantidad de perdidos, nótese que la condición de siempre ganar más o la misma cantidad de duelos que los que se pierdan se traduce en que $(x,y)$ nunca puede tocar la diagonal $y=x+1$. Es decir queremos contar la cantidad de caminos de $(0,0)$ a $(n,n)$, tal que nunca tocamos esa diagonal.
 \\\\
 Usemos una estrategia similar a la que usamos en el problema de los paréntesis, tomemos cualquier camino no válido y consideremos el primer punto $p$ donde toca la diagonal $y=x+1$. Reflejemos la secuencia de direcciones desde ese punto al final del camino, es decir, cada paso hacia arriba (duelo perdido) por paso hacia la derecha (duelo ganado) y viceversa. Nótese que la parte final del camino original va de $p=(k,k+1)$ para algún $k$ a $(n,n)$ usando $n-k$ pasos a la derecha y $n-k-1$ pasos hacia arriba. Después de reflejar, como se invirtieron los pasos, tendremos que llegamos a $(k+(n-k-1,k+1+(n-k)))=(n-1,n+1)$. Esto nos da una biyección entre los caminos no válidos y los caminos de $(0,0)$ a $(n-1,n+1)$, los cuales son $\binom{2n}{n-1}$. Entonces la respuesta es el total de caminos de $(0,0)$ a $(n,n)$ quitándole los inválidos, es decir:
 \[\binom{2n}{n}-\binom{2n}{n-1}=\binom{2n}{n}-\frac{n}{n+1}\binom{2n}{n}=\frac{1}{n+1}\binom{2n}{n}\]
 Nótese que entonces tenemos que calcular el $n$-ésimo número de Catalán.
-\subsubsection*{Código}
-Ver \href{https://codeforces.com/group/DH4HPwQlLU/contest/689800/submission/377211921}{código}.
+\subsection*{Código}
+Ver \href{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/bluelock.cpp}{código}.
 
-\subsection*{El torneo de los 3 magos (here we go again)}
-\subsubsection*{Hint1}
-\subsubsection*{Solución}
+\section*{7.11.4 El torneo de los 3 magos (here we go again)}
+\subsection*{Hint1}
+\subsection*{Solución}
 Notemos que el estado del laberinto queda completamente descrito por qué mago está en qué fila, es decir una permutación $\pi$ donde $\pi[f]$ es el índice $i$ del mago que ocupa la fila $f$. Si sabemos la permutación actual, podemos determinar exactamente qué mago enfrenta qué criatura en la siguiente columna.
 \\\\
 En cada columna, cubrimos las $n$ filas con baldosas. Cada baldosa
@@ -479,16 +432,81 @@ dp[j+1][\pi'] \mathrel{+}= dp[j][\pi]
 \text{ans} = \sum_{\pi} dp[m][\pi]
 \]
 
-\subsubsection*{Código}
-Ver \href{https://codeforces.com/group/DH4HPwQlLU/contest/689800/submission/377214365}{código}.
+\subsection*{Código}
+Ver \href{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/magos.cpp}{código}.
 
+\section*{7.11.5 The Wall (medium) (Helvetic Coding Contest 2016)}
+\subsection*{Hint 1}
+Intenta reducir el problema a barras y estrellas.
+\subsection*{Solución}
+Sea $x_i \geq 0$ el número de ladrillos en la columna $i$, y $x_{\text{pile}} \geq 0$ los ladrillos que sobran. Queremos contar las soluciones de:
+\[
+x_1 + x_2 + \cdots + x_C + x_{\text{pile}} = n,
+\quad x_i \geq 0,
+\quad \sum_{i=1}^{C} x_i \geq 1
+\]
+El número de soluciones sin la restricción $\sum x_i \geq 1$ es $\binom{n+C}{C}$ (barras y estrellas con $C+1$ variables). Restamos el único caso donde $\sum x_i = 0$, es decir, $x_{\text{pile}} = n$ y todas las columnas vacías, por lo que la respuesta es:
+\[
+\binom{n+C}{C} - 1
+\]
+Notemos que $\binom{n+C}{C} = \frac{(n+C)!}{n! \cdot C!}$. Como $p = 10^6+3$ es primo y $n+C \leq 700000 < p$, $(n+C)!$, $n!$ y $C!$ no son divisibles por $p$. Entonces podemos calcular la división modular usando el pequeño Teorema de Fermat.
+\subsection*{Código}
+Ver \href{https://codeforces.com/problemset/submission/690/377859415}{código}.
 
-\section*{Geometría}
-\subsection*{Beyblades por decena}
-\subsubsection*{Hint1}
-El estadio mínimo que contiene todas las trayectorias de todos los
-beyblades es el convex hull de cierta unión de polígonos. ¿Cuáles?
-\subsubsection*{Solución}
+\section*{8.7.1 Balloons (ICPC)}
+\subsection*{Hint 1}
+La información que nos interesa de un segmento es cuál es el siguiente segmento que tocaría el globo de empezar en el, ¿podemos precalcular el "siguiente" de cada segmento?
+\subsection*{Solución}
+En lugar de simular el rebote del globo para cada query por
+separado, calculamos una sola vez, para cada segmento inclinado, cuál es el siguiente segmento que tocaría un globo si saliera de su punto más alto hacia arriba. Una vez que sabemos esto para todos los segmentos, resolver una query se reduce a seguir una cadena de "siguientes" segmentos hasta llegar a un segmento horizontal (atascado) o no encontrar ninguno (escapa).
+
+Recorremos la sala de izquierda a derecha. En cada momento
+mantenemos el conjunto de segmentos que cruzan la línea vertical actual, ordenados de abajo hacia arriba según la altura a la que los corta esa línea. Este orden se puede mantener con un conjunto ordenado, comparando dos segmentos mediante productos cruz para evitar la división.
+ 
+Los eventos que procesamos, ordenados por $x$, son:
+\begin{itemize}
+    \item el extremo izquierdo de cada segmento (donde \emph{entra}
+          al conjunto de activos),
+    \item cada query (la posición $x$ donde se lanza un globo),
+    \item el extremo derecho de cada segmento (donde \emph{sale}
+          del conjunto de activos).
+\end{itemize}
+ 
+Cuando un segmento entra y su extremo izquierdo es su punto más alto (es decir, el segmento desciende de izquierda a derecha por lo que un globo que llegara a ese extremo rebotaría hacia arriba). El siguiente segmento que tocaría a es el que está arriba de él en el conjunto de activos, justo en el momento en que lo insertamos. Guardamos esa
+información para este segmento.
+ 
+Cuando un segmento sale y su extremo derecho es su punto
+más alto (el segmento asciende de izquierda a derecha, por lo que un  un globo que llegara a ese extremo derecho rebotaría hacia arriba, y el siguiente segmento es el que está arriba de él justo antes de eliminarlo).
+ 
+Cuando un segmento horizontal sale, no hay
+"siguiente", pues un globo que toca un segmento horizontal se queda atascado ahí mismo.
+ 
+Cuando procesamos una query en la posición $x$, el
+primer segmento que tocaría un globo lanzado desde el suelo es el segmento más bajo entre los activos en ese momento
+(o ninguno, si no hay segmentos activos en cuyo caso el globo escapa sin tocar nada).
+ 
+Una vez prepocesados los segmentos, para resolver una query:
+ 
+\begin{enumerate}
+    \item Empezaremos en el primer segmento que toca el globo (calculado arriba).
+    \item Si no hay ningún segmento, el globo escapa en la
+          posición $x$ de lanzamiento.
+    \item Si el segmento es horizontal, el globo se atasca  ahí.
+    \item Si es inclinado, continuamos con el "siguiente segmento" que ya calculamos.
+\end{enumerate}
+ 
+Una optimización que podemos hacer es notar que la cadena de "siguientes" es la misma para todas las
+queries que pasan por un mismo segmento. Podemos guardar el resultado final de cada segmento la primera vez que lo calculamos, para no recorrer la misma cadena más de una vez.
+
+\subsection*{Código}
+Ver \href{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/101473B.cpp}{código}.
+ 
+\section*{8.7.2 Beyblades por decena}
+\subsection*{Hint1}
+El estadio mínimo que contiene todas las trayectorias de todos los beyblades es el convex hull de cierta unión de polígonos. ¿Cuáles?
+\subsection*{Hint2}
+En un segmento de línea con extremos enteros hay $gcd(|x_2-x_1|,|y_2-y_1|)+1$ puntos enteros.
+\subsection*{Solución}
 Para que el interior del beyblade $i$ no choque con el estadio en ningún momento de su trayectoria, el estadio debe contener al beyblade en todas sus posiciones posibles. La trayectoria es un segmento de $p_1$ a $p_2$,
 entonces las posiciones extremas del beyblade son el polígono $b_i$
 trasladado a $p_1$ y el polígono $b_i$ trasladado a $p_2$.
@@ -528,16 +546,15 @@ Notemos que el número de puntos con coordenadas enteras en un segmento de $(x_1
 \[(x_1+t\frac{x_2-x_1}{d},y_1+t\frac{y_2-y_1}{d})\]
 en donde $d=gcd(|x_2-x_1|,|y_2-y_1|)$ y $t\in \{1,\ldots d\}$. Es decir, hay $d+1$ puntos en total contando ambos extremos, es decir $d-1$ más $2$ extremos. Podemos calcular esto para cada arista del polígono convexo del estadio para calcular $B$. $A$ lo podemos calcular con la fórmula de shoelace.
 
-\textbf{Complejidad:} $O(nk \log(nk))$ donde $n$ es el número de
-beyblades y $k$ el número máximo de vértices por beyblade.
+La complejidad es $O(nk \log(nk))$ donde $n$ es el número de beyblades y $k$ el número máximo de vértices por beyblade.
 
-\subsubsection*{Código}
-Ver \href{https://codeforces.com/group/DH4HPwQlLU/contest/689800/submission/377230507}{código}.
+\subsection*{Código}
+Ver \href{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/beyblade.cpp}{código}.
 
-\subsection*{Poligon.io}
-\subsubsection*{Hint 1}
+\section*{8.7.3 Poligon.io}
+\subsection*{Hint 1}
 ¿Basta con verificar si los vértices de un polígono están dentro de otro? Pensar en ejemplos con polígonos no convexos.
-\subsubsection*{Solución}
+\subsection*{Solución}
 Para determinar si el jugador $i$ es conquistado por el jugador $j$,
 necesitamos verificar si el polígono $i$ está completamente
 dentro del polígono $j$. Esto requiere dos condiciones:
@@ -563,5 +580,226 @@ dentro del polígono $j$. Esto requiere dos condiciones:
 \end{figure}
 Un jugador sobrevive si no es conquistado por ningún otro. La
 respuesta es el número de jugadores no conquistados.
-\subsubsection*{Código}
-Ver \href{https://codeforces.com/group/DH4HPwQlLU/contest/689800/submission/377242520}{código}.
+\subsection*{Código}
+Ver \href{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/paper.cpp}{código}.
+
+\section*{8.7.4 Birthday Cake (2024 ICPC Gran Premio de México 2da Fecha)}
+
+\subsection*{Hint 1}
+El segmento entre dos puntos enteros $a=(a_x,a_y)$ y
+$b=(b_x,b_y)$ tiene $g := \gcd(|a_x-b_x|,\ |a_y-b_y|) + 1$ puntos enteros.
+\subsection*{Hint 2}
+Verificar cada par de puntos enteros para ver si cumple la condición de tener al menos $N$ puntos es $O(M^2)$, demasiado lento. Busca una condición sobre las coordenadas de $a$ y $b$ módulo $N-1$ que garantice que el segmento tiene suficientes puntos enteros y piensa por qué la convexidad  del pastel hace que sea equivalente.
+\subsection*{Solución}
+El segmento entre dos puntos enteros $a=(a_x,a_y)$ y
+$b=(b_x,b_y)$ tiene $g := \gcd(|a_x-b_x|,\ |a_y-b_y|) + 1$ puntos enteros (incluyendo ambos extremos). Por lo tanto, $a$ admite un segmento con al menos $N$ puntos enteros usando $b$ como otro extremo si y solo si $\gcd(|a_x-b_x|,|a_y-b_y|) \geq N-1$. Llamemos $m = N-1$.
+
+\textbf{Afirmación:} para $a \neq b$ puntos con coordenadas enteras en un polígono convexo entonces:
+\[
+\gcd(|a_x-b_x|,|a_y-b_y|) \geq m
+\iff
+a_x \equiv b_x \pmod{m} \ \text{y}\ a_y \equiv b_y \pmod{m}
+\]
+
+\textit{($\Leftarrow$)} Si $m \mid (a_x-b_x)$ y
+$m \mid (a_y-b_y)$, entonces $m$ divide a
+$\gcd(|a_x-b_x|,|a_y-b_y|)$, y como $a\neq b$ este $\gcd$ es
+positivo, y mayor o igual a $m$.
+
+\textit{($\Rightarrow$)} Sea
+$g = \gcd(|a_x-b_x|,|a_y-b_y|) \geq m$. El vector
+$v=\left(\frac{b_x-a_x}{g}, \frac{b_y-a_y}{g}\right)$ es entero. Definimos
+\[
+c = a + m \cdot \left(\frac{b_x-a_x}{g}, \frac{b_y-a_y}{g}\right)
+\]
+Como $0 \leq m/g \leq 1$, el punto $c$ está sobre el segmento $[a,b]$ y como el polígono es convexo, $c$ también
+está dentro del polígono. Además $c$ tiene coordenadas enteras, y $c - a = m \cdot v$, así que
+$c_x \equiv a_x \pmod m$ y $c_y \equiv a_y \pmod m$. Como
+$m \geq 1$ y el vector primitivo no es nulo, $c \neq a$.
+
+Por lo tanto, para cada punto entero $a$ dentro o en el borde del polígono, $a$ es válido si y solo si existe otro punto entero $c$ en el pastel con $(c_x \bmod m, c_y \bmod m) = (a_x \bmod m, a_y \bmod m)$.
+
+Entonces: contamos cuántos puntos enteros del pastel caen en
+cada una de las $m \times m$ clases de congruencia. Si una
+clase tiene $\geq 2$ puntos, todos los puntos de esa clase son válidos.
+
+Ahora, lo que falta es encontrar las coordenadas de los puntos. Para cada columna entera $x \in [0,5000]$, el polígono (convexo) intersecta esa columna en un intervalo
+$[y_{\min}(x), y_{\max}(x)]$, calculable manteniendo los bordes superior e inferior del polígono mientras avanzamos en $x$ (línea de barrido). Los puntos enteros de esa columna son $(x,y)$ para $y \in [\lceil y_{\min}(x)\rceil, \lfloor y_{\max}(x)\rfloor]$.
+
+Para cada $x$, incrementamos el conteo de la clase
+$(x \bmod m,\ y \bmod m)$ para cada $y$ del rango, como el
+rango es contiguo, los residuos $y \bmod m$ siguen un patrón
+periódico que se puede contar en $O(m)$ por columna.
+
+Una segunda pasada recorre de nuevo las columnas, para cada
+punto entero, si su clase tiene conteo $\geq 2$, se cuenta como válida.
+
+La complejidad es $O(5000 \cdot m)$ para ambas pasadas.
+\subsection*{Código}
+Ver \href{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/105216.cpp}{código}.
+
+\section*{9.11.1 Finding a centroid}
+\subsection*{Hint1}
+Si elegimos un vértice del árbol, ¿cómo sabemos que es un centroide?
+\subsection*{Solución}
+Un vértice $c$ es centroide si cada subárbol tiene a lo más $\frac{n}{2}$ vértices. Empezamos en el vértice $1$ y calculamos el tamaño de los subárboles, si todos son menores a $\frac{n}{2}$ ya encontramos el centroide, de lo contrario existe un único hijo $u$ tal que su subárbol tiene tamaño mayor a $\frac{n}{2}$ (si hubiera dos, la suma excedería $n$). 
+
+El subárbol hacia arriba de $u$ tiene $n-sz[u] < \frac{n}{2}$, donde $sz[u]$ es el tamaño de subárbol de $u$ que dijimos era mayor a $\frac{n}{2}$, por lo que si elegimos a $u$ como candidato para centroide, ya no tenemos que preocuparnos por todos los vértices que no estaban en su subárbol, pues ya cumplen la condición, simplemente volveremos a evaluar considerando solo los vértices en el subárbol de $u$ y de encontrar algún subárbol con más de $\frac{n}{2}$ vértices, volvemos a realizar el mismo procedimiento hasta encontrar el centroide.
+\subsection*{Código}
+Ver \href{https://cses.fi/paste/155eeecc0f435b8c10ac77e/}{código}.
+
+\section*{9.11.2 Zuko vs Aang $\filledstar$}
+\subsection*{Hint 1}
+Para calcular la probabilidad de encontrar a Aang en un nodo $v$, queremos calcular la suma
+$\sum_u P(u \to v) \cdot [\text{sum}(u \to v) \leq k]$
+sobre todos los nodos $u$. ¿Qué técnica permite descomponer
+sumas sobre pares de nodos en un árbol?
+ 
+\subsection*{Solución}
+ 
+Como Zuko no puede repetir templos y el grafo es un árbol, el
+único camino de $u$ a $v$ es el camino directo. Si Zuko se desvía
+en algún nodo intermedio, nunca puede regresar porque ya visitó ese
+nodo. Entonces la probabilidad de que Zuko visite $v$ partiendo
+de $u$ es la probabilidad de que siga exactamente el camino
+directo $u = w_0, w_1, \ldots, w_t = v$.
+ 
+En cada nodo $w_i$ del camino, Zuko elige con la misma probabilidad entre sus vecinos no visitados. El único vecino ya visitado es $w_{i-1}$ (de donde vino), excepto en $w_0$ donde no ha visitado a nadie.
+Entonces la probabilidad de llegar a $v$ desde $u$ es:
+\[
+P(u \to v) = \prod_{i=0}^{t-1} \frac{1}{\text{deg'}(w_i)}
+\quad \text{donde} \quad
+\text{deg'}(w_i) = \begin{cases}
+\deg(w_0) & \text{si } i = 0 \\
+\deg(w_i) - 1 & \text{si } i > 0
+\end{cases}
+\]
+ 
+Recordemos también, que el camino sólo es válido si la suma acumulada de espiritualidades es $\leq k$:
+\[
+\sum_{i=0}^{t} e_{w_i} \leq k
+\]
+ 
+Como tenemos $n$ nodos, la probabilidad de empezar en cualquiera de ellos es $\frac{1}{n}$, de donde para cada nodo $v$ la probabilidad de encontrarle es:
+\[
+P_v = \frac{1}{n} \sum_{u=1}^{n} P(u \to v) \cdot
+\left[\sum_{w \in \text{camino}(u,v)} e_w \leq k\right]
+\]
+Una vez que desglosamos lo que necesitamos calcular, viene el problema de no poder calcularlo con fuerza bruta , la suma $\sum_u P(u \to v)$ recorre todos los pares $(u,v)$. Calcularla directamente cuesta $O(n^2)$. La \textbf{descomposición de centroide} permite descomponer esta suma eficientemente, para cada centroide $c$, contamos los pares $(u,v)$ cuyo camino pasa por $c$.
+
+Si el camino $u \to v$ pasa por el centroide $c$, se descompone
+en $u \to c \to v$. Definimos dos probabilidades:
+ 
+\begin{itemize}
+    \item \texttt{pt}: la probabilidad de que
+          Zuko, empezando en $u$, siga el camino hasta $c$:
+          \[
+          \texttt{pt}[u] = \frac{1}{\deg(u)} \cdot
+          \prod_{\substack{w \in \text{camino}(u,c) \\ w \neq u}}
+          \frac{1}{\deg(w) - 1}
+          \]
+ 
+    \item \texttt{pf}: la probabilidad
+          de que Zuko, empezando en $c$, siga el camino hasta $v$:
+          \[
+          \texttt{pf}[v] = \frac{1}{\deg(c)} \cdot
+          \prod_{\substack{w \in \text{camino}(c,v) \\ w \neq c}}
+          \frac{1}{\deg(w) - 1}
+          \]
+\end{itemize}
+ 
+Hay un detalle sutil, cuando $c$ es vértice \textbf{intermedio} del
+camino $u \to c \to v$ (no inicio), Zuko llega a $c$ desde la
+dirección de $u$ y tiene $\deg(c) - 1$ opciones (no puede volver).
+Entonces la probabilidad de $c \to v$ como vértice intermedio es:
+\[
+\texttt{pf$_{m}$}[v] = \frac{1}{\deg(c)-1} \cdot
+\prod_{\substack{w \in \text{camino}(c,v) \\ w \neq c}}
+\frac{1}{\deg(w) - 1}
+= \texttt{pf}[v] \cdot \frac{\deg(c)}{\deg(c)-1}
+\]
+El factor \texttt{f$_m$} $= \frac{\deg(c)}{\deg(c)-1}$
+convierte \texttt{pf} en \texttt{pf$_{m}$}.
+ 
+Para cada centroide $c$, recorremos cada subárbol y guardaremos para cada vértice $u$ visitado la suma de espiritualidades de $c$ a $u$ (si es mayor a k, ya no exploramos más), pt[$u$], pf[$u$]. Una vez que tenemos la información anterior. Procesaremos los subárboles uno por uno y calcularemos cuánto contribuyen a la respuesta de cada templo $i$ (res[$i$]):
+ 
+\textit{Caso 1: $u = c$ (Zuko empieza en $c$).}
+\\\\
+Zuko visita $c$ automáticamente (contribuye 1 a \texttt{res[$c$]}
+si $e_c \leq k$). Para cada nodo $v$ en un subárbol, la
+probabilidad de visitarlo es \texttt{pf}$[v]$, así que sumamos \texttt{pf}$[v]$ a \texttt{res[$v$]}.
+ 
+\textit{Caso 2: $v = c$ (Zuko quiere llegar a $c$).}
+\\\\
+Para cada nodo $u$ en un subárbol, la probabilidad de que visite
+$c$ es \texttt{pt}$[u]$, así que sumamos \texttt{pt[$u$]} a \texttt{res[$c$]}.
+ 
+\textit{Caso 3: $u$ y $v$ en subárboles distintos.}
+\\\\
+La probabilidad de que Zuko visite $v$ iniciando en $u$ y pasando
+por $c$ es $\texttt{pt}[u] \cdot \texttt{pf$_mid$}[v]$, con la
+restricción $\texttt{sum}[u] + \texttt{sum}[v] - e_c \leq k$ (la suma del camino completo es la suma hasta $c$ más la suma desde $c$,
+restando $e_c$ porque se cuenta dos veces).
+ 
+Ahora, no podemos simplemente contar todos los pares de vértices porque buscamos vértices que estén en diferentes subárboles.
+\\\\Si tuvieramos los subárboles $A$, $B$ y $C$, lo que podemos hacer es procesar los subárboles en orden manteniendo un arreglo llamado \texttt{prev}, es decir, primero procesamos $A$ y metemos todos sus vértices en \texttt{prev}. Luego, procesamos $B$ contamos los pares $(u,v)$, ($u \in \texttt{prev}, v \in \text{B}$) y ($u \in \text{B}, v \in \texttt{prev}$), y agregamos $B$ a $\texttt{prev}$. Cuando queramos procesar $C$, queremos los pares $(u,v)$ tal que $u\in C, v \in (A \cup B)$ o $u\in (A \cup B), v \in C$, pero los elementos de $A\cup B$ son exactamente \texttt{prev}, entonces podemos simplemente hacer lo mismo que hicimos con $B$, y después agregar $C$ a \texttt{prev}.
+
+Para cada par $(u,v)$ la probabilidad de llegar a $v$ empezando en $u$ es $\texttt{pt}[u]*\texttt{pf}_m[v]$ siempre que se cumpla $\texttt{sum}[u]+\texttt{sum}[v]-e_c \leq k$, es decir, $\texttt{sum}[u] \leq k - \texttt{sum}[v]+ e_c$. Nótese que podemos guardar un arreglo \texttt{prevOrden} de pares $\{\texttt{sum}, \texttt{pt}\}$ ordenado por $\texttt{sum}$ de todos los vértices en $\texttt{prev}$, así para cada $v$, podemos hacer una búsqueda binaria sobre \texttt{prevOrden} para saber qué $u$ sí considerar, es decir:
+\[\texttt{res}[v]=\sum_{\substack{u \in \texttt{prev} \\ sum[u]\leq t_v}} \texttt{pt}[u]\cdot \texttt{pf}_m[v]\]
+donde $t_v$ es $k - \texttt{sum}[v]+ e_c$.
+
+Ahora, la suma anterior nos costaría $O(n)$, pero como $\texttt{pf}_m[v]$ es constante, podemos precalcular la suma en una suma de prefijos de \texttt{prevOrden} y realizar un solo producto.
+\[\texttt{res}[v] =\texttt{pf}m[v] \cdot \sum_{\substack{u \in \texttt{prev} \\ sum[u]\leq t_v}} \texttt{pt}[u]\]
+
+Para cada par $(u,v)$ estamos agregando a la respuesta la probabilidad de llegar a $v$ empezando a $u$, pero falta la otra dirección: la probabilidad de llegar a $u$ empezando en $v$, para esto simplemente podemos utilizar una estrategia análoga a la de arriba, un arreglo de pares ${\texttt{sum}, \texttt{pt}}$ llamado \texttt{sub} ordenado por \texttt{sum}, pero esta vez, el arreglo será de los vértices del subárbol actual, así como su suma de prefijos. Después, iteraramos sobre nuestro arreglo \texttt{prev} y para cada uno haremos una búsqueda binaria sobre \texttt{sub} para encontrar qué $v$ podemos usar (misma lógica de despejar la resta). Tras esto, de forma análoga a cómo que hicimos anteriormente, a $\texttt{res}[u]$ le sumaremos $\texttt{pf}_m[u]\cdot \sum_{\substack{v \in \texttt{sub} \\ sum[v]\leq t_u}} \texttt{pt}[v]$, donde la suma la tenemos calculada en el arreglo de suma de prefijos.
+\\\\
+Nótese que cada que pasemos a un nuevo subárbol, debemos reconstruir las sumas de prefijos porque agregamos nuevos elementos a \texttt{prev} que deben incluirse en las búsquedas siguientes.
+\subsection*{Código}
+Ver \href{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/avatar.cpp}{código}.
+
+\section*{Pursuit For Artifacts (Codeforces 652E)}
+
+\subsection*{Hint 1}
+Cada puente se puede cruzar a lo más una vez, en cualquier dirección. Si una región de la gráfica no tiene puentes ¿qué vértices dentro de ella puedes visitar sin "gastar" la posibilidad de salir hacia el resto de la gráfica?
+
+\subsection*{Hint 2}
+Contrae cada componente sin puentes a un solo vértice. ¿Qué estructura tiene la gráfica construida, y qué representan sus aristas?
+
+\subsection*{Solución}
+
+Usando $Tarjan$ encontraremos los puentes de la gráfica, después, por cada componente que encontremos, la contraeremos en un vértice. La gráfica resultante es un árbol cuyas aristas son exactamente los puentes
+originales.
+
+Si la componente que contiene a $a$ (o a $b$, o cualquier componente en el camino entre ambas) tiene una arista con artefacto, Johnny puede desviarse, recoger el artefacto, y seguir su camino sin necesidad de cruzar ningún puente dos veces. Esto es porque dentro de una componente sin puentes siempre existen rutas alternativas que no reutilizan las mismas aristas para entrar y salir por los puntos necesarios.
+
+Marcamos cada vértice del árbol de componentes con $1$ si esa componente contiene alguna arista interna con artefacto. Cada arista del árbol también tiene su propio valor $0/1$. La respuesta es \textbf{YES} si y solo si, en el camino del árbol desde la componente de $a$ hasta la de $b$, hay algún $1$. Esto último lo podemos verificar con un $BFS/DFS$ en la gráfica construida.
+
+Nota de implementación: con $n$ hasta $3\times10^5$, las DFS recursivas (para encontrar puentes) pueden causar \textit{stack overflow} en gráficas tipo cadena. Conviene implementarlas \textbf{iterativamente} con una pila explícita. La complejidad es $O(n+m)$.
+
+\subsection*{Código}
+Ver \href{https://codeforces.com/contest/652/submission/217948279}{código}.
+
+\section*{Brick Walls (Codeforces 1404E)}
+
+\subsection*{Hint 1}
+Una celda no puede pertenecer a un ladrillo horizontal y a un ladrillo
+vertical al mismo tiempo (de lo contrario el ladrillo no sería un
+rectángulo $1\times k$ o $k\times 1$), por lo que es una gráfica bipartita.
+
+\subsection*{Solución}
+
+Empezamos con ladrillos $1\times1$ donde cada celda es su propio ladrillo, por lo que necesitamos $r$ ladrillos, donde $r$ es el número de celdas negras. Cada vez que fusionamos dos ladrillos adyacentes
+en una sola pieza más grande, el conteo total de ladrillos se reduce en 1.
+
+Llamamos borde-V a la frontera entre dos celdas negras verticalmente adyacentes $(i,j)$ y $(i+1,j)$, y
+borde-H a la frontera entre dos celdas horizontalmente adyacentes $(i,j)$ y $(i,j+1)$. Fusionar los ladrillos de dos celdas conectadas por un borde-V corresponde a extender un ladrillo verticalmente; análogamente, un borde-H extiende
+horizontalmente.
+
+Construimos una gráfica bipartita, en un lado los bordes-V y en otros los bordes-H. Conectamos un borde-H con un borde-V si comparten una celda. Queremos elegir el máximo conjunto de bordes a activar tal que ninguna arista tenga sus dos vértices en el conjunto. Es decir, buscamos el conjunto independiente máximo, este es el total de
+vértices $-$ los vértices en la cobertura mínima. En una gráfica bipartita, por el teorema de König, la mínima cobertura de vértices es el matching máximo que podemos calcular con flujo máximo.
+
+Por lo tanto la respuesta es la cantidad total de bordes quitándole el matching máximo.
+\subsection*{Código}
+Ver \href{https://codeforces.com/contest/1404/submission/254010265}{código}.
+
+
