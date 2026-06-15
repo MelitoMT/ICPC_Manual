@@ -1,7 +1,7 @@
 Desde inicios de la civilización el contar ha sido de utilidad, y aunque para cosas simples como contar el cambio de una compra basta con contar moneda por moneda, cuando queremos contar cosas más grandes como el número de placas posibles en la ciudad de México o la cantidad de diferentes manos de poker que puedes tener, contar una por una no es un método eficiente ni confiable pues lo más probable es que cometamos un error, es aquí donde entra la necesidad de otras técnicas que estudiaremos a continuación.
 \section{Bases}
 \subsection*{Principio de multiplicación}
-Supongamos que vamos a comprar un helado en una tienda donde puedes escoger cono de sabor vainilla o chocolate, helado de fresa, mango o chicle y de toppings chispas de chocolate o cereal, ¿cuántas maneras diferentes hay de elegir un helado?
+Supongamos que vamos a comprar un helado en una tienda donde puedes escoger cono de sabor vainilla o chocolate, helado de fresa, mango o chicle y de toppings chispas de chocolate o cereal, ¿cuántas maneras diferentes hay de elegir un helado diferente?
 \\\\Pensemos que así como podemos elegir la combinación {vainilla, fresa, chispitas} podemos elegir la combinación {chocolate, fresa, chispitas} o {vainilla, mango, cereal}, hay bastantes formas de combinar los sabores y notemos que el hecho de que elijamos un sabor de cono, no limita para nada nuestra eleccion de helado o de topping. Es así como llegamos a la conclusión que por cada sabor de cono podemos elegir cualquiera de los 3 helados y cualquiera de los 2 toppings, y cada combinación será diferente, de donde tendremos $2\times 3 \times 2=12$ formas de elegir un helado.
 \\\\Esto se llama \textbf{principio de multiplicación} y nos dice que si una tarea se divide en $k$ etapas \textbf{independientes}, es decir la elección de una etapa no limita las opciones de las demás, con $n_1, n_2, \ldots, n_k$ formas de realizar cada una, el número total de formas de completar la tarea es $n_1 \cdot n_2 \cdots n_k$.
  
@@ -11,21 +11,30 @@ Ahora supongamos que en la heladería nos dicen que además de los helados, ofre
  
 \subsection*{Principio del complemento}
 
-Imaginemos que queremos comprar un helado que no sea de chicle, ¿de cuántas formas podemos hacerlo?, calcularlo directamente sería ver todas las opciones que no tienen chicle, a veces esta tarea es más complicada que calcular lo opuesto, es decir, vamos a contar cuántos helados diferentes tienen chicle, notemos que si el sbaor de helado esta fijo, tenemos 2 opciones de cono y 2 de toppings, es decir 4 opciones. Ahora podemos simplemente restar a los 12 que teníamos, la cantidad que sí teinen chicle, dejandonos con 8. Esta idea se llama \textbf{principio del complemento} y nos conviene usarla cuando los casos no deseados tienen una estructura más simple que los deseados.
+Imaginemos que queremos comprar un helado que no sea de chicle, ¿de cuántas formas podemos hacerlo?, calcularlo directamente sería ver todas las opciones que no tienen chicle, a veces esta tarea es más complicada que calcular lo opuesto, es decir, vamos a contar cuántos helados diferentes tienen chicle, notemos que si el sabor de helado esta fijo, tenemos 2 opciones de cono y 2 de toppings, es decir 4 opciones. Ahora podemos simplemente restar a los 12 que teníamos, la cantidad que sí tienen chicle, dejandonos con 8. Esta idea se llama \textbf{principio del complemento} y nos conviene usarla cuando los casos no deseados tienen una estructura más simple que los deseados.
  
 \subsection*{Principio del palomar}
 
- En la heladería además hay una promoción para motivar la convivencia, si llegan dos personas con el mismo cumpleaños juntas, se les regalará a ambas personas un helado, ¿cuántas personas se necesitan para asegurar que alguien tendrá un helado gratis? Podríamos pensar que se necesitan muchisimas, pero en realidad solo necesitamos 367, esto porque en el peor caso cada una de las primeras 366 personas va a cumplir un día diferente (incluyendo 29 de febrero) y cuando llegue la persona número 367 como todos los cumpleaños ya tienen una persona que cumple ese día, forzosamente compartirá cumpleaños con alguien. Esto nos dice que en una escuela de 5000 estudiantes no solamente tendrá 2 personas que cumplan el mismo día, si no que pensando en el peor caso con la misma lógica de arriba, habrá 14 personas que compartan cumpleaños con alguien más. A esta idea se le llama \textbf{principio del palomar}.
+ En la heladería además hay una promoción para motivar la convivencia, si llegan dos personas con el mismo cumpleaños juntas, se les regalará a ambas personas un helado, ¿cuántas personas mínimas se necesitan para asegurar que alguien tendrá un helado gratis? Podríamos pensar que se necesitan muchisimas, pero en realidad solo necesitamos 367, esto porque en el peor caso cada una de las primeras 366 personas va a cumplir un día diferente (incluyendo 29 de febrero) y cuando llegue la persona número 367 como todos los cumpleaños ya tienen una persona que cumple ese día, forzosamente compartirá cumpleaños con alguien. Con la misma lógica, en una escuela de 5000 estudiantes no basta con saber que \emph{algún} par comparte cumpleaños: el principio del palomar también nos dice cuántas personas pueden caer, como mínimo, en el \emph{mismo} día. Hay $366$ ``casillas'' posibles (los días del año, contando 29 de febrero); si repartimos $5000$ estudiantes lo más parejo posible entre esas casillas, a cada día le tocan al menos $\lfloor 5000/366\rfloor = 13$ personas, pero sobran $5000 - 366\cdot 13 = 242$ estudiantes que obligan a que al menos $242$ días tengan una persona extra. En consecuencia, \textbf{algún} cumpleaños concentra al menos $14$ personas ($\lceil 5000/366\rceil = 14$): en el peor reparto posible habrá un día con catorce estudiantes que cumplen ese mismo día (y por tanto comparten cumpleaños entre sí). A esta idea se le llama \textbf{principio del palomar}.
 
 \section{Permutaciones}
 
-Supongamos que queremos escoger el nuevo CEO y VP de una lista de 5 candidatos y queremos saber de cuántas formas diferentes se puede hacer, a esto se le llama \textbf{permutación} 
+Supongamos que queremos escoger el nuevo CEO y VP de una lista de 5 candidatos y queremos saber de cuántas formas diferentes se puede hacer, a esto se le llama \textbf{permutación}: estamos \emph{ordenando} una selección de $2$ personas distintas entre $5$, porque el cargo importa (CEO $\neq$ VP).
+
+\textit{Ejemplo (cómo agrupar las opciones).} Si los candidatos son $A,B,C,D,E$, una forma natural de organizar las $20$ parejas es \textbf{fijar primero al CEO} y listar quién puede ser VP:
+\begin{itemize}
+  \item CEO $A$: VP puede ser $B,C,D,E$ $\to$ \texttt{(A,B), (A,C), (A,D), (A,E)} (4 parejas);
+  \item CEO $B$: VP puede ser $A,C,D,E$ $\to$ 4 parejas;
+  \item y así con CEO $C$, $D$ o $E$.
+\end{itemize}
+Son $5$ grupos de $4$ parejas cada uno, o sea $5\cdot 4 = 20$ en total. Otra agrupación equivalente es fijar al VP y contar cuántos CEOs quedan; el resultado es el mismo porque en una permutación \emph{el orden de las etapas sí importa}: escoger primero CEO y después VP no es lo mismo que contar combinaciones, donde el par $\{A,B\}$ no distingue quién va en cada puesto.
+
 El número de permutaciones de tomar $r$ elementos tomados de un conjunto de $n$ distintos es:
 \[
 P(n, r) = n \cdot (n-1) \cdots (n-r+1) = \frac{n!}{(n-r)!}
 \]
 
-Esto es así porque pensemos que si tenemos $n$ opciones para la primera elección, una vez que lo escogimos, nos queda $n-1$ opciones y así hasta que hayamos hecho las $r$ elecciones. Nótese que cuando $n=r$ estamos calculando de cuántas formas se puede reordenar un conjunto completo y usando la fórmula se vuelve simplemente $n!$, esto nos dice que en el ejemplo de arriba las formas de escoger al CEO y VP son $P(5,2)=20$.
+Esto es así porque pensemos que si tenemos $n$ opciones para la primera elección, una vez que lo escogimos, nos queda $n-1$ opciones para la segunda elección, y así hasta que hayamos hecho las $r$ elecciones. Nótese que cuando $n=r$ estamos calculando de cuántas formas se puede reordenar un conjunto completo y usando la fórmula se vuelve simplemente $n!$, esto nos dice que en el ejemplo de arriba las formas de escoger al CEO y VP son $P(5,2)=20$.
  
 \subsection*{Permutaciones con repetición}
 
@@ -40,7 +49,7 @@ El denominador divide las repeticiones que no generan acomodos distintos, de for
  \[\dfrac{11!}{1!\,4!\,4!\,2!} = 34\,650\]
 
 \section{Combinaciones}
-Si ahora quisieramos de los 5 empleados agarrar 2 para que formen parte de una brigada no podemos aplicar directamente lo que aprendimos en permutaciones porque aquí el orden no importa, si primero elegimos al número 4 y luego al 2, es lo mismo que si elegieramos al 2 y después al 4, no hay distincion pues ambos formaran parte de la brigada. Lo que si aprendimos es que las formas de permutar un conjunto de $r$ elementos es $r!$, entonces notemos que podemos calcular las permutaciones y luego dividir entre $r!$ que son los ordenamientos de cada selección que producen el mismo subconjunto, es decir si queremos hacer una selección de $r$ elementos de un conjunto de $n$ donde el orden no importa.El número de combinaciones es:
+Si ahora quisieramos de los 5 empleados agarrar 2 para que formen parte de una brigada no podemos aplicar directamente lo que aprendimos en permutaciones porque aquí el orden no importa, si primero elegimos al número 4 y luego al 2, es lo mismo que si elegieramos al 2 y después al 4, no hay distincion pues ambos formaran parte de la misma brigada. Lo que si aprendimos es que las formas de permutar un conjunto de $r$ elementos es $r!$, entonces notemos que podemos calcular las permutaciones y luego dividir entre $r!$ que son los ordenamientos de cada selección que producen el mismo subconjunto, es decir si queremos hacer una selección de $r$ elementos de un conjunto de $n$ donde el orden no importa.El número de combinaciones es:
 \[
 \binom{n}{r} = \frac{P(n,r)}{r!} = \frac{n!}{r!\,(n-r)!}
 \]
@@ -74,9 +83,9 @@ Algunas propiedades útiles para recordar son (se recomienda al lector intentar 
 \begin{itemize}
     \item Simetría: $\binom{n}{r} = \binom{n}{n-r}$
     \item Factorizacion: $\binom{n}{r} = \frac{n}{k}\binom{n-1}{n-1}$
-    \item Identidad de pascal: $\binom{n-1}{r-1} + \binom{n-1}{r}=\binom{n}{r}$
-    \item Suma sobre k: $\sum_{k=0}^{n}\binom{n}{k}=2^n$
-    \item Suma sobre m: $\sum_{m=0}^{n}\binom{m}{k}=\binom{n+1}{k+1}$
+    \item Identidad de pascal: $\binom{n-1}{r-1} + \binom{n-1}{r} = \binom{n}{r}$
+    \item Suma sobre $k$: $\sum_{k=0}^{n}\binom{n}{k}=2^n$
+    \item Suma sobre $m$: $\sum_{m=0}^{n}\binom{m}{k}=\binom{n+1}{k+1}$
     \item Suma alternada: $\sum_{r=0}^{n} (-1)^r\binom{n}{r} = 0$
     \item Suma de cuadrados: $\binom{n}{0}^2+\binom{n}{1}^2+\cdots+\binom{n}{n}^2=\binom{2n}{n}$
 \end{itemize}
@@ -90,8 +99,15 @@ ll nCr(ll n,ll k){
     return comb;
 }
 \end{lstlisting}
-La implementacion anterior es corta, pero es importante ser cuidadosos con la implementación pues es muy fácil obtener overflow,
-en general lo más usual en programación competitiva es precalcular los factoriales
+La implementación anterior es corta, pero conviene ser cuidadosos: $\binom{n}{k}$ crece muy rápido (por ejemplo $\binom{100}{50}$ ya no cabe en un entero de 64 bits) y es fácil obtener \textbf{overflow}. En programación competitiva, además, la respuesta casi siempre se pide \textbf{módulo} un primo $M$ (típicamente $10^9+7$ o $998244353$) justamente porque esos valores son demasiado grandes para imprimirlos tal cual. La estrategia habitual es \textbf{precalcular} factoriales e \textbf{inversos factoriales} módulo $M$ una sola vez, y después responder cada consulta en $O(1)$ con
+\[
+\binom{n}{k} \equiv \texttt{fac}[n]\cdot \texttt{invFac}[k]\cdot \texttt{invFac}[n-k] \pmod M.
+\]
+En el precálculo, \texttt{fac}[$i$] guarda $i!\bmod M$. El arreglo \texttt{inv}[$i$] guarda el \textbf{inverso modular} de $i$, es decir el entero tal que $i\cdot \texttt{inv}[i]\equiv 1\pmod M$ (requiere que $M$ sea primo y $\gcd(i,M)=1$)\footnote{La existencia del inverso y la recurrencia para calcular todos los \texttt{inv}[$i$] en $O(M)$ se ven en la sección de inversos con módulo.}. Con esos inversos se construyen los \textbf{inversos factoriales}: $\texttt{invFac}[0]=1$ y, para $i\ge 1$,
+\[
+\texttt{invFac}[i] = \texttt{invFac}[i-1]\cdot \texttt{inv}[i] \bmod M,
+\]
+de modo que \texttt{invFac}[$i$] $=(i!)^{-1}\bmod M$. \textit{Ejemplo} con $M=7$: como $3\cdot 5=15\equiv 1\pmod 7$, tenemos $\texttt{inv}[3]=5$; entonces $\texttt{invFac}[3]=\texttt{inv}[1]\cdot\texttt{inv}[2]\cdot\texttt{inv}[3]=1\cdot 4\cdot 5=20\equiv 6\pmod 7$, y efectivamente $3!=6\equiv -1\pmod 7$, cuyo inverso es $6$. Así, $\binom{5}{2}=10\equiv 3\pmod 7$ coincide con $\texttt{fac}[5]\cdot\texttt{invFac}[2]\cdot\texttt{invFac}[3]=1\cdot 4\cdot 6\equiv 3\pmod 7$.
 \begin{lstlisting}[language=C++]
 long long fac[MX], invFac[MX], inv[MX];
 void precalcComb () {
@@ -111,7 +127,7 @@ void precalcComb () {
 	}
 }
 \end{lstlisting}
-y después dependiendo de si queremos calcularlo con modulo o no utilizamos alguna de las siguientes implementaciones respectivamente
+Una vez hecho el precálculo, cada $\binom{n}{k}$ módulo $M$ se obtiene con una sola línea. Como alternativa más lenta (sin arreglo \texttt{invFac}) se puede dividir módulo $M$ multiplicando por el inverso de cada factorial con exponenciación binaria; en la práctica se usa casi siempre la versión precalculada.
 \begin{lstlisting}[language=C++]
 long long nCr(long long n, long long r, long long mod){
     if (r == 0) return 1;
@@ -127,13 +143,16 @@ long long comb (int n, int k) {
 \end{lstlisting}
 \section{Principio de Inclusión-Exclusión}
 
-En ocasiones cuando tengamos conjuntos querremos saber cuántos elementos tiene su unión, podríamos pensar que si los conjuntos son $A$ y $B$ basta con hacer la suma $|A| +|B|$, sin embargo, es probable que los conjuntos no sean disjuntos, es decir, que haya elementos que pertenezcan tanto a $A$ como $B$, en ese caso, les estaríamos contando doble, es por esto que en realidad $|A \cup B|=|A| + |B| - |A \cap B|$, es decir, restamos una vez los que se están contando doble.
+En ocasiones cuando tenemos conjuntos querremos saber cuántos elementos tiene su unión, podríamos pensar que si los conjuntos son $A$ y $B$ basta con hacer la suma $|A| +|B|$, sin embargo, es probable que los conjuntos no sean disjuntos, es decir, que haya elementos que pertenezcan tanto a $A$ como $B$, en ese caso, les estaríamos contando doble. \textit{Ejemplo.} Si $A=\{1,2,3,4\}$ y $B=\{3,4,5,6\}$, entonces $|A|+|B|=8$, pero $A\cup B=\{1,2,3,4,5,6\}$ solo tiene $6$ elementos: el $3$ y el $4$ aparecieron una vez al contar $A$ y otra al contar $B$. Es por esto que en realidad $|A \cup B|=|A| + |B| - |A \cap B|$, es decir, restamos una vez los que se están contando doble (aquí $|A\cap B|=|\{3,4\}|=2$ y $6=8-2$).
 \\\\Similarmente si tuviesemos tres conjuntos $A,B,C$, notemos que al sumar $|A|+|B|+|C|$ estamos contando los elementos que están en dos de los conjuntos doble como en el caso de dos conjuntos, pero no solo eso, pues los elementos que están en los tres conjuntos, están siendo contados tres veces, y al restar todas las intersecciones de dos conjuntos se están restando tres veces, por lo que habrá que sumarlos, es decir
 \[|A \cup B \cup C=|A|+|B|+|C|-|A \cap B|-|A \cap C|-|B \cap C|+|A \cap B \cap C|\]
 usando esta misma lógica para $n$ conjuntos nos da el llamado \textbf{principio de inclusión-exclusión}, este nos dice que si tenemos $A_1,\cdots, A_n$ conjuntos entonces tenemos que
 \[|\bigcup_{i=1}^{n}A_i|=\sum_{i=1}^{n}|A_i|-\sum_{i<j}|A_i \cap A_j|+\cdots+(-1)^{n+1}|A_1\cap \cdots \cap A_n|\]
-Esta fórmula podría parecer muy abstracta para utilizarse, por eso resolveremos un problema: Dados $N,L,R$ queremos calcular los números $x$ en el intervalo $[L,R]$ tal que $x$ es coprimo con $N$. 
-\\\\Nótese que si hacemos $f(X)$ el número de $x$ corpimos con $N$ en el intervalo $[1,X]$, la respuesta será $f(R)-f(L-1)$. Si bien podríamos intentar calcular la cantidad de números coprimos con $N$ en el intervalo, es más fácil calcular lo opuesto, es decir, cuántos comparten un factor primo con $N$. 
+Esta fórmula general puede parecer abstracta; la aplicamos en el ejercicio siguiente.
+
+\textbf{Ejercicio.} Dados $N$, $L$ y $R$, calcular cuántos enteros $x$ del intervalo $[L,R]$ son coprimos con $N$ (\href{https://acm.hdu.edu.cn/showproblem.php?pid=4135}{Co-prime, LCPC 2011}). \textit{Ejemplo.} Con $N=6$, $L=1$ y $R=10$ se piden los $x\in\{1,2,\ldots,10\}$ con $\gcd(x,6)=1$; como $6=2\cdot 3$, basta que $x$ no sea múltiplo de $2$ ni de $3$, y los que cumplen son $1$, $5$ y $7$, así que la respuesta es $3$.
+
+\textit{Solución.} Nótese que si hacemos $f(X)$ el número de $x$ coprimos con $N$ en el intervalo $[1,X]$, la respuesta será $f(R)-f(L-1)$. Si bien podríamos intentar calcular la cantidad de números coprimos con $N$ en el intervalo, es más fácil calcular lo opuesto, es decir, cuántos comparten un factor primo con $N$.
 \\\\Con la criba podemos encontrar todos los factores primos $p_1,p2_,\cdots,p_r$ de $N$. Ahora, sea $D_i$ los números divisibles por $p_i$ en el intervalo $[1,X]$, entonces $|D_i|=\lfloor \frac{X}{p_i} \rfloor$ por inclusión exclusión tenemos que:
 \[|D_1 \cup D_2 \cup \cdots \cup D_r|=\sum_{i}\lfloor \frac{X}{p_i} \rfloor - \sum_{i < j}\lfloor \frac{X}{p_i p_j} \rfloor + \sum_{i < j < k}\lfloor \frac{X}{p_i p_j p_k} \rfloor - \cdots\]
 y así tenemos que:
@@ -154,8 +173,7 @@ ll f(ll X, vector<ll>& primes) {
     return X - res;
 }
 \end{lstlisting}
-\textbf{Ejercicio} Completar la implementación del problema 
-\href{https://acm.hdu.edu.cn/showproblem.php?pid=4135}{Co-prime (LCPC 2011)}
+Complete el programa principal usando \texttt{f} para responder en el intervalo $[L,R]$.
 \section{Barras y estrellas}
  Supongamos tenemos $r$ niños y $n$ juguetes, ¿de cuántas formas podemos distribuir los juguetes entre los niños?, en este problema no hay restricciones, un niño puede tener 0 o todos los juguetes. Para resolver este problema usaremos ''palitos'' que separen los juguetes en secciones, por ejemplo, supongamos que tenemos 3 niños y 5 juguetes, entonces un acomodo donde el primer niño reciba dos juguetes, el segundo dos y tercero uno se puede representar de la siguiente forma
  \[\includegraphics[scale=0.7]{imgs/image.png}\]
@@ -165,7 +183,7 @@ ll f(ll X, vector<ll>& primes) {
 
 \section{Lema de Burnside}
 
-Hay una clase de problemas de conteo donde la respuesta no es simplemente contar objetos, sino contar objetos \textbf{distintos bajo simetría}. Tomemos el ejemplo clásico: ¿cuántos collares distintos se pueden hacer con $n$ cuentas de $k$ colores, si dos collares son el mismo cuando uno se obtiene del otro por rotación? Contar directamente sobrecontea el mismo collar $n$ veces (una por cada rotación). El lema de Burnside resuelve exactamente esta clase de problemas.
+Hay una clase de problemas de conteo donde la respuesta no es simplemente contar objetos, sino contar objetos \textbf{distintos bajo simetría}. Tomemos el ejemplo clásico: ¿cuántos collares distintos se pueden hacer con $n$ cuentas de $k$ colores, si dos collares son el mismo cuando uno se obtiene del otro por rotación? Contar directamente sobrecontea el mismo collar $n$ veces (una por cada rotación). \textit{Ejemplo.} Con $n=3$ cuentas y $k=2$ colores (digamos rojo $R$ y verde $G$) hay $2^3=8$ coloraciones si numeramos las posiciones, pero varias son el mismo collar al rotar: \texttt{R-R-G}, \texttt{G-R-R} y \texttt{R-G-R} describen un solo collar; lo mismo \texttt{R-G-G}, \texttt{G-G-R} y \texttt{G-R-G}. En total solo hay $4$ collares distintos (\texttt{RRR}, \texttt{GGG} y esos dos tipos mixtos), no $8$. El lema de Burnside resuelve exactamente esta clase de problemas.
 
 Para formalizar ``dos objetos son el mismo si uno se obtiene del otro por alguna simetría'', necesitamos el concepto de \textbf{acción de grupo}.
 
@@ -366,6 +384,55 @@ Notemos que los dos subpolígonos son independientes, es decir, la triangulació
 \[
 T_n = \sum_{k=1}^{n} T_{k-1} \cdot T_{n-k}
 \]
+En programación competitiva esta recurrencia casi siempre se resuelve con \textbf{programación dinámica} o \textbf{memoización}: guardamos $C_0,C_1,\ldots,C_n$ en un arreglo (una ``tabla'' de una fila) y vamos llenándolo de izquierda a derecha, porque para calcular $C_n$ solo hacen falta valores $C_0,\ldots,C_{n-1}$ ya conocidos. La base es $C_0=1$ (el polígono degenerado con $0$ triángulos internos).
+
+\textit{Ejemplo (cómo se llena la tabla).} Lo más cómodo es imaginar un arreglo de una fila que crece de izquierda a derecha; cada casilla nueva usa solo las anteriores:
+\[
+\underbrace{[\,1\,]}_{C_0}
+\;\to\;
+\underbrace{[\,1,\;1\,]}_{C_0,C_1}
+\;\to\;
+\underbrace{[\,1,\;1,\;2\,]}_{C_0,C_1,C_2}
+\;\to\;
+\underbrace{[\,1,\;1,\;2,\;5\,]}_{C_0,C_1,C_2,C_3}.
+\]
+Para obtener $C_3$ conviene ver la recurrencia como una \textbf{matriz de productos}. Con los valores ya calculados $C_0=1$, $C_1=1$ y $C_2=2$, formamos la matriz $M[i][j]=C_i\cdot C_j$:
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{c|ccc}
+ & $j=0$ & $j=1$ & $j=2$ \\
+\hline
+$i=0$ & $1$ & $1$ & $2$ \\
+$i=1$ & $1$ & $1$ & $2$ \\
+$i=2$ & $2$ & $2$ & $4$ \\
+\end{tabular}
+\end{center}
+La fórmula $C_n=\sum_{k=1}^{n} C_{k-1}C_{n-k}$ equivale a sumar la \textbf{anti-diagonal} donde $i+j=n-1$. Para $n=3$ esa anti-diagonal son las celdas $(0,2)$, $(1,1)$ y $(2,0)$:
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{c|ccc}
+ & $j=0$ & $j=1$ & $j=2$ \\
+\hline
+$i=0$ & $1$ & $1$ & \cellcolor{teal!20}$2$ \\
+$i=1$ & $1$ & \cellcolor{teal!20}$1$ & $2$ \\
+$i=2$ & \cellcolor{teal!20}$2$ & $2$ & $4$ \\
+\end{tabular}
+\end{center}
+\noindent de modo que $C_3 = 2+1+2 = 5$. En el código, el bucle interno recorre esos pares $(i,j)$ con $i=k-1$ y $j=n-k$.
+La implementación recorre $i=1,\ldots,n$ y acumula la suma; cada $C_i$ queda listo antes de calcular $C_{i+1}$:
+\begin{lstlisting}[language=C++]
+vector<ll> catalan(int n) {
+    vector<ll> C(n + 1);
+    C[0] = 1;
+    for (int i = 1; i <= n; i++)
+        for (int k = 1; k <= i; k++)
+            C[i] += C[k - 1] * C[i - k];
+    return C;
+}
+\end{lstlisting}
+
 Esta secuencia de números se llama \textbf{números de Catalan} y se denota $C_n = T_n$. Otra forma de expresar estos números es:
 \[
 C_n = \frac{1}{n+1}\binom{2n}{n}

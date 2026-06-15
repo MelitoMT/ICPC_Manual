@@ -1,14 +1,57 @@
-\chapter*{Conclusiones y Próximos pasos}
 
-Este manual de matemáticas para ICPC buscó que los alumnos pudieran acercarse a temas matemáticos a través de retos concretos. Como parte de la validación de los problemas de autoría, se compartió el grupo de Codeforces con un grupo reducido de compañeros con experiencia en ICPC. El problema \textit{Proyecto Hail Mary} fue el más resuelto (4 de 5 participantes), aunque con un número considerable de intentos fallidos. Si bien la muestra es pequeña, el patrón general indica que el problema requiere un pequeño análisis antes de poder aplicar la herramienta matemática subyacente directamente. Fue gratificante saber que la retroalimentación de los problemas de autoría propia fue positiva, varios alumnos reportaron
-haberse mantenido entretenidos y determinados a resolverlos, incluso cuando implicó aprender técnicas que no conocían.
+\section*{Un puente entre dos enfoques}
 
-Una de las motivaciones detrás de este manual fue mostrar que el contenido de la licenciatura en matemáticas no vive aislado de la programación competitiva; al contrario, gran parte de las herramientas que aquí se desarrollan parten de temas que cualquier estudiante de la Facultad ya ve en su formación. Conocimientos de las materias de tronco común de la facultad fundamentan una gran parte del texto, un poco de teoría de grupos aparece al tocar el lema de Burnside, incluso Variable Compleja se asoma en la intuición detrás de la FFT, donde las raíces de la unidad complejas son el punto de partida antes de trasladar la idea al mundo modular con NTT. Y por supuesto, Teoría de Números y Teoría de Gráficas son, casi en su totalidad, prerrequisitos directos de la mitad de los temas cubiertos aquí. Ojalá este manual ayude a construir un puente, que un problema de Codeforces sea una oportunidad para repasar un teorema visto en clase, y que un teorema visto en clase sea una herramienta más en la mochila al momento de leer
-un problema nuevo.
+En la Facultad de Ciencias conviven, con frecuencia, dos perfiles que rara vez
+se cruzan en profundidad. Por un lado, estudiantes de matemáticas que dominan
+el razonamiento abstracto pero tienden a alejarse de la implementación y de
+los temas ``más de computación''. Por otro, estudiantes de ciencias de la
+computación que se sienten más cómodos programando algoritmos y estructuras de
+datos, pero no siempre retoman con la misma disposición la parte matemática
+que esos algoritmos encierran.
 
-Escribir este manual fue en sí mismo un proceso de aprendizaje. Cada sección obligó a repensar ideas que parecían claras, a buscar la explicación más honesta posible y a encontrar los ejemplos que mejor ilustraran cada concepto. También confirmó lo abrumador que puede resultar la cantidad de recursos disponibles en línea: blogs, editoriales,tutoriales, libros, videos; dispersos, en distintos idiomas, con distintos niveles de rigor o diferentes enfoques. Este manual intentó ser un granito de arena en ese panorama: un recurso en español, con enfoque matemático, pensado para el contexto de la Facultad de Ciencias y las competencias nacionales y regionales del ICPC. Si le es útil a aunque sea un alumno, habrá valido la pena.
+En la práctica de la ICPC ---y en buena parte de la programación competitiva---
+ninguno de los dos enfoques basta por separado. Un buen desempeño exige
+\textbf{ambos}: reconocer la estructura matemática de un problema \emph{y}
+traducirla a código eficiente bajo restricciones de tiempo y memoria. Esa
+brecha se percibe con claridad en la facultad, donde la preparación para el
+concurso suele quedar repartida entre quienes aportan la teoría y quienes
+aportan la práctica, sin un material común que dialogue con los dos lados.
 
-\section*{Trabajo futuro}
+Este manual nació precisamente con esa intención: \textbf{acercar ambos mundos}.
+Para el estudiante de matemáticas, muestra cómo herramientas del plan de
+estudios se vuelven decisivas en problemas concretos. Para quien viene del
+lado computacional, ofrece el trasfondo teórico que a menudo falta en los
+recursos orientados solo a algoritmos. No pretende fusionar las dos carreras,
+sino ofrecer un espacio donde sus fortalezas se complementen en el contexto
+específico de la competencia.
+
+\section*{Objetivo y alcance docente}
+Una de las motivaciones detrás de este trabajo fue mostrar que el contenido de la licenciatura en matemáticas no vive aislado de la programación competitiva; al contrario, gran parte de las herramientas que aquí se desarrollan parten de temas que cualquier estudiante de la Facultad vio ---o verá--- en el aula. Conocimientos de las materias de tronco común de la facultad fundamentan una gran parte del texto. Y por supuesto, Teoría de Números y Teoría de Gráficas son, casi en su totalidad, prerrequisitos directos de la mitad de los temas cubiertos aquí.
+
+El trabajo buscó que los alumnos se acercaran a temas matemáticos a través de retos, no como recetas de implementación sino como ideas con trasfondo teórico, materializando un puente entre la formación matemática de la licenciatura y la preparación para competencias de programación, que un problema de Codeforces pueda ser una oportunidad para repasar un tema visto en clase, y que un tema visto en clase sea una herramienta más en la mochila al momento de leer un problema nuevo.
+ 
+Cada capítulo combina exposición conceptual, ejercicios resueltos, problemas propuestos y editoriales con \textit{hints} antes de la solución completa.
+Esa progresión responde a una decisión pedagógica deliberada: favorecer un aprendizaje activo de forma similar a un seminario.
+
+\section*{Aportaciones y evidencia}
+Más allá de la redacción del material, el trabajo incluyó actividades concretas de docencia:
+
+\begin{itemize}
+    \item Problemas de autoría propia (marcados con $\filledstar$), probados
+          por concursantes de ICPC reales; la retroalimentación fue positiva: varios
+          alumnos reportaron mantenerse entretenidos y motivados incluso cuando tuvieron que aprender técnicas nuevas.
+    \item Un grupo en Codeforces para practicar y validar enunciados antes
+          de su publicación definitiva.
+    \item Un recurso en español con referencias bibliográficas y enlaces a
+          demostraciones completas para quien desee profundizar, equilibrando
+          la practicidad que exige la competencia con el rigor que caracteriza
+          la formación matemática.
+\end{itemize}
+
+Escribir el manual fue, además, un proceso de aprendizaje: cada sección obligó a repensar ideas que parecían claras, buscar la explicación más honesta posible y encontrar ejemplos que las ilustraran bien.
+También confirmó lo disperso que puede resultar el material disponible en línea: blogs, editoriales, tutoriales en distintos idiomas y niveles de rigor. Si este documento le resulta útil aunque sea a un estudiante de la facultad, el objetivo docente se habrá cumplido.
+
+\section{Trabajo futuro}
 
 Hay varias direcciones naturales para extender este trabajo:
 
@@ -22,3 +65,6 @@ puede llevar al lector a esperar de antemano qué herramienta usar. Se propone a
 \textbf{Más problemas de autoría propia.} Los problemas marcados con $\filledstar$ fueron muy bien recibidos por los lectores por intentar incluir narraciones cercanas a ellos que los motivara a resolverlos.
 Extender la lista, especialmente con problemas que combinen varias áreas del manual, sería una contribución valiosa para una edición futura.
 
+\textbf{Uso en la facultad.} El manual podría servir como material de
+apoyo en seminarios del club Pu++ o en cursos donde se quiera mostrar
+aplicaciones algorítmicas de contenidos ya vistos en clase.

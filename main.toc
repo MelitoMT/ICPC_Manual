@@ -57,43 +57,45 @@
 \contentsline {section}{\numberline {7.1}Bases}{51}{section.7.1}%
 \contentsline {section}{\numberline {7.2}Permutaciones}{52}{section.7.2}%
 \contentsline {section}{\numberline {7.3}Combinaciones}{53}{section.7.3}%
-\contentsline {section}{\numberline {7.4}Principio de Inclusión-Exclusión}{54}{section.7.4}%
+\contentsline {section}{\numberline {7.4}Principio de Inclusión-Exclusión}{55}{section.7.4}%
 \contentsline {section}{\numberline {7.5}Barras y estrellas}{56}{section.7.5}%
-\contentsline {section}{\numberline {7.6}Lema de Burnside}{56}{section.7.6}%
-\contentsline {subsection}{\numberline {7.6.1}Órbitas y puntos fijos}{57}{subsection.7.6.1}%
-\contentsline {section}{\numberline {7.7}Números de Catalan}{58}{section.7.7}%
-\contentsline {section}{\numberline {7.8}Números de Stirling de segundo tipo}{59}{section.7.8}%
-\contentsline {section}{\numberline {7.9}Números de Bell}{59}{section.7.9}%
-\contentsline {section}{\numberline {7.10}Ejercicios}{60}{section.7.10}%
-\contentsline {section}{\numberline {7.11}Problemas}{61}{section.7.11}%
-\contentsline {chapter}{\numberline {8}Geometría computacional}{62}{chapter.8}%
-\contentsline {paragraph}{Igualdad y comparadores.}{62}{section*.39}%
-\contentsline {section}{\numberline {8.1}Bases}{63}{section.8.1}%
-\contentsline {section}{\numberline {8.2}Intersecciones}{65}{section.8.2}%
-\contentsline {paragraph}{Ejercicio.}{65}{section*.43}%
-\contentsline {section}{\numberline {8.3}Polígonos}{65}{section.8.3}%
-\contentsline {section}{\numberline {8.4}Convex Hull}{68}{section.8.4}%
-\contentsline {section}{\numberline {8.5}Algoritmos de barrido}{70}{section.8.5}%
-\contentsline {section}{\numberline {8.6}Ejercicios}{75}{section.8.6}%
-\contentsline {section}{\numberline {8.7}Problemas}{75}{section.8.7}%
-\contentsline {chapter}{\numberline {9}Teoría de gráficas}{76}{chapter.9}%
-\contentsline {section}{\numberline {9.1}Lema de los apretones de mano}{76}{section.9.1}%
-\contentsline {section}{\numberline {9.2}Caminos y circuitos de Euler}{77}{section.9.2}%
-\contentsline {subsection}{\numberline {9.2.1}Algoritmo de Hierholzer}{77}{subsection.9.2.1}%
-\contentsline {section}{\numberline {9.3}Componentes fuertemente conexas}{78}{section.9.3}%
-\contentsline {subsection}{\numberline {9.3.1}Algoritmo de Kosaraju}{78}{subsection.9.3.1}%
-\contentsline {section}{\numberline {9.4}2-SAT}{80}{section.9.4}%
-\contentsline {section}{\numberline {9.5}Puentes y puntos de articulación}{82}{section.9.5}%
-\contentsline {section}{\numberline {9.6}Árboles}{84}{section.9.6}%
-\contentsline {section}{\numberline {9.7}Centroide}{85}{section.9.7}%
-\contentsline {section}{\numberline {9.8}Ancestro común más bajo (LCA)}{87}{section.9.8}%
-\contentsline {section}{\numberline {9.9}Flujo máximo}{90}{section.9.9}%
-\contentsline {subsection}{\numberline {9.9.1}Ford-Fulkerson}{91}{subsection.9.9.1}%
-\contentsline {subsection}{\numberline {9.9.2}Dinic}{93}{subsection.9.9.2}%
-\contentsline {subsection}{\numberline {9.9.3}Teorema max-flow min-cut}{96}{subsection.9.9.3}%
-\contentsline {subsection}{\numberline {9.9.4}Matching máximo}{96}{subsection.9.9.4}%
-\contentsline {subsection}{\numberline {9.9.5}Teorema de König}{99}{subsection.9.9.5}%
-\contentsline {subsection}{\numberline {9.9.6}Teorema de Hall}{100}{subsection.9.9.6}%
-\contentsline {section}{\numberline {9.10}Ejercicios}{101}{section.9.10}%
-\contentsline {section}{\numberline {9.11}Problemas}{103}{section.9.11}%
-\contentsline {chapter}{\numberline {10}Soluciones}{104}{chapter.10}%
+\contentsline {section}{\numberline {7.6}Lema de Burnside}{57}{section.7.6}%
+\contentsline {subsection}{\numberline {7.6.1}Órbitas y puntos fijos}{58}{subsection.7.6.1}%
+\contentsline {section}{\numberline {7.7}Números de Catalan}{59}{section.7.7}%
+\contentsline {section}{\numberline {7.8}Números de Stirling de segundo tipo}{61}{section.7.8}%
+\contentsline {section}{\numberline {7.9}Números de Bell}{61}{section.7.9}%
+\contentsline {section}{\numberline {7.10}Ejercicios}{62}{section.7.10}%
+\contentsline {section}{\numberline {7.11}Problemas}{63}{section.7.11}%
+\contentsline {chapter}{\numberline {8}Geometría computacional}{64}{chapter.8}%
+\contentsline {paragraph}{Igualdad y comparadores.}{64}{section*.39}%
+\contentsline {section}{\numberline {8.1}Bases}{65}{section.8.1}%
+\contentsline {section}{\numberline {8.2}Intersecciones}{67}{section.8.2}%
+\contentsline {paragraph}{Ejercicio.}{67}{section*.43}%
+\contentsline {section}{\numberline {8.3}Polígonos}{67}{section.8.3}%
+\contentsline {section}{\numberline {8.4}Convex Hull}{70}{section.8.4}%
+\contentsline {section}{\numberline {8.5}Algoritmos de barrido}{72}{section.8.5}%
+\contentsline {section}{\numberline {8.6}Ejercicios}{77}{section.8.6}%
+\contentsline {section}{\numberline {8.7}Problemas}{77}{section.8.7}%
+\contentsline {chapter}{\numberline {9}Teoría de gráficas}{78}{chapter.9}%
+\contentsline {section}{\numberline {9.1}Lema de los apretones de mano}{78}{section.9.1}%
+\contentsline {section}{\numberline {9.2}Caminos y circuitos de Euler}{79}{section.9.2}%
+\contentsline {subsection}{\numberline {9.2.1}Algoritmo de Hierholzer}{80}{subsection.9.2.1}%
+\contentsline {section}{\numberline {9.3}Componentes fuertemente conexas}{80}{section.9.3}%
+\contentsline {subsection}{\numberline {9.3.1}Algoritmo de Kosaraju}{80}{subsection.9.3.1}%
+\contentsline {section}{\numberline {9.4}2-SAT}{82}{section.9.4}%
+\contentsline {section}{\numberline {9.5}Puentes y puntos de articulación}{84}{section.9.5}%
+\contentsline {section}{\numberline {9.6}Árboles}{87}{section.9.6}%
+\contentsline {section}{\numberline {9.7}Centroide}{87}{section.9.7}%
+\contentsline {section}{\numberline {9.8}Ancestro común más bajo (LCA)}{90}{section.9.8}%
+\contentsline {section}{\numberline {9.9}Flujo máximo}{93}{section.9.9}%
+\contentsline {subsection}{\numberline {9.9.1}Ford-Fulkerson}{94}{subsection.9.9.1}%
+\contentsline {subsection}{\numberline {9.9.2}Dinic}{95}{subsection.9.9.2}%
+\contentsline {subsection}{\numberline {9.9.3}Teorema max-flow min-cut}{98}{subsection.9.9.3}%
+\contentsline {subsection}{\numberline {9.9.4}Matching máximo}{99}{subsection.9.9.4}%
+\contentsline {subsection}{\numberline {9.9.5}Teorema de König}{101}{subsection.9.9.5}%
+\contentsline {subsection}{\numberline {9.9.6}Teorema de Hall}{103}{subsection.9.9.6}%
+\contentsline {section}{\numberline {9.10}Ejercicios}{104}{section.9.10}%
+\contentsline {section}{\numberline {9.11}Problemas}{105}{section.9.11}%
+\contentsline {chapter}{\numberline {10}Soluciones}{106}{chapter.10}%
+\contentsline {chapter}{\numberline {11}Conclusiones y Próximos pasos}{131}{chapter.11}%
+\contentsline {section}{\numberline {11.1}Trabajo futuro}{132}{section.11.1}%

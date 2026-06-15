@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2026.1.15)  14 JUN 2026 21:32
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2026.1.15)  14 JUN 2026 22:03
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -948,7 +948,7 @@ Package hyperref Info: Link coloring OFF on input line 89.
 \openout5 = `main.out'.
 
  (tex/portada.tex
-<./imgs/UNAM.png, id=358, 225.84375pt x 225.84375pt>
+<./imgs/UNAM.png, id=366, 225.84375pt x 225.84375pt>
 File: ./imgs/UNAM.png Graphic file (type png)
 <use ./imgs/UNAM.png>
 Package pdftex.def Info: ./imgs/UNAM.png  used on input line 22.
@@ -958,7 +958,7 @@ Overfull \hbox (26.11882pt too wide) in paragraph at lines 22--23
  [][] 
  []
 
-<./imgs/fciencias.png, id=359, 210.7875pt x 240.9pt>
+<./imgs/fciencias.png, id=367, 210.7875pt x 240.9pt>
 File: ./imgs/fciencias.png Graphic file (type png)
 <use ./imgs/fciencias.png>
 Package pdftex.def Info: ./imgs/fciencias.png  used on input line 27.
@@ -1249,36 +1249,33 @@ Underfull \hbox (badness 10000) in paragraph at lines 269--271
 
 Underfull \vbox (badness 7133) has occurred while \output is active []
 
- [26]
-Underfull \vbox (badness 2096) has occurred while \output is active []
-
- [27]
-Underfull \hbox (badness 10000) in paragraph at lines 309--313
+ [26] [27]
+Underfull \hbox (badness 10000) in paragraph at lines 313--317
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 309--313
+Underfull \hbox (badness 10000) in paragraph at lines 313--317
 
  []
 
 [28] [29]
-Underfull \hbox (badness 10000) in paragraph at lines 443--448
+Underfull \hbox (badness 10000) in paragraph at lines 447--452
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 450--452
+Underfull \hbox (badness 10000) in paragraph at lines 454--456
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 456--460
+Underfull \hbox (badness 10000) in paragraph at lines 460--464
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 456--460
+Underfull \hbox (badness 10000) in paragraph at lines 460--464
 
  []
 
@@ -1357,104 +1354,101 @@ Underfull \hbox (badness 10000) in paragraph at lines 9--11
 
 [51
 
-] [52]
-Underfull \hbox (badness 10000) in paragraph at lines 70--73
-
- []
-
-[53]
-Underfull \hbox (badness 10000) in paragraph at lines 130--132
+] [52] [53]
+Underfull \hbox (badness 10000) in paragraph at lines 79--82
 
  []
 
 [54]
-Underfull \hbox (badness 10000) in paragraph at lines 134--138
+Underfull \hbox (badness 10000) in paragraph at lines 146--148
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 134--138
+Underfull \vbox (badness 2080) has occurred while \output is active []
+
+ [55]
+Underfull \hbox (badness 10000) in paragraph at lines 155--157
 
  []
 
-[55]
-<imgs/image.png, id=1301, 274.02374pt x 77.53969pt>
+<imgs/image.png, id=1302, 274.02374pt x 77.53969pt>
 File: imgs/image.png Graphic file (type png)
 <use imgs/image.png>
-Package pdftex.def Info: imgs/image.png  used on input line 161.
+Package pdftex.def Info: imgs/image.png  used on input line 179.
 (pdftex.def)             Requested size: 191.8153pt x 54.27739pt.
- [56 <./imgs/image.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 207--209
+[56] [57 <./imgs/image.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 225--227
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 210--213
+Underfull \hbox (badness 10000) in paragraph at lines 228--231
 
  []
 
-[57]
-Underfull \hbox (badness 10000) in paragraph at lines 330--362
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 363--366
-
- []
-
-[58] [59]
-Underfull \hbox (badness 10000) in paragraph at lines 427--430
+[58]
+Underfull \hbox (badness 10000) in paragraph at lines 348--380
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 433--438
+Underfull \hbox (badness 10000) in paragraph at lines 381--384
+
+ []
+
+[59] [60]
+Underfull \hbox (badness 10000) in paragraph at lines 494--497
+
+ []
+
+[61]
+Underfull \hbox (badness 10000) in paragraph at lines 500--505
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 433--438
+Underfull \hbox (badness 10000) in paragraph at lines 500--505
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 440--442
-
- []
-
-[60]
-Underfull \hbox (badness 10000) in paragraph at lines 442--448
+Underfull \hbox (badness 10000) in paragraph at lines 507--509
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 442--448
+Underfull \hbox (badness 10000) in paragraph at lines 509--515
 
  []
 
-) [61]
+
+Underfull \hbox (badness 10000) in paragraph at lines 509--515
+
+ []
+
+[62]) [63]
 Cap\'{\i }tulo 8.
-(tex/geo/geo.tex (tex/geo/codes/geo.cpp) (tex/geo/codes/geo.cpp [62
+(tex/geo/geo.tex (tex/geo/codes/geo.cpp) (tex/geo/codes/geo.cpp [64
 
-]) (tex/geo/codes/geo.cpp) [63]
-<./tex/geo/pics/cross1.png, id=1393, 222.8325pt x 200.24812pt>
+]) (tex/geo/codes/geo.cpp) [65]
+<./tex/geo/pics/cross1.png, id=1427, 222.8325pt x 200.24812pt>
 File: ./tex/geo/pics/cross1.png Graphic file (type png)
 <use ./tex/geo/pics/cross1.png>
 Package pdftex.def Info: ./tex/geo/pics/cross1.png  used on input line 70.
 (pdftex.def)             Requested size: 111.41597pt x 100.12381pt.
  (tex/geo/codes/geo.cpp)
-<./tex/geo/pics/sort.png, id=1394, 325.96782pt x 328.22626pt>
+<./tex/geo/pics/sort.png, id=1428, 325.96782pt x 328.22626pt>
 File: ./tex/geo/pics/sort.png Graphic file (type png)
 <use ./tex/geo/pics/sort.png>
 Package pdftex.def Info: ./tex/geo/pics/sort.png  used on input line 86.
 (pdftex.def)             Requested size: 162.9835pt x 164.11272pt.
- (tex/geo/codes/geo.cpp) (tex/geo/codes/geo.cpp [64 <./tex/geo/pics/cross1.png> <./tex/geo/pics/sort.png>]) [65]
+ (tex/geo/codes/geo.cpp) (tex/geo/codes/geo.cpp [66 <./tex/geo/pics/cross1.png> <./tex/geo/pics/sort.png>]) [67]
 Underfull \hbox (badness 10000) in paragraph at lines 158--161
 
  []
 
-[66]
+[68]
 Underfull \hbox (badness 10000) in paragraph at lines 350--363
 
  []
@@ -1469,10 +1463,10 @@ Underfull \hbox (badness 10000) in paragraph at lines 366--373
 
  []
 
-[67] (tex/geo/codes/geo.cpp)
+[69] (tex/geo/codes/geo.cpp)
 Underfull \vbox (badness 4279) has occurred while \output is active []
 
- [68]
+ [70]
 Underfull \hbox (badness 10000) in paragraph at lines 406--409
 
  []
@@ -1482,7 +1476,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 406--409
 
  []
 
-(tex/geo/codes/geo.cpp [69])
+(tex/geo/codes/geo.cpp [71])
 Underfull \hbox (badness 10000) in paragraph at lines 410--412
 
  []
@@ -1507,15 +1501,15 @@ Underfull \hbox (badness 10000) in paragraph at lines 421--425
 
  []
 
-[70] [71]
+[72] [73]
 Underfull \hbox (badness 10000) in paragraph at lines 527--529
 
  []
 
-(tex/geo/codes/geo.cpp [72]
+(tex/geo/codes/geo.cpp [74]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [73])
+ [75])
 Underfull \hbox (badness 10000) in paragraph at lines 531--534
 
  []
@@ -1523,7 +1517,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 531--534
 
 Underfull \vbox (badness 3525) has occurred while \output is active []
 
- [74]) [75]
+ [76]) [77]
 Cap\'{\i }tulo 9.
 (tex/grafos/grafos.tex
 Underfull \hbox (badness 10000) in paragraph at lines 1--4
@@ -1531,244 +1525,242 @@ Underfull \hbox (badness 10000) in paragraph at lines 1--4
  []
 
 
-LaTeX Warning: Command \' invalid in math mode on input line 25.
-
-
-LaTeX Warning: Command \' invalid in math mode on input line 29.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 27--31
+Underfull \hbox (badness 10000) in paragraph at lines 25--28
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 33--37
+LaTeX Warning: Command \' invalid in math mode on input line 32.
 
- []
-
-[76
+[78
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 90--94
 
- []
-
-[77]
-Underfull \hbox (badness 10000) in paragraph at lines 132--140
-
- []
+LaTeX Warning: Command \' invalid in math mode on input line 36.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 132--140
-
- []
-
-[78] [79]
-Underfull \hbox (badness 10000) in paragraph at lines 256--270
+Underfull \hbox (badness 10000) in paragraph at lines 34--38
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 256--270
+Underfull \hbox (badness 10000) in paragraph at lines 40--44
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 256--270
+Underfull \hbox (badness 10000) in paragraph at lines 97--101
+
+ []
+
+[79]
+Underfull \hbox (badness 10000) in paragraph at lines 139--142
+
+ []
+
+[80] [81]
+Underfull \hbox (badness 10000) in paragraph at lines 270--277
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 256--270
+Underfull \hbox (badness 10000) in paragraph at lines 270--277
+
+ []
+
+[82]
+Underfull \hbox (badness 10000) in paragraph at lines 282--290
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 272--276
+Underfull \hbox (badness 10000) in paragraph at lines 282--290
 
  []
 
 
-Underfull \vbox (badness 1590) has occurred while \output is active []
+Underfull \hbox (badness 10000) in paragraph at lines 292--296
 
- [80]
-Underfull \hbox (badness 10000) in paragraph at lines 307--314
+ []
+
+[83]
+Underfull \hbox (badness 10000) in paragraph at lines 327--334
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 307--314
+Underfull \hbox (badness 10000) in paragraph at lines 327--334
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 307--314
+Underfull \hbox (badness 10000) in paragraph at lines 327--334
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 307--314
+Underfull \hbox (badness 10000) in paragraph at lines 327--334
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 332--336
+Underfull \hbox (badness 10000) in paragraph at lines 352--356
 
  []
 
-[81]
-Underfull \hbox (badness 10000) in paragraph at lines 395--405
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 395--405
-
- []
-
-[82] [83] [84]
-Underfull \vbox (badness 3364) has occurred while \output is active []
-
- [85]
-Underfull \hbox (badness 10000) in paragraph at lines 616--626
+[84]
+Underfull \hbox (badness 10000) in paragraph at lines 415--425
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 616--626
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 616--626
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 616--626
-
- []
-
-[86]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [87]
-Underfull \hbox (badness 10000) in paragraph at lines 691--698
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 691--698
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 691--698
+Underfull \hbox (badness 10000) in paragraph at lines 415--425
 
  []
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [88]
-Underfull \hbox (badness 10000) in paragraph at lines 734--737
+ [85] [86] [87] [88]
+Underfull \hbox (badness 10000) in paragraph at lines 636--646
 
  []
 
 
-Overfull \hbox (31.84496pt too wide) in paragraph at lines 822--823
+Underfull \hbox (badness 10000) in paragraph at lines 636--646
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 636--646
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 636--646
+
+ []
+
+[89]
+Underfull \hbox (badness 10000) in paragraph at lines 711--718
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 711--718
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 711--718
+
+ []
+
+[90]
+Underfull \hbox (badness 10000) in paragraph at lines 754--757
+
+ []
+
+[91]
+Overfull \hbox (31.84496pt too wide) in paragraph at lines 842--843
  [][] 
  []
 
-[89] [90] [91]
-Underfull \hbox (badness 10000) in paragraph at lines 965--969
-
- []
-
-[92]
-Underfull \hbox (badness 10000) in paragraph at lines 1025--1030
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1031--1035
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1070--1074
-
- []
-
-[93]
-Underfull \hbox (badness 10000) in paragraph at lines 1107--1137
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1107--1137
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1107--1137
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1138--1141
+[92] [93]
+Underfull \hbox (badness 10000) in paragraph at lines 985--989
 
  []
 
 [94]
+Underfull \hbox (badness 10000) in paragraph at lines 1045--1050
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1051--1055
+
+ []
+
+
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [95]
-Underfull \hbox (badness 10000) in paragraph at lines 1227--1237
+Underfull \hbox (badness 10000) in paragraph at lines 1090--1094
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1227--1237
+Underfull \hbox (badness 10000) in paragraph at lines 1127--1157
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1227--1237
+Underfull \hbox (badness 10000) in paragraph at lines 1127--1157
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1240--1242
-
- []
-
-[96]
-Underfull \hbox (badness 10000) in paragraph at lines 1300--1330
-
- []
-
-[97] [98]
-Underfull \hbox (badness 10000) in paragraph at lines 1422--1463
+Underfull \hbox (badness 10000) in paragraph at lines 1127--1157
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1465--1469
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [96]
+Underfull \hbox (badness 10000) in paragraph at lines 1158--1161
 
  []
 
-[99]
-Underfull \hbox (badness 10000) in paragraph at lines 1547--1552
+[97]
+Underfull \hbox (badness 10000) in paragraph at lines 1247--1257
 
  []
 
-[100] [101] [102]) [103]
+
+Underfull \hbox (badness 10000) in paragraph at lines 1247--1257
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1247--1257
+
+ []
+
+[98]
+Underfull \hbox (badness 10000) in paragraph at lines 1260--1262
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1320--1350
+
+ []
+
+[99] [100]
+Underfull \hbox (badness 10000) in paragraph at lines 1442--1483
+
+ []
+
+[101]
+Underfull \hbox (badness 10000) in paragraph at lines 1485--1489
+
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [102]
+Underfull \hbox (badness 10000) in paragraph at lines 1567--1572
+
+ []
+
+[103] [104]) [105]
 Cap\'{\i }tulo 10.
 (tex/editorial/editorial.tex
 Underfull \vbox (badness 3199) has occurred while \output is active []
 
- [104
+ [106
 
 ]
 Underfull \hbox (badness 10000) in paragraph at lines 42--44
@@ -1780,7 +1772,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 59--64
 
  []
 
-[105]
+[107]
 Underfull \hbox (badness 10000) in paragraph at lines 70--77
 
  []
@@ -1795,7 +1787,7 @@ Package microtype Info: Fixing zero \fontdimen 6 for font `U/MnSymbolC/m/n/14.4'
 (microtype)             (new value: 14.4pt) on input line 80.
 Package microtype Info: Fixing zero \fontdimen 6 for font `U/MnSymbolD/m/n/14.4'
 (microtype)             (new value: 14.4pt) on input line 80.
-[106]
+[108]
 Underfull \hbox (badness 10000) in paragraph at lines 120--123
 
  []
@@ -1805,7 +1797,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 133--138
 
  []
 
-[107]
+[109]
 Underfull \hbox (badness 10000) in paragraph at lines 156--161
 
  []
@@ -1815,7 +1807,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 156--161
 
  []
 
-[108]
+[110]
 Underfull \hbox (badness 10000) in paragraph at lines 173--176
 
  []
@@ -1830,7 +1822,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 178--183
 
  []
 
-[109]
+[111]
 Underfull \hbox (badness 10000) in paragraph at lines 185--191
 
  []
@@ -1840,7 +1832,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 185--191
 
  []
 
-[110]
+[112]
 Underfull \hbox (badness 10000) in paragraph at lines 207--209
 
  []
@@ -1850,7 +1842,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 218--221
 
  []
 
-[111]
+[113]
 Underfull \hbox (badness 10000) in paragraph at lines 232--235
 
  []
@@ -1860,7 +1852,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 245--248
 
  []
 
-[112]
+[114]
 Underfull \hbox (badness 10000) in paragraph at lines 248--252
 
  []
@@ -1880,37 +1872,37 @@ Overfull \hbox (5.19992pt too wide) in paragraph at lines 268--274
 \T1/lmr/m/n/10.95 (-20) tam-biÈn po-ten-cia de 2. La con-di-ciÛn pa-ra que el sis-te-ma ten-ga so-lu-ciÛn es ver que si $\OML/lmm/m/it/10.95 d[] \U/MnSymbolD/m/n/10.95 ^^@ []\OMX/MnSymbolE/m/n/10.95 à\OML/lmm/m/it/10.95 d[]; [] ; d[]\OMX/MnSymbolE/m/n/10.95 ç$
  []
 
-[113]
-Underfull \hbox (badness 10000) in paragraph at lines 274--282
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 274--282
-
- []
-
-[114]
-Underfull \hbox (badness 10000) in paragraph at lines 319--324
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 319--324
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 319--324
-
- []
-
 [115]
-Underfull \hbox (badness 10000) in paragraph at lines 355--358
+Underfull \hbox (badness 10000) in paragraph at lines 274--282
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 274--282
 
  []
 
 [116]
+Underfull \hbox (badness 10000) in paragraph at lines 319--324
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 319--324
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 319--324
+
+ []
+
+[117]
+Underfull \hbox (badness 10000) in paragraph at lines 355--358
+
+ []
+
+[118]
 Underfull \hbox (badness 10000) in paragraph at lines 370--373
 
  []
@@ -1920,7 +1912,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 381--388
 
  []
 
-[117]
+[119]
 Underfull \hbox (badness 10000) in paragraph at lines 397--403
 
  []
@@ -1930,7 +1922,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 418--423
 
  []
 
-[118] [119] [120] [121] [122] [123] [124]
+[120] [121] [122] [123] [124] [125] [126]
 Underfull \hbox (badness 10000) in paragraph at lines 726--731
 
  []
@@ -1950,14 +1942,16 @@ Underfull \hbox (badness 10000) in paragraph at lines 744--746
 
  []
 
-[125]
+[127]
 Underfull \hbox (badness 10000) in paragraph at lines 754--757
 
  []
 
-[126]) (tex/conclusiones.tex [127] [128] [129
+[128]) [129] [130]
+Cap\'{\i }tulo 11.
+(tex/conclusiones.tex [131
 
-]) [130] (tex/editorial/editorialLinks.tex
+]) [132] (tex/editorial/editorialLinks.tex
 Underfull \hbox (badness 10000) in paragraph at lines 4--6
 
  []
@@ -2017,7 +2011,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 28--30
 
  []
 
-[131]
+[133]
 Underfull \hbox (badness 10000) in paragraph at lines 30--32
 
  []
@@ -2077,7 +2071,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 52--54
 
  []
 
-[132]
+[134]
 Underfull \hbox (badness 10000) in paragraph at lines 54--56
 
  []
@@ -2132,7 +2126,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 74--76
 
  []
 
-[133]
+[135]
 Underfull \hbox (badness 10000) in paragraph at lines 76--78
 
  []
@@ -2142,13 +2136,13 @@ Underfull \hbox (badness 10000) in paragraph at lines 78--80
 
  []
 
-) (tex/bibliografia.tex [134]
+) (tex/bibliografia.tex [136]
 LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 7.
  (C:\Users\maria\AppData\Local\Programs\MiKTeX\tex/latex/lm\ts1lmr.fd
 File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-) [135
+) [137
 
-{C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ts1.enc}] [136]) [137] (main.aux
+{C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ts1.enc}] [138]) [139] (main.aux
 LaTeX Info: Redefining \. on input line 11.
 LaTeX Info: Redefining \% on input line 11.
 )
@@ -2157,20 +2151,20 @@ LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-04>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: C7F0AD6FE27641E458F54919B0F78616;14624.
+(rerunfilecheck)             Checksum: 2E65BB4926E4AF696DD45C577E9A7FE5;14956.
  ) 
 Here is how much of TeX's memory you used:
- 36877 strings out of 474486
- 659282 string characters out of 5743755
+ 36924 strings out of 474486
+ 659833 string characters out of 5743755
  2496542 words of memory out of 5000000
- 56555 multiletter control sequences out of 15000+600000
- 751283 words of font info for 413 fonts, out of 8000000 for 9000
+ 56562 multiletter control sequences out of 15000+600000
+ 752470 words of font info for 424 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  102i,23n,107p,1704b,2257s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/mnsymbol/MnSymbol10.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/mnsymbol/MnSymbol12.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/mnsymbol/MnSymbol6.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/mnsymbol/MnSymbol7.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/mnsymbol/MnSymbol8.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx10.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx12.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx6.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx8.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmcsc10.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi10.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi12.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi6.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi7.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi8.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr10.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr6.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr7.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr8.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr9.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmri10.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmri9.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt10.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt8.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt9.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtti10.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on main.pdf (137 pages, 1503092 bytes).
+<C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/mnsymbol/MnSymbol10.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/mnsymbol/MnSymbol12.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/mnsymbol/MnSymbol6.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/mnsymbol/MnSymbol7.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/mnsymbol/MnSymbol8.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/mnsymbol/MnSymbol9.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx10.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx12.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx6.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx8.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmcsc10.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi10.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi12.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi6.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi7.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi8.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi9.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr10.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr6.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr7.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr8.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr9.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmri10.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmri9.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt10.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt8.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt9.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtti10.pfb><C:/Users/maria/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on main.pdf (139 pages, 1547161 bytes).
 PDF statistics:
- 2981 PDF objects out of 2984 (max. 8388607)
- 1456 named destinations out of 1728 (max. 500000)
- 99046 words of extra memory for PDF output out of 106986 (max. 10000000)
+ 3034 PDF objects out of 3580 (max. 8388607)
+ 1474 named destinations out of 1728 (max. 500000)
+ 99062 words of extra memory for PDF output out of 106986 (max. 10000000)
 
