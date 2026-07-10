@@ -31,7 +31,7 @@
 \usepackage{float}
 \usetikzlibrary{babel}
 \usetikzlibrary{calc}
-
+\usetikzlibrary{arrows.meta}
 \definecolor{coral}{rgb}{255, 99, 71}
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
@@ -64,8 +64,7 @@
 \usepackage{comment}
 \usepackage{MnSymbol,bbding,pifont}
 % Referencias (Revisar su uso)
-\usepackage{hyperref}
-\usepackage[nameinlink,capitalise]{cleveref}
+\usepackage{tcolorbox}
 \usepackage{booktabs}
 \usepackage{xurl}
 \setlength{\parskip}{6pt}
@@ -79,16 +78,36 @@
   \fancyfoot[R]{\thepage}
 }
 \setcounter{page}{1}
-\usetikzlibrary{positioning}
+\usetikzlibrary{positioning, shapes.misc}
 
 \newcommand{\Z}{\mathbb{Z}}
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\R}{\mathbb{R}}
 \setlength{\parindent}{0pt}
+\usepackage{tablefootnote}
+\makeatletter
+\renewcommand*\l@chapter[2]{%
+  \ifnum \c@tocdepth >\m@ne
+    \addpenalty{-\@highpenalty}%
+    \vskip 1.0em \@plus\p@
+    \setlength\@tempdima{1.5em}%
+    \begingroup
+      \parindent \z@ \rightskip \@pnumwidth
+      \parfillskip -\@pnumwidth
+      \leavevmode \bfseries
+      \advance\leftskip\@tempdima
+      \hskip -\leftskip
+      #1\nobreak\dotfill\nobreak\hb@xt@\@pnumwidth{\hss #2}\par
+      \penalty\@highpenalty
+    \endgroup
+  \fi}
+\makeatother
+\usepackage{hyperref}
+\usepackage[nameinlink,capitalise]{cleveref}
 
 \begin{document}
 \input{tex/portada.tex}
-%\input{tex/introduccion/agradecimientos.tex}
+\input{tex/introduccion/agradecimientos.tex}
 
 
 %Arreglar formato de hojas extra
@@ -123,10 +142,10 @@
 \chapter{Teoría de gráficas}
 \input{tex/grafos/grafos.tex}
 
-\chapter{Soluciones}
+\chapter{\hspace{.3em} Soluciones}
 \input{tex/editorial/editorial.tex}
 
-\chapter{Conclusiones y Próximos pasos}
+\chapter{\hspace{.3em} Conclusiones y Próximos pasos}
 \input{tex/conclusiones.tex}
 
 \newpage

@@ -1,9 +1,9 @@
-Desde inicios de la civilización el contar ha sido de utilidad, y aunque para cosas simples como contar el cambio de una compra basta con contar moneda por moneda, cuando queremos contar cosas más grandes como el número de placas posibles en la ciudad de México o la cantidad de diferentes manos de poker que puedes tener, contar una por una no es un método eficiente ni confiable pues lo más probable es que cometamos un error, es aquí donde entra la necesidad de otras técnicas que estudiaremos a continuación.
+Desde inicios de la civilización el contar ha sido de utilidad, y aunque para cosas simples como contar el cambio de una compra basta con contar moneda por moneda, cuando queremos contar cosas más grandes como el número de placas posibles en la ciudad de México o la cantidad de diferentes manos de póker que puedes tener, contar una por una no es un método eficiente ni confiable, pues, lo más probable es que cometamos un error. Es aquí donde entra la necesidad de otras técnicas que estudiaremos a continuación.
 \section{Bases}
 \subsection*{Principio de multiplicación}
-Supongamos que vamos a comprar un helado en una tienda donde puedes escoger cono de sabor vainilla o chocolate, helado de fresa, mango o chicle y de toppings chispas de chocolate o cereal, ¿cuántas maneras diferentes hay de elegir un helado diferente?
-\\\\Pensemos que así como podemos elegir la combinación {vainilla, fresa, chispitas} podemos elegir la combinación {chocolate, fresa, chispitas} o {vainilla, mango, cereal}, hay bastantes formas de combinar los sabores y notemos que el hecho de que elijamos un sabor de cono, no limita para nada nuestra eleccion de helado o de topping. Es así como llegamos a la conclusión que por cada sabor de cono podemos elegir cualquiera de los 3 helados y cualquiera de los 2 toppings, y cada combinación será diferente, de donde tendremos $2\times 3 \times 2=12$ formas de elegir un helado.
-\\\\Esto se llama \textbf{principio de multiplicación} y nos dice que si una tarea se divide en $k$ etapas \textbf{independientes}, es decir la elección de una etapa no limita las opciones de las demás, con $n_1, n_2, \ldots, n_k$ formas de realizar cada una, el número total de formas de completar la tarea es $n_1 \cdot n_2 \cdots n_k$.
+Supongamos que vamos a comprar un helado en una tienda donde puedes escoger cono de sabor vainilla o chocolate, helado de fresa, mango o chicle y de toppings chispas de chocolate o cereal. ¿Cuántas maneras diferentes hay de elegir un helado diferente?
+\\\\Pensemos que así como podemos elegir la combinación {vainilla, fresa, chispitas} podemos elegir la combinación {chocolate, fresa, chispitas} o {vainilla, mango, cereal}. Hay bastantes formas de combinar los sabores y notemos que el hecho de que elijamos un sabor de cono, no limita para nada nuestra eleccion de helado o de topping. Es así como llegamos a la conclusión que por cada sabor de cono podemos elegir cualquiera de los 3 helados y cualquiera de los 2 toppings, y cada combinación será diferente, de donde tendremos $2\times 3 \times 2=12$ formas de elegir un helado.
+\\\\Esto se llama \textbf{principio de multiplicación} y nos dice que si una tarea se divide en $k$ etapas \textbf{independientes}, es decir la elección de una etapa no limita las opciones de las demás, con $n_1, n_2, \ldots, n_k$ formas de realizar cada una, el número total de formas de completar la tarea es $n_1 n_2 \cdots n_k$.
  
 \subsection*{Principio de adición}
 Ahora supongamos que en la heladería nos dicen que además de los helados, ofrecen aguas frescas de 5 sabores, si quisieramos solamente comprar un solo artículo de la heladería, ¿de cuántas formas podríamos hacerlo? Pues bien, ya vimos que tenemos 12 helados diferentes, a esto le sumaremos las 5 opciones de agua pues al comprar un sólo artículo tenemos que elegir una de las dos opciones y así obtenemos que hay 17 formas diferentes de realizar la tarea.
@@ -11,15 +11,15 @@ Ahora supongamos que en la heladería nos dicen que además de los helados, ofre
  
 \subsection*{Principio del complemento}
 
-Imaginemos que queremos comprar un helado que no sea de chicle, ¿de cuántas formas podemos hacerlo?, calcularlo directamente sería ver todas las opciones que no tienen chicle, a veces esta tarea es más complicada que calcular lo opuesto, es decir, vamos a contar cuántos helados diferentes tienen chicle, notemos que si el sabor de helado esta fijo, tenemos 2 opciones de cono y 2 de toppings, es decir 4 opciones. Ahora podemos simplemente restar a los 12 que teníamos, la cantidad que sí tienen chicle, dejandonos con 8. Esta idea se llama \textbf{principio del complemento} y nos conviene usarla cuando los casos no deseados tienen una estructura más simple que los deseados.
+Imaginemos que queremos comprar un helado que no sea de chicle, ¿de cuántas formas podemos hacerlo? Calcularlo directamente sería ver todas las opciones que no tienen chicle. A veces esta tarea es más complicada que calcular lo opuesto, es decir, vamos a contar cuántos helados diferentes tienen chicle, notemos que si el sabor de helado esta fijo, tenemos 2 opciones de cono y 2 de toppings, es decir 4 opciones. Ahora podemos simplemente restar a los 12 que teníamos, la cantidad que sí tienen chicle, dejándonos con 8. Esta idea se llama \textbf{principio del complemento} y nos conviene usarla cuando los casos no deseados tienen una estructura más simple que los deseados.
  
 \subsection*{Principio del palomar}
 
- En la heladería además hay una promoción para motivar la convivencia, si llegan dos personas con el mismo cumpleaños juntas, se les regalará a ambas personas un helado, ¿cuántas personas mínimas se necesitan para asegurar que alguien tendrá un helado gratis? Podríamos pensar que se necesitan muchisimas, pero en realidad solo necesitamos 367, esto porque en el peor caso cada una de las primeras 366 personas va a cumplir un día diferente (incluyendo 29 de febrero) y cuando llegue la persona número 367 como todos los cumpleaños ya tienen una persona que cumple ese día, forzosamente compartirá cumpleaños con alguien. Con la misma lógica, en una escuela de 5000 estudiantes no basta con saber que \emph{algún} par comparte cumpleaños: el principio del palomar también nos dice cuántas personas pueden caer, como mínimo, en el \emph{mismo} día. Hay $366$ ``casillas'' posibles (los días del año, contando 29 de febrero); si repartimos $5000$ estudiantes lo más parejo posible entre esas casillas, a cada día le tocan al menos $\lfloor 5000/366\rfloor = 13$ personas, pero sobran $5000 - 366\cdot 13 = 242$ estudiantes que obligan a que al menos $242$ días tengan una persona extra. En consecuencia, \textbf{algún} cumpleaños concentra al menos $14$ personas ($\lceil 5000/366\rceil = 14$): en el peor reparto posible habrá un día con catorce estudiantes que cumplen ese mismo día (y por tanto comparten cumpleaños entre sí). A esta idea se le llama \textbf{principio del palomar}.
+ En la heladería además hay una promoción para motivar la convivencia. Si llegan dos personas con el mismo cumpleaños juntas, se les regalará a ambas personas un helado. ¿Cuántas personas mínimas se necesitan para asegurar que alguien tendrá un helado gratis? Podríamos pensar que se necesitan muchisimas, pero en realidad solo necesitamos 367, esto porque en el peor caso cada una de las primeras 366 personas va a cumplir un día diferente (incluyendo 29 de febrero) y cuando llegue la persona número 367 como todos los cumpleaños ya tienen una persona que cumple ese día, forzosamente compartirá cumpleaños con alguien. Con la misma lógica, en una escuela de 5000 estudiantes no basta con saber que \emph{algún} par comparte cumpleaños: el principio del palomar también nos dice cuántas personas pueden caer, como mínimo, en el \emph{mismo} día. Hay $366$ ``casillas'' posibles (los días del año, contando 29 de febrero); si repartimos $5000$ estudiantes lo más parejo posible entre esas casillas, a cada día le tocan al menos $\lfloor 5000/366\rfloor = 13$ personas, pero sobran $5000 - 366\cdot 13 = 242$ estudiantes que obligan a que al menos $242$ días tengan una persona extra. En consecuencia, \textbf{algún} cumpleaños concentra al menos $14$ personas ($\lceil 5000/366\rceil = 14$): en el peor reparto posible habrá un día con catorce estudiantes que cumplen ese mismo día (y por tanto comparten cumpleaños entre sí). A esta idea se le llama \textbf{principio del palomar}.
 
 \section{Permutaciones}
 
-Supongamos que queremos escoger el nuevo CEO y VP de una lista de 5 candidatos y queremos saber de cuántas formas diferentes se puede hacer, a esto se le llama \textbf{permutación}: estamos \emph{ordenando} una selección de $2$ personas distintas entre $5$, porque el cargo importa (CEO $\neq$ VP).
+Supongamos que queremos escoger el nuevo CEO y VP de una lista de 5 candidatos y queremos saber de cuántas formas diferentes se puede hacer. A esto se le llama \textbf{permutación}: estamos \emph{ordenando} una selección de $2$ personas distintas entre $5$, porque el cargo importa (CEO $\neq$ VP).
 
 \textit{Ejemplo (cómo agrupar las opciones).} Si los candidatos son $A,B,C,D,E$, una forma natural de organizar las $20$ parejas es \textbf{fijar primero al CEO} y listar quién puede ser VP:
 \begin{itemize}
@@ -34,7 +34,7 @@ El número de permutaciones de tomar $r$ elementos tomados de un conjunto de $n$
 P(n, r) = n \cdot (n-1) \cdots (n-r+1) = \frac{n!}{(n-r)!}
 \]
 
-Esto es así porque pensemos que si tenemos $n$ opciones para la primera elección, una vez que lo escogimos, nos queda $n-1$ opciones para la segunda elección, y así hasta que hayamos hecho las $r$ elecciones. Nótese que cuando $n=r$ estamos calculando de cuántas formas se puede reordenar un conjunto completo y usando la fórmula se vuelve simplemente $n!$, esto nos dice que en el ejemplo de arriba las formas de escoger al CEO y VP son $P(5,2)=20$.
+Esto es así porque si tenemos $n$ opciones para la primera elección, una vez que lo escogimos, nos quedan $n-1$ opciones para la segunda elección, y así hasta que hayamos hecho las $r$ elecciones. Nótese que cuando $n=r$ estamos calculando de cuántas formas se puede reordenar un conjunto completo y usando la fórmula se vuelve simplemente $n!$. Esto nos dice que en el ejemplo de arriba las formas de escoger al CEO y VP son $P(5,2)=20$.
  
 \subsection*{Permutaciones con repetición}
 
@@ -49,7 +49,7 @@ El denominador divide las repeticiones que no generan acomodos distintos, de for
  \[\dfrac{11!}{1!\,4!\,4!\,2!} = 34\,650\]
 
 \section{Combinaciones}
-Si ahora quisieramos de los 5 empleados agarrar 2 para que formen parte de una brigada no podemos aplicar directamente lo que aprendimos en permutaciones porque aquí el orden no importa, si primero elegimos al número 4 y luego al 2, es lo mismo que si elegieramos al 2 y después al 4, no hay distincion pues ambos formaran parte de la misma brigada. Lo que si aprendimos es que las formas de permutar un conjunto de $r$ elementos es $r!$, entonces notemos que podemos calcular las permutaciones y luego dividir entre $r!$ que son los ordenamientos de cada selección que producen el mismo subconjunto, es decir si queremos hacer una selección de $r$ elementos de un conjunto de $n$ donde el orden no importa.El número de combinaciones es:
+Si ahora quisieramos de los 5 empleados agarrar 2 para que formen parte de una brigada, no podemos aplicar directamente lo que aprendimos en permutaciones porque aquí el orden no importa. Si primero elegimos al número 4 y luego al 2, es lo mismo que si elegiéramos al 2 y después al 4, no hay distinción pues ambos formarán parte de la misma brigada. Lo que sí aprendimos es que las formas de permutar un conjunto de $r$ elementos es $r!$, entonces notemos que podemos calcular las permutaciones y luego dividir entre $r!$ que son los ordenamientos de cada selección que producen el mismo subconjunto. Es decir, si queremos hacer una selección de $r$ elementos de un conjunto de $n$ donde el orden no importa, el número de combinaciones es:
 \[
 \binom{n}{r} = \frac{P(n,r)}{r!} = \frac{n!}{r!\,(n-r)!}
 \]
@@ -82,7 +82,7 @@ Algunas propiedades útiles para recordar son (se recomienda al lector intentar 
  
 \begin{itemize}
     \item Simetría: $\binom{n}{r} = \binom{n}{n-r}$
-    \item Factorizacion: $\binom{n}{r} = \frac{n}{k}\binom{n-1}{n-1}$
+    \item Factorizacion: $\binom{n}{r} = \frac{n}{r}\binom{n-1}{r-1}$
     \item Identidad de pascal: $\binom{n-1}{r-1} + \binom{n-1}{r} = \binom{n}{r}$
     \item Suma sobre $k$: $\sum_{k=0}^{n}\binom{n}{k}=2^n$
     \item Suma sobre $m$: $\sum_{m=0}^{n}\binom{m}{k}=\binom{n+1}{k+1}$
@@ -90,7 +90,7 @@ Algunas propiedades útiles para recordar son (se recomienda al lector intentar 
     \item Suma de cuadrados: $\binom{n}{0}^2+\binom{n}{1}^2+\cdots+\binom{n}{n}^2=\binom{2n}{n}$
 \end{itemize}
 
-Si solo haremos calculos rápidos sin modulo y sin numeros grandes podemos implementar directamente
+Si solo haremos calculos rápidos sin módulo y sin números grandes podemos implementar directamente
 \begin{lstlisting}[language=C++]
 ll nCr(ll n,ll k){
     if(k>n-k)k=n-k;
@@ -107,7 +107,9 @@ En el precálculo, \texttt{fac}[$i$] guarda $i!\bmod M$. El arreglo \texttt{inv}
 \[
 \texttt{invFac}[i] = \texttt{invFac}[i-1]\cdot \texttt{inv}[i] \bmod M,
 \]
-de modo que \texttt{invFac}[$i$] $=(i!)^{-1}\bmod M$. \textit{Ejemplo} con $M=7$: como $3\cdot 5=15\equiv 1\pmod 7$, tenemos $\texttt{inv}[3]=5$; entonces $\texttt{invFac}[3]=\texttt{inv}[1]\cdot\texttt{inv}[2]\cdot\texttt{inv}[3]=1\cdot 4\cdot 5=20\equiv 6\pmod 7$, y efectivamente $3!=6\equiv -1\pmod 7$, cuyo inverso es $6$. Así, $\binom{5}{2}=10\equiv 3\pmod 7$ coincide con $\texttt{fac}[5]\cdot\texttt{invFac}[2]\cdot\texttt{invFac}[3]=1\cdot 4\cdot 6\equiv 3\pmod 7$.
+de modo que \texttt{invFac}[$i$] $=(i!)^{-1}\bmod M$.
+
+\textit{Ejemplo} con $M=7$: como $3\cdot 5=15\equiv 1\pmod 7$, tenemos $\texttt{inv}[3]=5$; entonces $\texttt{invFac}[3]=\texttt{inv}[1]\cdot\texttt{inv}[2]\cdot\texttt{inv}[3]=1\cdot 4\cdot 5=20\equiv 6\pmod 7$, y efectivamente $3!=6\equiv -1\pmod 7$, cuyo inverso es $6$. Así, $\binom{5}{2}=10\equiv 3\pmod 7$ coincide con $\texttt{fac}[5]\cdot\texttt{invFac}[2]\cdot\texttt{invFac}[3]=1\cdot 4\cdot 6\equiv 3\pmod 7$.
 \begin{lstlisting}[language=C++]
 long long fac[MX], invFac[MX], inv[MX];
 void precalcComb () {
@@ -143,21 +145,23 @@ long long comb (int n, int k) {
 \end{lstlisting}
 \section{Principio de Inclusión-Exclusión}
 
-En ocasiones cuando tenemos conjuntos querremos saber cuántos elementos tiene su unión, podríamos pensar que si los conjuntos son $A$ y $B$ basta con hacer la suma $|A| +|B|$, sin embargo, es probable que los conjuntos no sean disjuntos, es decir, que haya elementos que pertenezcan tanto a $A$ como $B$, en ese caso, les estaríamos contando doble. \textit{Ejemplo.} Si $A=\{1,2,3,4\}$ y $B=\{3,4,5,6\}$, entonces $|A|+|B|=8$, pero $A\cup B=\{1,2,3,4,5,6\}$ solo tiene $6$ elementos: el $3$ y el $4$ aparecieron una vez al contar $A$ y otra al contar $B$. Es por esto que en realidad $|A \cup B|=|A| + |B| - |A \cap B|$, es decir, restamos una vez los que se están contando doble (aquí $|A\cap B|=|\{3,4\}|=2$ y $6=8-2$).
-\\\\Similarmente si tuviesemos tres conjuntos $A,B,C$, notemos que al sumar $|A|+|B|+|C|$ estamos contando los elementos que están en dos de los conjuntos doble como en el caso de dos conjuntos, pero no solo eso, pues los elementos que están en los tres conjuntos, están siendo contados tres veces, y al restar todas las intersecciones de dos conjuntos se están restando tres veces, por lo que habrá que sumarlos, es decir
-\[|A \cup B \cup C=|A|+|B|+|C|-|A \cap B|-|A \cap C|-|B \cap C|+|A \cap B \cap C|\]
-usando esta misma lógica para $n$ conjuntos nos da el llamado \textbf{principio de inclusión-exclusión}, este nos dice que si tenemos $A_1,\cdots, A_n$ conjuntos entonces tenemos que
+En ocasiones cuando tenemos conjuntos querremos saber cuántos elementos tiene su unión. Podríamos pensar que si los conjuntos son $A$ y $B$,  basta con hacer la suma $|A| +|B|$, donde $|A|$ es la cardinalidad o número de elementos de un conjunto $A$, sin embargo, es probable que los conjuntos no sean disjuntos, es decir, que haya elementos que pertenezcan tanto a $A$ como $B$, en ese caso, les estaríamos contando doble.
+
+\textit{Ejemplo.} Si $A=\{1,2,3,4\}$ y $B=\{3,4,5,6\}$, entonces $|A|+|B|=8$, pero $A\cup B=\{1,2,3,4,5,6\}$ solo tiene $6$ elementos: el $3$ y el $4$ aparecieron una vez al contar $A$ y otra al contar $B$. Es por esto que en realidad $|A \cup B|=|A| + |B| - |A \cap B|$, es decir, restamos una vez los que se están contando doble (aquí $|A\cap B|=|\{3,4\}|=2$ y $6=8-2$).
+\\\\Similarmente si tuviésemos tres conjuntos $A,B,C$, notemos que al sumar $|A|+|B|+|C|$ estamos contando los elementos que están en dos de los conjuntos doble como en el caso de dos conjuntos. Más aún, los elementos que están en los tres conjuntos, están siendo contados tres veces, y al restar todas las intersecciones de dos conjuntos se están restando tres veces, por lo que habrá que sumarlos, es decir:
+\[|A \cup B \cup C|=|A|+|B|+|C|-|A \cap B|-|A \cap C|-|B \cap C|+|A \cap B \cap C|\]
+Usando esta misma lógica para $n$ conjuntos nos da el llamado \textbf{principio de inclusión-exclusión}. Este nos dice que si tenemos conjuntos $A_1,\cdots, A_n$ entonces tenemos que
 \[|\bigcup_{i=1}^{n}A_i|=\sum_{i=1}^{n}|A_i|-\sum_{i<j}|A_i \cap A_j|+\cdots+(-1)^{n+1}|A_1\cap \cdots \cap A_n|\]
 Esta fórmula general puede parecer abstracta; la aplicamos en el ejercicio siguiente.
 
 \textbf{Ejercicio.} Dados $N$, $L$ y $R$, calcular cuántos enteros $x$ del intervalo $[L,R]$ son coprimos con $N$ (\href{https://acm.hdu.edu.cn/showproblem.php?pid=4135}{Co-prime, LCPC 2011}). \textit{Ejemplo.} Con $N=6$, $L=1$ y $R=10$ se piden los $x\in\{1,2,\ldots,10\}$ con $\gcd(x,6)=1$; como $6=2\cdot 3$, basta que $x$ no sea múltiplo de $2$ ni de $3$, y los que cumplen son $1$, $5$ y $7$, así que la respuesta es $3$.
 
 \textit{Solución.} Nótese que si hacemos $f(X)$ el número de $x$ coprimos con $N$ en el intervalo $[1,X]$, la respuesta será $f(R)-f(L-1)$. Si bien podríamos intentar calcular la cantidad de números coprimos con $N$ en el intervalo, es más fácil calcular lo opuesto, es decir, cuántos comparten un factor primo con $N$.
-\\\\Con la criba podemos encontrar todos los factores primos $p_1,p2_,\cdots,p_r$ de $N$. Ahora, sea $D_i$ los números divisibles por $p_i$ en el intervalo $[1,X]$, entonces $|D_i|=\lfloor \frac{X}{p_i} \rfloor$ por inclusión exclusión tenemos que:
+\\\\Con la criba podemos encontrar todos los factores primos $p_1,p_2,\cdots,p_r$ de $N$. Ahora, sea $D_i$ los números divisibles por $p_i$ en el intervalo $[1,X]$, entonces $|D_i|=\lfloor \frac{X}{p_i} \rfloor$ por inclusión exclusión tenemos que:
 \[|D_1 \cup D_2 \cup \cdots \cup D_r|=\sum_{i}\lfloor \frac{X}{p_i} \rfloor - \sum_{i < j}\lfloor \frac{X}{p_i p_j} \rfloor + \sum_{i < j < k}\lfloor \frac{X}{p_i p_j p_k} \rfloor - \cdots\]
 y así tenemos que:
 \[f(X)=X-|D_1 \cup \cdots \cup D_r|\]
-de forma que ya solo tenemos que implementarlo, para esto, iteraremos sobre los $2^r$ subconjuntos de factores primos de $N$. Para este tipo de problemas es importante analizar la complejidad, nótese que $2 \times 3 \times 5 \times 7 \times 11 \times 13 \times 17 \times 19 > 10^6$, de forma que si $N \leq 10^9$, este tendrá a lo más $9$ factores primos, por lo que iterar sobre los $2^9=512$ subconjuntos sí es algo que se puede hacer rapidamente.
+de forma que ya solo tenemos que implementarlo. Para esto, iteraremos sobre los $2^r$ subconjuntos de factores primos de $N$. Para este tipo de problemas es importante analizar la complejidad. Nótese que $2 \times 3 \times 5 \times 7 \times 11 \times 13 \times 17 \times 19 > 10^6$, de forma que si $N \leq 10^9$, este tendrá a lo más $9$ factores primos distintos, por lo que iterar sobre los $2^9=512$ subconjuntos sí es algo que se puede hacer rapidamente.
 \begin{lstlisting}[language=C++]
 ll f(ll X, vector<ll>& primes) {
     int k = primes.size();
@@ -175,11 +179,11 @@ ll f(ll X, vector<ll>& primes) {
 \end{lstlisting}
 Complete el programa principal usando \texttt{f} para responder en el intervalo $[L,R]$.
 \section{Barras y estrellas}
- Supongamos tenemos $r$ niños y $n$ juguetes, ¿de cuántas formas podemos distribuir los juguetes entre los niños?, en este problema no hay restricciones, un niño puede tener 0 o todos los juguetes. Para resolver este problema usaremos ''palitos'' que separen los juguetes en secciones, por ejemplo, supongamos que tenemos 3 niños y 5 juguetes, entonces un acomodo donde el primer niño reciba dos juguetes, el segundo dos y tercero uno se puede representar de la siguiente forma
+ Supongamos que tenemos $r$ niños y $n$ juguetes, ¿de cuántas formas podemos distribuir los juguetes entre los niños?. En este problema no hay restricciones, un niño puede tener 0 o todos los juguetes. Para resolver este problema usaremos ''palitos'' que separen los juguetes en secciones. Por ejemplo, supongamos que tenemos 3 niños y 5 juguetes, entonces un acomodo donde el primer niño reciba dos juguetes, el segundo dos y tercero uno se puede representar de la siguiente forma
  \[\includegraphics[scale=0.7]{imgs/image.png}\]
- De la misma forma si quisieramos $r$ regiones, ocuparíamos $r-1$ palitos, y notemos que podemos permutar los palitos por $(n+r-1)!$ y después quitar las repeticiones dividiendo por $n!(r-1)!$ asi el número queda
+ De la misma forma si quisiéramos $r$ regiones, ocuparíamos $r-1$ palitos. Al colocar los $r-1$ palitos con  los $n$ juguetes tenemos en total $n+r-1$ objetos que hay que acomodar en una fila. Si todos los objetos fueran distinguibles tendríamos un total de $(n+r-1)!$ formas de acomodarlos; sin embargo, notemos que no hay forma de distinguir un palito de los demás, así como un juguete de los otros juguetes, por lo tanto, usando permutaciones con repetición debemos quitar las  permutaciones generadas al permutar los juguetes entre sí $n!$ y los palitos entre sí $(r-1)!$. Así, la cantidad de formas de distribuir los juguetes es:
  \[\frac{(n+r-1)!}{n!(r-1)!}\]
- esto también nos deja un resultado interesante y es que la ecuación $x_1+x_2+\cdots+x_r=n$ donde $0\leq x_i$ tiene una cantidad de soluciones $\frac{(n+r-1)!}{n!(r-1)!}$.
+ Esto también nos deja un resultado interesante y es que la ecuación $x_1+x_2+\cdots+x_r=n$ donde $0\leq x_i$ tiene una cantidad de soluciones $\frac{(n+r-1)!}{n!(r-1)!}$.
 
 \section{Lema de Burnside}
 
@@ -223,9 +227,9 @@ X^g := \{x \in X \mid g \cdot x = x\}
 La demostración completa puede consultarse en línea.\footnote{\url{https://artofproblemsolving.com/wiki/index.php/Burnside's_Lemma}}.
 
 Usemos este lema en el caso del problema de collares de $n$ cuentas con $k$ colores donde dos collares son iguales si uno se obtiene del otro por rotación. En este caso, $X$ son todas las coloraciones: $|X| = k^n$. 
-\\\\Nótese que si tenemos un collar con $n$ cuentas numeradas $1,2,\cdots, n$ en círculo con $k$ colores diferentes. La rotación por $r$ posiciones envía la cuenta $i$ a la posición $i+r (mod n)$ por lo que hay $n$ rotaciones distintas $r=0,1,\cdots, n-1$ donde $r=0$ es la identidad, es decir, no rotar. Dos formas de colorear las cuentas son las misma si alguna se obtiene de la otra bajo alguna rotación. Estas rotaciones serán precisamente nuestro grupo $G$ que actuara sobre $X$.
+\\\\Nótese que si tenemos un collar con $n$ cuentas numeradas $1,2,\cdots, n$ en círculo con $k$ colores diferentes. La rotación por $r$ posiciones envía la cuenta $i$ a la posición $i+r (\mod n)$ por lo que hay $n$ rotaciones distintas $r=0,1,\cdots, n-1$ donde $r=0$ es la identidad, es decir, no rotar. Dos formas de colorear las cuentas son la misma si alguna se obtiene de la otra bajo alguna rotación. Estas rotaciones serán precisamente nuestro grupo $G$ que actuará sobre $X$.
 
-Ahora, notemos que nos interesa saber el número de orbitas porque nos interesa la cantidad de collares diferentes y cada orbita es un collar diferente. Sabiendo esto queremos entonces aplicar el lema de burnside y para ello nos interesa saber cuántos objetos fija la rotación por $r$ posiciones. Notemos entonces que la rotación $r$ fija una coloración si y solo si esta es periodica con periodo $gcd(r,n)$ ya que la cuenta $i$ debe tener el mismo color que la cuenta $i+r$ y esto agrupa las cuentas en exactamente $gcd(r,n)$ clases donde todas las cuentas deben tener el mismo color. Y ya que cada una puede tener $k$ colores diferentes, tenemos que hay $k^{gcd(r,n)}$ coloraciones fijas. 
+Ahora, notemos que nos interesa saber el número de órbitas porque nos interesa la cantidad de collares diferentes y cada órbita es un collar diferente. Sabiendo esto, queremos entonces aplicar el lema de Burnside y para ello nos interesa saber cuántos objetos fija la rotación por $r$ posiciones. Notemos entonces que la rotación $r$ fija una coloración si y solo si esta es periódica con periodo $gcd(r,n)$ ya que la cuenta $i$ debe tener el mismo color que la cuenta $i+r$ y esto agrupa las cuentas en exactamente $gcd(r,n)$ clases donde todas las cuentas deben tener el mismo color. Y ya que cada una puede tener $k$ colores diferentes, tenemos que hay $k^{gcd(r,n)}$ coloraciones fijas. 
 \\\\
 Entonces por el lema de Burnside tenemos que:
 \[
@@ -236,8 +240,8 @@ La implementación entonces queda:
 long long collares(int n, int k, long long mod) {
     long long res = 0;
     for (int r = 0; r < n; r++)
-        res = (res + power(k, __gcd(r, n), mod)) % mod;
-    return res % mod * power(n, mod-2, mod) % mod;
+        res = (res + power(k, gcd(r, n), mod)) % mod;
+    return (res % mod) * power(n, mod-2, mod) % mod;
 }
 \end{lstlisting}
 
@@ -345,7 +349,7 @@ Para los primeros casos podemos revisar la cantidad a mano:
 \end{tikzpicture}
 \end{figure}
 
-Aunque pudimos hacer estos casos a mano, entre más lados tenga el polígono el número de triangulaciones se puede hacer muy grande, debido a esto es conveniente para nosotros buscar alguna otra forma de calcularlos.
+Aunque pudimos hacer estos casos a mano, entre más lados tenga el polígono, el número de triangulaciones se puede hacer muy grande. Debido a esto es conveniente para nosotros buscar alguna otra forma de calcularlos.
 \\\\
 Sea $T_n$ el número de triangulaciones de un polígono de $n+2$ lados. Fijamos la arista que va del vértice $0$ al vértice $n+1$. Esa arista pertenece a exactamente un triángulo de cualquier triangulación, llamemos $k$ al tercer vértice de ese triángulo, con $k \in \{1, 2, \ldots, n\}$. Por ejemplo para $n=3$:
  \begin{figure}[H]
@@ -384,7 +388,7 @@ Notemos que los dos subpolígonos son independientes, es decir, la triangulació
 \[
 T_n = \sum_{k=1}^{n} T_{k-1} \cdot T_{n-k}
 \]
-En programación competitiva esta recurrencia casi siempre se resuelve con \textbf{programación dinámica} o \textbf{memoización}: guardamos $C_0,C_1,\ldots,C_n$ en un arreglo (una ``tabla'' de una fila) y vamos llenándolo de izquierda a derecha, porque para calcular $C_n$ solo hacen falta valores $C_0,\ldots,C_{n-1}$ ya conocidos. La base es $C_0=1$ (el polígono degenerado con $0$ triángulos internos).
+En programación competitiva esta recurrencia casi siempre se resuelve con \textbf{programación dinámica} o \textbf{memorización}: guardamos $C_0,C_1,\ldots,C_n$ en un arreglo (una ``tabla'' de una fila) y vamos llenándolo de izquierda a derecha, porque para calcular $C_n$ solo hacen falta valores $C_0,\ldots,C_{n-1}$ ya conocidos. La base es $C_0=1$ (el polígono degenerado con $0$ triángulos internos).
 
 \textit{Ejemplo (cómo se llena la tabla).} Lo más cómodo es imaginar un arreglo de una fila que crece de izquierda a derecha; cada casilla nueva usa solo las anteriores:
 \[
@@ -498,20 +502,18 @@ $\mathbf{15}$ & $20$ & $27$ & $37$ & $52$ \\
     \[x=\frac{n}{6}\]
     De esta forma vemos que hay $C(\frac{n}{3},\frac{n}{6})$ formas de elegir los $\frac{n}{6}$ triángulos que colorearemos de tipo $A$. Como ya se elegió que tipo será, para cada triángulo $i$ habrá $c_i$ formas de colorearlo, donde $c_i$ son las formas de colorear un triángulo $i$ de forma que tenga peso máximo y sea de alguno de los dos tipos (no importa cuál porque son simétricos). Nótese que $c_i$ es igual a contar las formas en las que elegir el vértice que tendra color diferente a los demás en el triángulo, es decir, la cantidad de vértices de peso mínimo. Dicho esto finalmente la respuesta nos queda:
     \[\binom{\frac{n}{3}}{\frac{n}{6}}\prod_{i=1}^{\frac{n}{3}}c_i\]
-    \\\\
-    Código
-    \\\\
-    Ver \href{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/1795D.cpp}{solución}.
+\\\\
+    Ver \href{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/1795D.cpp}{código}.
 
 \subsection*{7.10.2 \href{https://cses.fi/problemset/task/2064}{Bracket Squences I (CSES 2064)}}
   Nótese que una secuencia de $n=2m$ brackets es válida si tiene $m$ brackets de apertura, $m$ de cierre y para cualquier posición la cantidad de brackets de apertura hasta esa posición, es decir en el prefijo, es mayor o igual a la de cierre.
-  \\\\Notemos que si no tuvieramos ninguna restricción sobre los prefijos entonces la cantidad total de secuencias sería simplemente la forma de colocar $m$ aperturas en $n$ posiciones, es decir: $\binom{n}{m}$. Entonces nos interesa encotnrar cuál es la cantidad de secuencias inválidas para restarlas de las secuencias totales y encotnrar cuántas secuencias válidas hay. Tomemos una secuencia de brackets inválida cualquiera, notemos que entonces esta tiene un prefijo donde los cierres son mayores a las aperturas. En ese prefijo, cambiemos todos los brackets de apertura por los de cierre y los de cierre por los de apertura. Notemos que entonces la secuencia nueva tiene $m+1$ aperturas y $m-1$ cierres. Esto nos da una biyección entre las secuencias inválidas de $m$ aperturas y $m$ cierres y todas las secuencias posibles con $m+1$ aperturas y $m-1$ cierres que son $\binom{n}{m+1}$ de donde tenemos que:
+  \\\\Si no tuvieramos ninguna restricción sobre los prefijos entonces la cantidad total de secuencias sería simplemente la forma de colocar $m$ aperturas en $n$ posiciones, es decir: $\binom{n}{m}$. Entonces nos interesa encotnrar cuál es la cantidad de secuencias inválidas para restarlas de las secuencias totales y encotnrar cuántas secuencias válidas hay. Tomemos una secuencia de brackets inválida cualquiera, notemos que entonces esta tiene un prefijo donde los cierres son mayores a las aperturas. En ese prefijo, cambiemos todos los brackets de apertura por los de cierre y los de cierre por los de apertura. Notemos que entonces la secuencia nueva tiene $m+1$ aperturas y $m-1$ cierres. Esto nos da una biyección entre las secuencias inválidas de $m$ aperturas y $m$ cierres y todas las secuencias posibles con $m+1$ aperturas y $m-1$ cierres que son $\binom{n}{m+1}$ de donde tenemos que:
   \[\binom{2m}{m}-\binom{2m}{m+1}=\frac{1}{m+1}\binom{2m}{m}\]
-  Notemos que esta fórmula es exactametne la fórmula de los números de Catalán, por lo que para calcular las secuencias válidas de $n$ brackets, basta con calcular el $n$-ésimo número de Catalán.
-    \\\\
-    Código
-    \\\\
+  \begin{samepage}
+      Esta es la fórmula de los números de Catalán, por lo que para calcular las secuencias válidas de $n$ brackets, basta con calcular el $n$-ésimo número de Catalán.
+  \\\\
     Ver \href{https://cses.fi/paste/a095f196a9c6a0561095b74/}{código.}
+  \end{samepage}
 \section{Problemas}
 \begin{itemize}
     \item[7.11.1] \href{https://cses.fi/problemset/task/1715/}{String Distribution (CSES 1715)}

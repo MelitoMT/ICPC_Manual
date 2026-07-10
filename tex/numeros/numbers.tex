@@ -1,7 +1,7 @@
 En programación competitiva, dominar o al menos tener buenas nociones de los conceptos principales de teoría de números no es un lujo, sino una necesidad. A lo largo de este texto y en la práctica dentro de la ICPC, el lector encontrará problemas donde aparecen de manera natural ideas como divisibilidad, números primos, residuos, máximo común divisor y aritmética modular. En términos generales, la teoría de números estudia las propiedades de los enteros, y por ello ofrece un lenguaje muy útil para describir, simplificar y resolver muchos problemas clásicos de concurso.
 \section{Bases}
 
-\textbf{Definición (divisibilidad).} Decimos que $a$ \textbf{divide} a $b$ (y escribimos $a \mid b$) si existe un entero $k$ tal que $b = ka$.
+\textbf{Definición.} Decimos que $a$ \textbf{divide} a $b$ (y escribimos $a \mid b$) si existe un entero $k$ tal que $b = ka$.
 
 \textit{Ejemplo.} Se cumple $4 \mid 20$ porque $20 = 4 \cdot 5$ (aquí $k = 5$). En cambio, $6 \nmid 20$, pues no existe ningún entero $k$ con $20 = 6k$.
 
@@ -9,7 +9,7 @@ Veamos propiedades de la divisibilidad que aparecen con frecuencia en competenci
 
 \textbf{Propiedad 1.} Si un mismo número divide a otros dos, entonces también divide a su suma y su diferencia:
 \[
-a \mid b \text{ y } a \mid c \implies a \mid (b \pm c).
+a \mid b \text{  y  } a \mid c \implies a \mid (b \pm c).
 \]
 
 \textit{Ejemplo.} Como $3 \mid 12$ y $3 \mid 21$, entonces $3 \mid (21-12) = 9$ y $3 \mid (21+12) = 33$.
@@ -30,7 +30,7 @@ a \mid b \text{ y } b \mid c \implies a \mid c.
 
 El \textbf{máximo común divisor} de dos números $a$ y $b$, denotado $\gcd(a,b)$ (siglas en inglés), es el mayor entero que divide a ambos. El \textbf{mínimo común múltiplo} $\text{lcm}(a,b)$ es el menor entero positivo divisible por ambos.
 
-\textit{Ejemplo ($\gcd$ y $\text{lcm}$).} Si $a = 12$ y $b = 18$, entonces los divisores de $12$ son
+\textit{Ejemplo ($\text{gcd}$ y $\text{lcm}$).} Si $a = 12$ y $b = 18$, entonces los divisores de $12$ son
 \[
 \{1,2,3,4,6,12\}
 \]
@@ -74,7 +74,7 @@ dividiendo antes de multiplicar para mantener los valores en el rango.
 
 Hasta aquí relacionamos $\text{lcm}(a,b)$ con $\gcd(a,b)$. Para \emph{calcular} $\gcd(a,b)$ se usa el algoritmo de Euclides.
 
-\textbf{Algoritmo deuclides} Para enteros $a$ y $b$ con $b \neq 0$,
+\textbf{Algoritmo de Euclides.} Para enteros $a$ y $b$ con $b \neq 0$,
 \[
 \gcd(a, b) = \gcd(b, a \bmod b).
 \]
@@ -190,9 +190,11 @@ long long power(long long a, long long b, long long mod) {
 12 = 2^2 \cdot 3, \qquad 60 = 2^2 \cdot 3 \cdot 5.
 \]
 
-\textbf{Propiedad (prueba de primalidad hasta $\sqrt{n}$).} Si $n$ es un número compuesto, entonces existen enteros $a$ y $b$ con $n = ab$ y $1 < a, b < n$. No pueden cumplirse a la vez $a > \sqrt{n}$ y $b > \sqrt{n}$, pues entonces $ab > n$. Por tanto, todo compuesto posee un divisor $d$ con $1 < d \le \lfloor\sqrt{n}\rfloor$. Basta probar divisibilidad con los enteros en ese rango.
+\textbf{Propiedad (prueba de primalidad hasta $\sqrt{n}$).} Si $n$ es un número compuesto (es mayor a $1$ y tiene más de dos divisores positivos), entonces existen enteros $a$ y $b$ con $n = ab$ y $1 < a, b < n$. No pueden cumplirse a la vez $a > \sqrt{n}$ y $b > \sqrt{n}$, pues entonces $ab > n$. Por tanto, todo compuesto posee un divisor $d$ con $1 < d \le \lfloor\sqrt{n}\rfloor$. Para determinar si un número es compuesto, basta probar divisibilidad con los enteros en ese rango.
 
-\textit{Ejemplo.} Como $91 = 7\cdot 13$ y $7 \le \sqrt{91}$, al buscar factores de $91$ basta llegar hasta $\lfloor\sqrt{91}\rfloor = 9$; al hallar $7$ se concluye que $91$ no es primo. Si ningún entero entre $2$ y $\lfloor\sqrt{n}\rfloor$ divide a $n$, entonces $n$ es primo. Esto da un algoritmo $O(\sqrt{n})$.
+\textit{Ejemplo.} Como $91 = 7\cdot 13$ y $7 \le \sqrt{91}$, al buscar factores de $91$ basta llegar hasta $\lfloor\sqrt{91}\rfloor = 9$; al hallar $7$ se concluye que $91$ no es primo.
+
+Si ningún entero entre $2$ y $\lfloor\sqrt{n}\rfloor$ divide a $n$, entonces $n$ es primo. Esto da un algoritmo $O(\sqrt{n})$.
 
 \paragraph{Implementación (\texttt{esPrimo}).}
 
@@ -264,9 +266,9 @@ for (int i = 2; i * i <= n; i++) {
  
 \paragraph{Complejidad.} La criba anterior corre en $O(n \log \log n)$, prácticamente lineal; suele ser viable hasta $n \approx 10^7$ con memoria razonable. Para $n$ mayor o para tener el \emph{menor factor primo} de cada entero (útil para factorizar rápido) existen variantes en tiempo $O(n)$; véase la referencia \cite{cpalg-sieve}.
 
-\section{Teorema de Bézout}
+\section{Lema de Bézout}
 
-\textbf{Teorema (Bézout).} Para cualesquiera enteros $a$ y $b$ no ambos cero, existen enteros $x$ e $y$ tales que
+\textbf{Lema (Bézout).} Para cualesquiera enteros $a$ y $b$ no ambos cero, existen enteros $x$ e $y$ tales que
 \[
 ax + by = \gcd(a, b).
 \]
@@ -478,7 +480,6 @@ vector<long long> inversos(int m, long long p) {
     return inv;
 }
 \end{lstlisting}
-
 \subsection*{Pequeño teorema de Fermat}
 
 Diremos que dos enteros son \textbf{primos relativos} o \textbf{coprimos} si su máximo común divisor es $1$.
@@ -512,8 +513,8 @@ En el caso particular $m = p$ primo, los enteros coprimos con $p$ entre $1$ y $p
 \[
 3^4 = 81 \equiv 1 \pmod{10}.
 \]
-
-\section{Congruencias lineales y Teorema Chino del Residuo}
+\begin{samepage}
+    \section{Congruencias lineales y Teorema Chino del Residuo}
 \subsection*{Congruencia lineal}
 
 Ahora que sabemos calcular inversos modulares, podemos abordar las \textbf{congruencias lineales}: dado un módulo $m$ y enteros $a$ y $b$, buscamos enteros $x$ que satisfagan
@@ -521,6 +522,8 @@ Ahora que sabemos calcular inversos modulares, podemos abordar las \textbf{congr
 ax \equiv b \pmod{m}.
 \]
 Al igual que con los inversos, estas ecuaciones \emph{no siempre} tienen solución.
+
+\end{samepage}
 
 \textbf{Propiedad (existencia de solución).} Sea $g = \gcd(a,m)$. La congruencia $ax \equiv b \pmod{m}$ tiene al menos una solución si y sólo si $g \mid b$.
 
@@ -565,7 +568,7 @@ Si $x_1$ y $x_2$ son dos soluciones, entonces $x_1 \equiv x_2 \pmod{n_1}$ y $x_1
 
 En implementaciones conviene reducir módulo $\text{lcm}(n_1,n_2)$ (o módulos intermedios) en cada paso para controlar el \textit{overflow}.
 
-El mismo procedimiento se extiende a $k$ congruencias $x \equiv a_i \pmod{n_i}$: se fusionan dos a dos, reemplazando cada par por una sola congruencia módulo el mínimo común múltiplo de los módulos involucrados, hasta obtener una congruencia única. Una cota razonable de coste es $O\bigl(k \log \text{lcm}(n_1,\ldots,n_k)\bigr)$ si en cada paso se usa Euclides extendido sobre enteros acotados por dicho mcm.
+El mismo procedimiento se extiende a $k$ congruencias $x \equiv a_i \pmod{n_i}$: se fusionan dos a dos, reemplazando cada par por una sola congruencia módulo el mínimo común múltiplo de los módulos involucrados, hasta obtener una congruencia única. Una cota razonable de coste es $O\bigl(k \log \text{lcm}(n_1,\ldots,n_k)\bigr)$ si en cada paso se usa Euclides extendido sobre enteros acotados por dicho lcm.
 
 \textit{Ejemplo.} Busquemos $x$ que satisfaga el sistema
 \begin{align*}
@@ -895,7 +898,7 @@ Para módulo no primo o cuando $\gcd(a,m) > 1$, hay variantes que reducen al cas
     Por otro lado, si contamos por columnas, notaremos que cada columna $k$ tiene $|\{i \leq n | f(i)\geq k\}|$ porque asi definimos la tabla. De aquí que:
     \[\sum_{i=1}^{n}f(i)=\sum_{i=1}^{\infty}|\{i \leq n | f(i)\geq k\}|\]
     Otra observación importante es que dado $i$, $f(i) = k$ si y solo si $1, 2, \ldots, k-1$ dividen a $i$, pero $k$
-    no divide a $i$. Definamos $L_j = \text{mcm}(1, 2, \ldots, j)$ con $L_0 = 1$. Entonces:
+    no divide a $i$. Definamos $L_j = \text{gcd}(1, 2, \ldots, j)$ con $L_0 = 1$. Entonces:
     \[
     f(i) = k \iff L_{k-1} \mid i \text{ y } L_k \nmid i
     \]

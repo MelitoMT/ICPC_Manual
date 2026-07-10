@@ -120,15 +120,15 @@ Si pueden pasar todos los niveles, imprime ``\texttt{I become the guy.}''.Si es 
 \end{table}
 \end{comment}
 
-La programación competitiva suele describirse como un deporte mental: exige constancia, disciplina y entrenamiento estructurado. El objetivo no es solamente encontrar una solución correcta, sino hacerlo con precisión y en el menor tiempo posible.
+La programación competitiva suele describirse como una actividad mental: exige constancia, disciplina y entrenamiento estructurado. El objetivo no es solamente encontrar una solución correcta, sino hacerlo con precisión y en el menor tiempo posible.
 \\\\
 Su filosofía se centra en la resolución eficiente de problemas clásicos de ciencias de la computación. En este contexto, los enunciados están diseñados para ser resolubles con técnicas y algoritmos conocidos; es decir, no se trata de problemas de investigación abierta, sino de retos que evalúan la capacidad de modelar, implementar y optimizar soluciones bajo presión de tiempo. Resolver un problema implica comprender el enunciado, elegir una estrategia algorítmica adecuada y traducirla a código en un lenguaje de programación. El componente competitivo aparece cuando, además de resolver correctamente, se debe hacerlo rápido y con la menor cantidad de intentos fallidos.
 \\\\
-En comparación con hackatones u otros concursos de desarrollo, donde se privilegia la construcción de productos completos durante varios días, la ICPC y competencias similares se enfocan en problemas puntuales con criterios estrictos de correctitud, tiempo y memoria. El sitio oficial de la ICPC la describe como una competencia algorítmica universitaria. En la práctica, esto significa que cada solución enviada es evaluada automáticamente por un programa llamado juez en línea que verifica si el programa responde correctamente a todos los casos de prueba y respeta los límites establecidos. Esta dinámica es una diferencia clave frente a concursos con evaluación más abierta y en ocasiones algo subjetiva, como los hackatones.
+En comparación con hackatones u otros concursos de desarrollo, donde se privilegia la construcción de productos completos durante varios días, la ICPC y competencias similares se enfocan en problemas puntuales con criterios estrictos de correctitud, tiempo y memoria. El sitio oficial de la ICPC la describe como una competencia algorítmica universitaria. En la práctica, esto significa que cada solución enviada es evaluada automáticamente por un programa llamado \textit{juez en línea} que verifica si el programa responde correctamente a todos los casos de prueba y respeta los límites establecidos. Esta dinámica es una diferencia clave frente a concursos con evaluación más abierta y en ocasiones algo subjetiva, como los hackatones.
 \\\\
 La ICPC es actualmente la competencia universitaria más representativa en esta disciplina. Se compite en equipos de tres estudiantes de la misma institución y, según la región, el proceso se organiza en varias fases clasificatorias. En el caso de México, desde 2024 se introdujo una estructura de \textbf{cuatro etapas}; entre ellas, el Gran Premio de México, compuesto por tres fechas de competencia clasificatorias. En cada fecha se resuelve un conjunto de problemas, usualmente entre 9 y 13, en tiempo limitado y la clasificación considera tanto la cantidad de problemas resueltos como la penalización acumulada por tiempo e intentos incorrectos.
 \\\\
-Para hacerlo más claro e ilustrativo, tomemos como ejemplo el problema clásico de \href{https://codeforces.com/problemset/problem/231/A}{Codeforces 231A}.
+Tomemos el problema clásico de \href{https://codeforces.com/problemset/problem/231/A}{Codeforces 231A} para ejemplificar cómo se ve un problema de competencia.
 
 \begin{center}
 \fbox{
@@ -175,9 +175,9 @@ Como se observa en este ejemplo, usualmente todo problema de programación compe
     \item \textbf{Ejemplos:} casos de prueba para validar la interpretación.
 \end{itemize}
 
-Una pregunta valiosa para quien inicia es: \textit{¿entiendo lo que me pide el problema?}; y después, \textit{ya que entendí el problema, ¿puedo crear un código para resolverlo?}; finalmente, \textit{¿cuánto tiempo me tomaría escribir un código correcto y sin errores?}. Esta autoevaluación ayuda a medir el progreso real en programación competitiva y, sobre todo, a construir confianza con cada intento. Incluso cuando la primera solución no sale a la perfección, cada ajuste mejora la lectura de problemas, la precisión del código y la velocidad de respuesta en concurso. Entre más problemas se resuelven, mayor ``condición'' se desarrolla para identificar patrones, tipos de enunciados, técnicas y trucos frecuentes; en consecuencia, cada vez resulta más natural acercarse a una solución correcta desde el primer intento.
+Una pregunta valiosa para quien inicia es: \textit{¿entiendo lo que me pide el problema?}; y después, \textit{ya que entendí el problema, ¿puedo crear un código para resolverlo?}; finalmente, \textit{¿cuánto tiempo me tomaría escribir un código correcto y sin errores?}. Esta autoevaluación ayuda a medir el progreso real en programación competitiva y, sobre todo, a construir confianza con cada intento. Incluso cuando la primera solución no sale a la perfección, cada ajuste mejora la lectura de problemas, la precisión del código y la velocidad de respuesta en concurso. Entre más problemas se resuelven, mayor ``condición'' se desarrolla para identificar patrones, tipos de enunciados, técnicas y trucos frecuentes. En consecuencia, cada vez resulta más natural acercarse a una solución correcta desde el primer intento.
 
-La idea central para resolver el problema 231A es contar, en cada línea, cuántos valores son iguales a 1; si la suma es mayor o igual a 2, se incrementa el contador de problemas resueltos. Esta tarea permite practicar lectura de entrada, recorridos simples y condiciones lógicas. El código puede implementarse de forma directa:
+La idea central para resolver el problema 231A es contar, en cada línea, cuántos valores son iguales a 1; si la suma es mayor o igual a 2, se incrementa un contador de problemas resueltos. Esta tarea permite practicar lectura de entrada, recorridos simples y condiciones lógicas. El código puede implementarse de forma directa:
 \lstinputlisting[language=C++]{./tex/codes/codeforces/231A.cpp}
 
 En este ejercicio también queremos exponer un detalle importante: en la salida se imprime \texttt{"\textbackslash n"}. Aunque parezca menor, el juez en línea suele comparar texto de forma estricta. Si el formato no coincide exactamente con lo esperado (por ejemplo, cuando el resultado debe ir en una línea y no se respeta), es posible recibir un veredicto \texttt{Wrong Answer} aun cuando la lógica sea correcta. Iniciar puede ser frustrante, pero después de superar esa curva de aprendizaje, este deporte se vuelve sumamente reconfortante.
@@ -209,7 +209,7 @@ En resumen, existen muchos jueces en línea y miles de problemas disponibles par
 \subsection{Ejercicios}
 
 \begin{itemize}
-    \item \href{https://omegaup.com/arena/problem/Tabla-para-pastel/#problems}{Tabla para Pastel (omegaUp)}: Concurso FCiencias 2016.
+    \item \href{https://omegaup.com/arena/problem/Tabla-para-pastel/#problems}{Tabla para Pastel (omegaUp)}: Encontrar el diámetro de un círculo a partir de un cuadrado contenido en él.
     \item \href{https://codeforces.com/problemset/problem/4/A}{Watermelon (Codeforces 4A)}: Determinar si una sandía de peso $w$ puede dividirse en dos partes pares positivas.
     \item \href{https://codeforces.com/problemset/problem/2009/A}{Minimize (Codeforces 2009A)}: Para cada caso, hallar el mínimo de $(c-a)+(b-c)$ con $a \leq c \leq b$.
     \item \href{https://codeforces.com/problemset/problem/469/A}{I Wanna Be the Guy (Codeforces 469A)}: Decidir si dos jugadores, combinando los niveles que cada uno puede pasar, cubren todos los niveles del juego.

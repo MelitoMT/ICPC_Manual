@@ -31,7 +31,7 @@ bool N(point x){
 }
 
 bool operator <(point x, point y){
-    return (N(x) == N(y) && prodCruz(x,y) > 0) || (N(x) && !N(x));
+    return (N(x) == N(y) && prodCruz(x,y) > 0) || (N(x) && !N(y));
 }
 
 double prodPunto(point a, point b){
@@ -42,7 +42,7 @@ double prodCruz(point a, point b) {
     return a.x * b.y - a.y * b.x;
 }
 
-int winding_number(vector<point> poly, point q) {
+int winding_number(vector<point> &poly, point q) {
     int wn = 0;
     int n = poly.size();
     for (int i = 0; i < n; i++) {
@@ -64,7 +64,7 @@ bool dentro(vector<point> poly, point q) {
     return winding_number(poly, q) != 0;
 }
 
-vector<point> convexHull(vector<point> pts) {
+vector<point> convexHull(vector<point> &pts) {
     int n = pts.size();
     if (n < 2) return pts;
     sort(pts.begin(), pts.end());
@@ -135,19 +135,17 @@ struct cmp {
 
 bool shamos_hoey(vector<seg> segs) {
     int n = segs.size();
-    /*asegurarse que los segmentos
-    vayan de izquierda a derecha*/
+    //asegurarse que los segmentos
+    //vayan de izquierda a derecha
     for (auto& s : segs){
         if (s.first.x > s.second.x){
             swap(s.first, s.second);
         }
     }
-    /*
-    eventos guardara la x del punto, 
-    1 o -1 que nos indicara si es de inicio 
-    o fin respectivamente,
-    el indice en el vector original
-    */
+    //eventos guardara la x del punto, 
+    //1 o -1 que nos indicara si es de inicio 
+    //o fin respectivamente,
+    //el indice en el vector original
     vector<tuple<double,int,int>> eventos;
     for (int i = 0; i < n; i++) {
         eventos.push_back(
@@ -159,47 +157,46 @@ bool shamos_hoey(vector<seg> segs) {
     }
     sort(eventos.begin(), eventos.end(),
     [](auto& a, auto& b){
-        if (abs(get<0>(a) 
-        - get<0>(b)) > 1e-9){
+        if (abs(get<0>(a) - get<0>(b)) > 1e-9){
             return get<0>(a) < get<0>(b);
         }
         return get<1>(a) > get<1>(b);
     });
  
     set<seg,cmp> activos;
-    /*estructura que nos ayude
-    a borrar sin depender del
-    comparador que definimos*/
+    //estructura que nos ayude
+    //a borrar sin depender del
+    //comparador que definimos
     vector<set<seg,cmp>::iterator> pos(n, activos.end());
     for (auto& [x, tipo, id] : eventos) {
         sweepX = x;
-        //procesamos nodo de inicio
         if (tipo == 1) {
+            //procesamos nodo de inicio
             auto it  = 
             activos.insert(segs[id]).first;
             pos[id]  = it;
             auto sig = next(it);
-            auto ant = (it != activos.begin())
-            ? prev(it)
-            : activos.end();
-            /*buscar interseccion con 
-            vecinos, se dejo como ejercicio
-            en intersecciones*/
+            //buscar interseccion con 
+            //vecinos, se dejo como ejercicio
+            //en intersecciones
             if (sig != activos.end()
-            && intersectan(it, sig)){
-                return true;
-            } 
+                && intersectan(it, sig)){
+                    return true;
+                } 
+            auto ant = (it != activos.begin())
+                ? prev(it)
+                : activos.end();
             if (ant != activos.end()
-            && intersectan(it, ant)){
-                return true;
-            }
-            //procesamos nodo de final
+                && intersectan(it, ant)){
+                    return true;
+                }
         } else {
+            //procesamos nodo de final
             auto it  = pos[id];
             auto sig = next(it);
             auto ant = (it != activos.begin())
-            ? prev(it)
-            : activos.end();
+                ? prev(it)
+                : activos.end();
             if (sig != activos.end()
             && ant != activos.end()
             && intersectan(*sig, *ant)){
