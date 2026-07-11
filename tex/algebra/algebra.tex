@@ -145,12 +145,13 @@ recalcular todo desde cero cada vez.
 
 En el caso de una recurrencia lineal general la forma de implementarlo con DP es bastante simple. Es como hacer fuerza bruta, pero memorizando lo que ya calculamos:
 \begin{lstlisting}[language=C++]
-//Nos saltamos los primeros n terminos que son fijos
-for(int i = n; i <= k; i ++){
+// Saltamos los primeros n terminos, que son las condiciones iniciales.
+for (int i = n; i <= k; i++) {
     dp[i] = 0;
-    //para cada uno de los terminos anteriores j sumamos el termino multiplicado por su constante
-    for(int j = 1; j <= n; j++){
-        dp[i] += c[j] * dp[i-j];
+
+    // Cada termino anterior j contribuye con su constante c[j].
+    for (int j = 1; j <= n; j++) {
+        dp[i] += c[j] * dp[i - j];
     }
 }
 \end{lstlisting}
@@ -199,11 +200,14 @@ p(x) = a_0 + x(a_1 + x(a_2 + \cdots + x(a_{n-1} + x \cdot (0 + a_n))\cdots))
 \]
 Es decir, se empezará a calcular desde el coeficiente de mayor grado y se va acumulando de adentro hacia afuera:
 \begin{lstlisting}[language=C++]
-ll horner(vector<ll> a, ll x) {
-    ll res = 0;
-    for (int i = a.size()-1; i >= 0; i--)
-        res = res * x + a[i];
-    return res;
+long long evaluateHorner(const vector<long long>& coefficients, long long x) {
+    long long result = 0;
+
+    for (int i = (int)coefficients.size() - 1; i >= 0; i--) {
+        result = result * x + coefficients[i];
+    }
+
+    return result;
 }
 \end{lstlisting}
 Frecuentemente este algoritmo se hace módulo algún número (por ejemplo cuando los coeficientes o
@@ -297,78 +301,91 @@ con módulo $10^9+7$ la salida sería $30$.
 En realidad, podemos ver este problema desde otro enfoque. Buscaremos un polinomio tal que $p_k(n)=\sum_{i=1}^{n} i^k$, lo primero que queremos saber es qué grado tiene el polinomio para saber cuántos puntos necesitamos, esto lo haremos por inducción, nótese que si $k=1$, por lo visto antes, $p_1(n)=\frac{n(n+1)}{2}$, es decir es un polinomio de grado $k+1=2$, supongamos entonces que $p_{k-1}(n)$ tiene grado $k$, ahora consideremos $p_{k}(n)$ y saquemos su derivada, es decir $p^{'}_{k}(n)=kp_{k-1}(n)$ de donde como la derivada baja un grado, tenemos que $p_{k}(n)$ tiene grado $k+1$.
 \\\\De lo anterior concluimos que teniendo $k+2$ puntos por los que pase el polinomio podemos evaluarlo de forma eficiente. Estos podemos encontrarlos fácilmente, pues $f(0)=0$ y de ahí $f(x)=f(x-1)+x^k$. Tras esto ocuparemos la interpolación vista arriba para calcular $f(n)$, de forma que la implementación nos quedaría
 \begin{lstlisting}[language=C++]
-const ll mod = 1e9 + 7;
-ll lagrangeInter(int n, int k) {
-	if (k == 0) {
+const long long MOD = 1000000007;
+
+long long sumOfPowers(int n, int k) {
+    if (k == 0) {
         return n;
     }
-  ll res = 0;
-	if (n <= k + 1) {
-		for (int i = 1; i <= n; i ++) {
-			res = (res + power(i, k)) % mod;
-		}
-		return res;
-	}
-	vector<ll> pre(k + 2), suf(k + 2), inv(k + 2);
-	inv[0] = 1;
-	pre[0] = n;
-	suf[k + 1] = n - (k + 1);
-    //precalcular prefijos
-	for (int i = 1; i <= k; i ++){
-        pre[i] = pre[i - 1] * (n - i) % mod;
-    }
-    //precalcular sufijos
-	for (int i = k; i >= 1; i --){
-        suf[i] = suf[i + 1] * (n - i) % mod;
-    }
-    //precalcular inversos
-	for (int i = 1; i <= k + 1; i ++){
-        inv[i] = inv[i - 1] * inv[i] % mod;
+
+    if (n <= k + 1) {
+        long long result = 0;
+        for (int i = 1; i <= n; i++) {
+            result = (result + power(i, k)) % MOD;
+        }
+        return result;
     }
 
-	int yi = 0;
-	int num, denom;
-	for (int i = 0; i <= k + 1; i ++) {
-		yi = (yi + power(i, k)) % mod;
+    vector<long long> prefix(k + 2);
+    vector<long long> suffix(k + 2);
+    vector<long long> fact(k + 2);
+    vector<long long> invFact(k + 2);
 
-        //calcular numerador
-		if (i == 0){
-            num = suf[1];
-        }
-		else if (i == k + 1){
-            num = pre[k];
-        }
-		else{
-            num = pre[i - 1] * suf[i + 1] % mod;
-        }
- 
-        //calcular denominador
-		denom = inv[i] * inv[k + 1 - i] % mod;
- 
+    prefix[0] = n;
+    suffix[k + 1] = n - (k + 1);
 
-		if ((i + k) % 2 == 1){
-            res += (yi * num % mod) * denom % mod; 
+    // Prefijos: (n)(n-1)...(n-i)
+    for (int i = 1; i <= k; i++) {
+        prefix[i] = prefix[i - 1] * (n - i) % MOD;
+    }
+
+    // Sufijos: (n-(k+1))...(n-i)
+    for (int i = k; i >= 1; i--) {
+        suffix[i] = suffix[i + 1] * (n - i) % MOD;
+    }
+
+    fact[0] = 1;
+    for (int i = 1; i <= k + 1; i++) {
+        fact[i] = fact[i - 1] * i % MOD;
+    }
+    invFact[k + 1] = power(fact[k + 1], MOD - 2, MOD);
+    for (int i = k; i >= 0; i--) {
+        invFact[i] = invFact[i + 1] * (i + 1) % MOD;
+    }
+
+    long long yValue = 0;
+    long long result = 0;
+
+    for (int i = 0; i <= k + 1; i++) {
+        yValue = (yValue + power(i, k)) % MOD;
+
+        long long numerator;
+        if (i == 0) {
+            numerator = suffix[1];
+        } else if (i == k + 1) {
+            numerator = prefix[k];
+        } else {
+            numerator = prefix[i - 1] * suffix[i + 1] % MOD;
         }
-		else{
-            res -= (yi * num % mod) * denom % mod;
+
+        long long denominator = invFact[i] * invFact[k + 1 - i] % MOD;
+        long long term = yValue * numerator % MOD * denominator % MOD;
+
+        if ((i + k) % 2 == 1) {
+            result += term;
+        } else {
+            result -= term;
         }
- 
-        //evitar que el resultado sea negativo
-		res = (res % mod + mod) % mod;
-	}
-	return res;
+
+        // Normalizar a [0, MOD)
+        result = (result % MOD + MOD) % MOD;
+    }
+
+    return result;
 }
- 
+
 int main() {
-	int n, k; cin >> n >> k;
-	cout << lagrangeInt(n, k) << endl;
+    int n, k;
+    cin >> n >> k;
+    cout << sumOfPowers(n, k) << "\n";
 }
 \end{lstlisting}
 
 \textbf{Ejercicio} Optimizar la interpolación de Lagrange como lo hicimos cuando los puntos son $1, 2, 3, \cdots, n$, para cualquier progresión aritmética.
 \\
  
-\section{Transformada de Fourier rápida (FFT) y NTT}
+\section{Transformada de Fourier rápida (FFT) y NTT\adv}
+\advnote{Requiere polinomios (sección anterior) y, para NTT, aritmética modular e inversos (Cap.~6). Puede omitirse en una primera lectura.}
  
 En la sección pasada ya trabajamos con polinomios, una duda que nos puede surgir al manipularlos es ¿cómo multiplicarlos eficientemente?, supongamos que tenemos un polinomio  $A(x) = \sum_{i=0}^{n-1} a_i x^i$ y otro $B(x) = \sum_{i=0}^{n-1} b_i x^i$, el producto de ambos es $C(x) = A(x) \cdot B(x)$ y tiene coeficientes:
 \[
@@ -414,113 +431,147 @@ Se recomienda usar $FFT$ cuando los coeficientes pueden superar el módulo de $N
 Las implementaciones de FFT y NTT que se usan en los problemas de este capítulo se dejan aquí para referencia:
 \\\\FFT
 \begin{lstlisting}[language=C++]
-
 #include <complex>
-using ld = long double;
-using cd = complex<ld>;
-const ld PI = acosl(-1.0L);
- 
-void fft(vector<cd>& a, bool inv) {
-    int n = a.size();
+#include <vector>
+
+using Complex = std::complex<long double>;
+const long double PI = acosl(-1.0L);
+
+void fft(std::vector<Complex>& values, bool invert) {
+    int n = values.size();
+
+    // Bit-reversal permutation
     for (int i = 1, j = 0; i < n; i++) {
         int bit = n >> 1;
-        for (; j & bit; bit >>= 1) j ^= bit;
+        for (; j & bit; bit >>= 1) {
+            j ^= bit;
+        }
         j ^= bit;
-        if (i < j) swap(a[i], a[j]);
+        if (i < j) {
+            std::swap(values[i], values[j]);
+        }
     }
-    for (int len = 2; len <= n; len <<= 1) {
-        ld ang = 2 * PI / len * (inv ? -1 : 1);
-        cd wlen(cosl(ang), sinl(ang));
-        for (int i = 0; i < n; i += len) {
-            cd w(1);
-            for (int j = 0; j < len / 2; j++) {
-                cd u = a[i + j];
-                cd v = a[i + j + len / 2] * w;
-                a[i + j]           = u + v;
-                a[i + j + len / 2] = u - v;
-                w *= wlen;
+
+    for (int length = 2; length <= n; length <<= 1) {
+        long double angle = 2 * PI / length * (invert ? -1 : 1);
+        Complex rootLength(cosl(angle), sinl(angle));
+
+        for (int i = 0; i < n; i += length) {
+            Complex root(1);
+            for (int j = 0; j < length / 2; j++) {
+                Complex u = values[i + j];
+                Complex v = values[i + j + length / 2] * root;
+                values[i + j] = u + v;
+                values[i + j + length / 2] = u - v;
+                root *= rootLength;
             }
         }
     }
-    if (inv)
-        for (auto& x : a) x /= n;
+
+    if (invert) {
+        for (Complex& value : values) {
+            value /= n;
+        }
+    }
 }
 \end{lstlisting}
 NTT
 \begin{lstlisting}[language=C++]
-const ll MOD = 998244353;
-const ll PRIM = 3;
- 
-void ntt(vector<ll>& a, bool inv) {
-    int n = a.size();
+const long long MOD = 998244353;
+const long long PRIMITIVE_ROOT = 3;
+
+void ntt(std::vector<long long>& values, bool invert) {
+    int n = values.size();
+
     for (int i = 1, j = 0; i < n; i++) {
         int bit = n >> 1;
-        for (; j & bit; bit >>= 1) j ^= bit;
+        for (; j & bit; bit >>= 1) {
+            j ^= bit;
+        }
         j ^= bit;
-        if (i < j) swap(a[i], a[j]);
+        if (i < j) {
+            std::swap(values[i], values[j]);
+        }
     }
-    for (int len = 2; len <= n; len <<= 1) {
-        ll w = inv
-            ? power(PRIM, MOD - 1 - (MOD - 1) / len, MOD)
-            : power(PRIM, (MOD - 1) / len, MOD);
-        for (int i = 0; i < n; i += len) {
-            ll wn = 1;
-            for (int j = 0; j < len / 2; j++) {
-                ll u = a[i + j];
-                ll v = a[i + j + len / 2] * wn % MOD;
-                a[i + j]           = (u + v) % MOD;
-                a[i + j + len / 2] = (u - v + MOD) % MOD;
-                wn = wn * w % MOD;
+
+    for (int length = 2; length <= n; length <<= 1) {
+        long long root = invert
+            ? power(PRIMITIVE_ROOT, MOD - 1 - (MOD - 1) / length, MOD)
+            : power(PRIMITIVE_ROOT, (MOD - 1) / length, MOD);
+
+        for (int i = 0; i < n; i += length) {
+            long long currentRoot = 1;
+            for (int j = 0; j < length / 2; j++) {
+                long long u = values[i + j];
+                long long v = values[i + j + length / 2] * currentRoot % MOD;
+                values[i + j] = (u + v) % MOD;
+                values[i + j + length / 2] = (u - v + MOD) % MOD;
+                currentRoot = currentRoot * root % MOD;
             }
         }
     }
-    if (inv) {
-        ll ni = power(n, MOD - 2, MOD);
-        for (auto& x : a) x = x * ni % MOD;
+
+    if (invert) {
+        long long invN = power(n, MOD - 2, MOD);
+        for (long long& value : values) {
+            value = value * invN % MOD;
+        }
     }
 }
 \end{lstlisting}
-En la práctica, lo que se llama desde el problema es simplemente \texttt{multiply(a, b)},
+En la práctica, lo que se llama desde el problema es simplemente \texttt{multiplyNtt(a, b)} o \texttt{multiplyFft(a, b)},
 que devuelve el vector de coeficientes del producto. Las funciones \texttt{ntt} y \texttt{fft}
 son internas.
  
 \begin{lstlisting}[language=C++]
-vector<ll> multiply_ntt(vector<ll> a, vector<ll> b) {
-    int result_size = a.size() + b.size() - 1;
+std::vector<long long> multiplyNtt(std::vector<long long> a, std::vector<long long> b) {
+    int resultSize = a.size() + b.size() - 1;
     int n = 1;
-    while (n < result_size){
+    while (n < resultSize) {
         n <<= 1;
     }
-    a.resize(n); b.resize(n);
-    ntt(a, false); ntt(b, false);
-    for (int i = 0; i < n; i++){
+
+    a.resize(n);
+    b.resize(n);
+    ntt(a, false);
+    ntt(b, false);
+
+    for (int i = 0; i < n; i++) {
         a[i] = a[i] * b[i] % MOD;
     }
+
     ntt(a, true);
-    a.resize(result_size);
+    a.resize(resultSize);
     return a;
 }
-vector<ll> multiply_fft(vector<ll> a, vector<ll> b) {
-    int result_size = a.size() + b.size() - 1;
+
+std::vector<long long> multiplyFft(std::vector<long long> a, std::vector<long long> b) {
+    int resultSize = a.size() + b.size() - 1;
     int n = 1;
-    while (n < result_size) n <<= 1;
-    vector<cd> fa(n), fb(n);
-    for (int i = 0; i < (int)a.size(); i++){
+    while (n < resultSize) {
+        n <<= 1;
+    }
+
+    std::vector<Complex> fa(n), fb(n);
+    for (int i = 0; i < (int)a.size(); i++) {
         fa[i] = a[i];
     }
-    for (int i = 0; i < (int)b.size(); i++){
+    for (int i = 0; i < (int)b.size(); i++) {
         fb[i] = b[i];
     }
-    fft(fa, false); fft(fb, false);
-    for (int i = 0; i < n; i++){
+
+    fft(fa, false);
+    fft(fb, false);
+    for (int i = 0; i < n; i++) {
         fa[i] *= fb[i];
     }
     fft(fa, true);
-    vector<ll> res(result_size);
-    for (int i = 0; i < result_size; i++){
-        res[i] = llroundl(fa[i].real());
-    }     
-    return res;
+
+    std::vector<long long> result(resultSize);
+    for (int i = 0; i < resultSize; i++) {
+        result[i] = llroundl(fa[i].real());
+    }
+    return result;
 }
 \end{lstlisting}
 \section{Ejercicios}
