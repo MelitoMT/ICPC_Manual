@@ -368,14 +368,14 @@ int main() {
 \textbf{Ejercicio} Optimizar la interpolación de Lagrange como lo hicimos cuando los puntos son $1, 2, 3, \cdots, n$, para cualquier progresión aritmética.
 \\
  
-\section{Transformada de Fourier rápida (FFT) y NTT}
+\section{Transformada rápida de Fourier (FFT) y NTT}
  
-En la sección pasada ya trabajamos con polinomios, una duda que nos puede surgir al manipularlos es ¿cómo multiplicarlos eficientemente?, supongamos que tenemos un polinomio  $A(x) = \sum_{i=0}^{n-1} a_i x^i$ y otro $B(x) = \sum_{i=0}^{n-1} b_i x^i$, el producto de ambos es $C(x) = A(x) \cdot B(x)$ y tiene coeficientes:
+En la sección pasada ya trabajamos con polinomios. Una duda que nos puede surgir al manipularlos es ¿cómo multiplicarlos eficientemente? Supongamos que tenemos un polinomio  $A(x) = \sum_{i=0}^{n-1} a_i x^i$ y otro $B(x) = \sum_{i=0}^{n-1} b_i x^i$, el producto de ambos es $C(x) = A(x) \cdot B(x)$ y tiene coeficientes:
 \[
 c_k = \sum_{i+j=k} a_i b_j
 \]
  
-Esta operación se llama \textbf{convolución} y calcularla directamente cuesta $O(n^2)$, cuando $n \approx 10^5$, esto es $10^{10}$ operaciones, tiempo que nos daría TLE al intentar solucionar un problema de esta forma en la ICPC. El objetivo de $FFT$ será poder hacer esta multiplicación en $O(n \log n)$.
+Esta operación se llama \textbf{convolución} y calcularla directamente cuesta $O(n^2)$, cuando $n \approx 10^5$, esto es alrededor de $10^{10}$ operaciones, tiempo que nos daría TLE al intentar solucionar un problema de esta forma en la ICPC. El objetivo de $FFT$ será poder hacer esta multiplicación en $O(n \log n)$.
 
 De la sección de arriba sabemos que si tenemos un polinomio de grado $n-1$, este lo podemos determinar evaluando $n$ puntos diferentes. Basado en esto, nos gustaría tener para ambos polinomios $A$ y $B$ sus valores en $n$ puntos estratégicos para entonces multiplicar estos valores y obtener valores del polinomio $C$. 
 
