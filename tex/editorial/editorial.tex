@@ -1,199 +1,7 @@
 En este capítulo se recogen las editoriales de los problemas propuestos en el manual. Los nueve problemas de autoría propia se distinguen en el título con la etiqueta (Autoría $\filledstar$).
 \\\\
-\editorialproblem{5.5.1 Throwing Dice (CSES 1092)}
-\subsection*{Hint1}
-Llamemos $f(n)$ son las formas de obtener suma $n$ lanzando el dado. Notemos que $f(n-1)$ son las formas de obtener $f(n)$ si el último dado sale $1$.
-\subsection*{Hint2}
-¿La observación de $f(n-1)$ también se cumple para $f(n-2)$? ¿Qué hay de $f(n-3)$?
-\subsection*{Solución}
-A primer vistazo, este problema parece de combinatoria o DP, pero en realidad este problema se resuelve usando recurrencias. El último dado tiene $6$ resultados diferentes, si el último dado muestra $1$, la suma de los lanzamientos anteriores debe ser $n-1$ o de lo contrario nuestra suma final no podría ser $n$. Esto se cumple para todos los resultados del dado, es decir, que si nos sale $6$, la suma acumulada debería ser $n-6$. Esta observación nos sugiere que
-\[f(n)=f(n-1)+f(n-2)+f(n-3)+f(n-4)+f(n-5)+f(n-6)\]
-Como $n\leq10^{18}$ no podemos calcular $f(n)$ iterativametne. Aplicando exponenciación de matrices, la matriz de transición es:
-\[
-\begin{pmatrix} f(n)\\ f(n-1)\\ f(n-2)\\ f(n-3)\\ f(n-4)\\ f(n-5) \end{pmatrix}
-=
-\begin{pmatrix}
-1 & 1 & 1 & 1 & 1 & 1 \\
-1 & 0 & 0 & 0 & 0 & 0 \\
-0 & 1 & 0 & 0 & 0 & 0 \\
-0 & 0 & 1 & 0 & 0 & 0 \\
-0 & 0 & 0 & 1 & 0 & 0 \\
-0 & 0 & 0 & 0 & 1 & 0
-\end{pmatrix}
-\begin{pmatrix} f(n-1)\\ f(n-2)\\ f(n-3)\\ f(n-4)\\ f(n-5)\\ f(n-6) \end{pmatrix}
-\]
-Sólo hay $1$ forma de obtener $1$ como suma (y $0$ formas para números negativos), entonces podemos simplemente calcular:
-\[
-\begin{pmatrix} f(n)\\ \vdots\\ f(n-5) \end{pmatrix}
-=
-\begin{pmatrix}
-1 & 1 & 1 & 1 & 1 & 1 \\
-1 & 0 & 0 & 0 & 0 & 0 \\
-0 & 1 & 0 & 0 & 0 & 0 \\
-0 & 0 & 1 & 0 & 0 & 0 \\
-0 & 0 & 0 & 1 & 0 & 0 \\
-0 & 0 & 0 & 0 & 1 & 0
-\end{pmatrix}^{n}
-\begin{pmatrix} 1\\ 0\\ 0\\ 0\\ 0\\ 0 \end{pmatrix}
-\]
-La complejidad es $O(6^3 \log n) = O(\log n)$.
-\subsection*{Código}
-Ver \codelink{https://cses.fi/paste/48e6570bd3a36951107242d/}.
-\editorialproblem{5.5.2 Cowmpany Compensation (Codeforces 995F)}
-\subsection*{Hint1}
-Considera una función $f(v,x)$, el número de formas de asignar salarios al subárbol $v$ asignando salario $x$ a $v$. ¿De qué depende el valor de $f(v,x)$?
-\\\\Notemos que si $v$ es una hoja, $f(v,x)=1$.
-\subsection*{Hint2}
- Si $v$ es un vértice cuyos únicos $k$ hijos son hojas, $f(v,x)=\prod_{1}^{k} \sum_{i}^{x} f(s_k,i)$, donde $s_k$ es el $k$-ésimo hijo de $v$
-\subsection*{Hint3}
-Podemos calcular $f(v,x)$ para $x \in \{1,2,...,n+1\}$ con $n\leq 3000$ en tiempo. Sin embargo, $d\leq 10^9$, como evaluamos polinomios para valores muy grandes en $O(n)$?
-\subsection*{Solución}
-Definimos $f(v,x)$ como el número de formas de asignar salarios al
-subárbol de $v$ dado que $v$ tiene salario $x$:
-\[
-f(v,x)=\prod_{i=1}^{k} \sum_{j=1}^{x} f(s_i,j)
-\]
-donde $s_1,\ldots,s_k$ son los hijos de $v$. Para cualquier nodo $v$,
-definimos $g(v,x)$ como las formas de asignar salario \textbf{a lo
-más} $x$ al subárbol de $v$:
-\[
-g(v,x)=\sum_{j=1}^{x} f(v,j)
-\]
-Notemos que la respuesta final es $g(1,d)$.
-\\\\
-\textbf{¿Qué grado tiene este polinomio?} Si $v$ es una hoja,
-$f(v,x)=1$ (grado 0) y $g(v,x)=x$ (grado 1). En general:
-\[
-f(v,x)=\prod_{i=1}^{k}g(s_i,x)
-\]
-los grados de los $g(s_i,x)$ se suman, entonces:
-\[
-\deg(f(v,x))=\sum_{i=1}^{k} \deg(g(s_i,x))
-\]
-Y como $g(v,x)=\sum_{j=1}^{x}f(v,j)$ sube el grado en 1, el grado
-de $g(v,x)$ es igual al \textbf{número de nodos en el subárbol de $v$}.
-Por lo tanto $\deg(g(1,x)) = n$ el número total de vértices.
-\\\\
-Podemos calcular $g(1,1), g(1,2), \ldots, g(1,n+1)$ en $O(n^2)$ con DP procesando los nodos de hojas a raíz. Para cada nodo $v$ y cada $x$, calculamos $f(v,x) = \prod_{i=1}^{k} g(s_i,x)$ y luego $g(v,x) = g(v,x-1) + f(v,x)$, guardando ambos valores en memoria
-para evitar repetir cálculos. Con $n+1$ puntos evaluados en $x=1,2,\ldots,n+1$ (puntos consecutivos), aplicamos interpolación de Lagrange con la simplificación para puntos consecutivos para evaluar el polinomio en $d$ en $O(n)$.
-\subsection*{Código}
-Ver \codelink{https://codeforces.com/problemset/submission/995/375695448}.
+\editorialproblem{5.10.1 Digits Sum (Codeforces 1553A)}
 
-\editorialproblem{5.5.3 Hail Mary (Autoría $\filledstar$)}
-\subsection*{Hint1}
-Para cada posición $i$
-\[IDF[i]=\sum_{j=0}^{m-1} s_j \cdot r_{i+j}\]
-¿Se parece esta suma a alguna que hayas visto antes?
-\subsection*{Hint2}
-Si recorremos $s$ al revés, es decir $s^{\text{rev}}[j] = s[m-1-j]$ . ¿Puedes
-expresar $\text{IDF}[i]$ usando $s^{\text{rev}}$?
-\subsection*{Solución}
-Cuando hay que multiplicar dos arreglos eficientemente, puede ser una señal de que FFT puede ser útil, este problmema es un claro ejemplo.
-El IDF en la posición $i$ es:
-\[
-\text{IDF}[i] = \sum_{j=0}^{m-1} s_j \cdot r_{i+j}
-\]
-Definimos $s^{\text{rev}}[j] = s[m-1-j]$ y calculamos la convolución
-$s^{\text{rev}} * r$:
-\[
-(s^{\text{rev}} * r)[k] = \sum_j s[m-1-j] \cdot r[k-j]
-\]
-Si consideramos el cambio de variable $u = m-1-j$ podemos simplificar la expresión un poco:
-\[
-= \sum_u s[u] \cdot r[u+(k-m+1)]
-\]
-Notemos entonces que si $i = k-m+1$ (es decir $k = m-1+i$):
-\[
-= \sum_u s[u] \cdot r[i+u] = \text{IDF}[i]
-\]
-lo que se ve como una convolución tradicional para calcular con FFT. Tenemos entonces que $\text{IDF}[i] = (s^{\text{rev}} * r)[m-1+i]$. Calculamos
-todos los valores de IDF con una sola FFT en $O((n+m)\log(n+m))$. Finalmente evaluamos para cada indice $i$ si cae en  $[\,F, \infty)$ (feliz), en $[1, E]$ (enojado) o ninguna.
-\subsection*{Código}
-Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/hailMary.cpp}.
-
-\editorialproblem{5.5.4 Nikita and Order Statistics (Codeforces 993E)}
-\subsection*{Hint1}
-¿Realmente importa qué número es $a_i$ o sólo si es menor o mayor que $x$? Piensa en $1$s y $0$s.
-\subsection*{Hint2}
-Consideremos un arreglo $b$ de $1$s y $0$s, donde $b_i=1$ si $a_i < x$. ¿Cómo contamos eficientemente para cada intervalo $(l,j)$ cuántos números menores a $x$ hay? Correcto, con prefijos (por eso es útil que sea un arreglo de $1$s y $0$s).
-\subsection*{Hint3}
-Piensa en $f[v]$ como la cantidad de veces que aparece $v$ en los prefijos, dado un $k$ ¿qué cuenta $f[v] \cdot  f[v+k]?$
-\subsection*{Solución}
-Lo primero que tenemos que hacer es definir nuestro arreglo $b$ de $1$s y $0$s y calcular los prefijos, es decir un arreglo $s$ tal que $s_i=b_0+b_1+\cdots+b_i$. Notemos entonces que para un $k$ la respuesta a la que llamaremos $\text{res}[k]$ es la cantidad de pares $(i,j)$ tal que $i < j$ y $s_j-s_i=k$.
-\\\\
-Definimos $f[v]$ como la cantidad de $i$ tal que $s_i=v$, esto lo podemos calcular rapidamente al mismo tiempo que calculamos los $s_i$, para cada uno simplemente incrementamos $f[s_i]$ en $1$. Para $k>0$, como los prefijos son no decrecientes (es una suma acumulada de $0$s y $1$s), $s_j - s_i = k > 0$ implica $j > i$, entonces:
-\[
-\text{res}[k] = \sum_{v=0}^{n} f[v] \cdot f[v+k] \qquad (k > 0)
-\]
-\begin{samepage}
-Queremos calcular $\sum_v f[v] \cdot f[v+k]$ para todos los $k$ simultáneamente. Definamos $\tilde{f}[i] = f[n-i]$ y calculemos la convolución $f * \tilde{f}$ en el índice $n-k$:
-\[
-(f * \tilde{f})[n-k]
-= \sum_{v=0}^{n} f[v] \cdot \tilde{f}[n-k-v]
-= \sum_{v=0}^{n} f[v] \cdot f[n-(n-k-v)]
-= \sum_{v=0}^{n} f[v] \cdot f[v+k]
-\]
-Entonces $\text{ans}[k] = (f * \tilde{f})[n-k]$ para $k > 0$. A la operación $\sum_v f[v] \cdot f[v+k]$ se le llama\textbf{autocorrelación} de $f$, y calcularla para todos los $k$
-con FFT cuesta $O(n \log n)$.
-\end{samepage}
-\\\\Notemos que solo hemos mencionado la respuesta para $k>0$, esto porque
-\[(f * \tilde{f})[n] = \sum_v f[v]^2\]
-cuenta todos los pares $(i,j)$ con $s_i = s_j$ sin restricción de orden incluyendo $i=j$ e $i>j$, por lo que debemos refilledstar los $n+1$ pares con $i=j$ y dividir entre 2:
-\[
-\text{ans}[0] = \frac{(f * \tilde{f})[n] - (n+1)}{2}
-\]
-\subsection*{Código}
-Ver \codelink{https://codeforces.com/contest/993/submission/375820964}.
-
-
-\editorialproblem{5.5.5 Running Competition (Codeforces 1398G)}
-\subsection*{Hint1}
-Cualquier vuelta es un rectángulo, es decir $L=2y+2(a_j-a_i)$ con $i < j$, de donde $l_i$ tiene que ser par porque $2y$ y $2(a_j-a_i)$ son ambos pares. Es decir, queremos el mayor $d$ tal que $d+y$ divida a $\frac{l_i}{2}$ y existan $i$ y $j$ tal que $d=a_j-a_i$.
-\subsection*{Hint2}
-Queremos todas las diferencias de pares...¿Qué algoritmo usamos cuando queremos contar pares con cierta suma rápido?
-\subsection*{Solución}
-Definimos $f[v]=1$ si $v\in \{a_0, \cdots, a_n\}$, de lo contrario $f[v]=0$. Definamos $\tilde{f}[i]=f[x-i]$ y calculemos la convolución $f * \tilde{f}$:
-\[
-(f * \tilde{f})[x-d] = \sum_{v} f[v] \cdot f[v+d]
-\]
-Notemos que este valor es positivo si y solo si existe algún par $(a_i, a_j)$
-con $a_j - a_i = d$. Encontrar esto para todas las diferencias $d \in \{1, \ldots, x-1\}$ en $O(x \log x)$ se calcula eficientemente con FFT.
-\\\\
-Finalmente, tenemos que responder las queries, para cada etapa $l_t$, queremos el mayor divisor de $l_t' = l_t/2$ de la forma $d + y$ donde $d$ es una diferencia válida. Llamemosle $D = d + y$, entonces $D$ es un divisor válido si $D-y=d$ es una diferencia válida. Este último cambio de variable nos permite buscar directamente divisores de $l_t'$ y verificar en $O(1)$ si son válidos.\\\\A continuación, iteraremos sobre los divisores de $l_t'$ en orden decreciente, esto lo hacemos revisando los enteros de $1$ a $\sqrt{l_t'}$ y agregando los que le dividan a un arreglo, recordemos que es mejor usar la condición $i*i<l_t'$ que $i<\sqrt{l_t'}$ para no meternos con decimales. Tras esto, verificaremos en $O(1)$ si $D - y$ es diferencia válida usando el arreglo obtenido de la convolucion. Es decir, revisaremos que $D>y$ y que la posición $D-y$ no sea $0$.
-\subsection*{Código}
-Ver \codelink{https://codeforces.com/contest/1398/submission/375853380}.
-
-\editorialproblem{5.5.6 Rumbo al Mundial (Autoría $\filledstar$)}
-\subsection*{Hint1}
-Ignoremos por un momento que hay varios semáforos. Si los conductores solamente tuvieran que pasar por un único semáforo. ¿De cuántas formas podría ocurrir que el tiempo de espera sea $k$? ¿Qué sucede si hay dos semáforos?
-\subsection*{Hint2}
-Puede que se necesite multiplicar más de dos polinomios. ¿Cómo podemos organizarlos para hacerlo eficientemente?
-\subsection*{Solución}
-Si solamente hubiera un semáforo con tiempo $t_1$, hay exactamente una forma en la que el conductor espera cada uno de los tiempos. Entonces dado un $k$ la cantidad de formas en las que la suma total de espera de $1$ semáforo sea $k$ (a lo que denotaremos $f_{t_1}[k]$)la podemos ver como:
-\[
-f_{t_1}[k] = \begin{cases} 1 & \text{si } 0 \leq k \leq t_1 - 1 \\ 0 & \text{en otro caso} \end{cases}
-\]
-\\\\
-Ahora, dados dos semáforos con ciclos $t_1$ y $t_2$, notemos que las formas de que la suma de tiempos sea $k$ es buscar la cantidad de pares $(a,b)$ tal que $a+b=k$ y $a\in {0,\cdots,t_1-1}$ y $b\in{0,\cdots,t_2-1}$, es decir:
-\[
-    f_{\{t_1,t_2\}}[k]=\sum_{i=0}^{k}f_{t_1}[i]f_{t_2}[k-i]
-\]
-Este problema para dos semáforos lo podríamos resolver con FFT multiplicando los arreglos que guarden las formas de sumar $k$ para cada semáforo. Si agregaramos un tercer semáforo $t_3$, podemos utilizar la misma lógica, pero ahora buscar los pares $(c,d)$ tal que $c+d=k$, $c$ sea suma de dos números $a$ y $b$ correspondientes a los primeros dos semáforos (definido como arriba) y $d\in {0,\cdots t_3-1}$.
-\\\\Lo anterior nos sugiere que podemos multiplicar los primeros dos semáforos y luego ese producto multiplicarlo por el arreglo del tercer semáforo y así consecutivamente hasta el semáforo $t_m$. Este razonamiento es correcto, sin embargo, poco óptimo, pues correriamos el algoritmo de FFT un total de $m$ veces con un arreglo que cada vez se hace más grande. Necesitamos algo un poco más eficiente.
-\\\\
-La observación clave es que si tenemos dos conjuntos de semáforos $S_1={t_1,t_2}$ y $S_2={t_3,t_4}$, las formas de que la suma total de espera sea $k$ serán las formas de tener un par $(a,b)$ tal que $a$ es una suma de tiempos de semáforos en $S_1$ y $b$ una suma de tiempos de semáforos en $S_2$, es decir:
-\[
-    f_{S_1\cup S_2}[k]=\sum_{i=0}^{k}f_{S_1}[i]f_{S_2}[k-i]
-\]
-Nótese que $f_{S1}$ y $f_{S_2}$ se calculan como hicimos arriba para dos semáforos.
-\\\\
-Esto nos sugiere que dado un conjunto de semáforos $S={t_1,t_2,\cdots,t_m}$, podemos dividir a $S$ a la mitad y calcular la solución para una de las mitades. En cada mitad lo que haremos será volver a dividir a la mitad y así consecutivamente hasta quedarnos con el problema de conjuntos de $1$ o $2$ semáforos que ya sabemos resolver. ¿Por qué esto es más eficiente? En lugar de hacer $m$ productos de tamaño creciente, hacemos $O(\log m)$ multiplicaciones. Consierando que el tamaño total de los polinomios en cada nivel es $W=t_1+t_2+\cdots+t_m$, la complejidad total es $O( W \log^2 W)$.
-\\\\
-Finalmente iteramos un contador $j$ de $1$ a $T$ y acumulamos en una suma cuántas formas tienen suma $j$, así, podemos refilledstarlo a $W$ y obtener cuántas formas tienen suma mayor a $T$.
-\subsection*{Código}
-Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/mundial.cpp}.
-
-\editorialproblem{6.10.1 Digits Sum (Codeforces 1553A)}
 \subsection*{Hint1}
 ¿Qué pasa si el último dígito de un número es $9$?
 \subsection*{Solución}
@@ -202,7 +10,7 @@ Notemos que para cualquier número $x$, si su último dígito no es $9$ entonces
 \subsection*{Código}
 Ver \codelink{https://codeforces.com/contest/1553/submission/376093836}.
 
-\editorialproblem{6.10.2 Two Divisors (Codeforces 1916B)}
+\editorialproblem{5.10.2 Two Divisors (Codeforces 1916B)}
 \subsection*{Hint1}
 Si $b$ es el mayor divisor de $x$ diferente de $x$, entonces $\frac{x}{b}$ es el menor divisor de $x$ mayor a $1$. Es decir, es el primo más pequeño que divide a $x$.
 \subsection*{Solución}
@@ -211,7 +19,7 @@ Primero veamos el caso donde $a$ no divide a $b$. Podemos sacar $m=lcm(a,b)$, es
 \subsection*{Código}
 Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/1916B.cpp}.
 
-\editorialproblem{6.10.3 Exponentiation II (CSES 712)}
+\editorialproblem{5.10.3 Exponentiation II (CSES 712)}
 \subsection*{Hint 1}
 ¿Tienen $a$ y $10^9+7$ algún divisor en común?
 \subsection*{Hint 2}
@@ -227,7 +35,7 @@ Ahora, podemos calcular $b^c \, \mod (p-1)$, con exponenciación binaria, de for
 \subsection*{Código}
 Ver \codelink{https://cses.fi/paste/59f7146d402d82ade95b1e/}.
 
-\editorialproblem{6.10.4 Short Task (Codeforces 1512G)}
+\editorialproblem{5.10.4 Short Task (Codeforces 1512G)}
 \subsection*{Hint1}
 ¿Qué información podemos guardar para responder cada query en $O(1)$?
 \subsection*{Solución}
@@ -237,7 +45,7 @@ En lugar de calcular $d(n)$ para cada $n$ individualmente, podemos calcularlo pa
 \subsection*{Código}
 Ver \codelink{https://codeforces.com/contest/1512/submission/196458896}.
 
-\editorialproblem{6.10.5 Fantastic Beasts (Latin American Regional 2018)}
+\editorialproblem{5.10.5 Fantastic Beasts (Latin American Regional 2018)}
 \subsection*{Hint 1}
 Como hay $Z \leq 100$ zoológicos, después de $100$ unidades de tiempo, cada bestia se estará moviendo en ciclo.
 \subsection*{Hint 2}
@@ -254,7 +62,7 @@ La idea del problema es sencilla; sin embargo se recomienda tener cuidado con la
 \subsection*{Código}
 Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/9547.cpp}.
 
-\editorialproblem{6.10.6 Sushi Lovers (Autoría $\filledstar$)}
+\editorialproblem{5.10.6 Sushi Lovers (Autoría $\filledstar$)}
 \subsection*{Hint 1}
 El chef $i$ está disponible en la hora $t$ si y solo si
 $t \equiv r_i \pmod{d_i}$. Para preparar un rollo, todos sus
@@ -312,7 +120,7 @@ Verificar esto para cada query y cada rollo tendría una complejidad de $O(MQ) \
 \subsection*{Código}
 Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/sushiLovers.cpp}.
 
-\editorialproblem{6.10.7 Pociones Locas (Autoría $\filledstar$)}
+\editorialproblem{5.10.7 Pociones Locas (Autoría $\filledstar$)}
 \subsection*{Hint1}
 Los libros se comportan de forma ciclica módulo $lcm(p_1, p_2, p_3, p_4)$.
 \subsection*{Hint2}
@@ -325,6 +133,199 @@ Ahora notemos que los libros se van a comportar de forma cíclica módulo $p_t$ 
 \\\\Para cada consulta $k$ revisaremos, si $k \geq L$ entonces se alcanza el máximo de todo el ciclo, es decir $m[L-1]$ nos dará en índice de día donde se alcanza el máximo. En otro caso, simplemente revisaremos $m[k-1]$ pues ya lo tenemos calculado. Una vez obtenido el día donde se alcanza el máximo simplemente multiplicaremos cuántos hay de cada tipo ese día, es decir, lo que guardamos en nuestro arreglo $f$.
 \subsection*{Código}
 Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/pociones.cpp}.
+
+\editorialproblem{6.5.1 Throwing Dice (CSES 1092)}
+\subsection*{Hint1}
+Llamemos $f(n)$ son las formas de obtener suma $n$ lanzando el dado. Notemos que $f(n-1)$ son las formas de obtener $f(n)$ si el último dado sale $1$.
+\subsection*{Hint2}
+¿La observación de $f(n-1)$ también se cumple para $f(n-2)$? ¿Qué hay de $f(n-3)$?
+\subsection*{Solución}
+A primer vistazo, este problema parece de combinatoria o DP, pero en realidad este problema se resuelve usando recurrencias. El último dado tiene $6$ resultados diferentes, si el último dado muestra $1$, la suma de los lanzamientos anteriores debe ser $n-1$ o de lo contrario nuestra suma final no podría ser $n$. Esto se cumple para todos los resultados del dado, es decir, que si nos sale $6$, la suma acumulada debería ser $n-6$. Esta observación nos sugiere que
+\[f(n)=f(n-1)+f(n-2)+f(n-3)+f(n-4)+f(n-5)+f(n-6)\]
+Como $n\leq10^{18}$ no podemos calcular $f(n)$ iterativametne. Aplicando exponenciación de matrices, la matriz de transición es:
+\[
+\begin{pmatrix} f(n)\\ f(n-1)\\ f(n-2)\\ f(n-3)\\ f(n-4)\\ f(n-5) \end{pmatrix}
+=
+\begin{pmatrix}
+1 & 1 & 1 & 1 & 1 & 1 \\
+1 & 0 & 0 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 & 0 & 0 \\
+0 & 0 & 1 & 0 & 0 & 0 \\
+0 & 0 & 0 & 1 & 0 & 0 \\
+0 & 0 & 0 & 0 & 1 & 0
+\end{pmatrix}
+\begin{pmatrix} f(n-1)\\ f(n-2)\\ f(n-3)\\ f(n-4)\\ f(n-5)\\ f(n-6) \end{pmatrix}
+\]
+Sólo hay $1$ forma de obtener $1$ como suma (y $0$ formas para números negativos), entonces podemos simplemente calcular:
+\[
+\begin{pmatrix} f(n)\\ \vdots\\ f(n-5) \end{pmatrix}
+=
+\begin{pmatrix}
+1 & 1 & 1 & 1 & 1 & 1 \\
+1 & 0 & 0 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 & 0 & 0 \\
+0 & 0 & 1 & 0 & 0 & 0 \\
+0 & 0 & 0 & 1 & 0 & 0 \\
+0 & 0 & 0 & 0 & 1 & 0
+\end{pmatrix}^{n}
+\begin{pmatrix} 1\\ 0\\ 0\\ 0\\ 0\\ 0 \end{pmatrix}
+\]
+La complejidad es $O(6^3 \log n) = O(\log n)$.
+\subsection*{Código}
+Ver \codelink{https://cses.fi/paste/48e6570bd3a36951107242d/}.
+\editorialproblem{6.5.2 Cowmpany Compensation (Codeforces 995F)}
+\subsection*{Hint1}
+Considera una función $f(v,x)$, el número de formas de asignar salarios al subárbol $v$ asignando salario $x$ a $v$. ¿De qué depende el valor de $f(v,x)$?
+\\\\Notemos que si $v$ es una hoja, $f(v,x)=1$.
+\subsection*{Hint2}
+ Si $v$ es un vértice cuyos únicos $k$ hijos son hojas, $f(v,x)=\prod_{1}^{k} \sum_{i}^{x} f(s_k,i)$, donde $s_k$ es el $k$-ésimo hijo de $v$
+\subsection*{Hint3}
+Podemos calcular $f(v,x)$ para $x \in \{1,2,...,n+1\}$ con $n\leq 3000$ en tiempo. Sin embargo, $d\leq 10^9$, como evaluamos polinomios para valores muy grandes en $O(n)$?
+\subsection*{Solución}
+Definimos $f(v,x)$ como el número de formas de asignar salarios al
+subárbol de $v$ dado que $v$ tiene salario $x$:
+\[
+f(v,x)=\prod_{i=1}^{k} \sum_{j=1}^{x} f(s_i,j)
+\]
+donde $s_1,\ldots,s_k$ son los hijos de $v$. Para cualquier nodo $v$,
+definimos $g(v,x)$ como las formas de asignar salario \textbf{a lo
+más} $x$ al subárbol de $v$:
+\[
+g(v,x)=\sum_{j=1}^{x} f(v,j)
+\]
+Notemos que la respuesta final es $g(1,d)$.
+\\\\
+\textbf{¿Qué grado tiene este polinomio?} Si $v$ es una hoja,
+$f(v,x)=1$ (grado 0) y $g(v,x)=x$ (grado 1). En general:
+\[
+f(v,x)=\prod_{i=1}^{k}g(s_i,x)
+\]
+los grados de los $g(s_i,x)$ se suman, entonces:
+\[
+\deg(f(v,x))=\sum_{i=1}^{k} \deg(g(s_i,x))
+\]
+Y como $g(v,x)=\sum_{j=1}^{x}f(v,j)$ sube el grado en 1, el grado
+de $g(v,x)$ es igual al \textbf{número de nodos en el subárbol de $v$}.
+Por lo tanto $\deg(g(1,x)) = n$ el número total de vértices.
+\\\\
+Podemos calcular $g(1,1), g(1,2), \ldots, g(1,n+1)$ en $O(n^2)$ con DP procesando los nodos de hojas a raíz. Para cada nodo $v$ y cada $x$, calculamos $f(v,x) = \prod_{i=1}^{k} g(s_i,x)$ y luego $g(v,x) = g(v,x-1) + f(v,x)$, guardando ambos valores en memoria
+para evitar repetir cálculos. Con $n+1$ puntos evaluados en $x=1,2,\ldots,n+1$ (puntos consecutivos), aplicamos interpolación de Lagrange con la simplificación para puntos consecutivos para evaluar el polinomio en $d$ en $O(n)$.
+\subsection*{Código}
+Ver \codelink{https://codeforces.com/problemset/submission/995/375695448}.
+
+\editorialproblem{6.5.3 Hail Mary (Autoría $\filledstar$)}
+\subsection*{Hint1}
+Para cada posición $i$
+\[IDF[i]=\sum_{j=0}^{m-1} s_j \cdot r_{i+j}\]
+¿Se parece esta suma a alguna que hayas visto antes?
+\subsection*{Hint2}
+Si recorremos $s$ al revés, es decir $s^{\text{rev}}[j] = s[m-1-j]$ . ¿Puedes
+expresar $\text{IDF}[i]$ usando $s^{\text{rev}}$?
+\subsection*{Solución}
+Cuando hay que multiplicar dos arreglos eficientemente, puede ser una señal de que FFT puede ser útil, este problmema es un claro ejemplo.
+El IDF en la posición $i$ es:
+\[
+\text{IDF}[i] = \sum_{j=0}^{m-1} s_j \cdot r_{i+j}
+\]
+Definimos $s^{\text{rev}}[j] = s[m-1-j]$ y calculamos la convolución
+$s^{\text{rev}} * r$:
+\[
+(s^{\text{rev}} * r)[k] = \sum_j s[m-1-j] \cdot r[k-j]
+\]
+Si consideramos el cambio de variable $u = m-1-j$ podemos simplificar la expresión un poco:
+\[
+= \sum_u s[u] \cdot r[u+(k-m+1)]
+\]
+Notemos entonces que si $i = k-m+1$ (es decir $k = m-1+i$):
+\[
+= \sum_u s[u] \cdot r[i+u] = \text{IDF}[i]
+\]
+lo que se ve como una convolución tradicional para calcular con FFT. Tenemos entonces que $\text{IDF}[i] = (s^{\text{rev}} * r)[m-1+i]$. Calculamos
+todos los valores de IDF con una sola FFT en $O((n+m)\log(n+m))$. Finalmente evaluamos para cada indice $i$ si cae en  $[\,F, \infty)$ (feliz), en $[1, E]$ (enojado) o ninguna.
+\subsection*{Código}
+Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/hailMary.cpp}.
+
+\editorialproblem{6.5.4 Nikita and Order Statistics (Codeforces 993E)}
+\subsection*{Hint1}
+¿Realmente importa qué número es $a_i$ o sólo si es menor o mayor que $x$? Piensa en $1$s y $0$s.
+\subsection*{Hint2}
+Consideremos un arreglo $b$ de $1$s y $0$s, donde $b_i=1$ si $a_i < x$. ¿Cómo contamos eficientemente para cada intervalo $(l,j)$ cuántos números menores a $x$ hay? Correcto, con prefijos (por eso es útil que sea un arreglo de $1$s y $0$s).
+\subsection*{Hint3}
+Piensa en $f[v]$ como la cantidad de veces que aparece $v$ en los prefijos, dado un $k$ ¿qué cuenta $f[v] \cdot  f[v+k]?$
+\subsection*{Solución}
+Lo primero que tenemos que hacer es definir nuestro arreglo $b$ de $1$s y $0$s y calcular los prefijos, es decir un arreglo $s$ tal que $s_i=b_0+b_1+\cdots+b_i$. Notemos entonces que para un $k$ la respuesta a la que llamaremos $\text{res}[k]$ es la cantidad de pares $(i,j)$ tal que $i < j$ y $s_j-s_i=k$.
+\\\\
+Definimos $f[v]$ como la cantidad de $i$ tal que $s_i=v$, esto lo podemos calcular rapidamente al mismo tiempo que calculamos los $s_i$, para cada uno simplemente incrementamos $f[s_i]$ en $1$. Para $k>0$, como los prefijos son no decrecientes (es una suma acumulada de $0$s y $1$s), $s_j - s_i = k > 0$ implica $j > i$, entonces:
+\[
+\text{res}[k] = \sum_{v=0}^{n} f[v] \cdot f[v+k] \qquad (k > 0)
+\]
+\begin{samepage}
+Queremos calcular $\sum_v f[v] \cdot f[v+k]$ para todos los $k$ simultáneamente. Definamos $\tilde{f}[i] = f[n-i]$ y calculemos la convolución $f * \tilde{f}$ en el índice $n-k$:
+\[
+(f * \tilde{f})[n-k]
+= \sum_{v=0}^{n} f[v] \cdot \tilde{f}[n-k-v]
+= \sum_{v=0}^{n} f[v] \cdot f[n-(n-k-v)]
+= \sum_{v=0}^{n} f[v] \cdot f[v+k]
+\]
+Entonces $\text{ans}[k] = (f * \tilde{f})[n-k]$ para $k > 0$. A la operación $\sum_v f[v] \cdot f[v+k]$ se le llama\textbf{autocorrelación} de $f$, y calcularla para todos los $k$
+con FFT cuesta $O(n \log n)$.
+\end{samepage}
+\\\\Notemos que solo hemos mencionado la respuesta para $k>0$, esto porque
+\[(f * \tilde{f})[n] = \sum_v f[v]^2\]
+cuenta todos los pares $(i,j)$ con $s_i = s_j$ sin restricción de orden incluyendo $i=j$ e $i>j$, por lo que debemos refilledstar los $n+1$ pares con $i=j$ y dividir entre 2:
+\[
+\text{ans}[0] = \frac{(f * \tilde{f})[n] - (n+1)}{2}
+\]
+\subsection*{Código}
+Ver \codelink{https://codeforces.com/contest/993/submission/375820964}.
+
+
+\editorialproblem{6.5.5 Running Competition (Codeforces 1398G)}
+\subsection*{Hint1}
+Cualquier vuelta es un rectángulo, es decir $L=2y+2(a_j-a_i)$ con $i < j$, de donde $l_i$ tiene que ser par porque $2y$ y $2(a_j-a_i)$ son ambos pares. Es decir, queremos el mayor $d$ tal que $d+y$ divida a $\frac{l_i}{2}$ y existan $i$ y $j$ tal que $d=a_j-a_i$.
+\subsection*{Hint2}
+Queremos todas las diferencias de pares...¿Qué algoritmo usamos cuando queremos contar pares con cierta suma rápido?
+\subsection*{Solución}
+Definimos $f[v]=1$ si $v\in \{a_0, \cdots, a_n\}$, de lo contrario $f[v]=0$. Definamos $\tilde{f}[i]=f[x-i]$ y calculemos la convolución $f * \tilde{f}$:
+\[
+(f * \tilde{f})[x-d] = \sum_{v} f[v] \cdot f[v+d]
+\]
+Notemos que este valor es positivo si y solo si existe algún par $(a_i, a_j)$
+con $a_j - a_i = d$. Encontrar esto para todas las diferencias $d \in \{1, \ldots, x-1\}$ en $O(x \log x)$ se calcula eficientemente con FFT.
+\\\\
+Finalmente, tenemos que responder las queries, para cada etapa $l_t$, queremos el mayor divisor de $l_t' = l_t/2$ de la forma $d + y$ donde $d$ es una diferencia válida. Llamemosle $D = d + y$, entonces $D$ es un divisor válido si $D-y=d$ es una diferencia válida. Este último cambio de variable nos permite buscar directamente divisores de $l_t'$ y verificar en $O(1)$ si son válidos.\\\\A continuación, iteraremos sobre los divisores de $l_t'$ en orden decreciente, esto lo hacemos revisando los enteros de $1$ a $\sqrt{l_t'}$ y agregando los que le dividan a un arreglo, recordemos que es mejor usar la condición $i*i<l_t'$ que $i<\sqrt{l_t'}$ para no meternos con decimales. Tras esto, verificaremos en $O(1)$ si $D - y$ es diferencia válida usando el arreglo obtenido de la convolucion. Es decir, revisaremos que $D>y$ y que la posición $D-y$ no sea $0$.
+\subsection*{Código}
+Ver \codelink{https://codeforces.com/contest/1398/submission/375853380}.
+
+\editorialproblem{6.5.6 Rumbo al Mundial (Autoría $\filledstar$)}
+\subsection*{Hint1}
+Ignoremos por un momento que hay varios semáforos. Si los conductores solamente tuvieran que pasar por un único semáforo. ¿De cuántas formas podría ocurrir que el tiempo de espera sea $k$? ¿Qué sucede si hay dos semáforos?
+\subsection*{Hint2}
+Puede que se necesite multiplicar más de dos polinomios. ¿Cómo podemos organizarlos para hacerlo eficientemente?
+\subsection*{Solución}
+Si solamente hubiera un semáforo con tiempo $t_1$, hay exactamente una forma en la que el conductor espera cada uno de los tiempos. Entonces dado un $k$ la cantidad de formas en las que la suma total de espera de $1$ semáforo sea $k$ (a lo que denotaremos $f_{t_1}[k]$)la podemos ver como:
+\[
+f_{t_1}[k] = \begin{cases} 1 & \text{si } 0 \leq k \leq t_1 - 1 \\ 0 & \text{en otro caso} \end{cases}
+\]
+\\\\
+Ahora, dados dos semáforos con ciclos $t_1$ y $t_2$, notemos que las formas de que la suma de tiempos sea $k$ es buscar la cantidad de pares $(a,b)$ tal que $a+b=k$ y $a\in {0,\cdots,t_1-1}$ y $b\in{0,\cdots,t_2-1}$, es decir:
+\[
+    f_{\{t_1,t_2\}}[k]=\sum_{i=0}^{k}f_{t_1}[i]f_{t_2}[k-i]
+\]
+Este problema para dos semáforos lo podríamos resolver con FFT multiplicando los arreglos que guarden las formas de sumar $k$ para cada semáforo. Si agregaramos un tercer semáforo $t_3$, podemos utilizar la misma lógica, pero ahora buscar los pares $(c,d)$ tal que $c+d=k$, $c$ sea suma de dos números $a$ y $b$ correspondientes a los primeros dos semáforos (definido como arriba) y $d\in {0,\cdots t_3-1}$.
+\\\\Lo anterior nos sugiere que podemos multiplicar los primeros dos semáforos y luego ese producto multiplicarlo por el arreglo del tercer semáforo y así consecutivamente hasta el semáforo $t_m$. Este razonamiento es correcto, sin embargo, poco óptimo, pues correriamos el algoritmo de FFT un total de $m$ veces con un arreglo que cada vez se hace más grande. Necesitamos algo un poco más eficiente.
+\\\\
+La observación clave es que si tenemos dos conjuntos de semáforos $S_1={t_1,t_2}$ y $S_2={t_3,t_4}$, las formas de que la suma total de espera sea $k$ serán las formas de tener un par $(a,b)$ tal que $a$ es una suma de tiempos de semáforos en $S_1$ y $b$ una suma de tiempos de semáforos en $S_2$, es decir:
+\[
+    f_{S_1\cup S_2}[k]=\sum_{i=0}^{k}f_{S_1}[i]f_{S_2}[k-i]
+\]
+Nótese que $f_{S1}$ y $f_{S_2}$ se calculan como hicimos arriba para dos semáforos.
+\\\\
+Esto nos sugiere que dado un conjunto de semáforos $S={t_1,t_2,\cdots,t_m}$, podemos dividir a $S$ a la mitad y calcular la solución para una de las mitades. En cada mitad lo que haremos será volver a dividir a la mitad y así consecutivamente hasta quedarnos con el problema de conjuntos de $1$ o $2$ semáforos que ya sabemos resolver. ¿Por qué esto es más eficiente? En lugar de hacer $m$ productos de tamaño creciente, hacemos $O(\log m)$ multiplicaciones. Consierando que el tamaño total de los polinomios en cada nivel es $W=t_1+t_2+\cdots+t_m$, la complejidad total es $O( W \log^2 W)$.
+\\\\
+Finalmente iteramos un contador $j$ de $1$ a $T$ y acumulamos en una suma cuántas formas tienen suma $j$, así, podemos refilledstarlo a $W$ y obtener cuántas formas tienen suma mayor a $T$.
+\subsection*{Código}
+Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/mundial.cpp}.
  
 \editorialproblem{7.11.1 String Distribution (CSES 1715)}
 \subsection*{Hint 1}

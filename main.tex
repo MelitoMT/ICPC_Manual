@@ -84,6 +84,12 @@
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\codelink}[1]{\url{#1}}
+\newcommand{\adv}{\texorpdfstring{\textsuperscript{$\bigstar$}}{*}}
+\newcommand{\advnote}[1]{%
+\begin{tcolorbox}[colback=orange!5, colframe=orange!60!black, title={Sección avanzada~$\bigstar$}]
+#1
+\end{tcolorbox}
+}
 \newcommand{\editorialproblem}[1]{%
   \section*{#1}%
   \addcontentsline{toc}{section}{#1}%
@@ -132,11 +138,11 @@
 \chapter{Entrada/Salida}
 \input{tex/preliminares/entradasalida.tex}
 
-\chapter{Álgebra}
-\input{tex/algebra/algebra.tex}
-
 \chapter{Teoría de números}
 \input{tex/numeros/numbers.tex}
+
+\chapter{Álgebra}
+\input{tex/algebra/algebra.tex}
 
 \chapter{Combinatoria y conteo}
 \input{tex/combi/combi.tex}

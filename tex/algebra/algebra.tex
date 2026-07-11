@@ -524,10 +524,10 @@ vector<ll> multiply_fft(vector<ll> a, vector<ll> b) {
 }
 \end{lstlisting}
 \section{Ejercicios}
-\begin{tcolorbox}[colback=green!5, colframe=codegreen!50, title=Nota]
-  Las descripciones de los problemas están en los links de los títulos.
-\end{tcolorbox}
 \subsection*{5.4.1 \href{https://cses.fi/problemset/task/1722}{Fibonacci Numbers (CSES 1722)}}
+
+\textbf{Descripción: }\url{https://cses.fi/problemset/task/1722}
+
 En este problema nos dan la recurrencia:
 \[F_n = F_{n-2}+F_{n-1}\]
 Notemos que tiene la forma $F_n = C_1 F_{n-1} + C_2 F_{n-2}$ con $C_1 = C_2 = 1$, de donde la matriz de transición es:
@@ -553,6 +553,9 @@ overflow.
 \\\\Ver \href{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/1722.cpp}{código}.
 
 \subsection*{5.4.2 \href{https://cses.fi/problemset/task/1723}{Graph Paths I (CSES 1723)}}
+
+\textbf{Descripción: }\url{https://cses.fi/problemset/task/1723}
+
 En este problema nos dan una gráfica dirigida. Podríamos pensar que este es un problema en el que necesitamos algún algoritmo de gráficas, pero la realidad es que podemos resolverlo con exponenciación de matrices. Notemos que podemos expresar la gráfica por medio de una matriz de adyacencia $M$. Esta tendrá $M[i][j]=1$ si hay una arista de $i$ a $j$, de lo contrario, tendrá $0$. 
 \\\\Cuando calculamos $M^2$ lo que hacemos es:
 \[(M^2)[i][j] = \sum_{k=1}^{n} M[i][k] \cdot M[k][j]\]

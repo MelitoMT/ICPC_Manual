@@ -916,6 +916,9 @@ long long babyStepGiantStep(long long a, long long b, long long m) {
 Para módulo no primo o cuando $\gcd(a,m) > 1$, hay variantes que reducen al caso coprimo; véase la referencia \cite{cpalg-discrete-log-general}.
 \section{Ejercicios}
 \subsection*{6.9.1 \href{https://codeforces.com/contest/1542/problem/C}{Strange Function (Codeforces 1542C)}}
+
+\textbf{Descripción: }\url{https://codeforces.com/contest/1542/problem/C}
+
     Construyamos la siguiente tabla, en las filas colocaremos los valores de $i$ y en las columnas los valores de $k$ y pondremos una estrella en la celda $(i,j)$ si $f(i)\geq k$:
     \[
     \begin{array}{c|ccccc}
@@ -946,6 +949,9 @@ Para módulo no primo o cuando $\gcd(a,m) > 1$, hay variantes que reducen al cas
     \\\\
     Ver \codelink{https://codeforces.com/contest/1542/submission/251341276}.
 \subsection*{6.9.2 \href{https://codeforces.com/problemset/problem/1725/H}{Hot Black Hot White (COMPFEST 14)}}
+
+\textbf{Descripción: }\url{https://codeforces.com/problemset/problem/1725/H}
+
     Antes de indagar en cómo elegir $Z$ o cómo pintar las rocas mágicas, vamos a intentar simplificar la expresión que nos dan: $concat(A_i, A_j) \times concat(A_j, A_i) + A_i \times A_j \equiv Z \, \mod 3$.
     \\\\Veamos que si $k$ es la cantidad de digitos de $A_j$ entonces $concat(A_i, A_j)=A_i \times 10^k + A_j$ y más aún como $10^k \equiv 1^k \equiv 1\, \mod 3$ tenemos que:
     \[concat(A_j, A_i)\equiv A_i+A_j  \mod 3\]
@@ -958,6 +964,9 @@ Para módulo no primo o cuando $\gcd(a,m) > 1$, hay variantes que reducen al cas
     \\\\
     Ver \codelink{https://codeforces.com/contest/1725/submission/201205415}.
 \subsection*{6.9.3 \href{https://lightoj.com/problem/monkey-tradition}{Monkey Tradition (Light OJ)}}
+
+\textbf{Descripción: }\url{https://lightoj.com/problem/monkey-tradition}
+
 Notemos que si a un monito, le faltó $r_i$ para llegar a la cima de su bambú dando saltos $p_i$, esto significa que la altura $L$ cumple que $L\equiv r_i \, \mod \,p_i$. Esto nos deja con un sistema de congruencias:
 \begin{align*}
     L \equiv r_1  \mod p_1 \\

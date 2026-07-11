@@ -1708,6 +1708,9 @@ $i$ a la tarea $j$, minimizar el costo total. La mejor referencia que he encontr
 
 \section{Ejercicios}
 \subsection*{9.10.1 \href{https://codeforces.com/problemset/problem/808/F}{Card Game (Codeforces)}}
+
+\textbf{Descripción: }\url{https://codeforces.com/problemset/problem/808/F}
+
 Si un conjunto de cartas con $l_i \leq L$ permite alcanzar potencia $\geq k$, entonces
 también lo permite cualquier nivel mayor (hay más cartas disponibles). Podemos hacer búsqueda binaria sobre el nivel necesario.
 
@@ -1747,6 +1750,9 @@ La complejidad es $O(\log n)$ para las iteraciones de búsqueda binaria, cada un
 Ver \codelink{https://codeforces.com/contest/808/submission/273807670}.
 
 \subsection*{9.10.2 \href{https://www.spoj.com/problems/QTREE2/}{Query on a tree III (SPOJ)}}
+
+\textbf{Descripción: }\url{https://www.spoj.com/problems/QTREE2/}
+
  Para resolver el primer tipo de consulta notemos que el camino de $a$ a $b$ pasa por su LCA $L$, y se descompone en el camino $a \to L$ más el camino $L \to b$. Si guardamos para cada vértice la distancia acumulada desde la raíz
 (\texttt{distRoot}), entonces:
 \[
