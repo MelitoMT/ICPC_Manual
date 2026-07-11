@@ -92,55 +92,71 @@ Algunas propiedades útiles para recordar son (se recomienda al lector intentar 
 
 Si solo haremos calculos rápidos sin módulo y sin números grandes podemos implementar directamente
 \begin{lstlisting}[language=C++]
-ll nCr(ll n,ll k){
-    if(k>n-k)k=n-k;
-    ll comb=1;
-    for(ll i=0;i<k;i++)comb=comb*(n-i)/(i+1);
-    return comb;
+long long binomial(long long n, long long k) {
+    if (k > n - k) {
+        k = n - k;
+    }
+
+    long long result = 1;
+    for (long long i = 0; i < k; i++) {
+        result = result * (n - i) / (i + 1);
+    }
+    return result;
 }
 \end{lstlisting}
 La implementación anterior es corta, pero conviene ser cuidadosos: $\binom{n}{k}$ crece muy rápido (por ejemplo $\binom{100}{50}$ ya no cabe en un entero de 64 bits) y es fácil obtener \textbf{overflow}. En programación competitiva, además, la respuesta casi siempre se pide \textbf{módulo} un primo $M$ (típicamente $10^9+7$ o $998244353$) justamente porque esos valores son demasiado grandes para imprimirlos tal cual. La estrategia habitual es \textbf{precalcular} factoriales e \textbf{inversos factoriales} módulo $M$ una sola vez, y después responder cada consulta en $O(1)$ con
 \[
-\binom{n}{k} \equiv \texttt{fac}[n]\cdot \texttt{invFac}[k]\cdot \texttt{invFac}[n-k] \pmod M.
+\binom{n}{k} \equiv \texttt{factorial}[n]\cdot \texttt{invFactorial}[k]\cdot \texttt{invFactorial}[n-k] \pmod M.
 \]
-En el precálculo, \texttt{fac}[$i$] guarda $i!\bmod M$. El arreglo \texttt{inv}[$i$] guarda el \textbf{inverso modular} de $i$, es decir el entero tal que $i\cdot \texttt{inv}[i]\equiv 1\pmod M$ (requiere que $M$ sea primo y $\gcd(i,M)=1$)\footnote{La existencia del inverso y la recurrencia para calcular todos los \texttt{inv}[$i$] en $O(M)$ se ven en la sección de inversos con módulo.}. Con esos inversos se construyen los \textbf{inversos factoriales}: $\texttt{invFac}[0]=1$ y, para $i\ge 1$,
+En el precálculo, \texttt{factorial}[$i$] guarda $i!\bmod M$. El arreglo \texttt{inv}[$i$] guarda el \textbf{inverso modular} de $i$, es decir el entero tal que $i\cdot \texttt{inv}[i]\equiv 1\pmod M$ (requiere que $M$ sea primo y $\gcd(i,M)=1$)\footnote{La existencia del inverso y la recurrencia para calcular todos los \texttt{inv}[$i$] en $O(M)$ se ven en la sección de inversos con módulo.}. Con esos inversos se construyen los \textbf{inversos factoriales}: $\texttt{invFactorial}[0]=1$ y, para $i\ge 1$,
 \[
-\texttt{invFac}[i] = \texttt{invFac}[i-1]\cdot \texttt{inv}[i] \bmod M,
+\texttt{invFactorial}[i] = \texttt{invFactorial}[i-1]\cdot \texttt{inv}[i] \bmod M,
 \]
-de modo que \texttt{invFac}[$i$] $=(i!)^{-1}\bmod M$.
+de modo que \texttt{invFactorial}[$i$] $=(i!)^{-1}\bmod M$.
 
-\textit{Ejemplo} con $M=7$: como $3\cdot 5=15\equiv 1\pmod 7$, tenemos $\texttt{inv}[3]=5$; entonces $\texttt{invFac}[3]=\texttt{inv}[1]\cdot\texttt{inv}[2]\cdot\texttt{inv}[3]=1\cdot 4\cdot 5=20\equiv 6\pmod 7$, y efectivamente $3!=6\equiv -1\pmod 7$, cuyo inverso es $6$. Así, $\binom{5}{2}=10\equiv 3\pmod 7$ coincide con $\texttt{fac}[5]\cdot\texttt{invFac}[2]\cdot\texttt{invFac}[3]=1\cdot 4\cdot 6\equiv 3\pmod 7$.
+\textit{Ejemplo} con $M=7$: como $3\cdot 5=15\equiv 1\pmod 7$, tenemos $\texttt{inv}[3]=5$; entonces $\texttt{invFactorial}[3]=\texttt{inv}[1]\cdot\texttt{inv}[2]\cdot\texttt{inv}[3]=1\cdot 4\cdot 5=20\equiv 6\pmod 7$, y efectivamente $3!=6\equiv -1\pmod 7$, cuyo inverso es $6$. Así, $\binom{5}{2}=10\equiv 3\pmod 7$ coincide con $\texttt{factorial}[5]\cdot\texttt{invFactorial}[2]\cdot\texttt{invFactorial}[3]=1\cdot 4\cdot 6\equiv 3\pmod 7$.
 \begin{lstlisting}[language=C++]
-long long fac[MX], invFac[MX], inv[MX];
-void precalcComb () {
-	fac[0] = inv[0] = 1;
-	for (int i = 1; i <= MX - 1; i++) {
-		fac[i] = fac[i - 1] * i % mod;
-	}
-	
-	inv[0] = inv[1] = 1;
-	for (int i = 2; i <= MX - 1; i++) {
-		inv[i] = inv[mod % i] * (mod - mod / i) % mod;
-	}
-	
-	inv_fac[0] = 1;
-	for (int i = 1; i <= MX - 1; i++) {
-		invFac[i] = invFac[i - 1] * inv[i] % mod;
-	}
+const int MAX_N = 1000000;
+long long factorial[MAX_N];
+long long invFactorial[MAX_N];
+long long inv[MAX_N];
+long long mod;
+
+void precomputeBinomials() {
+    factorial[0] = 1;
+    for (int i = 1; i < MAX_N; i++) {
+        factorial[i] = factorial[i - 1] * i % mod;
+    }
+
+    inv[1] = 1;
+    for (int i = 2; i < MAX_N; i++) {
+        inv[i] = inv[mod % i] * (mod - mod / i) % mod;
+    }
+
+    invFactorial[0] = 1;
+    for (int i = 1; i < MAX_N; i++) {
+        invFactorial[i] = invFactorial[i - 1] * inv[i] % mod;
+    }
 }
 \end{lstlisting}
-Una vez hecho el precálculo, cada $\binom{n}{k}$ módulo $M$ se obtiene con una sola línea. Como alternativa más lenta (sin arreglo \texttt{invFac}) se puede dividir módulo $M$ multiplicando por el inverso de cada factorial con exponenciación binaria; en la práctica se usa casi siempre la versión precalculada.
+Una vez hecho el precálculo, cada $\binom{n}{k}$ módulo $M$ se obtiene con una sola línea. Como alternativa más lenta (sin arreglo \texttt{invFactorial}) se puede dividir módulo $M$ multiplicando por el inverso de cada factorial con exponenciación binaria; en la práctica se usa casi siempre la versión precalculada.
 \begin{lstlisting}[language=C++]
-long long nCr(long long n, long long r, long long mod){
-    if (r == 0) return 1;
-    long long num = fac[n];
-    long long den = (inverseMod(fac[r],mod) * inverseMod(fac[n-r],mod)) % mod;
-    return (num * den) % mod;
+long long binomialMod(long long n, long long k, long long mod) {
+    if (k == 0) {
+        return 1;
+    }
+
+    long long numerator = factorial[n];
+    long long denominator =
+        (inverseMod(factorial[k], mod) * inverseMod(factorial[n - k], mod)) % mod;
+    return (numerator * denominator) % mod;
 }
 
-long long comb (int n, int k) {
-	if (n < 0 || k < 0 || n < k) return 0;
-	return fac[n] * inv_fac[k] % mod * inv_fac[n - k] % mod;
+long long binomialPrecomputed(int n, int k) {
+    if (n < 0 || k < 0 || n < k) {
+        return 0;
+    }
+    return factorial[n] * invFactorial[k] % mod * invFactorial[n - k] % mod;
 }
 \end{lstlisting}
 \section{Principio de Inclusión-Exclusión}
@@ -161,23 +177,34 @@ Esta fórmula general puede parecer abstracta; la aplicamos en el ejercicio sigu
 \[|D_1 \cup D_2 \cup \cdots \cup D_r|=\sum_{i}\lfloor \frac{X}{p_i} \rfloor - \sum_{i < j}\lfloor \frac{X}{p_i p_j} \rfloor + \sum_{i < j < k}\lfloor \frac{X}{p_i p_j p_k} \rfloor - \cdots\]
 y así tenemos que:
 \[f(X)=X-|D_1 \cup \cdots \cup D_r|\]
-de forma que ya solo tenemos que implementarlo. Para esto, iteraremos sobre los $2^r$ subconjuntos de factores primos de $N$. Para este tipo de problemas es importante analizar la complejidad. Nótese que $2 \times 3 \times 5 \times 7 \times 11 \times 13 \times 17 \times 19 > 10^6$, de forma que si $N \leq 10^9$, este tendrá a lo más $9$ factores primos distintos, por lo que iterar sobre los $2^9=512$ subconjuntos sí es algo que se puede hacer rapidamente.
+de forma que ya solo tenemos que implementarlo. Para esto, iteraremos sobre los $2^r$ subconjuntos de factores primos de $N$. Para este tipo de problemas es importante analizar la complejidad. Nótese que $2 \times 3 \times 5 \times 7 \times 11 \times 13 \times 17 \times 19 > 10^6$, de forma que si $N \leq 10^9$, este tendrá a lo más $9$ factores primos distintos, por lo que iterar sobre los $2^9=512$ subconjuntos sí es algo que se puede hacer rapidamente. En el código, el número de bits encendidos de la máscara indica cuántos primos hay en el subconjunto (y por tanto el signo en inclusión-exclusión).
 \begin{lstlisting}[language=C++]
-ll f(ll X, vector<ll>& primes) {
-    int k = primes.size();
-    ll res = 0;
-    for (int mask = 1; mask < (1 << k); mask++) {
-        ll prod = 1;
-        int bits = __builtin_popcount(mask);
-        for (int i = 0; i < k; i++)
-            if (mask >> i & 1) prod *= primes[i];
-        if (bits % 2 == 1) res += X / prod;
-        else               res -= X / prod;
+long long countCoprimeUpTo(long long limit, const vector<long long>& primes) {
+    int numPrimes = primes.size();
+    long long notCoprime = 0;
+
+    for (int mask = 1; mask < (1 << numPrimes); mask++) {
+        long long product = 1;
+        int bitsOn = 0;
+
+        for (int i = 0; i < numPrimes; i++) {
+            if ((mask >> i) & 1) {
+                product *= primes[i];
+                bitsOn++;
+            }
+        }
+
+        if (bitsOn % 2 == 1) {
+            notCoprime += limit / product;
+        } else {
+            notCoprime -= limit / product;
+        }
     }
-    return X - res;
+
+    return limit - notCoprime;
 }
 \end{lstlisting}
-Complete el programa principal usando \texttt{f} para responder en el intervalo $[L,R]$.
+Complete el programa principal usando \texttt{countCoprimeUpTo} para responder en el intervalo $[L,R]$.
 \section{Barras y estrellas}
  Supongamos que tenemos $r$ niños y $n$ juguetes, ¿de cuántas formas podemos distribuir los juguetes entre los niños?. En este problema no hay restricciones, un niño puede tener 0 o todos los juguetes. Para resolver este problema usaremos ''palitos'' que separen los juguetes en secciones. Por ejemplo, supongamos que tenemos 3 niños y 5 juguetes, entonces un acomodo donde el primer niño reciba dos juguetes, el segundo dos y tercero uno se puede representar de la siguiente forma
  \[\includegraphics[scale=0.7]{imgs/image.png}\]
@@ -185,7 +212,8 @@ Complete el programa principal usando \texttt{f} para responder en el intervalo 
  \[\frac{(n+r-1)!}{n!(r-1)!}\]
  Esto también nos deja un resultado interesante y es que la ecuación $x_1+x_2+\cdots+x_r=n$ donde $0\leq x_i$ tiene una cantidad de soluciones $\frac{(n+r-1)!}{n!(r-1)!}$.
 
-\section{Lema de Burnside}
+\section{Lema de Burnside\adv}
+\advnote{Formaliza el conteo bajo simetría con acciones de grupo. Basta con la intuición de ``órbitas'' y ``puntos fijos''; no se asume un curso de álgebra abstracta. Puede omitirse en una primera lectura.}
 
 Hay una clase de problemas de conteo donde la respuesta no es simplemente contar objetos, sino contar objetos \textbf{distintos bajo simetría}. Tomemos el ejemplo clásico: ¿cuántos collares distintos se pueden hacer con $n$ cuentas de $k$ colores, si dos collares son el mismo cuando uno se obtiene del otro por rotación? Contar directamente sobrecontea el mismo collar $n$ veces (una por cada rotación). \textit{Ejemplo.} Con $n=3$ cuentas y $k=2$ colores (digamos rojo $R$ y verde $G$) hay $2^3=8$ coloraciones si numeramos las posiciones, pero varias son el mismo collar al rotar: \texttt{R-R-G}, \texttt{G-R-R} y \texttt{R-G-R} describen un solo collar; lo mismo \texttt{R-G-G}, \texttt{G-G-R} y \texttt{G-R-G}. En total solo hay $4$ collares distintos (\texttt{RRR}, \texttt{GGG} y esos dos tipos mixtos), no $8$. El lema de Burnside resuelve exactamente esta clase de problemas.
 
@@ -237,11 +265,16 @@ Entonces por el lema de Burnside tenemos que:
 \]
 La implementación entonces queda:
 \begin{lstlisting}[language=C++]
-long long collares(int n, int k, long long mod) {
-    long long res = 0;
-    for (int r = 0; r < n; r++)
-        res = (res + power(k, gcd(r, n), mod)) % mod;
-    return (res % mod) * power(n, mod-2, mod) % mod;
+long long countNecklaces(int numBeads, int numColors, long long mod) {
+    long long sumFixed = 0;
+
+    for (int rotation = 0; rotation < numBeads; rotation++) {
+        long long cycleLength = gcd(rotation, numBeads);
+        sumFixed = (sumFixed + power(numColors, cycleLength, mod)) % mod;
+    }
+
+    long long invNumBeads = power(numBeads, mod - 2, mod);
+    return sumFixed * invNumBeads % mod;
 }
 \end{lstlisting}
 
@@ -427,13 +460,17 @@ $i=2$ & \cellcolor{teal!20}$2$ & $2$ & $4$ \\
 \noindent de modo que $C_3 = 2+1+2 = 5$. En el código, el bucle interno recorre esos pares $(i,j)$ con $i=k-1$ y $j=n-k$.
 La implementación recorre $i=1,\ldots,n$ y acumula la suma; cada $C_i$ queda listo antes de calcular $C_{i+1}$:
 \begin{lstlisting}[language=C++]
-vector<ll> catalan(int n) {
-    vector<ll> C(n + 1);
-    C[0] = 1;
-    for (int i = 1; i <= n; i++)
-        for (int k = 1; k <= i; k++)
-            C[i] += C[k - 1] * C[i - k];
-    return C;
+vector<long long> catalanNumbers(int n) {
+    vector<long long> catalan(n + 1);
+    catalan[0] = 1;
+
+    for (int i = 1; i <= n; i++) {
+        for (int k = 1; k <= i; k++) {
+            catalan[i] += catalan[k - 1] * catalan[i - k];
+        }
+    }
+
+    return catalan;
 }
 \end{lstlisting}
 
@@ -447,7 +484,8 @@ Nótese que estos números nos serán útiles cuando estemos resolviendo un prob
     \item Árboles binarios completos con $n+1$ hojas.
     \item Caminos reticulares de $(0,0)$ a $(n,n)$ que no cruzan la diagonal $y=x$.
 \end{itemize}
-\section{Números de Stirling de segundo tipo}
+\section{Números de Stirling de segundo tipo\adv}
+\advnote{Extensión del conteo de particiones; útil en problemas específicos. Puede omitirse en una primera lectura.}
  
 Los \textbf{números de Stirling de segundo tipo} $S(n,k)$ cuentan el número de formas de partir un conjunto de $n$ elementos en exactamente $k$ subconjuntos no vacíos.
  
@@ -470,7 +508,8 @@ La intuición detrás de esta recurrencia consiste en observar que el elemento $
     \item $n$ comparte subconjunto con otros elementos, en este caso partimos $\{1,\ldots,n-1\}$ en $k$ subconjuntos de $S(n-1,k)$ formas, y agregamos $n$ a cualquiera de los $k$ subconjuntos existentes.
 \end{itemize}
  
-\section{Números de Bell}
+\section{Números de Bell\adv}
+\advnote{Depende de los números de Stirling de segundo tipo (sección anterior). Puede omitirse en una primera lectura.}
  
 El $n$-ésimo \textbf{número de Bell} $B_n$ cuenta el total de particiones de un conjunto de $n$ elementos en subconjuntos no vacíos, sin importar cuántos subconjuntos haya:
 \[
@@ -502,18 +541,20 @@ $\mathbf{15}$ & $20$ & $27$ & $37$ & $52$ \\
     \[x=\frac{n}{6}\]
     De esta forma vemos que hay $C(\frac{n}{3},\frac{n}{6})$ formas de elegir los $\frac{n}{6}$ triángulos que colorearemos de tipo $A$. Como ya se elegió que tipo será, para cada triángulo $i$ habrá $c_i$ formas de colorearlo, donde $c_i$ son las formas de colorear un triángulo $i$ de forma que tenga peso máximo y sea de alguno de los dos tipos (no importa cuál porque son simétricos). Nótese que $c_i$ es igual a contar las formas en las que elegir el vértice que tendra color diferente a los demás en el triángulo, es decir, la cantidad de vértices de peso mínimo. Dicho esto finalmente la respuesta nos queda:
     \[\binom{\frac{n}{3}}{\frac{n}{6}}\prod_{i=1}^{\frac{n}{3}}c_i\]
-\\\\
-    Ver \href{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/1795D.cpp}{código}.
+    \\\\
+    Código
+    \\\\
+    Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/1795D.cpp}.
 
 \subsection*{7.10.2 \href{https://cses.fi/problemset/task/2064}{Bracket Squences I (CSES 2064)}}
   Nótese que una secuencia de $n=2m$ brackets es válida si tiene $m$ brackets de apertura, $m$ de cierre y para cualquier posición la cantidad de brackets de apertura hasta esa posición, es decir en el prefijo, es mayor o igual a la de cierre.
   \\\\Si no tuvieramos ninguna restricción sobre los prefijos entonces la cantidad total de secuencias sería simplemente la forma de colocar $m$ aperturas en $n$ posiciones, es decir: $\binom{n}{m}$. Entonces nos interesa encotnrar cuál es la cantidad de secuencias inválidas para restarlas de las secuencias totales y encotnrar cuántas secuencias válidas hay. Tomemos una secuencia de brackets inválida cualquiera, notemos que entonces esta tiene un prefijo donde los cierres son mayores a las aperturas. En ese prefijo, cambiemos todos los brackets de apertura por los de cierre y los de cierre por los de apertura. Notemos que entonces la secuencia nueva tiene $m+1$ aperturas y $m-1$ cierres. Esto nos da una biyección entre las secuencias inválidas de $m$ aperturas y $m$ cierres y todas las secuencias posibles con $m+1$ aperturas y $m-1$ cierres que son $\binom{n}{m+1}$ de donde tenemos que:
   \[\binom{2m}{m}-\binom{2m}{m+1}=\frac{1}{m+1}\binom{2m}{m}\]
-  \begin{samepage}
-      Esta es la fórmula de los números de Catalán, por lo que para calcular las secuencias válidas de $n$ brackets, basta con calcular el $n$-ésimo número de Catalán.
-  \\\\
-    Ver \href{https://cses.fi/paste/a095f196a9c6a0561095b74/}{código.}
-  \end{samepage}
+  Notemos que esta fórmula es exactamente la fórmula de los números de Catalán, por lo que para calcular las secuencias válidas de $n$ brackets, basta con calcular el $n$-ésimo número de Catalán.
+    \\\\
+    Código
+    \\\\
+    Ver \codelink{https://cses.fi/paste/a095f196a9c6a0561095b74/}.
 \section{Problemas}
 \begin{itemize}
     \item[7.11.1] \href{https://cses.fi/problemset/task/1715/}{String Distribution (CSES 1715)}

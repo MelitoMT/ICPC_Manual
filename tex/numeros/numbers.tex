@@ -96,7 +96,7 @@ Se repite el paso hasta obtener residuo $0$; el último resto no nulo es $\gcd(a
 long long gcd(long long a, long long b) {
     return b == 0 ? a : gcd(b, a % b);
 }
- 
+
 long long lcm(long long a, long long b) {
     return a / gcd(a, b) * b;
 }
@@ -164,16 +164,20 @@ De aquí un algoritmo $O(\log b)$; en cada paso se puede reducir módulo $m$ par
 \paragraph{Implementación.}
 
 \begin{lstlisting}[language=C++]
-long long power(long long a, long long b, long long mod) {
-    long long res = 1;
-    a %= mod;
-    while (b > 0) {
-        //si b es impar se multiplica una vez extra
-        if (b % 2) res = res * a % mod;
-        a = a * a % mod;
-        b = b/2;
+long long power(long long base, long long exponent, long long mod) {
+    long long result = 1;
+    base %= mod;
+
+    while (exponent > 0) {
+        // Si el exponente es impar, multiplicamos una vez extra.
+        if (exponent % 2 == 1) {
+            result = result * base % mod;
+        }
+        base = base * base % mod;
+        exponent /= 2;
     }
-    return res;
+
+    return result;
 }
 \end{lstlisting}
 
@@ -199,11 +203,18 @@ Si ningún entero entre $2$ y $\lfloor\sqrt{n}\rfloor$ divide a $n$, entonces $n
 \paragraph{Implementación (\texttt{esPrimo}).}
 
 \begin{lstlisting}[language=C++]
-bool prime(long long n) {
-    if (n < 2) return false;
-    if (n % 2 == 0) return n == 2;
+bool isPrime(long long n) {
+    if (n < 2) {
+        return false;
+    }
+    if (n % 2 == 0) {
+        return n == 2;
+    }
+
     for (long long i = 3; i * i <= n; i += 2) {
-        if (n % i == 0) return false;
+        if (n % i == 0) {
+            return false;
+        }
     }
     return true;
 }
@@ -253,12 +264,13 @@ Los números que permanecen sin tachar son los primos: $2,3,5,7,11$.
 \textit{Observaciones de implementación.} El bucle exterior puede limitarse a $i$ con $i^2 \le n$: si un número compuesto tuviera un factor $> \sqrt{n}$, el cofactor sería $x \le \sqrt{n}$ y ya se habría tachado antes. Además, al marcar múltiplos del primo $i$ basta empezar en $j = i^2$, porque los múltiplos $2i, 3i, \ldots, (i-1)i$ ya fueron tachados por primos menores.
 
 \begin{lstlisting}[language=C++]
-vector<bool> prime(n + 1, true);
-prime[0] = prime[1] = false;
+vector<bool> isPrime(n + 1, true);
+isPrime[0] = isPrime[1] = false;
+
 for (int i = 2; i * i <= n; i++) {
-    if (prime[i]) {
+    if (isPrime[i]) {
         for (int j = i * i; j <= n; j += i) {
-            prime[j] = false;
+            isPrime[j] = false;
         }
     }
 }
@@ -343,18 +355,20 @@ Por lo tanto, una elección válida de coeficientes de Bézout es
 x = -1, \qquad y = 2.
 \]
 
-\paragraph{Implementación (\texttt{gcdExt}).}
+\paragraph{Implementación (\texttt{extendedGcd}).}
 
 \begin{lstlisting}[language=C++]
-// calcula gcd(a,b) y encuentra x,y tales que ax + by = gcd(a,b)
-long long gcdExt(long long a, long long b, long long &x, long long &y) {
-    //Caso base pues gcd(a,0)=a
+// Calcula gcd(a, b) y encuentra x, y tales que a*x + b*y = gcd(a, b).
+long long extendedGcd(long long a, long long b, long long& x, long long& y) {
+    // Caso base: gcd(a, 0) = a.
     if (b == 0) {
-        x = 1; y = 0; 
+        x = 1;
+        y = 0;
         return a;
     }
+
     long long x1, y1;
-    long long g = gcdExt(b, a % b, x1, y1);
+    long long g = extendedGcd(b, a % b, x1, y1);
     x = y1;
     y = x1 - (a / b) * y1;
     return g;
@@ -421,26 +435,26 @@ El paso de la segunda a la tercera afirmación es solo reescribir la congruencia
 
 Si $\gcd(a,m)=1$, el algoritmo de Euclides extendido produce $x,y$ con $ax + my = 1$, es decir $ax \equiv 1 \pmod{m}$; ese $x$ es un inverso de $a$ módulo $m$.
 
-\paragraph{Implementación (\texttt{inv}).}
+\paragraph{Implementación (\texttt{modularInverse}).}
 
 \begin{lstlisting}[language=C++]
-long long inv(long long a, long long m) {
+long long modularInverse(long long a, long long m) {
     long long x, y;
-    gcdExt(a, m, x, y);
+    extendedGcd(a, m, x, y);
     return (x % m + m) % m;
 }
 \end{lstlisting}
-Nótese que al final en lugar de devolver $x$, devolvemos \verb|(x % m + m) % m|, esto es porque el coeficiente $x$ que devuelve \texttt{gcdExt} puede ser negativo. Por ejemplo, el inverso de $3$ módulo $7$ es $5$, pero el algoritmo puede devolver $x = -2$, que es equivalente, pues $-2 \equiv 5 \pmod 7$. La expresión \verb|(x % m + m) % m| convierte cualquier $x$ a un número congruente a $x$ positivo en $[0, m)$.
+Nótese que al final en lugar de devolver $x$, devolvemos \verb|(x % m + m) % m|, esto es porque el coeficiente $x$ que devuelve \texttt{extendedGcd} puede ser negativo. Por ejemplo, el inverso de $3$ módulo $7$ es $5$, pero el algoritmo puede devolver $x = -2$, que es equivalente, pues $-2 \equiv 5 \pmod 7$. La expresión \verb|(x % m + m) % m| convierte cualquier $x$ a un número congruente a $x$ positivo en $[0, m)$.
 
 Cuando $m = p$ es primo y $\gcd(a,p)=1$, el pequeño teorema de Fermat implica que
 \[
 a^{p-1} \equiv 1 \pmod{p}.
 \]
-Multiplicando ambos lados por $a^{-1}$ se obtiene $a^{p-2} \equiv a^{-1} \pmod{p}$. Así, el inverso modular se puede calcular también como una potencia, usando exponenciación modular en tiempo $O(\log p)$. Esta vía es útil cuando ya se tiene implementada la exponenciación rápida y no se quiere depender de \texttt{gcdExt} en ese momento.
+Multiplicando ambos lados por $a^{-1}$ se obtiene $a^{p-2} \equiv a^{-1} \pmod{p}$. Así, el inverso modular se puede calcular también como una potencia, usando exponenciación modular en tiempo $O(\log p)$. Esta vía es útil cuando ya se tiene implementada la exponenciación rápida y no se quiere depender de \texttt{extendedGcd} en ese momento.
 
 \subsection*{Inversos para cada número módulo $m$}
 
-A veces necesitamos el inverso de cada $i \in \{1,\ldots,m-1\}$ a la vez. Llamar \texttt{gcdExt} por cada $i$ cuesta del orden de $O(m \log m)$.
+A veces necesitamos el inverso de cada $i \in \{1,\ldots,m-1\}$ a la vez. Llamar \texttt{extendedGcd} por cada $i$ cuesta del orden de $O(m \log m)$.
 
 Cuando el módulo es un primo $p$, existe un método lineal $O(p)$ que rellena \texttt{inv[i]}. Partimos de $\texttt{inv}[1]=1$. Para $i \ge 2$, la división euclidiana
 \[
@@ -472,11 +486,14 @@ Comprobación rápida: $2 \cdot 4 = 8 \equiv 1 \pmod{7}$ y $3 \cdot 5 = 15 \equi
 \paragraph{Implementación.}
 
 \begin{lstlisting}[language=C++]
-vector<long long> inversos(int m, long long p) {
-    vector<long long> inv(m);
+vector<long long> modularInversesUpTo(int limit, long long primeMod) {
+    vector<long long> inv(limit);
     inv[1] = 1;
-    for (int i = 2; i < m; i++)
-        inv[i] = (p - (p / i) * inv[p % i] % p) % p;
+
+    for (int i = 2; i < limit; i++) {
+        inv[i] = (primeMod - (primeMod / i) * inv[primeMod % i] % primeMod) % primeMod;
+    }
+
     return inv;
 }
 \end{lstlisting}
@@ -580,7 +597,8 @@ Escribimos $x = 2 + 3b$; entonces $2 + 3b \equiv 3 \pmod{5}$, es decir $3b \equi
 %EJERCICIO IMPLEMENTAR CRT PARA K CONGRUENCIAS
 %https://codeforces.com/contest/982/problem/E
 
-\section{Funciones multiplicativas}
+\section{Funciones multiplicativas\adv}
+\advnote{Requiere criba, factorización y aritmética modular. Incluye $\phi$, $\mu$ e inversión de Möbius. Puede omitirse en una primera lectura.}
 
 \textbf{Definición.} Una función $f: \mathbb{Z}^+ \to \mathbb{Z}$ es \textbf{multiplicativa} si
 \[
@@ -631,39 +649,46 @@ Entonces
 
 \paragraph{Cálculo de $\phi(n)$ por factorización.} El siguiente código recorre los primos que dividen a $n$ y actualiza un acumulador según $\phi(p^k)=p^k-p^{k-1}$ implícitamente (resta una fracción por cada $p$). Tiene complejidad $O(\sqrt{n})$.
 \begin{lstlisting}[language=C++]
-long long phi(long long n) {
-    long long res = n;
-    for (long long p = 2; p * p <= n; p++)
+long long eulerPhi(long long n) {
+    long long result = n;
+
+    for (long long p = 2; p * p <= n; p++) {
         if (n % p == 0) {
             while (n % p == 0) {
                 n /= p;
             }
-            res -= res / p;
+            result -= result / p;
         }
-    if (n > 1) {
-        res -= res / n;
     }
-    return res;
+
+    if (n > 1) {
+        result -= result / n;
+    }
+
+    return result;
 }
 \end{lstlisting}
 
 \paragraph{Criba de phi en $[1,n]$.} A veces necesitamos $\phi(i)$ para todo $1\le i\le n$. Repetir el algoritmo anterior para cada $i$ cuesta $O(n\sqrt{n})$. Con la misma idea que en la criba de Eratóstenes, para cada primo $p$ recorremos sus múltiplos $j$ y actualizamos $\texttt{phi[j]}$ restando la contribución del factor $p$. La complejidad es $O(n\log\log n)$.
 
 \begin{lstlisting}[language=C++]
-vector<long long> cribaPhi(int n) {
+vector<long long> sievePhi(int n) {
     vector<long long> phi(n + 1);
-    // inicializamos phi[i] = i
+
+    // Inicializamos phi[i] = i.
     for (int i = 1; i <= n; i++) {
         phi[i] = i;
     }
+
     for (int i = 2; i <= n; i++) {
-        // si phi[i] sigue siendo i, entonces i es primo
+        // Si phi[i] sigue siendo i, entonces i es primo.
         if (phi[i] == i) {
             for (int j = i; j <= n; j += i) {
                 phi[j] -= phi[j] / i;
             }
         }
     }
+
     return phi;
 }
 \end{lstlisting}
@@ -753,29 +778,35 @@ Con una criba para $\mu$ en $[1,n]$ (como la de abajo) y un ciclo sobre $d$, la 
 \paragraph{Criba de $\mu$.} Una implementación en tiempo lineal (variante de criba lineal) es la siguiente:
 
 \begin{lstlisting}[language=C++]
-vector<int> cribaMu(int n) {
+vector<int> sieveMu(int n) {
     vector<int> mu(n + 1, 1);
-    vector<bool> compuesto(n + 1, false);
-    vector<int> primos;
+    vector<bool> isComposite(n + 1, false);
+    vector<int> primes;
+
     for (int i = 2; i <= n; i++) {
-        //revisar si es primo
-        if (!compuesto[i]) { 
-            primos.push_back(i); mu[i] = -1;
+        if (!isComposite[i]) {
+            primes.push_back(i);
+            mu[i] = -1;
         }
-        for (int p : primos) {
-            if (i * p > n){
+
+        for (int p : primes) {
+            if ((long long)i * p > n) {
                 break;
             }
-            compuesto[i * p] = true;
-            //revisar si tiene cuadrados
+
+            isComposite[i * p] = true;
+
+            // Si p divide a i, entonces i*p tiene un cuadrado.
             if (i % p == 0) {
                 mu[i * p] = 0;
                 break;
             }
-            //mu(ip)=mu(i)mu(p)=-mu(i)
+
+            // mu(i*p) = mu(i) * mu(p) = -mu(i)
             mu[i * p] = -mu[i];
         }
     }
+
     return mu;
 }
 \end{lstlisting}
@@ -793,7 +824,8 @@ $\texttt{mu}[i]$ & $1$ & $-1$ & $-1$ & $0$ & $-1$ & $1$ & $-1$ & $0$ & $0$ & $1$
 \end{center}
 Los ceros corresponden a enteros divisibles por un cuadrado ($4$, $8$, $9$, etc.).
 
-\section{Logaritmo discreto y Baby-step Giant-step}
+\section{Logaritmo discreto y Baby-step Giant-step\adv}
+\advnote{Requiere exponenciación modular y familiaridad con grupos de unidades módulo $m$. Puede omitirse en una primera lectura.}
 
 \textbf{Problema (logaritmo discreto).} Fijados un módulo $m \ge 2$ y enteros $a$ y $b$ con $\gcd(a,m)=1$, se busca un entero $x$ (si existe) tal que
 \[
@@ -845,37 +877,39 @@ Así, la solución es $x\equiv 4 \pmod{16}$ (misma clase al considerar el orden 
 \paragraph{Implementación.}
 
 \begin{lstlisting}[language=C++]
-long long bsgs(long long a, long long b, long long m) {
-    a %= m; b %= m;
-    if (b == 1 || m == 1){
+long long babyStepGiantStep(long long a, long long b, long long m) {
+    a %= m;
+    b %= m;
+
+    if (b == 1 || m == 1) {
         return 0;
     }
-    
-    //calculamos solo una vez el techo de la raiz 
+
     long long n = ceil(sqrt((double)m));
     unordered_map<long long, long long> baby;
- 
-    //baby steps guardar b*a^j para j = 0..n
-    long long aj = b;
+
+    // Baby steps: guardar b * a^j para j = 0..n
+    long long current = b;
     for (long long j = 0; j <= n; j++) {
-        baby[aj] = j;
-        aj = aj * a % m;
+        baby[current] = j;
+        current = current * a % m;
     }
- 
-    //Usamos la exponenciacion binaria que vimos antes
-    long long an = power(a, n, m);
-    long long cur = an;
+
+    // Giant steps: usar la exponenciacion binaria vista antes.
+    long long aToN = power(a, n, m);
+    current = aToN;
+
     for (long long i = 1; i <= n; i++) {
-        if (baby.count(cur)) {
-            //recuperar el exponente 
-            long long x = i * n - baby[cur];
-            if (x > 0){
+        if (baby.count(current)) {
+            long long x = i * n - baby[current];
+            if (x > 0) {
                 return x;
             }
         }
-        cur = cur * an % m;
+        current = current * aToN % m;
     }
-    return -1;
+
+    return -1; // No hay solucion.
 }
 \end{lstlisting}
 
@@ -910,7 +944,7 @@ Para módulo no primo o cuando $\gcd(a,m) > 1$, hay variantes que reducen al cas
     Esta suma puede parecer muy grande, sin embargo, $L_j$ crece muy rápido, pues por definición $L_j$ es divisible por todos los números hasta $j$. Para $n \leq 10^{16}$, basta calcular hasta $j = 40$, pues $L_{41} > 10^{16}$, haciendo que
     los demás términos sean $0$. En la implementación, haremos la suma hasta encontrar el primer término $0$, ahí pararemos y ya tendremos el resultado.
     \\\\
-    Ver \href{https://codeforces.com/contest/1542/submission/251341276}{código}.
+    Ver \codelink{https://codeforces.com/contest/1542/submission/251341276}.
 \subsection*{6.9.2 \href{https://codeforces.com/problemset/problem/1725/H}{Hot Black Hot White (COMPFEST 14)}}
     Antes de indagar en cómo elegir $Z$ o cómo pintar las rocas mágicas, vamos a intentar simplificar la expresión que nos dan: $concat(A_i, A_j) \times concat(A_j, A_i) + A_i \times A_j \equiv Z \, \mod 3$.
     \\\\Veamos que si $k$ es la cantidad de digitos de $A_j$ entonces $concat(A_i, A_j)=A_i \times 10^k + A_j$ y más aún como $10^k \equiv 1^k \equiv 1\, \mod 3$ tenemos que:
@@ -922,7 +956,7 @@ Para módulo no primo o cuando $\gcd(a,m) > 1$, hay variantes que reducen al cas
     \end{align*}
     Notemos que $0^2\equiv 0  \mod 3$, $1^2 \equiv 1  \mod 3$ y $2^2 \equiv 1 \, \mod 3$. Si tenemos al menos $\frac{n}{2}$ piedras tal que $A_i^2\equiv 0  \mod 3$, entonces podemos colorear $\frac{n}{2}$ de esas de un solo color, así cuando haya dos colores diferentes tendremos que $A_i^2+A_j^2\equiv 0^2 +A_j^2 \equiv A_j^2  \mod 3$ y como ningún número al cuadrado es congruente con $2$ módulo $3$, podemos hacer $Z=2$. Por otro lado, si no hay al menos $\frac{n}{2}$ que lo cumplan, significa que hay al menos $\frac{n}{2}$ tal que $A_i^2 \equiv 1  \mod 3$, entonces coloreamos $\frac{n}{2}$ de ellas de un mismo color y así no habrá ningún par de rocas de diferente color tal que ambas tengan $A_j^2 \equiv 0$. De donde podemos hacer $Z=0$.
     \\\\
-    Ver \href{https://codeforces.com/contest/1725/submission/201205415}{código}.
+    Ver \codelink{https://codeforces.com/contest/1725/submission/201205415}.
 \subsection*{6.9.3 \href{https://lightoj.com/problem/monkey-tradition}{Monkey Tradition (Light OJ)}}
 Notemos que si a un monito, le faltó $r_i$ para llegar a la cima de su bambú dando saltos $p_i$, esto significa que la altura $L$ cumple que $L\equiv r_i \, \mod \,p_i$. Esto nos deja con un sistema de congruencias:
 \begin{align*}
@@ -934,7 +968,7 @@ Notemos que si a un monito, le faltó $r_i$ para llegar a la cima de su bambú d
 \end{align*}
 el cual podemos resolver con el teorema chino del residuo directamente. La única observación relevante es que como todos son primos distintos, todos los módulos son coprimos entre sí, lo que nos garantiza existe siempre la solución.
 \\\\
-Ver \href{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/monkeyTradition.cpp}{código}.
+Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/monkeyTradition.cpp}.
 \section{Problemas}
 \begin{itemize}
     \item[6.10.1] \href{https://codeforces.com/problemset/problem/1553/A}{Digits Sum (Codeforces 1553A)}
@@ -943,7 +977,7 @@ Ver \href{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editoria
     \item[6.10.4] \href{https://codeforces.com/problemset/problem/1512/G}{Short Task (Codeforces 1512G)}
     %CRT
     \item[6.10.5] \href{https://matcomgrader.com/problem/9547/fantastic-beasts/}{Fantastic Beasts (Latam Regional Contest 2018)}
-    \item[6.10.6] \href{https://codeforces.com/group/DH4HPwQlLU/contest/689800/problem/C}{Sushi Lovers}
-    \item[6.10.7] \href{https://codeforces.com/group/DH4HPwQlLU/contest/689800/problem/F}{Pociones Locas}
+    \item[6.10.6] \href{https://codeforces.com/group/DH4HPwQlLU/contest/689800/problem/C}{Sushi Lovers (Autoría $\filledstar$)}
+    \item[6.10.7] \href{https://codeforces.com/group/DH4HPwQlLU/contest/689800/problem/F}{Pociones Locas (Autoría $\filledstar$)}
 
 \end{itemize}
