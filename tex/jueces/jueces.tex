@@ -1,17 +1,10 @@
-\begin{comment}
-En el capítulo anterior mencionamos los jueces en línea (online judges), a grandes razgos, estos son sistemas que reciben un programa enviado por un usuario, entonces ejecutan este con entradas predefinidas a las que se les llama casos y compara las respuestas arrojadas por el programa con las esperadas, y a partir de esto determina si la solución enviada es correcta o no.
-\\
-El funcionamiento de un juez en línea se puede ver de la siguiente manera:
-\begin{center}
-    Cliente $\rightarrow$ Frontend $\rightarrow$ Backed $\rightarrow$ Evaluador
-\end{center} 
-\end{comment}
+
 
 Los jueces en línea son plataformas que reciben el código fuente de una solución, lo compilan, lo ejecutan con casos de prueba predefinidos y determinan automáticamente si el programa cumple con lo pedido en el problema. En programación competitiva, prácticamente toda la evaluación pasa por este tipo de sistemas.
 
 \section{¿Qué hace un juez en línea?}
 
-Cuando una persona concursante envía una solución, el juez no revisa si ``la idea parece correcta'', sino si el programa produce exactamente el comportamiento esperado. Para ello, utiliza un conjunto de casos de prueba preparados por quienes diseñaron el problema, junto con una salida correcta previamente validada.
+Cuando un concursante envía una solución, el juez no revisa si ``la idea parece correcta'', sino si el programa produce exactamente el comportamiento esperado. Para ello, utiliza un conjunto de casos de prueba preparados por quienes diseñaron el problema, junto con una salida correcta previamente validada.
 
 Antes de que un problema llegue al concurso, normalmente pasa por una etapa de preparación. En muchas competencias existe una convocatoria o proceso interno para proponer problemas; cada propuesta debe venir acompañada de una solución conocida, correcta y justificable. En otras palabras, no se plantean problemas de investigación abierta ni preguntas cuya solución todavía sea incierta: el comité necesita saber de antemano que el problema se puede resolver y bajo qué complejidad.
 
@@ -36,7 +29,7 @@ Una vez preparado el problema, el juez en línea sigue un proceso bien definido 
 Como resultado de este proceso, el juez devuelve un veredicto. Los más frecuentes son los siguientes:
 \begin{itemize}
     \item \textbf{Accepted (AC):} la solución produjo la respuesta correcta dentro de los límites establecidos.
-    \item \textbf{Wrong Answer (WA):} la salida no coincide con la esperada o no satisface el criterio del checker.
+    \item \textbf{Wrong Answer (WA):} la salida no coincide con la esperada o no satisface el criterio del comparador.
     \item \textbf{Compilation Error (CE):} el programa no compiló correctamente.
     \item \textbf{Run Time Error (RTE):} ocurrió un error durante la ejecución, como división entre cero o acceso inválido a memoria.
     \item \textbf{Time Limit Exceeded (TLE):} la solución tardó más de lo permitido.
@@ -47,7 +40,7 @@ Como resultado de este proceso, el juez devuelve un veredicto. Los más frecuent
 
 \section{Arquitectura general}
 
-Aunque la implementación concreta puede variar entre plataformas, un juez en línea suele estar compuesto por varias partes que colaboran entre sí. En una versión un poco más realista, el envío pasa primero por un frontend, luego se registra como una solicitud de evaluación y entra en una cola. A partir de esa cola, uno o varios procesos trabajadores, o \textit{workers}, toman envíos pendientes, los compilan y los ejecutan dentro de un entorno aislado. Después, la salida producida se envía a un comparador, que decide si la respuesta debe aceptarse o no.
+Aunque la implementación concreta puede variar entre plataformas, un juez en línea suele estar compuesto por varias partes que colaboran entre sí. El envío pasa primero por un frontend, luego se registra como una solicitud de evaluación y entra en una cola. A partir de esa cola, uno o varios procesos trabajadores, o \textit{workers}, toman envíos pendientes, los compilan y los ejecutan dentro de un entorno aislado. Después, la salida producida se envía a un comparador, que decide si la respuesta debe aceptarse o no.
 
 Una forma simplificada de visualizarlo es la siguiente:
 

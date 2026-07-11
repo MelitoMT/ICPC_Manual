@@ -1,7 +1,7 @@
 En programación competitiva, dominar o al menos tener buenas nociones de los conceptos principales de teoría de números no es un lujo, sino una necesidad. A lo largo de este texto y en la práctica dentro de la ICPC, el lector encontrará problemas donde aparecen de manera natural ideas como divisibilidad, números primos, residuos, máximo común divisor y aritmética modular. En términos generales, la teoría de números estudia las propiedades de los enteros, y por ello ofrece un lenguaje muy útil para describir, simplificar y resolver muchos problemas clásicos de concurso.
 \section{Bases}
 
-\textbf{Definición (divisibilidad).} Decimos que $a$ \textbf{divide} a $b$ (y escribimos $a \mid b$) si existe un entero $k$ tal que $b = ka$.
+\textbf{Definición.} Decimos que $a$ \textbf{divide} a $b$ (y escribimos $a \mid b$) si existe un entero $k$ tal que $b = ka$.
 
 \textit{Ejemplo.} Se cumple $4 \mid 20$ porque $20 = 4 \cdot 5$ (aquí $k = 5$). En cambio, $6 \nmid 20$, pues no existe ningún entero $k$ con $20 = 6k$.
 
@@ -9,7 +9,7 @@ Veamos propiedades de la divisibilidad que aparecen con frecuencia en competenci
 
 \textbf{Propiedad 1.} Si un mismo número divide a otros dos, entonces también divide a su suma y su diferencia:
 \[
-a \mid b \text{ y } a \mid c \implies a \mid (b \pm c).
+a \mid b \text{  y  } a \mid c \implies a \mid (b \pm c).
 \]
 
 \textit{Ejemplo.} Como $3 \mid 12$ y $3 \mid 21$, entonces $3 \mid (21-12) = 9$ y $3 \mid (21+12) = 33$.
@@ -30,7 +30,7 @@ a \mid b \text{ y } b \mid c \implies a \mid c.
 
 El \textbf{máximo común divisor} de dos números $a$ y $b$, denotado $\gcd(a,b)$ (siglas en inglés), es el mayor entero que divide a ambos. El \textbf{mínimo común múltiplo} $\text{lcm}(a,b)$ es el menor entero positivo divisible por ambos.
 
-\textit{Ejemplo ($\gcd$ y $\text{lcm}$).} Si $a = 12$ y $b = 18$, entonces los divisores de $12$ son
+\textit{Ejemplo ($\text{gcd}$ y $\text{lcm}$).} Si $a = 12$ y $b = 18$, entonces los divisores de $12$ son
 \[
 \{1,2,3,4,6,12\}
 \]
@@ -74,7 +74,7 @@ dividiendo antes de multiplicar para mantener los valores en el rango.
 
 Hasta aquí relacionamos $\text{lcm}(a,b)$ con $\gcd(a,b)$. Para \emph{calcular} $\gcd(a,b)$ se usa el algoritmo de Euclides.
 
-\textbf{Algoritmo deuclides} Para enteros $a$ y $b$ con $b \neq 0$,
+\textbf{Algoritmo de Euclides.} Para enteros $a$ y $b$ con $b \neq 0$,
 \[
 \gcd(a, b) = \gcd(b, a \bmod b).
 \]
@@ -96,7 +96,7 @@ Se repite el paso hasta obtener residuo $0$; el último resto no nulo es $\gcd(a
 long long gcd(long long a, long long b) {
     return b == 0 ? a : gcd(b, a % b);
 }
- 
+
 long long lcm(long long a, long long b) {
     return a / gcd(a, b) * b;
 }
@@ -164,16 +164,20 @@ De aquí un algoritmo $O(\log b)$; en cada paso se puede reducir módulo $m$ par
 \paragraph{Implementación.}
 
 \begin{lstlisting}[language=C++]
-long long power(long long a, long long b, long long mod) {
-    long long res = 1;
-    a %= mod;
-    while (b > 0) {
-        //si b es impar se multiplica una vez extra
-        if (b % 2) res = res * a % mod;
-        a = a * a % mod;
-        b = b/2;
+long long power(long long base, long long exponent, long long mod) {
+    long long result = 1;
+    base %= mod;
+
+    while (exponent > 0) {
+        // Si el exponente es impar, multiplicamos una vez extra.
+        if (exponent % 2 == 1) {
+            result = result * base % mod;
+        }
+        base = base * base % mod;
+        exponent /= 2;
     }
-    return res;
+
+    return result;
 }
 \end{lstlisting}
 
@@ -190,18 +194,27 @@ long long power(long long a, long long b, long long mod) {
 12 = 2^2 \cdot 3, \qquad 60 = 2^2 \cdot 3 \cdot 5.
 \]
 
-\textbf{Propiedad (prueba de primalidad hasta $\sqrt{n}$).} Si $n$ es un número compuesto, entonces existen enteros $a$ y $b$ con $n = ab$ y $1 < a, b < n$. No pueden cumplirse a la vez $a > \sqrt{n}$ y $b > \sqrt{n}$, pues entonces $ab > n$. Por tanto, todo compuesto posee un divisor $d$ con $1 < d \le \lfloor\sqrt{n}\rfloor$. Basta probar divisibilidad con los enteros en ese rango.
+\textbf{Propiedad (prueba de primalidad hasta $\sqrt{n}$).} Si $n$ es un número compuesto (es mayor a $1$ y tiene más de dos divisores positivos), entonces existen enteros $a$ y $b$ con $n = ab$ y $1 < a, b < n$. No pueden cumplirse a la vez $a > \sqrt{n}$ y $b > \sqrt{n}$, pues entonces $ab > n$. Por tanto, todo compuesto posee un divisor $d$ con $1 < d \le \lfloor\sqrt{n}\rfloor$. Para determinar si un número es compuesto, basta probar divisibilidad con los enteros en ese rango.
 
-\textit{Ejemplo.} Como $91 = 7\cdot 13$ y $7 \le \sqrt{91}$, al buscar factores de $91$ basta llegar hasta $\lfloor\sqrt{91}\rfloor = 9$; al hallar $7$ se concluye que $91$ no es primo. Si ningún entero entre $2$ y $\lfloor\sqrt{n}\rfloor$ divide a $n$, entonces $n$ es primo. Esto da un algoritmo $O(\sqrt{n})$.
+\textit{Ejemplo.} Como $91 = 7\cdot 13$ y $7 \le \sqrt{91}$, al buscar factores de $91$ basta llegar hasta $\lfloor\sqrt{91}\rfloor = 9$; al hallar $7$ se concluye que $91$ no es primo.
+
+Si ningún entero entre $2$ y $\lfloor\sqrt{n}\rfloor$ divide a $n$, entonces $n$ es primo. Esto da un algoritmo $O(\sqrt{n})$.
 
 \paragraph{Implementación (\texttt{esPrimo}).}
 
 \begin{lstlisting}[language=C++]
-bool prime(long long n) {
-    if (n < 2) return false;
-    if (n % 2 == 0) return n == 2;
+bool isPrime(long long n) {
+    if (n < 2) {
+        return false;
+    }
+    if (n % 2 == 0) {
+        return n == 2;
+    }
+
     for (long long i = 3; i * i <= n; i += 2) {
-        if (n % i == 0) return false;
+        if (n % i == 0) {
+            return false;
+        }
     }
     return true;
 }
@@ -251,12 +264,13 @@ Los números que permanecen sin tachar son los primos: $2,3,5,7,11$.
 \textit{Observaciones de implementación.} El bucle exterior puede limitarse a $i$ con $i^2 \le n$: si un número compuesto tuviera un factor $> \sqrt{n}$, el cofactor sería $x \le \sqrt{n}$ y ya se habría tachado antes. Además, al marcar múltiplos del primo $i$ basta empezar en $j = i^2$, porque los múltiplos $2i, 3i, \ldots, (i-1)i$ ya fueron tachados por primos menores.
 
 \begin{lstlisting}[language=C++]
-vector<bool> prime(n + 1, true);
-prime[0] = prime[1] = false;
+vector<bool> isPrime(n + 1, true);
+isPrime[0] = isPrime[1] = false;
+
 for (int i = 2; i * i <= n; i++) {
-    if (prime[i]) {
+    if (isPrime[i]) {
         for (int j = i * i; j <= n; j += i) {
-            prime[j] = false;
+            isPrime[j] = false;
         }
     }
 }
@@ -264,9 +278,9 @@ for (int i = 2; i * i <= n; i++) {
  
 \paragraph{Complejidad.} La criba anterior corre en $O(n \log \log n)$, prácticamente lineal; suele ser viable hasta $n \approx 10^7$ con memoria razonable. Para $n$ mayor o para tener el \emph{menor factor primo} de cada entero (útil para factorizar rápido) existen variantes en tiempo $O(n)$; véase la referencia \cite{cpalg-sieve}.
 
-\section{Teorema de Bézout}
+\section{Lema de Bézout}
 
-\textbf{Teorema (Bézout).} Para cualesquiera enteros $a$ y $b$ no ambos cero, existen enteros $x$ e $y$ tales que
+\textbf{Lema (Bézout).} Para cualesquiera enteros $a$ y $b$ no ambos cero, existen enteros $x$ e $y$ tales que
 \[
 ax + by = \gcd(a, b).
 \]
@@ -341,18 +355,20 @@ Por lo tanto, una elección válida de coeficientes de Bézout es
 x = -1, \qquad y = 2.
 \]
 
-\paragraph{Implementación (\texttt{gcdExt}).}
+\paragraph{Implementación (\texttt{extendedGcd}).}
 
 \begin{lstlisting}[language=C++]
-// calcula gcd(a,b) y encuentra x,y tales que ax + by = gcd(a,b)
-long long gcdExt(long long a, long long b, long long &x, long long &y) {
-    //Caso base pues gcd(a,0)=a
+// Calcula gcd(a, b) y encuentra x, y tales que a*x + b*y = gcd(a, b).
+long long extendedGcd(long long a, long long b, long long& x, long long& y) {
+    // Caso base: gcd(a, 0) = a.
     if (b == 0) {
-        x = 1; y = 0; 
+        x = 1;
+        y = 0;
         return a;
     }
+
     long long x1, y1;
-    long long g = gcdExt(b, a % b, x1, y1);
+    long long g = extendedGcd(b, a % b, x1, y1);
     x = y1;
     y = x1 - (a / b) * y1;
     return g;
@@ -419,26 +435,26 @@ El paso de la segunda a la tercera afirmación es solo reescribir la congruencia
 
 Si $\gcd(a,m)=1$, el algoritmo de Euclides extendido produce $x,y$ con $ax + my = 1$, es decir $ax \equiv 1 \pmod{m}$; ese $x$ es un inverso de $a$ módulo $m$.
 
-\paragraph{Implementación (\texttt{inv}).}
+\paragraph{Implementación (\texttt{modularInverse}).}
 
 \begin{lstlisting}[language=C++]
-long long inv(long long a, long long m) {
+long long modularInverse(long long a, long long m) {
     long long x, y;
-    gcdExt(a, m, x, y);
+    extendedGcd(a, m, x, y);
     return (x % m + m) % m;
 }
 \end{lstlisting}
-Nótese que al final en lugar de devolver $x$, devolvemos \verb|(x % m + m) % m|, esto es porque el coeficiente $x$ que devuelve \texttt{gcdExt} puede ser negativo. Por ejemplo, el inverso de $3$ módulo $7$ es $5$, pero el algoritmo puede devolver $x = -2$, que es equivalente, pues $-2 \equiv 5 \pmod 7$. La expresión \verb|(x % m + m) % m| convierte cualquier $x$ a un número congruente a $x$ positivo en $[0, m)$.
+Nótese que al final en lugar de devolver $x$, devolvemos \verb|(x % m + m) % m|, esto es porque el coeficiente $x$ que devuelve \texttt{extendedGcd} puede ser negativo. Por ejemplo, el inverso de $3$ módulo $7$ es $5$, pero el algoritmo puede devolver $x = -2$, que es equivalente, pues $-2 \equiv 5 \pmod 7$. La expresión \verb|(x % m + m) % m| convierte cualquier $x$ a un número congruente a $x$ positivo en $[0, m)$.
 
 Cuando $m = p$ es primo y $\gcd(a,p)=1$, el pequeño teorema de Fermat implica que
 \[
 a^{p-1} \equiv 1 \pmod{p}.
 \]
-Multiplicando ambos lados por $a^{-1}$ se obtiene $a^{p-2} \equiv a^{-1} \pmod{p}$. Así, el inverso modular se puede calcular también como una potencia, usando exponenciación modular en tiempo $O(\log p)$. Esta vía es útil cuando ya se tiene implementada la exponenciación rápida y no se quiere depender de \texttt{gcdExt} en ese momento.
+Multiplicando ambos lados por $a^{-1}$ se obtiene $a^{p-2} \equiv a^{-1} \pmod{p}$. Así, el inverso modular se puede calcular también como una potencia, usando exponenciación modular en tiempo $O(\log p)$. Esta vía es útil cuando ya se tiene implementada la exponenciación rápida y no se quiere depender de \texttt{extendedGcd} en ese momento.
 
 \subsection*{Inversos para cada número módulo $m$}
 
-A veces necesitamos el inverso de cada $i \in \{1,\ldots,m-1\}$ a la vez. Llamar \texttt{gcdExt} por cada $i$ cuesta del orden de $O(m \log m)$.
+A veces necesitamos el inverso de cada $i \in \{1,\ldots,m-1\}$ a la vez. Llamar \texttt{extendedGcd} por cada $i$ cuesta del orden de $O(m \log m)$.
 
 Cuando el módulo es un primo $p$, existe un método lineal $O(p)$ que rellena \texttt{inv[i]}. Partimos de $\texttt{inv}[1]=1$. Para $i \ge 2$, la división euclidiana
 \[
@@ -470,15 +486,17 @@ Comprobación rápida: $2 \cdot 4 = 8 \equiv 1 \pmod{7}$ y $3 \cdot 5 = 15 \equi
 \paragraph{Implementación.}
 
 \begin{lstlisting}[language=C++]
-vector<long long> inversos(int m, long long p) {
-    vector<long long> inv(m);
+vector<long long> modularInversesUpTo(int limit, long long primeMod) {
+    vector<long long> inv(limit);
     inv[1] = 1;
-    for (int i = 2; i < m; i++)
-        inv[i] = (p - (p / i) * inv[p % i] % p) % p;
+
+    for (int i = 2; i < limit; i++) {
+        inv[i] = (primeMod - (primeMod / i) * inv[primeMod % i] % primeMod) % primeMod;
+    }
+
     return inv;
 }
 \end{lstlisting}
-
 \subsection*{Pequeño teorema de Fermat}
 
 Diremos que dos enteros son \textbf{primos relativos} o \textbf{coprimos} si su máximo común divisor es $1$.
@@ -512,8 +530,8 @@ En el caso particular $m = p$ primo, los enteros coprimos con $p$ entre $1$ y $p
 \[
 3^4 = 81 \equiv 1 \pmod{10}.
 \]
-
-\section{Congruencias lineales y Teorema Chino del Residuo}
+\begin{samepage}
+    \section{Congruencias lineales y Teorema Chino del Residuo}
 \subsection*{Congruencia lineal}
 
 Ahora que sabemos calcular inversos modulares, podemos abordar las \textbf{congruencias lineales}: dado un módulo $m$ y enteros $a$ y $b$, buscamos enteros $x$ que satisfagan
@@ -521,6 +539,8 @@ Ahora que sabemos calcular inversos modulares, podemos abordar las \textbf{congr
 ax \equiv b \pmod{m}.
 \]
 Al igual que con los inversos, estas ecuaciones \emph{no siempre} tienen solución.
+
+\end{samepage}
 
 \textbf{Propiedad (existencia de solución).} Sea $g = \gcd(a,m)$. La congruencia $ax \equiv b \pmod{m}$ tiene al menos una solución si y sólo si $g \mid b$.
 
@@ -565,7 +585,7 @@ Si $x_1$ y $x_2$ son dos soluciones, entonces $x_1 \equiv x_2 \pmod{n_1}$ y $x_1
 
 En implementaciones conviene reducir módulo $\text{lcm}(n_1,n_2)$ (o módulos intermedios) en cada paso para controlar el \textit{overflow}.
 
-El mismo procedimiento se extiende a $k$ congruencias $x \equiv a_i \pmod{n_i}$: se fusionan dos a dos, reemplazando cada par por una sola congruencia módulo el mínimo común múltiplo de los módulos involucrados, hasta obtener una congruencia única. Una cota razonable de coste es $O\bigl(k \log \text{lcm}(n_1,\ldots,n_k)\bigr)$ si en cada paso se usa Euclides extendido sobre enteros acotados por dicho mcm.
+El mismo procedimiento se extiende a $k$ congruencias $x \equiv a_i \pmod{n_i}$: se fusionan dos a dos, reemplazando cada par por una sola congruencia módulo el mínimo común múltiplo de los módulos involucrados, hasta obtener una congruencia única. Una cota razonable de coste es $O\bigl(k \log \text{lcm}(n_1,\ldots,n_k)\bigr)$ si en cada paso se usa Euclides extendido sobre enteros acotados por dicho lcm.
 
 \textit{Ejemplo.} Busquemos $x$ que satisfaga el sistema
 \begin{align*}
@@ -577,7 +597,8 @@ Escribimos $x = 2 + 3b$; entonces $2 + 3b \equiv 3 \pmod{5}$, es decir $3b \equi
 %EJERCICIO IMPLEMENTAR CRT PARA K CONGRUENCIAS
 %https://codeforces.com/contest/982/problem/E
 
-\section{Funciones multiplicativas}
+\section{Funciones multiplicativas\adv}
+\advnote{Requiere criba, factorización y aritmética modular. Incluye $\phi$, $\mu$ e inversión de Möbius. Puede omitirse en una primera lectura.}
 
 \textbf{Definición.} Una función $f: \mathbb{Z}^+ \to \mathbb{Z}$ es \textbf{multiplicativa} si
 \[
@@ -628,39 +649,46 @@ Entonces
 
 \paragraph{Cálculo de $\phi(n)$ por factorización.} El siguiente código recorre los primos que dividen a $n$ y actualiza un acumulador según $\phi(p^k)=p^k-p^{k-1}$ implícitamente (resta una fracción por cada $p$). Tiene complejidad $O(\sqrt{n})$.
 \begin{lstlisting}[language=C++]
-long long phi(long long n) {
-    long long res = n;
-    for (long long p = 2; p * p <= n; p++)
+long long eulerPhi(long long n) {
+    long long result = n;
+
+    for (long long p = 2; p * p <= n; p++) {
         if (n % p == 0) {
             while (n % p == 0) {
                 n /= p;
             }
-            res -= res / p;
+            result -= result / p;
         }
-    if (n > 1) {
-        res -= res / n;
     }
-    return res;
+
+    if (n > 1) {
+        result -= result / n;
+    }
+
+    return result;
 }
 \end{lstlisting}
 
 \paragraph{Criba de phi en $[1,n]$.} A veces necesitamos $\phi(i)$ para todo $1\le i\le n$. Repetir el algoritmo anterior para cada $i$ cuesta $O(n\sqrt{n})$. Con la misma idea que en la criba de Eratóstenes, para cada primo $p$ recorremos sus múltiplos $j$ y actualizamos $\texttt{phi[j]}$ restando la contribución del factor $p$. La complejidad es $O(n\log\log n)$.
 
 \begin{lstlisting}[language=C++]
-vector<long long> cribaPhi(int n) {
+vector<long long> sievePhi(int n) {
     vector<long long> phi(n + 1);
-    // inicializamos phi[i] = i
+
+    // Inicializamos phi[i] = i.
     for (int i = 1; i <= n; i++) {
         phi[i] = i;
     }
+
     for (int i = 2; i <= n; i++) {
-        // si phi[i] sigue siendo i, entonces i es primo
+        // Si phi[i] sigue siendo i, entonces i es primo.
         if (phi[i] == i) {
             for (int j = i; j <= n; j += i) {
                 phi[j] -= phi[j] / i;
             }
         }
     }
+
     return phi;
 }
 \end{lstlisting}
@@ -750,29 +778,35 @@ Con una criba para $\mu$ en $[1,n]$ (como la de abajo) y un ciclo sobre $d$, la 
 \paragraph{Criba de $\mu$.} Una implementación en tiempo lineal (variante de criba lineal) es la siguiente:
 
 \begin{lstlisting}[language=C++]
-vector<int> cribaMu(int n) {
+vector<int> sieveMu(int n) {
     vector<int> mu(n + 1, 1);
-    vector<bool> compuesto(n + 1, false);
-    vector<int> primos;
+    vector<bool> isComposite(n + 1, false);
+    vector<int> primes;
+
     for (int i = 2; i <= n; i++) {
-        //revisar si es primo
-        if (!compuesto[i]) { 
-            primos.push_back(i); mu[i] = -1;
+        if (!isComposite[i]) {
+            primes.push_back(i);
+            mu[i] = -1;
         }
-        for (int p : primos) {
-            if (i * p > n){
+
+        for (int p : primes) {
+            if ((long long)i * p > n) {
                 break;
             }
-            compuesto[i * p] = true;
-            //revisar si tiene cuadrados
+
+            isComposite[i * p] = true;
+
+            // Si p divide a i, entonces i*p tiene un cuadrado.
             if (i % p == 0) {
                 mu[i * p] = 0;
                 break;
             }
-            //mu(ip)=mu(i)mu(p)=-mu(i)
+
+            // mu(i*p) = mu(i) * mu(p) = -mu(i)
             mu[i * p] = -mu[i];
         }
     }
+
     return mu;
 }
 \end{lstlisting}
@@ -790,7 +824,8 @@ $\texttt{mu}[i]$ & $1$ & $-1$ & $-1$ & $0$ & $-1$ & $1$ & $-1$ & $0$ & $0$ & $1$
 \end{center}
 Los ceros corresponden a enteros divisibles por un cuadrado ($4$, $8$, $9$, etc.).
 
-\section{Logaritmo discreto y Baby-step Giant-step}
+\section{Logaritmo discreto y Baby-step Giant-step\adv}
+\advnote{Requiere exponenciación modular y familiaridad con grupos de unidades módulo $m$. Puede omitirse en una primera lectura.}
 
 \textbf{Problema (logaritmo discreto).} Fijados un módulo $m \ge 2$ y enteros $a$ y $b$ con $\gcd(a,m)=1$, se busca un entero $x$ (si existe) tal que
 \[
@@ -842,37 +877,39 @@ Así, la solución es $x\equiv 4 \pmod{16}$ (misma clase al considerar el orden 
 \paragraph{Implementación.}
 
 \begin{lstlisting}[language=C++]
-long long bsgs(long long a, long long b, long long m) {
-    a %= m; b %= m;
-    if (b == 1 || m == 1){
+long long babyStepGiantStep(long long a, long long b, long long m) {
+    a %= m;
+    b %= m;
+
+    if (b == 1 || m == 1) {
         return 0;
     }
-    
-    //calculamos solo una vez el techo de la raiz 
+
     long long n = ceil(sqrt((double)m));
     unordered_map<long long, long long> baby;
- 
-    //baby steps guardar b*a^j para j = 0..n
-    long long aj = b;
+
+    // Baby steps: guardar b * a^j para j = 0..n
+    long long current = b;
     for (long long j = 0; j <= n; j++) {
-        baby[aj] = j;
-        aj = aj * a % m;
+        baby[current] = j;
+        current = current * a % m;
     }
- 
-    //Usamos la exponenciacion binaria que vimos antes
-    long long an = power(a, n, m);
-    long long cur = an;
+
+    // Giant steps: usar la exponenciacion binaria vista antes.
+    long long aToN = power(a, n, m);
+    current = aToN;
+
     for (long long i = 1; i <= n; i++) {
-        if (baby.count(cur)) {
-            //recuperar el exponente 
-            long long x = i * n - baby[cur];
-            if (x > 0){
+        if (baby.count(current)) {
+            long long x = i * n - baby[current];
+            if (x > 0) {
                 return x;
             }
         }
-        cur = cur * an % m;
+        current = current * aToN % m;
     }
-    return -1;
+
+    return -1; // No hay solucion.
 }
 \end{lstlisting}
 
@@ -895,7 +932,7 @@ Para módulo no primo o cuando $\gcd(a,m) > 1$, hay variantes que reducen al cas
     Por otro lado, si contamos por columnas, notaremos que cada columna $k$ tiene $|\{i \leq n | f(i)\geq k\}|$ porque asi definimos la tabla. De aquí que:
     \[\sum_{i=1}^{n}f(i)=\sum_{i=1}^{\infty}|\{i \leq n | f(i)\geq k\}|\]
     Otra observación importante es que dado $i$, $f(i) = k$ si y solo si $1, 2, \ldots, k-1$ dividen a $i$, pero $k$
-    no divide a $i$. Definamos $L_j = \text{mcm}(1, 2, \ldots, j)$ con $L_0 = 1$. Entonces:
+    no divide a $i$. Definamos $L_j = \text{gcd}(1, 2, \ldots, j)$ con $L_0 = 1$. Entonces:
     \[
     f(i) = k \iff L_{k-1} \mid i \text{ y } L_k \nmid i
     \]

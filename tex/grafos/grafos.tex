@@ -100,21 +100,28 @@ Intuitivamente, el algoritmo parte de cualquier vértice y sigue aristas arbitra
 desde ese vértice. Se repite esto hasta usar todas las aristas.
  
 \begin{lstlisting}[language=C++]
+// Hierholzer: construye un circuito euleriano desde 'inicio'.
+// Asume que adj[v] es la lista de vecinos (se consume al recorrer).
 vector<int> hierholzer(int inicio) {
     stack<int> st;
     vector<int> circuito;
     st.push(inicio);
+
     while (!st.empty()) {
         int v = st.top();
+
         if (adj[v].empty()) {
+            // No quedan aristas salientes: v entra al circuito.
             circuito.push_back(v);
             st.pop();
         } else {
+            // Tomamos una arista v -> u y seguimos el recorrido.
             int u = adj[v].back();
             adj[v].pop_back();
             st.push(u);
         }
     }
+
     reverse(circuito.begin(), circuito.end());
     return circuito;
 }
@@ -194,38 +201,49 @@ El último en la lista es $a$, de la componente $\{a,b,c\}$. Intuitivamente, al 
 Así cada llamada a \texttt{dfs2} aísla exactamente una SCC.
  
 \begin{lstlisting}[language=C++]
-vector<int> adj[MAXN], radj[MAXN];
+vector<int> adj[MAXN], radj[MAXN];  // G y G^T
 bool visited[MAXN];
-vector<int> order;   // orden de salida del primer DFS
-ll comp[MAXN];      // SCC de cada nodo
- 
+vector<int> order;                  // orden de salida del primer DFS
+int comp[MAXN];                     // SCC de cada nodo
+
 void dfs1(int v) {
     visited[v] = true;
-    for (int u : adj[v])
-        if (!visited[u]) dfs1(u);
-    order.push_back(v);  
+    for (int u : adj[v]) {
+        if (!visited[u]) {
+            dfs1(u);
+        }
+    }
+    order.push_back(v);
 }
- 
+
 void dfs2(int v, int c) {
     comp[v] = c;
-    for (int u : radj[v])
-        if (comp[u] == -1) dfs2(u, c);
-}
- 
-int kosaraju(int n) {
-    // Primer DFS en G
-    fill(visited, visited+n, false);
-    for (int i = 0; i < n; i++)
-        if (!visited[i]) dfs1(i);
- 
-    // Segundo DFS en G^T, en orden inverso de salida
-    fill(comp, comp+n, -1);
-    int num_scc = 0;
-    for (int i = n-1; i >= 0; i--) {
-        int v = order[i];
-        if (comp[v] == -1) dfs2(v, num_scc++);
+    for (int u : radj[v]) {
+        if (comp[u] == -1) {
+            dfs2(u, c);
+        }
     }
-    return num_scc;
+}
+
+int kosaraju(int n) {
+    // Primer DFS en G: construye el orden de salida.
+    fill(visited, visited + n, false);
+    for (int i = 0; i < n; i++) {
+        if (!visited[i]) {
+            dfs1(i);
+        }
+    }
+
+    // Segundo DFS en G^T, en orden inverso de salida.
+    fill(comp, comp + n, -1);
+    int numScc = 0;
+    for (int i = n - 1; i >= 0; i--) {
+        int v = order[i];
+        if (comp[v] == -1) {
+            dfs2(v, numScc++);
+        }
+    }
+    return numScc;
 }
 \end{lstlisting}
  
@@ -266,7 +284,8 @@ condensación}, una gráfica donde cada nodo representa una SCC y hay una arista
 \end{figure}
 La gráfica de condensación es útil porque permite aplicar programación
 dinámica sobre el DAG para resolver preguntas sobre la gráfica original.
-\section{2-SAT}
+\section{2-SAT\adv}
+\advnote{Requiere componentes fuertemente conexas (sección anterior). Puede omitirse en una primera lectura.}
 Motivemos esta sección con este problema: \href{https://codeforces.com/problemset/problem/776/D}{The door problem}. Se nos dice que hay $n$ personas atrapadas en $n$ cuartos (una puerta por cuarto). Hay $m$ interrumptores; en general $m$ puede ser mayor, igual o menor que $n$, y no hay relación fija entre ambos. Activar o desactivar un interrumptor cambia el estado de las puertas que controla. Cada puerta es controlada por exactamente dos interrumptores. ¿Es posible operar los
 interruptores para que todas las puertas queden desbloqueadas al mismo
 tiempo?
@@ -466,37 +485,40 @@ Para que una arista $(uv)$  con $v$ hijo de $u$ n el DFS sea un puente, se debe 
 Finalmente, la implementación nos quedaría:
 \begin{lstlisting}[language=C++]
 vector<int> adj[MAXN];
-int disc[MAXN], low[MAXN], cont= 0;
+int disc[MAXN], low[MAXN], timer = 0;
 bool visited[MAXN], art[MAXN];
-vector<pair<int,int>> bridges;
- 
+vector<pair<int, int>> bridges;
+
 void dfs(int u, int parent) {
     visited[u] = true;
-    disc[u] = low[u] = cont++;
+    disc[u] = low[u] = timer++;
     int children = 0;
- 
+
     for (int v : adj[u]) {
         if (!visited[v]) {
             children++;
             dfs(v, u);
             low[u] = min(low[u], low[v]);
- 
-            // Arista u-v es puente
-            if (low[v] > disc[u])
+
+            // Arista u-v es puente.
+            if (low[v] > disc[u]) {
                 bridges.push_back({u, v});
- 
-            // u es articulacion (caso no raiz)
-            if (parent != -1 && low[v] >= disc[u])
+            }
+
+            // u es articulacion (caso no raiz).
+            if (parent != -1 && low[v] >= disc[u]) {
                 art[u] = true;
- 
+            }
         } else if (v != parent) {
-            // arista hacia atras
+            // Arista hacia atras.
             low[u] = min(low[u], disc[v]);
         }
     }
-    // u es articulacion (caso raiz)
-    if (parent == -1 && children >= 2)
+
+    // u es articulacion (caso raiz).
+    if (parent == -1 && children >= 2) {
         art[u] = true;
+    }
 }
 \end{lstlisting}
 \textbf{Ejercicio.} Implementar la solución completa de \href{https://onlinejudge.org/external/3/315.pdfL}{Network} usando
@@ -522,7 +544,8 @@ Para motivar este capítulo de árboles, véamos el problema \href{https://codef
 \end{itemize}
 Nótese que calcular la distancia a cada uno de los nodos rojos cada que nos dan una querie no es eficiente y en este problema que nos pueden dar $10^5$ queries en un arbol de $10^5$ vértices, esta solución ingenua resultaría en $TLE$. Veremos algunas herramientas que nos ayudarían a resolver este problema.
 
-\section{Centroide}
+\section{Centroide\adv}
+\advnote{Requiere manejo cómodo de árboles (DFS, subtamaños). Puede omitirse en una primera lectura.}
  
 El \textbf{centroide} de un árbol es un vértice $c$ tal que al eliminarlo, ninguna componente conexa resultante tiene más de $\lfloor n/2 \rfloor$ vértices. Todo árbol tiene uno o dos centroides. Si tiene dos, son adyacentes. En la siguiente figura el vértice amarillo es el centroide, nótese que entonces si se elimina las componentes conexas se quedan con un vértice.
  
@@ -645,46 +668,54 @@ Necesitamos calcular $\text{dist}(u, v)$ en $O(\log n)$. Esto se logra con el \t
 La implementación para construir el árbol de centroide queda:
 \begin{lstlisting}[language=C++]
 const int MAXN = 100005;
-const int INF  = 1e9;
- 
+
 vector<int> g[MAXN];   // grafica original
 int sz[MAXN];          // tamano del subarbol en la componente actual
 bool removed[MAXN];    // true si el nodo ya fue usado como centroide
 int cpar[MAXN];        // padre en el arbol de centroide (-1 para la raiz)
- 
-// Calcula el tamanio del subarbol de u en la componente actual
+
+// Calcula el tamano del subarbol de u en la componente actual.
 int calcSz(int u, int p) {
     sz[u] = 1;
-    for (int v : g[u])
-        if (v != p && !removed[v])
-            sz[u] += calc_sz(v, u);
+    for (int v : g[u]) {
+        if (v != p && !removed[v]) {
+            sz[u] += calcSz(v, u);
+        }
+    }
     return sz[u];
 }
- 
-// Encuentra el centroide de la componente
+
+// Encuentra el centroide de la componente que contiene a u.
 int centroid(int u, int p, int treeSz) {
-    for (int v : g[u])
-        if (v != p && !removed[v] && sz[v] > treeSz/2)
+    for (int v : g[u]) {
+        if (v != p && !removed[v] && sz[v] > treeSz / 2) {
             return centroid(v, u, treeSz);
+        }
+    }
     return u;
 }
- 
-// Construye el arbol de centroide recursivamente
-// u es cualquier nodo en la componente actual
-// p es el padre en el arbol de centroide (-1 para la raiz)
+
+// Construye el arbol de centroide recursivamente.
+// u: cualquier nodo de la componente actual.
+// p: padre en el arbol de centroide (-1 para la raiz).
 void build(int u, int p) {
-    int total = calcSz(u, -1);       // tamanio de esta componente
-    int c = centroid(u, -1, total);   // encontrar su centroide
-    cpar[c] = p;                      // c es hijo de p en el arbol de centroide
-    removed[c] = true;                // marcar c como procesado
-    // Recursar en cada componente que queda al eliminar c
-    for (int v : g[c])
-        if (!removed[v])
+    int total = calcSz(u, -1);
+    int c = centroid(u, -1, total);
+
+    cpar[c] = p;
+    removed[c] = true;
+
+    // Recursar en cada componente que queda al eliminar c.
+    for (int v : g[c]) {
+        if (!removed[v]) {
             build(v, c);
+        }
+    }
 }
 \end{lstlisting}
  El patrón estándar para cualquier problema que use descomposición por centroide es este problema, subir por los $O(\log n)$ ancestros en el árbol de centroide y agregar o consultar información en cada uno. Lo que varía entre problemas es qué información se guarda y cómo se combina.
-\section{Ancestro común más bajo (LCA)}
+\section{Ancestro común más bajo (LCA)\adv}
+\advnote{Requiere árboles con raíz y, para la versión eficiente, preprocesamiento (binary lifting). Puede omitirse en una primera lectura.}
 Dado un árbol con raíz, el \textbf{ancestro común más bajo} (LCA) de dos vértices $u$ y $v$ es el vértice más abajo que es ancestro de ambos.
 \begin{figure}[H]
 \centering
@@ -757,37 +788,49 @@ Una vez que coinciden, revisamos si $u = v$, ai se cumple, ese es el LCA. De lo 
 
 \begin{lstlisting}[language=C++]
 const int LOG = 17;
-int up[MAXN][LOG];
+int up[MAXN][LOG];  // up[v][k] = ancestro de v a distancia 2^k
 int prof[MAXN];
- 
-// Precalcular ancestros con DFS desde la raiz
+
+// Precalcula ancestros con DFS desde la raiz.
 void dfs(int v, int p, int d) {
     up[v][0] = p;
     prof[v] = d;
-    for (int k = 1; k < LOG; k++)
-        up[v][k] = up[up[v][k-1]][k-1];
-    for (int u : g[v])
-        if (u != p) dfs(u, v, d+1);
+
+    for (int k = 1; k < LOG; k++) {
+        up[v][k] = up[up[v][k - 1]][k - 1];
+    }
+
+    for (int u : g[v]) {
+        if (u != p) {
+            dfs(u, v, d + 1);
+        }
+    }
 }
- 
+
 int lca(int u, int v) {
-    // Igualar profundidades
-    if (prof[u] < prof[v]) swap(u, v);
+    // Igualar profundidades.
+    if (prof[u] < prof[v]) {
+        swap(u, v);
+    }
     int diff = prof[u] - prof[v];
-    for (int k = 0; k < LOG; k++)
-        if ((diff >> k) & 1) u = up[u][k];
- 
-    // revisar si ya encontramos el LCA
-    if (u == v) return u;
- 
-    // Subirlos juntos
-    for (int k = LOG-1; k >= 0; k--)
+    for (int k = 0; k < LOG; k++) {
+        if ((diff >> k) & 1) {
+            u = up[u][k];
+        }
+    }
+
+    if (u == v) {
+        return u;
+    }
+
+    // Subir ambos nodos juntos hasta quedar justo debajo del LCA.
+    for (int k = LOG - 1; k >= 0; k--) {
         if (up[u][k] != up[v][k]) {
             u = up[u][k];
             v = up[v][k];
         }
- 
-    // regresar el LCA
+    }
+
     return up[u][0];
 }
 \end{lstlisting}
@@ -855,7 +898,8 @@ Nótese que la complejidad es $O(n \log n + m \log^2 n)$, que para $n = m = 10^5
  
 \textbf{Ejercicio.} Implementar la solución completa del problema \href{https://codeforces.com/contest/342/problem/E}{Xenia and Tree (Codeforces 342E)} usando lo visto en esta sección.
  
-\section{Flujo máximo}
+\section{Flujo máximo\adv}
+\advnote{Tema avanzado de gráficas: incluye Ford--Fulkerson, Dinic, matching y los teoremas de König y Hall. Puede omitirse en una primera lectura.}
 Imagina que tienes una red de servidores conectados por cables. Cada cable tiene un ancho de banda máximo (en MB/s). Quieres descargar un archivo de un servidor $s$ a un servidor $t$ lo más rápido posible. Puedes dividir la descarga en varias rutas que pasen información simultáneamente, pero ningún cable puede superar su capacidad. ¿Cuántos MB/s puedes transferir en total?
  
 \begin{figure}[H]
@@ -1159,82 +1203,110 @@ Nótese que si quisiésemos hacer otra fase, el BFS ya no encontraría a $t$, po
 \\\\
 Nótese que como  la longitud máxima es $|V|-1$, hay a lo más $|V|-1$ fases. Cada fase cuesta $O(VE)$, dando complejidad total $O(V^2 E)$.
 \begin{lstlisting}[language=C++]
-#define all(v) v.begin(),v.end()
-const ll inf = 1e17;
+const long long INF = 1e17;
 
-struct flowEdge {
-    int u,v;
-    ll cap,flow = 0; 
-    flowEdge(int u, int v, ll cap) : u(u), v(v), cap(cap) {};
+struct FlowEdge {
+    int u, v;
+    long long cap, flow = 0;
+
+    FlowEdge(int u, int v, long long cap) : u(u), v(v), cap(cap) {}
 };
 
-struct Dinic{
-    vector<flowEdge> edges; 
-    vector<vector<int>> adj; 
-    int n,s,t; 
-    int id = 0;
-    vector<int> level, next; 
-    
+struct Dinic {
+    vector<FlowEdge> edges;
+    vector<vector<int>> adj;
+    int n, s, t;
+    int edgeId = 0;
+    vector<int> level, next;
     queue<int> q;
+
     Dinic(int n, int s, int t) : n(n), s(s), t(t) {
         adj.resize(n);
         level.resize(n);
         next.resize(n);
-        fill(all(level),-1); 
-        level[s] = 0; 
+        fill(level.begin(), level.end(), -1);
+        level[s] = 0;
         q.push(s);
     }
 
-    void add(int u, int v, ll cap){
-        edges.emplace_back(u,v,cap);
-        edges.emplace_back(v,u,0);
-        adj[u].push_back(id++); 
-        adj[v].push_back(id++); 
+    void add(int u, int v, long long cap) {
+        edges.emplace_back(u, v, cap);   // arista directa
+        edges.emplace_back(v, u, 0);     // arista residual inversa
+        adj[u].push_back(edgeId++);
+        adj[v].push_back(edgeId++);
     }
 
-    bool bfs(){
-        while (!q.empty()){
-            int curr = q.front();
+    // Construye el grafo de niveles en la red residual.
+    bool bfs() {
+        while (!q.empty()) {
+            int u = q.front();
             q.pop();
-            for (auto e : adj[curr]){
-                if (edges[e].cap - edges[e].flow  < 1) continue; 
-                if (level[edges[e].v] != -1) continue; 
-                level[edges[e].v] = level[edges[e].u] + 1; 
-                q.push(edges[e].v);
+
+            for (int e : adj[u]) {
+                int v = edges[e].v;
+                if (edges[e].cap - edges[e].flow < 1) {
+                    continue;
+                }
+                if (level[v] != -1) {
+                    continue;
+                }
+                level[v] = level[u] + 1;
+                q.push(v);
             }
         }
-        return level[t] != -1; 
+        return level[t] != -1;
     }
 
-    ll dfs(int u, ll flow){
-        if (flow == 0) return 0;
-        if (u == t) return flow;
-        for (auto& cid = next[u]; cid < adj[u].size(); cid++){ 
-            int e = adj[u][cid]; 
-            int v = edges[e].v; 
+    // Empuja flujo a lo largo de un camino de niveles s -> ... -> t.
+    long long dfs(int u, long long pushed) {
+        if (pushed == 0) {
+            return 0;
+        }
+        if (u == t) {
+            return pushed;
+        }
 
-            if (level[edges[e].u] + 1 != level[v] || edges[e].cap - edges[e].flow < 1) continue;
-            ll f = dfs(v,min(flow,edges[e].cap - edges[e].flow)); 
-            if (f == 0) continue; 
-            edges[e].flow += f; 
-            edges[e ^ 1].flow -= f;
-            return f;
+        for (int& cid = next[u]; cid < (int)adj[u].size(); cid++) {
+            int e = adj[u][cid];
+            int v = edges[e].v;
+
+            if (level[u] + 1 != level[v] || edges[e].cap - edges[e].flow < 1) {
+                continue;
+            }
+
+            long long tr = dfs(v, min(pushed, edges[e].cap - edges[e].flow));
+            if (tr == 0) {
+                continue;
+            }
+
+            edges[e].flow += tr;
+            edges[e ^ 1].flow -= tr;
+            return tr;
         }
         return 0;
     }
 
-    ll maxFlow(){
-        ll flow = 0;
-        while (bfs()){
-            fill(all(next),0);
-            for (ll f = dfs(s,inf); f != 0ll; f = dfs(s,inf)) flow += f;
-            fill(all(level),-1); 
+    long long maxFlow() {
+        long long flow = 0;
+
+        while (bfs()) {
+            fill(next.begin(), next.end(), 0);
+
+            while (true) {
+                long long pushed = dfs(s, INF);
+                if (pushed == 0) {
+                    break;
+                }
+                flow += pushed;
+            }
+
+            fill(level.begin(), level.end(), -1);
             level[s] = 0;
             q.push(s);
         }
+
         return flow;
     }
-
 };
 \end{lstlisting}
 \subsection{Teorema max-flow min-cut}
@@ -1392,48 +1464,67 @@ de $O(V^2 E)$.
  
 \begin{lstlisting}[language=C++]
 const int INF = 1e9;
-int n, m;             
-vector<int> adj[MAXN];  // adj[u] = vecinos de u (lado izquierdo)
-int matchL[MAXN], matchR[MAXN]; // emparejamiento actual
+int n, m;                           // |L| = n, |R| = m
+vector<int> adj[MAXN];              // adj[u] = vecinos de u (lado izquierdo)
+int matchL[MAXN], matchR[MAXN];    // emparejamiento actual
 int dist[MAXN];
- 
+
+// Construye capas de caminos aumentantes disjuntos.
 bool bfs() {
     queue<int> q;
     for (int u = 1; u <= n; u++) {
-        if (!matchL[u]) { dist[u] = 0; q.push(u); }
-        else dist[u] = INF;
+        if (!matchL[u]) {
+            dist[u] = 0;
+            q.push(u);
+        } else {
+            dist[u] = INF;
+        }
     }
+
     bool found = false;
     while (!q.empty()) {
-        int u = q.front(); q.pop();
+        int u = q.front();
+        q.pop();
+
         for (int v : adj[u]) {
             int w = matchR[v];
-            if (!w) found = true;
-            else if (dist[w] == INF) { dist[w] = dist[u]+1; q.push(w); }
+            if (!w) {
+                found = true;  // camino aumentante libre
+            } else if (dist[w] == INF) {
+                dist[w] = dist[u] + 1;
+                q.push(w);
+            }
         }
     }
     return found;
 }
- 
+
+// Intenta aumentar el matching desde u siguiendo las capas de BFS.
 bool dfs(int u) {
     for (int v : adj[u]) {
         int w = matchR[v];
-        if (!w || (dist[w] == dist[u]+1 && dfs(w))) {
-            matchL[u] = v; matchR[v] = u;
+        if (!w || (dist[w] == dist[u] + 1 && dfs(w))) {
+            matchL[u] = v;
+            matchR[v] = u;
             return true;
         }
     }
     dist[u] = INF;
     return false;
 }
- 
-int hopcroft_karp() {
-    fill(matchL+1, matchL+n+1, 0);
-    fill(matchR+1, matchR+m+1, 0);
+
+int hopcroftKarp() {
+    fill(matchL + 1, matchL + n + 1, 0);
+    fill(matchR + 1, matchR + m + 1, 0);
+
     int matching = 0;
-    while (bfs())
-        for (int u = 1; u <= n; u++)
-            if (!matchL[u] && dfs(u)) matching++;
+    while (bfs()) {
+        for (int u = 1; u <= n; u++) {
+            if (!matchL[u] && dfs(u)) {
+                matching++;
+            }
+        }
+    }
     return matching;
 }
 \end{lstlisting}
@@ -1688,7 +1779,7 @@ de \textbf{aristas} de $a$ a $L$).
 
 \section{Problemas}
 \begin{itemize}
-  \item[9.11.1] \href{https://cses.fi/problemset/task/2079}{Finding a Centroid (Codeforces)}
+  \item[9.11.1] \href{https://cses.fi/problemset/task/2079}{Finding a Centroid (Codeforces 2079)}
   \item[9.11.2] \href{https://codeforces.com/group/DH4HPwQlLU/contest/689800/problem/I}{Zuko vs Aang (Autoría $\filledstar$)}
   \item[9.11.3] \href{https://codeforces.com/problemset/problem/652/E}{Pursuit for artifacts (Codeforces 652E)}
   \item[9.11.4] \href{https://codeforces.com/contest/1404/problem/E}{Bricks (Codeforces 1404E)}

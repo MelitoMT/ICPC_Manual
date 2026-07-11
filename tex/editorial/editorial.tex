@@ -167,7 +167,7 @@ Ver \codelink{https://codeforces.com/contest/1398/submission/375853380}.
 \subsection*{Hint1}
 Ignoremos por un momento que hay varios semáforos. Si los conductores solamente tuvieran que pasar por un único semáforo. ¿De cuántas formas podría ocurrir que el tiempo de espera sea $k$? ¿Qué sucede si hay dos semáforos?
 \subsection*{Hint2}
-Puede que se necesite multiplicar más de dos polinomios, ¿cómo podemos organizarlos para hacerlo eficientemente?
+Puede que se necesite multiplicar más de dos polinomios. ¿Cómo podemos organizarlos para hacerlo eficientemente?
 \subsection*{Solución}
 Si solamente hubiera un semáforo con tiempo $t_1$, hay exactamente una forma en la que el conductor espera cada uno de los tiempos. Entonces dado un $k$ la cantidad de formas en las que la suma total de espera de $1$ semáforo sea $k$ (a lo que denotaremos $f_{t_1}[k]$)la podemos ver como:
 \[
@@ -187,7 +187,7 @@ La observación clave es que si tenemos dos conjuntos de semáforos $S_1={t_1,t_
 \]
 Nótese que $f_{S1}$ y $f_{S_2}$ se calculan como hicimos arriba para dos semáforos.
 \\\\
-Esto nos sugiere que dado un conjunto de semáforos $S={t_1,t_2,\cdots,t_m}$, podemos dividir a $S$ a la mitad y calcular la solución para una de las mitades. En cada mitad lo que haremos será volver a dividir a la mitad y así consecutivamente hasta quedarnos con el problema de conjuntos de $1$ o $2$ semáforos que ya sabemos resolver. ¿Por qué esto es más eficiente? En lugar de hacer $m$ productos de tamaño creciente, hacemos $O(log m)$ multiplicaciones. Consierando que el tamaño total de los polinomios en cada nivel es $W=t_1+t_2+\cdots+t_m$, la complejidad total es $O( W log^2 W)$.
+Esto nos sugiere que dado un conjunto de semáforos $S={t_1,t_2,\cdots,t_m}$, podemos dividir a $S$ a la mitad y calcular la solución para una de las mitades. En cada mitad lo que haremos será volver a dividir a la mitad y así consecutivamente hasta quedarnos con el problema de conjuntos de $1$ o $2$ semáforos que ya sabemos resolver. ¿Por qué esto es más eficiente? En lugar de hacer $m$ productos de tamaño creciente, hacemos $O(\log m)$ multiplicaciones. Consierando que el tamaño total de los polinomios en cada nivel es $W=t_1+t_2+\cdots+t_m$, la complejidad total es $O( W \log^2 W)$.
 \\\\
 Finalmente iteramos un contador $j$ de $1$ a $T$ y acumulamos en una suma cuántas formas tienen suma $j$, así, podemos refilledstarlo a $W$ y obtener cuántas formas tienen suma mayor a $T$.
 \subsection*{Código}
@@ -206,7 +206,7 @@ Ver \codelink{https://codeforces.com/contest/1553/submission/376093836}.
 \subsection*{Hint1}
 Si $b$ es el mayor divisor de $x$ diferente de $x$, entonces $\frac{x}{b}$ es el menor divisor de $x$ mayor a $1$. Es decir, es el primo más pequeño que divide a $x$.
 \subsection*{Solución}
-Primero veamos el caso donde $a$ no divide a $b$. Podemos sacar $m=mcm(a,b)$, este será el entero más pequeño que es divisible tanto por $a$ como por $b$, como $b$ no es múltiplo de $a$, $m$ es más grande que ambos. Además, como $a$ y $b$ son los mayores divisores de $x$ el siguiente número que ambos dividan es $x$ mismo, por lo que $m$ es la respuesta.
+Primero veamos el caso donde $a$ no divide a $b$. Podemos sacar $m=lcm(a,b)$, este será el entero más pequeño que es divisible tanto por $a$ como por $b$. Como $b$ no es múltiplo de $a$, $m$ es más grande que ambos. Además, como $a$ y $b$ son los mayores divisores de $x$ el siguiente número que ambos dividan es $x$ mismo, por lo que $m$ es la respuesta.
 \\\\Para el caso donde $a$ divide a $b$, tenemos que $b=ap$ con $p$ el primo más pequeño que divide a $x$ de donde $x=bp=b\frac{b}{a}$.
 \subsection*{Código}
 Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/1916B.cpp}.
@@ -219,38 +219,38 @@ Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/edit
 \subsection*{Solución}
 La primera observación importante es que $a,b,c$ son a lo más $10^9$, por lo que $b^c$ puede ser enorme, de forma que calcular $a^{b^c}$ directamente usando exponenciación binaria sería muy lento.
 \\\\
-Notemos que $a\leq 10^9$ por lo que como $10^9+7$ es primo, son coprimos entre sí. Lo anterior, nos permite usar el pequeño teorema de fermat que nos dice que si $\text{mcd}(a,p)=1$:
-\[a^{p-1}\equiv 1 \, \text{mod } p\]
+Notemos que $a\leq 10^9$ por lo que como $10^9+7$ es primo, son coprimos entre sí. Lo anterior, nos permite usar el pequeño teorema de fermat que nos dice que si $\text{lcm}(a,p)=1$:
+\[a^{p-1}\equiv 1 \,\mod p\]
 De lo anterior tenemos que
-\[a^{b^c} \equiv a^{b^c \text{mod (p-1)}} \text{mod } p\]
-Ahora, podemos calcular $b^c \, mod (p-1)$, con exponenciación binaria, de forma que nos queda un número $x\leq 10^9+6$, y ahora podemos calcular $a^x$ de la misma forma. Debemos tener cuidado con el caso $a=0$, en este caso $a^{b^c}=0$.
+\[a^{b^c} \equiv a^{b^c \mod (p-1)} \mod p\]
+Ahora, podemos calcular $b^c \, \mod (p-1)$, con exponenciación binaria, de forma que nos queda un número $x\leq 10^9+6$, y ahora podemos calcular $a^x$ de la misma forma. Debemos tener cuidado con el caso $a=0$, en este caso $a^{b^c}=0$.
 \subsection*{Código}
 Ver \codelink{https://cses.fi/paste/59f7146d402d82ade95b1e/}.
 
 \editorialproblem{6.10.4 Short Task (Codeforces 1512G)}
 \subsection*{Hint1}
-¿Qué información podemos guardar para responder las queries en $O(1)$?
+¿Qué información podemos guardar para responder cada query en $O(1)$?
 \subsection*{Solución}
 Notemos que calcular $n$ para cada querie es muy costoso en cuestión de tiempo. ¿Qué información necesitamos para responder una querie rápido? Notemos que si tuvieramos calculado $d(n)$ para cada $n\leq 10^7$, podríamos recorrerlo una única vez para guardar para cada entero $x$ menor o igual a $10^7$ el menor $n$ tal que $d(n)=x$. Esto nos permitiría contestar la querie directamente porque ya tendríamos la respuesta guardada en un arreglo. La pregunta resulta entonces, ¿cómo calcular $d(n)$ para cada $n \leq 10^7$ eficientemente?
 \\\\
-En lugar de calcular $d(n)$ para cada $n$ individualmente, podemos calcularlo para todos a la vez, es decir, para $k \in [1, 10^7]$ sumaremos $k$ a todos sus múltiplos porque eso es lo que contribuye a $d()$ de cada múltiplo. Este proceso es una idea parecida a la criba de Eratóstenes, y similarmente su complejidad es $O(n log n)$.
+En lugar de calcular $d(n)$ para cada $n$ individualmente, podemos calcularlo para todos a la vez, es decir, para $k \in [1, 10^7]$ sumaremos $k$ a todos sus múltiplos porque eso es lo que contribuye a $d()$ de cada múltiplo. Este proceso es una idea parecida a la criba de Eratóstenes, y similarmente su complejidad es $O(n \log n)$.
 \subsection*{Código}
 Ver \codelink{https://codeforces.com/contest/1512/submission/196458896}.
 
 \editorialproblem{6.10.5 Fantastic Beasts (Latin American Regional 2018)}
 \subsection*{Hint 1}
-Como hay $Z \leq 100$ zoológicos, después de $100$ unidades de tiempo, la bestia se estará moviendo en ciclo.
+Como hay $Z \leq 100$ zoológicos, después de $100$ unidades de tiempo, cada bestia se estará moviendo en ciclo.
 \subsection*{Hint 2}
 Para un zoológico $z$, los tiempos en que la bestia $i$
 está en $z$ (si es que llega a estar) se pueden ver como una congruencia.
 \subsection*{Solución}
-Notemos que como después de $Z$ unidades de tiempo, todas las bestias se estarán moviendo en ciclos, entonces lo primero que podemos hacer es revisar para cada una de las primeras $Z$ unidades dónde está cada bestia, si al menos dos no están en el mismo zoológico, significa que en esa unidad no están todas juntas, entonces nos pasamos a la siguiente. Si encontramos una unidad de tiempo donde todas las bestias están en el mismo zoólogico ya tenemos nuestra respuesta.
+Notemos que como después de $Z$ unidades de tiempo, todas las bestias se estarán moviendo en ciclos, entonces lo primero que podemos hacer es revisar para cada una de las primeras $Z$ unidades dónde está cada bestia, si al menos dos no están en el mismo zoológico, significa que en esa unidad no están todas juntas, entonces nos pasamos a la siguiente. Si encontramos una unidad de tiempo donde todas las bestias están en el mismo zoológico ya tenemos nuestra respuesta.
 \\\\
-En caso de que no hayamos encontrado nuestra respuesta en las primeras $Z$ unidades de tiempo, ahora todos los movimientos de las bestias serán en ciclo, para cada una tenemos que encontramos en qué tiempo está en cada uno de los zoólogicos y nótese que para un zoólogico $z_i$ si una bestia $j$ que se mueve en un ciclo de longitud $c_j$ lo visita en la unidad de tiempo $t$, también lo visitará en la unidad de tiempo $t+c_j$, es decir la bestia estará en ese zoólogico en una unidad de tiempo $x$ si:
-\[x \equiv t \, \text{mod } c_j\]
-\\\\Para cada zoólogico $z_i$ revisaremos que todas las bestias pasen por él en algun momento de su ciclo (de lo contrario ese zoólogico no puede ser la respuesta) y después, para cada bestia obtendremos la congruencia usando el tiempo en el que visitó el zoólogico y la longitud de su ciclo. Aplicaremos el teorema chino del residuo para resolver el sistema de congruencias lo que nos devolverá el menor tiempo posible en el que todas las bestias están en $z_i$ a la vez (o $-1$ en caso de que nunca pueda pasar). La respuesta será el menor tiempo sobre todos los zoólogicos.
+En caso de que no hayamos encontrado nuestra respuesta en las primeras $Z$ unidades de tiempo, ahora todos los movimientos de las bestias serán en ciclo. Para cada una tenemos que encontrar en qué tiempo está en cada uno de los zoólogicos. Nótese que para un zoológico $z_i$, si una bestia $j$ que se mueve en un ciclo de longitud $c_j$ lo visita en la unidad de tiempo $t$, también lo visitará en la unidad de tiempo $t+c_j$, es decir la bestia estará en ese zoológico en una unidad de tiempo $x$ si:
+\[x \equiv t \, \mod c_j\]
+Para cada zoológico $z_i$ revisaremos que todas las bestias pasen por él en algun momento de su ciclo (de lo contrario ese zoológico no puede ser la respuesta) y después, para cada bestia, obtendremos la congruencia usando el tiempo en el que visitó el zoológico y la longitud de su ciclo. Aplicaremos el teorema chino del residuo para resolver el sistema de congruencias lo que nos devolverá el menor tiempo posible en el que todas las bestias están en $z_i$ a la vez (o $-1$ en caso de que nunca pueda pasar). La respuesta será el menor tiempo sobre todos los zoólogicos.
 \\\\
-La idea del problema es sencilla; sin embargo se recomienda tener cuidado con la implementación para poder indicar correctamente cuando un zoólogico no aparece en un ciclo.
+La idea del problema es sencilla; sin embargo se recomienda tener cuidado con la implementación para poder indicar correctamente cuando un zoológico no aparece en un ciclo.
 \subsection*{Código}
 Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/9547.cpp}.
 
@@ -273,8 +273,8 @@ necesitamos $t$ que satisfaga todas las congruencias simultáneamente.
 Esto es un sistema de congruencias que podemos resolver con el teorema chino del residuo.
  \\\\
 Nótese que como todos los $d_i$ son potencias de 2, el $\text{lcm}$ del sistema es simplemente $L = \max(d_{c_1}, \ldots, d_{c_p})$, también potencia de 2. La condición para que el sistema tenga solución es ver que si $d_{c_j} = \max(d_{c_1}, \ldots, d_{c_p})$ entonces debe suceder que para todo $i \in \{1,\cdots, p\}$ :
-\[r_{c_j} \equiv r_{c_i} \text{ mod } d_{c_j}\]
-    
+\[r_{c_j} \equiv r_{c_i} \mod d_{c_j}\]
+\\\\
 Si el sistema tiene solución entonces existe $t \in [0, L)$ tal que
 satisface todas las congruencias, por la condición anterior este es simplemente $r_{c_j}$. Si el sistema no tiene solución, el rollo no se puede preparar.
 \\\\
@@ -299,14 +299,14 @@ $s = h \bmod L$:
           Revisamos si $t$ está en $t \in [s, L) \cup [0,\ (s+\ell) \bmod L]$.
 \end{itemize}
 
-Verificar esto para cada querie y cada rollo tendría una complejidad de $O(MQ) \approx 10^{10}$ lo que no es óptimo, necesitamos hacer optimizaciones. Notemos que como $d_i \leq 2^{20}$, solo hay 21 periodos posibles ($L \in \{1, 2, 4, \ldots, 2^{20}\}$). Podemos separar los rollos por periodo $L$ y cada conjunto ordenarlo por $t$. De esta forma para cada querie podemos revisar cada periodo y verificar:
+Verificar esto para cada query y cada rollo tendría una complejidad de $O(MQ) \approx 10^{10}$ lo que no es óptimo. Necesitamos hacer optimizaciones. Notemos que como $d_i \leq 2^{20}$, solo hay 21 periodos posibles ($L \in \{1, 2, 4, \ldots, 2^{20}\}$). Podemos separar los rollos por periodo $L$ y cada conjunto ordenarlo por $t$. De esta forma para cada querie podemos revisar cada periodo y verificar:
  
 \begin{itemize}
     \item Si $\ell \geq L$, todos los rollos con periodo
           $L$ son preparables, pues la espera máxima es $L-1 < \ell$.
           Sumamos el tamaño de rollos con ese periodo.
  
-    \item Si $\ell < L$, necesitamos contar cuántos $t$ están en $[h \text{ mod } L,\ (h+\ell)\text{ mod } L]$. Esto lo podemos hacer con búsqueda binaria siguiendo las condiciones vistas arriba.
+    \item Si $\ell < L$, necesitamos contar cuántos $t$ están en $[h \mod L,\ (h+\ell) \mod  L]$. Esto lo podemos hacer con búsqueda binaria siguiendo las condiciones vistas arriba.
           
 \end{itemize}
 \subsection*{Código}
@@ -314,14 +314,14 @@ Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/edit
 
 \editorialproblem{6.10.7 Pociones Locas (Autoría $\filledstar$)}
 \subsection*{Hint1}
-Los libros se comportan de forma ciclica módulo $mcm(p_1, p_2, p_3, p_4)$.
+Los libros se comportan de forma ciclica módulo $lcm(p_1, p_2, p_3, p_4)$.
 \subsection*{Hint2}
-¿Podemos precalcular información para resolver las queries en tiempo constante?
+¿Podemos precalcular información para resolver las queries en de forma rápida?
 \subsection*{Solución}
-Para resolver este prpblema en tiempo, tenemos que precalcular información.  Para cada uno de los $n$ libros podemos calcular $S(x)$ en $log(n)$ simplemente sumando cada dígito. Si guardamos un arreglo $f$ de días por cada tipo de libro, podemos sumar $1$ a la posición $f[t][S(x) \text{ mod } p[t]]$.
+Para resolver este prpblema en tiempo, tenemos que precalcular información.  Para cada uno de los $n$ libros podemos calcular $S(x)$ en $\log(n)$ simplemente sumando cada dígito. Si guardamos un arreglo $f$ de días por cada tipo de libro, podemos sumar $1$ a la posición $f[t][S(x) \mod p[t]]$.
 \\\\
-Ahora notemos que los libros se van a comportar de forma cíclica módulo $p_t$ donde $t$ es el tipo de cada libro. Sin embargo, nos intersa encontrar un periodo en el cuál todos los libros se muevan de forma cíclica con respecto a el, este periodo será $L=mcm(p_1, p_2, p_3, p_4)$, nótese que como los $p_i$ pueden compartir divisores esto es mucho de forma general a $p_1p_2p_3p_4$. Véase el caso para $p=(4,6,4,6)$, si hacemos el producto es $576$, pero $L=12$.
-\\\\Podemos mantener un arreglo $m[i]$ que acumule para cada día $i$ el índice donde se ha alcanzado el máximo hasta el día $i$. Este arreglo tiene longitud $L$ pues después se comportara igual módulo $L$, es decir, no se alcanzará un máximo que no se haya alcanzado ya.
+Ahora notemos que los libros se van a comportar de forma cíclica módulo $p_t$ donde $t$ es el tipo de cada libro. Sin embargo, nos intersa encontrar un periodo en el cuál todos los libros se muevan de forma cíclica con respecto a él. Este periodo será $L=gcd(p_1, p_2, p_3, p_4)$, nótese que como los $p_i$ pueden compartir divisores esto es mucho de forma general a $p_1p_2p_3p_4$. Véase el caso para $p=(4,6,4,6)$, si hacemos el producto es $576$, pero $L=12$.
+\\\\Podemos mantener un arreglo $m[i]$ que acumule para cada día $i$ el índice donde se ha alcanzado el máximo hasta el día $i$. Este arreglo tiene longitud $L$ pues después se comportará igual módulo $L$, es decir, no se alcanzará un máximo que no se haya alcanzado ya.
 \\\\Para cada consulta $k$ revisaremos, si $k \geq L$ entonces se alcanza el máximo de todo el ciclo, es decir $m[L-1]$ nos dará en índice de día donde se alcanza el máximo. En otro caso, simplemente revisaremos $m[k-1]$ pues ya lo tenemos calculado. Una vez obtenido el día donde se alcanza el máximo simplemente multiplicaremos cuántos hay de cada tipo ese día, es decir, lo que guardamos en nuestro arreglo $f$.
 \subsection*{Código}
 Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/pociones.cpp}.
@@ -455,14 +455,14 @@ Notemos que $\binom{n+C}{C} = \frac{(n+C)!}{n! \cdot C!}$. Como $p = 10^6+3$ es 
 \subsection*{Código}
 Ver \codelink{https://codeforces.com/problemset/submission/690/377859415}.
 
-\editorialproblem{8.7.1 Balloons (ICPC)}
+\editorialproblem{8.7.1 Balloons (2013-2014 ICPC Brazil Subregional)}
 \subsection*{Hint 1}
-La información que nos interesa de un segmento es cuál es el siguiente segmento que tocaría el globo de empezar en el, ¿podemos precalcular el "siguiente" de cada segmento?
+La información que nos interesa de un segmento es cuál es el siguiente segmento que tocaría el globo de empezar en el, ¿podemos precalcular el ''siguiente'' de cada segmento?
 \subsection*{Solución}
 En lugar de simular el rebote del globo para cada query por
 separado, calculamos una sola vez, para cada segmento inclinado, cuál es el siguiente segmento que tocaría un globo si saliera de su punto más alto hacia arriba. Una vez que sabemos esto para todos los segmentos, resolver una query se reduce a seguir una cadena de "siguientes" segmentos hasta llegar a un segmento horizontal (atascado) o no encontrar ninguno (escapa).
 
-Recorremos la sala de izquierda a derecha. En cada momento
+Recorremos la sala de izquierda a derecha (barrido de línea). En cada momento
 mantenemos el conjunto de segmentos que cruzan la línea vertical actual, ordenados de abajo hacia arriba según la altura a la que los corta esa línea. Este orden se puede mantener con un conjunto ordenado, comparando dos segmentos mediante productos cruz para evitar la división.
  
 Los eventos que procesamos, ordenados por $x$, son:
@@ -474,11 +474,11 @@ Los eventos que procesamos, ordenados por $x$, son:
           del conjunto de activos).
 \end{itemize}
  
-Cuando un segmento entra y su extremo izquierdo es su punto más alto (es decir, el segmento desciende de izquierda a derecha por lo que un globo que llegara a ese extremo rebotaría hacia arriba). El siguiente segmento que tocaría a es el que está arriba de él en el conjunto de activos, justo en el momento en que lo insertamos. Guardamos esa
+Cuando un segmento entra y su extremo izquierdo es su punto más alto (es decir, el segmento desciende de izquierda a derecha por lo que un globo que llegara a ese extremo rebotaría hacia arriba). El siguiente segmento que tocaría es el que está arriba de él en el conjunto de activos, justo en el momento en que lo insertamos. Guardamos esa
 información para este segmento.
  
 Cuando un segmento sale y su extremo derecho es su punto
-más alto (el segmento asciende de izquierda a derecha, por lo que un  un globo que llegara a ese extremo derecho rebotaría hacia arriba, y el siguiente segmento es el que está arriba de él justo antes de eliminarlo).
+más alto (el segmento asciende de izquierda a derecha, por lo que un globo que llegara a ese extremo derecho rebotaría hacia arriba). El siguiente segmento es el que está arriba de él justo antes de eliminarlo.
  
 Cuando un segmento horizontal sale, no hay
 "siguiente", pues un globo que toca un segmento horizontal se queda atascado ahí mismo.
@@ -494,10 +494,10 @@ Una vez prepocesados los segmentos, para resolver una query:
     \item Si no hay ningún segmento, el globo escapa en la
           posición $x$ de lanzamiento.
     \item Si el segmento es horizontal, el globo se atasca  ahí.
-    \item Si es inclinado, continuamos con el "siguiente segmento" que ya calculamos.
+    \item Si es inclinado, continuamos con el ''siguiente segmento'' que ya calculamos.
 \end{enumerate}
  
-Una optimización que podemos hacer es notar que la cadena de "siguientes" es la misma para todas las
+Una optimización que podemos hacer es notar que la cadena de ''siguientes'' es la misma para todas las
 queries que pasan por un mismo segmento. Podemos guardar el resultado final de cada segmento la primera vez que lo calculamos, para no recorrer la misma cadena más de una vez.
 
 \subsection*{Código}

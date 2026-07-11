@@ -1,212 +1,220 @@
-#include <bits/stdc++.h>
-using namespace std;
+#include <algorithm>
+#include <cmath>
+#include <set>
+#include <tuple>
+#include <utility>
+#include <vector>
 
-struct point {
-    double x,y;
-    point operator+(point p) {
-        return {x + p.x, y + p.y};
-    }
-    point operator-(point p) {
-        return {x - p.x, y - p.y};
-    }
-    point operator*(double a) {
-        return {x*a, y*a};
-    }
-    point operator/(double a) {
-        return {x/a, y/a};
+struct Point {
+    double x, y;
+
+    Point operator+(Point other) {
+        return {x + other.x, y + other.y};
     }
 
+    Point operator-(Point other) {
+        return {x - other.x, y - other.y};
+    }
+
+    Point operator*(double scalar) {
+        return {x * scalar, y * scalar};
+    }
+
+    Point operator/(double scalar) {
+        return {x / scalar, y / scalar};
+    }
 };
 
-bool operator==(point a,point b) {
-    return a.x==b.x && a.y==b.y;
-}
-bool operator!=(point a, point b) {
-    return !(a==b);
+bool operator==(Point a, Point b) {
+    return a.x == b.x && a.y == b.y;
 }
 
-bool N(point x){
-    point v = {1,0};
-    return prodCruz(v,x) > 0 || ( prodCruz(v,x) == 0 && prodPunto(v,x) > 0 );
+bool operator!=(Point a, Point b) {
+    return !(a == b);
 }
 
-bool operator <(point x, point y){
-    return (N(x) == N(y) && prodCruz(x,y) > 0) || (N(x) && !N(x));
+double dotProduct(Point a, Point b) {
+    return a.x * b.x + a.y * b.y;
 }
 
-double prodPunto(point a, point b){
-    return a.x*b.x + a.y*b.y;
-}
-
-double prodCruz(point a, point b) {
+double crossProduct(Point a, Point b) {
     return a.x * b.y - a.y * b.x;
 }
 
-int winding_number(vector<point> poly, point q) {
-    int wn = 0;
-    int n = poly.size();
+// True si el punto esta en la region N respecto a v = (1, 0).
+bool inNorthernHalf(Point x) {
+    Point reference = {1, 0};
+    return crossProduct(reference, x) > 0
+        || (crossProduct(reference, x) == 0 && dotProduct(reference, x) > 0);
+}
+
+bool operator<(Point x, Point y) {
+    return (inNorthernHalf(x) == inNorthernHalf(y) && crossProduct(x, y) > 0)
+        || (inNorthernHalf(x) && !inNorthernHalf(y));
+}
+
+int windingNumber(std::vector<Point>& polygon, Point query) {
+    int winding = 0;
+    int n = polygon.size();
+
     for (int i = 0; i < n; i++) {
-        point a = poly[i], b = poly[(i+1) % n];
-        if (a.y <= q.y) {
-            // arista cruza hacia arriba: b esta estrictamente sobre el rayo
-            if (b.y > q.y && prodCruz(b-a,q-a) > 0)
-                wn++;
+        Point a = polygon[i];
+        Point b = polygon[(i + 1) % n];
+
+        if (a.y <= query.y) {
+            // Arista cruza hacia arriba: b esta estrictamente sobre el rayo.
+            if (b.y > query.y && crossProduct(b - a, query - a) > 0) {
+                winding++;
+            }
         } else {
-            // arista cruza hacia abajo: b esta sobre o bajo el rayo
-            if (b.y <= q.y && prodCruz(b-a,q-a) < 0)
-                wn--;
+            // Arista cruza hacia abajo: b esta sobre o bajo el rayo.
+            if (b.y <= query.y && crossProduct(b - a, query - a) < 0) {
+                winding--;
+            }
         }
     }
-    return wn;
+
+    return winding;
 }
 
-bool dentro(vector<point> poly, point q) {
-    return winding_number(poly, q) != 0;
+bool isInside(std::vector<Point> polygon, Point query) {
+    return windingNumber(polygon, query) != 0;
 }
 
-vector<point> convexHull(vector<point> pts) {
-    int n = pts.size();
-    if (n < 2) return pts;
-    sort(pts.begin(), pts.end());
-    vector<point> hull;
-    /*construimos hull inferior
-    izquierda a derecha*/ 
+std::vector<Point> convexHull(std::vector<Point>& points) {
+    int n = points.size();
+    if (n < 2) {
+        return points;
+    }
+
+    std::sort(points.begin(), points.end());
+    std::vector<Point> hull;
+
+    // Hull inferior: de izquierda a derecha.
     for (int i = 0; i < n; i++) {
-        while (hull.size() >= 2 &&
-                /*producto cruz entre
-                B-A y C-A*/
-                prodCruz(hull.back()-hull[hull.size()-2], pts[i]-hull[hull.size()-2])<= 0)
+        while (hull.size() >= 2
+               && crossProduct(
+                      hull.back() - hull[hull.size() - 2],
+                      points[i] - hull[hull.size() - 2]) <= 0) {
             hull.pop_back();
-        hull.push_back(pts[i]);
+        }
+        hull.push_back(points[i]);
     }
- 
-    /*construimos hull superior
-    derecha a izquierda*/ 
-    int lower_size = hull.size();
-    for (int i = n-2; i >= 0; i--) {
-        while (hull.size() >= lower_size &&
-                /*producto cruz entre
-                B-A y C-A*/
-                prodCruz(hull.back()-hull[hull.size()-2], pts[i]-hull[hull.size()-2])<= 0)
+
+    // Hull superior: de derecha a izquierda.
+    int lowerSize = hull.size();
+    for (int i = n - 2; i >= 0; i--) {
+        while (hull.size() >= lowerSize
+               && crossProduct(
+                      hull.back() - hull[hull.size() - 2],
+                      points[i] - hull[hull.size() - 2]) <= 0) {
             hull.pop_back();
-        hull.push_back(pts[i]);
+        }
+        hull.push_back(points[i]);
     }
-    
-    //al cerrarlo este punto se repite
+
+    // Al cerrar el hull, el primer punto se repite.
     hull.pop_back();
     return hull;
 }
 
-bool intersectan(const seg& a, const seg& b) {
+// Representamos segmentos como pares de puntos.
+using Segment = std::pair<Point, Point>;
+
+bool segmentsIntersect(const Segment& a, const Segment& b) {
     return false;
-    /*ld o1 = orient(a.first, a.second, b.first);
-    ld o2 = orient(a.first, a.second, b.second);
-    ld o3 = orient(b.first, b.second, a.first);
-    ld o4 = orient(b.first, b.second, a.second);
-    return ((o1 > 0 && o2 < 0) || (o1 < 0 && o2 > 0)) &&
-           ((o3 > 0 && o4 < 0) || (o3 < 0 && o4 > 0));*/
+    // Implementacion dejada como ejercicio en la seccion de intersecciones.
 }
 
-//representamos segmentos como pares de puntos
-using seg = pair<point, point>;
-//funcion que nos devuelve dado un segmento y un x, la y del segmento.
-double getY(const seg& s, double x) {
-    if (abs(s.first.x - s.second.x) < 1e-9){
-        return s.first.y;
-    } 
-    return s.first.y + 
-        (s.second.y - s.first.y)
-        * (x - s.first.x)
-        / (s.second.x - s.first.x);
+// Dado un segmento y una coordenada x, regresa la y correspondiente.
+double getY(const Segment& segment, double x) {
+    if (std::abs(segment.first.x - segment.second.x) < 1e-9) {
+        return segment.first.y;
+    }
+
+    return segment.first.y
+        + (segment.second.y - segment.first.y)
+            * (x - segment.first.x)
+            / (segment.second.x - segment.first.x);
 }
 
 double sweepX;
-//Comparador para ordenar los segmentos por y
-struct cmp {
-    bool operator()(const seg& a, const seg& b) const {
+
+// Comparador para ordenar segmentos activos por su y en sweepX.
+struct SegmentComparator {
+    bool operator()(const Segment& a, const Segment& b) const {
         double ya = getY(a, sweepX);
         double yb = getY(b, sweepX);
-        if (abs(ya - yb) > 1e-9){
+
+        if (std::abs(ya - yb) > 1e-9) {
             return ya < yb;
         }
         return a < b;
     }
 };
 
-bool shamos_hoey(vector<seg> segs) {
-    int n = segs.size();
-    /*asegurarse que los segmentos
-    vayan de izquierda a derecha*/
-    for (auto& s : segs){
-        if (s.first.x > s.second.x){
-            swap(s.first, s.second);
+bool shamosHoey(std::vector<Segment> segments) {
+    int n = segments.size();
+
+    // Asegurar que cada segmento vaya de izquierda a derecha.
+    for (Segment& segment : segments) {
+        if (segment.first.x > segment.second.x) {
+            std::swap(segment.first, segment.second);
         }
     }
-    /*
-    eventos guardara la x del punto, 
-    1 o -1 que nos indicara si es de inicio 
-    o fin respectivamente,
-    el indice en el vector original
-    */
-    vector<tuple<double,int,int>> eventos;
+
+    // Eventos: (x, tipo, indice). tipo = 1 inicio, tipo = -1 fin.
+    std::vector<std::tuple<double, int, int>> events;
     for (int i = 0; i < n; i++) {
-        eventos.push_back(
-            {segs[i].first.x,   1, i}
-        );
-        eventos.push_back(
-            {segs[i].second.x,  -1, i}
-        );
+        events.push_back({segments[i].first.x, 1, i});
+        events.push_back({segments[i].second.x, -1, i});
     }
-    sort(eventos.begin(), eventos.end(),
-    [](auto& a, auto& b){
-        if (abs(get<0>(a) 
-        - get<0>(b)) > 1e-9){
-            return get<0>(a) < get<0>(b);
-        }
-        return get<1>(a) > get<1>(b);
-    });
- 
-    set<seg,cmp> activos;
-    /*estructura que nos ayude
-    a borrar sin depender del
-    comparador que definimos*/
-    vector<set<seg,cmp>::iterator> pos(n, activos.end());
-    for (auto& [x, tipo, id] : eventos) {
+
+    std::sort(events.begin(), events.end(),
+              [](auto& a, auto& b) {
+                  if (std::abs(std::get<0>(a) - std::get<0>(b)) > 1e-9) {
+                      return std::get<0>(a) < std::get<0>(b);
+                  }
+                  return std::get<1>(a) > std::get<1>(b);
+              });
+
+    std::set<Segment, SegmentComparator> active;
+    // Iteradores para borrar sin depender del comparador dinamico.
+    std::vector<std::set<Segment, SegmentComparator>::iterator> position(
+        n, active.end());
+
+    for (auto& [x, eventType, id] : events) {
         sweepX = x;
-        //procesamos nodo de inicio
-        if (tipo == 1) {
-            auto it  = 
-            activos.insert(segs[id]).first;
-            pos[id]  = it;
-            auto sig = next(it);
-            auto ant = (it != activos.begin())
-            ? prev(it)
-            : activos.end();
-            /*buscar interseccion con 
-            vecinos, se dejo como ejercicio
-            en intersecciones*/
-            if (sig != activos.end()
-            && intersectan(it, sig)){
-                return true;
-            } 
-            if (ant != activos.end()
-            && intersectan(it, ant)){
+
+        if (eventType == 1) {
+            // Evento de inicio.
+            auto it = active.insert(segments[id]).first;
+            position[id] = it;
+            auto nextIt = std::next(it);
+
+            // Buscar interseccion con vecinos (ejercicio de intersecciones).
+            if (nextIt != active.end() && segmentsIntersect(*it, *nextIt)) {
                 return true;
             }
-            //procesamos nodo de final
+
+            auto prevIt = (it != active.begin()) ? std::prev(it) : active.end();
+            if (prevIt != active.end() && segmentsIntersect(*it, *prevIt)) {
+                return true;
+            }
         } else {
-            auto it  = pos[id];
-            auto sig = next(it);
-            auto ant = (it != activos.begin())
-            ? prev(it)
-            : activos.end();
-            if (sig != activos.end()
-            && ant != activos.end()
-            && intersectan(*sig, *ant)){
-                    return true;
-            } 
-            activos.erase(it);
+            // Evento de fin.
+            auto it = position[id];
+            auto nextIt = std::next(it);
+            auto prevIt = (it != active.begin()) ? std::prev(it) : active.end();
+
+            if (nextIt != active.end() && prevIt != active.end()
+                && segmentsIntersect(*nextIt, *prevIt)) {
+                return true;
+            }
+
+            active.erase(it);
         }
     }
+
     return false;
 }
