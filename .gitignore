@@ -61,6 +61,16 @@
 # Output PDF (regenerate with pdflatex/latexmk)
 *.pdf
 
+# Root document build outputs
+/main.pdf
+/main.aux
+/main.log
+/main.out
+/main.toc
+/main.fls
+/main.fdb_latexmk
+/main.synctex.gz
+
 # latexmk
 latex.out
 

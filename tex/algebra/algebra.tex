@@ -601,7 +601,7 @@ Entonces si queremos encontrar $F_n$, con $n\geq 1$ podemos elevar la matriz a l
 La potencia se calcula de la misma forma que la exponenciación binaria (sección~\ref{sec:expbin}), pero aplicada a matrices. En lugar de multiplicar números, multiplicamos matrices $2\times2$ en cada paso. El caso $n=0$ se maneja directamente regresando $0$.
 Notemos que como  $n \leq 10^{18}$, todas las multiplicaciones deben hacerse módulo $10^9 + 7$ usando \texttt{long long} para evitar
 overflow.
-\\\\Ver \href{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/1722.cpp}{código}.
+\\\\Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/1722.cpp}.
 
 \subsection*{5.4.2 \href{https://cses.fi/problemset/task/1723}{Graph Paths I (CSES 1723)}}
 En este problema nos dan una gráfica dirigida. Podríamos pensar que este es un problema en el que necesitamos algún algoritmo de gráficas, pero la realidad es que podemos resolverlo con exponenciación de matrices. Notemos que podemos expresar la gráfica por medio de una matriz de adyacencia $M$. Esta tendrá $M[i][j]=1$ si hay una arista de $i$ a $j$, de lo contrario, tendrá $0$. 
@@ -613,7 +613,7 @@ Se va a sumar $M[i][k] \cdot M[k][j]$ por vértice $k$ tal que exista la arista 
 \]
 Notemos que $M^k$ suma para cada posible penúltimo vértice $m$ en el camino de $i$ a $j$, el número de caminos de longitud $k-1$ de $i$ a $m$ multiplicado por $M[m][j]$ es decir, solo se cuentan los caminos si existe alguna arista $m$-$j$, pues de lo contrario no podría existir ese camino.
 \\\\La respuesta al problema es entonces $M^k[1][n]$, que se calcula con exponenciación de matrices. Como los valores pueden ser grandes, se calculan módulo $10^9+7$.
-\\\\Ver \href{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/1722.cpp}{código}.
+\\\\Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/1722.cpp}.
 \section{Problemas}
 
 \begin{itemize}

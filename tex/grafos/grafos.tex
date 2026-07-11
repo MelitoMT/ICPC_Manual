@@ -1316,7 +1316,7 @@ struct Dinic {
 \]
 El \textbf{corte mínimo} es el de menor capacidad.
 \end{definition}
-Un teorema muy importante es el \textbf{Teorema de Flujo Máximo y Corte Mínimo} que nos dice que el valor del flujo máximo de $s$ a $t$ es igual a la capacidad del corte mínimo $s$-$t$\footnote{Ver \href{https://www.cs.toronto.edu/~lalla/373s16/notes/MFMC.pdf}{demostración}}.
+Un teorema muy importante es el \textbf{Teorema de Flujo Máximo y Corte Mínimo} que nos dice que el valor del flujo máximo de $s$ a $t$ es igual a la capacidad del corte mínimo $s$-$t$\footnote{\url{https://www.cs.toronto.edu/~lalla/373s16/notes/MFMC.pdf}}.
 \\\\
 Después de correr Dinic, si hacemos BFS en el grafo residual desde $s$.
 Los nodos alcanzables forman $S$ y los no alcanzables $T$. Los cables
@@ -1530,7 +1530,7 @@ int hopcroftKarp() {
 \end{lstlisting}
 
 \subsection{Teorema de König}
-El \textbf{teorema de König} nos dice que en una gráfica bipartita el matching máximo es igual a la cobertura mínima de vértices\footnote{Ver \href{https://www.math.nagoya-u.ac.jp/~richard/teaching/s2024/SML_Li_2.pdf}{demostración}}.
+El \textbf{teorema de König} nos dice que en una gráfica bipartita el matching máximo es igual a la cobertura mínima de vértices\footnote{\url{https://www.math.nagoya-u.ac.jp/~richard/teaching/s2024/SML_Li_2.pdf}}.
 \\\\
 Veámos la red del problema de los cañones. El flujo máximo = matching
 máximo (cada unidad de flujo es un par emparejado). El corte mínimo =
@@ -1704,7 +1704,7 @@ Cuando las aristas tienen pesos y queremos el matching perfecto de costo
 mínimo (o máximo), se usa el \textbf{algoritmo Húngaro} (Kuhn-Munkres),
 con complejidad $O(n^3)$. Aparece en problemas de asignación óptima: dados
 $n$ trabajadores, $n$ tareas, y costos $c_{ij}$ de asignar el trabajador
-$i$ a la tarea $j$, minimizar el costo total. La mejor referencia que he encontrado para este algoritmo es este \href{https://www.topcoder.com/thrive/articles/Assignment%20Problem%20and%20Hungarian%20Algorithm}{blog}.
+$i$ a la tarea $j$, minimizar el costo total. La mejor referencia que he encontrado para este algoritmo es \url{https://www.topcoder.com/thrive/articles/Assignment%20Problem%20and%20Hungarian%20Algorithm}.
 
 \section{Ejercicios}
 \subsection*{9.10.1 \href{https://codeforces.com/problemset/problem/808/F}{Card Game (Codeforces)}}
@@ -1744,7 +1744,7 @@ P - \text{maxFlow} \geq k
  
 La complejidad es $O(\log n)$ para las iteraciones de búsqueda binaria, cada una con un max flow en una red de $O(n)$ nodos y $O(n^2)$ aristas.
 
-Ver \href{https://codeforces.com/contest/808/submission/273807670}{código}.
+Ver \codelink{https://codeforces.com/contest/808/submission/273807670}.
 
 \subsection*{9.10.2 \href{https://www.spoj.com/problems/QTREE2/}{Query on a tree III (SPOJ)}}
  Para resolver el primer tipo de consulta notemos que el camino de $a$ a $b$ pasa por su LCA $L$, y se descompone en el camino $a \to L$ más el camino $L \to b$. Si guardamos para cada vértice la distancia acumulada desde la raíz
@@ -1775,7 +1775,7 @@ de \textbf{aristas} de $a$ a $L$).
 \end{itemize}
  Para ambos casos es eficiente recuperar el ancestro con binary lifting (la técnica de descomponer los niveles que queremos subir en potencias de dos).
 
- Ver \href{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/qtree2.cpp}{código}.
+ Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/qtree2.cpp}.
 
 \section{Problemas}
 \begin{itemize}

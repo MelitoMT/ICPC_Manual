@@ -944,7 +944,7 @@ Para módulo no primo o cuando $\gcd(a,m) > 1$, hay variantes que reducen al cas
     Esta suma puede parecer muy grande, sin embargo, $L_j$ crece muy rápido, pues por definición $L_j$ es divisible por todos los números hasta $j$. Para $n \leq 10^{16}$, basta calcular hasta $j = 40$, pues $L_{41} > 10^{16}$, haciendo que
     los demás términos sean $0$. En la implementación, haremos la suma hasta encontrar el primer término $0$, ahí pararemos y ya tendremos el resultado.
     \\\\
-    Ver \href{https://codeforces.com/contest/1542/submission/251341276}{código}.
+    Ver \codelink{https://codeforces.com/contest/1542/submission/251341276}.
 \subsection*{6.9.2 \href{https://codeforces.com/problemset/problem/1725/H}{Hot Black Hot White (COMPFEST 14)}}
     Antes de indagar en cómo elegir $Z$ o cómo pintar las rocas mágicas, vamos a intentar simplificar la expresión que nos dan: $concat(A_i, A_j) \times concat(A_j, A_i) + A_i \times A_j \equiv Z \, mod 3$.
     \\\\Veamos que si $k$ es la cantidad de digitos de $A_j$ entonces $concat(A_i, A_j)=A_i \times 10^k + A_j$ y más aún como $10^k \equiv 1^k \equiv 1\, mod 3$ tenemos que:
@@ -956,7 +956,7 @@ Para módulo no primo o cuando $\gcd(a,m) > 1$, hay variantes que reducen al cas
     \end{align*}
     Notemos que $0^2\equiv 0 \, mod 3$, $1^2 \equiv 1 \, mod 3$ y $2^2 \equiv 1 \, mod 3$. Si tenemos al menos $\frac{n}{2}$ piedras tal que $A_i^2\equiv 0 \, mod 3$, entonces podemos colorear $\frac{n}{2}$ de esas de un solo color, así cuando haya dos colores diferentes tendremos que $A_i^2+A_j^2\equiv 0^2 +A_j^2 \equiv A_j^2 \, mod 3$ y como ningún número al cuadrado es congruente con $2$ módulo $3$, podemos hacer $Z=2$. Por otro lado, si no hay al menos $\frac{n}{2}$ que lo cumplan, significa que hay al menos $\frac{n}{2}$ tal que $A_i^2 \equiv 1 \, mod 3$, entonces coloreamos $\frac{n}{2}$ de ellas de un mismo color y así no habrá ningún par de rocas de diferente color tal que ambas tengan $A_j^2 \equiv 0$. De donde podemos hacer $Z=0$.
     \\\\
-    Ver \href{https://codeforces.com/contest/1725/submission/201205415}{código}.
+    Ver \codelink{https://codeforces.com/contest/1725/submission/201205415}.
 \subsection*{6.9.3 \href{https://lightoj.com/problem/monkey-tradition}{Monkey Tradition (Light OJ)}}
 Notemos que si a un monito, le falto $r_i$ para llegar a la cima de su bambú dando saltos $p_i$, esto significa que la altura $L$ cumple que $L\equiv r_i \, mod \,p_i$, esto nos deja con un sistema de congruencias:
 \begin{align*}
@@ -968,7 +968,7 @@ Notemos que si a un monito, le falto $r_i$ para llegar a la cima de su bambú da
 \end{align*}
 el cual podemos resolver con el teorema chino del residuo directamente. La única observación relevante es que como todos son primos son distintos, todos los módulos son coprimos entre sí, lo que nos garantiza existe siempre la solución.
 \\\\
-Ver \href{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/monkeyTradition.cpp}{código}.
+Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/monkeyTradition.cpp}.
 \section{Problemas}
 \begin{itemize}
     \item[6.10.1] \href{https://codeforces.com/problemset/problem/1553/A}{Digits Sum (Codeforces 1553A)}
@@ -977,7 +977,7 @@ Ver \href{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editoria
     \item[6.10.4] \href{https://codeforces.com/problemset/problem/1512/G}{Short Task (Codeforces 1512G)}
     %CRT
     \item[6.10.5] \href{https://matcomgrader.com/problem/9547/fantastic-beasts/}{Fantastic Beasts (Latam Regional Contest 2028)}
-    \item[6.10.6] \href{https://codeforces.com/group/DH4HPwQlLU/contest/689800/problem/C}{Sushi Lovers}
-    \item[6.10.7] \href{https://codeforces.com/group/DH4HPwQlLU/contest/689800/problem/F}{Pociones Locas}
+    \item[6.10.6] \href{https://codeforces.com/group/DH4HPwQlLU/contest/689800/problem/C}{Sushi Lovers (Autoría $\filledstar$)}
+    \item[6.10.7] \href{https://codeforces.com/group/DH4HPwQlLU/contest/689800/problem/F}{Pociones Locas (Autoría $\filledstar$)}
 
 \end{itemize}
