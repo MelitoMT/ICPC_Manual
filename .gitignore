@@ -60,9 +60,9 @@
 
 # Output PDF (regenerate with pdflatex/latexmk)
 *.pdf
+!main.pdf
 
 # Root document build outputs
-/main.pdf
 /main.aux
 /main.log
 /main.out

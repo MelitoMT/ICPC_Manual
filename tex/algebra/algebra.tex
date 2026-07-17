@@ -1,6 +1,8 @@
 En la programación competitiva es muy común que ideas de soluciones se basen en propiedades algebraicas que veremos en esta sección.
-\\\\ Supongamos que queremos sumar los $n$ primeros números naturales. Claramente si $N$ es un número pequeño como $4$, rápidamente sumaríamos los números del $1$ al $4$ y diríamos que la respuesta es $10$. Sin embargo, el sumar número por número no resulta práctico cuando $n$ es un número muy grande como podría ser un millón. ¿Habrá alguna forma de saber rápidamente la respuesta para cualquier $n$? La respuesta es sí. Llamemos $S$ a la suma de todos los números de $1$ a $n$, supongamos que ponemos en una fila todos los números a sumar, es decir 
-\[ 1 + 2 + 3 + 4 + 5 + \cdots + n\]
+\\\\ Supongamos que queremos sumar los $n$ primeros números naturales. Claramente si $N$ es un número pequeño como $4$, rápidamente sumaríamos los números del $1$ al $4$ y diríamos que la respuesta es $10$. Sin embargo, el sumar número por número no resulta práctico cuando $n$ es un número muy grande como podría ser un millón. ¿Habrá alguna forma de saber rápidamente la respuesta para cualquier $n$? La respuesta es sí. Llamemos $S$ a la suma de todos los números de $1$ a $n$, supongamos que ponemos en una fila todos los números a sumar, es decir
+\[
+1 + 2 + 3 + 4 + 5 + \cdots + n.
+\]
 Ahora, junto a esta pongamos otra fila de los números a sumar al revés. Notemos que sumarlos en un orden diferente no afecta el resultado
 \[\begin{array}{ccccccccc}
 S &=& 1 &+& 2 &+& \cdots &+& n \\
@@ -8,29 +10,36 @@ S &=& n &+& (n-1) &+& \cdots &+& 1 \\
 \end{array}\]
 Notemos que si sumamos cada una de las $n$ columnas, cada una suma $n+1$. Sumar las dos listas ($2S$) es igual que sumar las $n$ columnas, es decir $2S=n(n+1)$ de donde:
 \[
-\sum_{i=1}^{n} i = 1 + 2 + \cdots + n = \frac{n(n+1)}{2}
+\sum_{i=1}^{n} i = 1 + 2 + \cdots + n = \frac{n(n+1)}{2}.
 \]
- 
+
 Esta suma es un ejemplo de \textbf{progresión aritmética}, más generalmente una progresión aritmética es una sucesión de números $\{a_1,a_2, a_3 \cdots \}$ tal que cualquier término se puede obtener del anterior al sumarle una cantidad fija $d$. Usando la idea de arriba podemos deducir que para cualquier progresión aritmética
-\[a_1+\cdots + a_n = \frac{n(a_1+a_n)}{2}\]
+\[
+a_1+\cdots + a_n = \frac{n(a_1+a_n)}{2}.
+\]
 \textbf{Ejercicio}: Si en lugar de $1 + 2 + 3 + \cdots + n$ tuviéramos $1^2 + 2^2 + 3^2 + \cdots + n^2$, ¿cuál sería el resultado?
 \\\\Ahora supongamos que queremos saber cuánto es la siguiente suma
 \[
-\sum_{i=0}^{n} r^i = 1 + r + r^2 + \cdots + r^{n}
+\sum_{i=0}^{n} r^i = 1 + r + r^2 + \cdots + r^{n}.
 \]
 Llamemos a la suma $S= 1 + r + r^2 + \cdots + r^{n}$, nótese que si multiplicamos ambos lados por $r$ tenemos que
- \[rS=r+r^2+\cdots+r^{n+1}\]
+\[
+rS=r+r^2+\cdots+r^{n+1}.
+\]
 Ahora de ambos lados podemos restar $S$, es decir
-  \[rS-S=r+r^2+\cdots+r^n-S=r+r^2+\cdots+r^{n+1}-(1+r+r^2+\cdots+r^n)\]
-Notemos que podemos cancelar la mayoría de elementos del lado derecho, para $r\neq1$ tenemos:
-
-%NOTA
+\[
+rS-S=r+r^2+\cdots+r^n-S=r+r^2+\cdots+r^{n+1}-(1+r+r^2+\cdots+r^n).
+\]
+Notemos que podemos cancelar la mayoría de elementos del lado derecho; para $r\neq1$ tenemos
+\[
+S=\frac{r^{n+1}-1}{r-1}.
+\]
 Para $|r| < 1$ y $n \to \infty$, la serie converge:
 \[
-\sum_{i=0}^{\infty} r^i = \frac{1}{1-r}
+\sum_{i=0}^{\infty} r^i = \frac{1}{1-r}.
 \]
 
-Las sumas no solo sirven para obtener la respuesta de problemas. También nos ayudan a evaluar complejidades, las identidades más comunes que se usan en programación competitiva son:
+Las sumas no solo sirven para obtener la respuesta de problemas. También nos ayudan a evaluar complejidades; las identidades más comunes que se usan en programación competitiva son~\cite{perez_algebra}:
 \begin{table}[H]
 \centering
 \renewcommand{\arraystretch}{1.6}
@@ -39,11 +48,11 @@ $\displaystyle\sum_{i=1}^{n} i =$          & $\dfrac{n(n+1)}{2}$, \\
 $\displaystyle\sum_{i=1}^{n} i^2 = $        & $\dfrac{n(n+1)(2n+1)}{6}$, \\
 $\displaystyle\sum_{i=1}^{n} i^3 = $        & $\left(\dfrac{n(n+1)}{2}\right)^2$, \\
 $\displaystyle\sum_{i=0}^{n-1} r^i = $      & $\dfrac{r^n-1}{r-1}$ \quad ($r \neq 1$), \\
-$\displaystyle\sum_{i=1}^{n} \frac{1}{i} \approx $ & $ \ln n$ \quad (armónica), \\
+$\displaystyle\sum_{i=1}^{n} \frac{1}{i} \approx $ & $ \ln n + \gamma$ \quad (armónica). \\
 
 \end{tabular}
 \end{table}
- 
+
 Una técnica muy poderosa es cambiar el orden de una doble suma. La igualdad:
 \[
 \sum_{i=1}^{n}\sum_{j=i}^{n} f(i,j) = \sum_{j=1}^{n}\sum_{i=1}^{j} f(i,j)
@@ -65,10 +74,14 @@ Ahora, como el sumando $\frac{1}{j}$ no depende de $i$, la suma interna es simpl
 Lo que parecía difícil se vuelve más sencillo al cambiar el orden.
 
 \section{Recurrencias}
-La sucesión ${0,1,1,2,3,5,8,\cdots}$ es muy famosa y es conocida como la sucesión de Fibonacci. La forma en la que se nos enseña a definirla es haciendo el primer término $F_0=0$, el segundo $F_1=1$ y desde ahí calcular los siguientes con la recurrencia 
-\[F_n=F_{n-1}+F_{n-2}\]
+La sucesión ${0,1,1,2,3,5,8,\cdots}$ es muy famosa y es conocida como la sucesión de Fibonacci. La forma en la que se nos enseña a definirla es haciendo el primer término $F_0=0$, el segundo $F_1=1$ y desde ahí calcular los siguientes con la recurrencia
+\[
+F_n=F_{n-1}+F_{n-2}.
+\]
 Más generalmente una recurrencia lineal se ve de la siguiente forma
-\[R_k=\sum_{i=1}^{n}C_iR_{i}\]
+\[
+R_k=\sum_{i=1}^{n}C_iR_{i}.
+\]
 Esto significa que $R_k$ es una combinación lineal de orden $n$. Por ejemplo, la recurrencia de Fibonacci es de orden $2$ y la constante en cada uno de los términos es $1$.
 \\\\Ahora nos surge una pregunta natural, dada una recurrencia lineal de orden $n$, ¿cómo encontramos el término $k$-ésimo?
 \\\\Existen varias formas de solucionar este problema, y cada uno nos arroja una complejidad diferente. No es que exista una mejor o peor forma de calcular la respuesta, porque todo dependerá de qué tan grandes son $k$ y $n$. 
@@ -191,11 +204,11 @@ $n^2$ entradas del producto como una suma de $n$ productos, dando una complejida
 \section{Polinomios e interpolación de Lagrange}
 Un polinomio de grado $n$ se representa como un vector de $n+1$ coeficientes:
 \[
-p(x) = a_0 + a_1 x + a_2 x^2 + \cdots + a_n x^n
+p(x) = a_0 + a_1 x + a_2 x^2 + \cdots + a_n x^n.
 \]
 Lo primero que nos interesa será poder evaluarlo en algún punto de forma eficiente. Para esto usaremos el \textbf{método de Horner}, que simplemente consiste en reescribir el polinomio como:
 \[
-p(x) = a_0 + x(a_1 + x(a_2 + \cdots + x(a_{n-1} + x \cdot (0 + a_n))\cdots))
+p(x) = a_0 + x(a_1 + x(a_2 + \cdots + x(a_{n-1} + x \cdot (0 + a_n))\cdots)).
 \]
 Es decir, se empezará a calcular desde el coeficiente de mayor grado y se va acumulando de adentro hacia afuera:
 \begin{lstlisting}[language=C++]
@@ -215,32 +228,32 @@ Ahora que sabemos cómo evaluar un polinomio, el resto de esta sección queremos
 \\\\
 Esto nos dice que $n+1$ puntos determinan completamente un polinomio de grado $n$. La pregunta es: ¿cómo construirlo? La idea de Lagrange es construir el polinomio interpolante como una suma de piezas, donde cada pieza se encarga de un solo punto.
  
-Para cada $i$, definimos el \textbf{polinomio base de Lagrange} $\ell_i(x)$ como el único polinomio de grado $n$ que vale $1$ en $x_i$ y $0$ en todos los demás $x_j$:
+Para cada $i$, definimos el \textbf{polinomio base de Lagrange} $\ell_i(x)$ como el único polinomio de grado $n$ que vale $1$ en $x_i$ y $0$ en todos los demás $x_j$~\cite{cf_lagrange}:
 \[
-\ell_i(x) = \prod_{j \neq i} \frac{x - x_j}{x_i - x_j}
+\ell_i(x) = \prod_{j \neq i} \frac{x - x_j}{x_i - x_j}.
 \]
- 
-Verifiquemos que cumple lo que queremos. Si evaluamos en $x = x_i$: cada factor del numerador es $x_i - x_j$ y cada factor del denominador es $x_i - x_j$, así que cada fracción vale $1$ y el producto es $1$. Ahora veamos qué pasa si evaluamos en $x=x_k$, con $k\neq i$. Como el producto recorre todos los $j\neq i$, en particular incluye el índice $j=k$. Separamos ese 
+
+Verifiquemos que cumple lo que queremos. Si evaluamos en $x = x_i$: cada factor del numerador es $x_i - x_j$ y cada factor del denominador es $x_i - x_j$, así que cada fracción vale $1$ y el producto es $1$. Ahora veamos qué pasa si evaluamos en $x=x_k$, con $k\neq i$. Como el producto recorre todos los $j\neq i$, en particular incluye el índice $j=k$. Separamos ese
 término del resto:
 
 \[
-\ell_i(x_k)=\prod_{j\neq i} \frac{x_k-x_j}{x_i-x_j} 
-= \underbrace{\frac{x_k-x_k}{x_i-x_k}}_{j=k} \cdot 
-\prod_{\substack{j\neq i \\ j\neq k}} \frac{x_k-x_j}{x_i-x_j}
+\ell_i(x_k)=\prod_{j\neq i} \frac{x_k-x_j}{x_i-x_j}
+= \underbrace{\frac{x_k-x_k}{x_i-x_k}}_{j=k} \cdot
+\prod_{\substack{j\neq i \\ j\neq k}} \frac{x_k-x_j}{x_i-x_j}.
 \]
 
-El primer factor (correspondiente a $j=k$) es $\dfrac{x_k-x_k}{x_i-x_k}=\dfrac{0}{x_i-x_k}=0$. 
-Como es un producto, basta que un factor sea cero para que todo el producto sea cero, 
+El primer factor (correspondiente a $j=k$) es $\dfrac{x_k-x_k}{x_i-x_k}=\dfrac{0}{x_i-x_k}=0$.
+Como es un producto, basta que un factor sea cero para que todo el producto sea cero,
 sin importar el valor de los demás factores. Por lo tanto $\ell_i(x_k)=0$ para todo $k\neq i$.
- 
+
 Con estas piezas, el polinomio interpolante es simplemente:
 \[
-p(x) = \sum_{i=0}^{n} y_i \cdot \ell_i(x)
+p(x) = \sum_{i=0}^{n} y_i \cdot \ell_i(x).
 \]
 Veamos un ejemplo concreto con los puntos $(0,1)$, $(1,2)$ y $(2,5)$. Aquí $n=2$, así que buscamos un polinomio de grado a lo más $2$. Los polinomios base son
 \[
 \ell_0(x)=\frac{(x-1)(x-2)}{(0-1)(0-2)}=\frac{(x-1)(x-2)}{2},\quad
-\ell_1(x)=\frac{x(x-2)}{(1-0)(1-2)}=-x(x-2),\]\[
+\ell_1(x)=\frac{x(x-2)}{(1-0)(1-2)}=-x(x-2),\quad
 \ell_2(x)=\frac{x(x-1)}{(2-0)(2-1)}=\frac{x(x-1)}{2}.
 \]
 El polinomio interpolante queda entonces
@@ -251,24 +264,24 @@ p(x)=1\cdot\ell_0(x)+2\cdot\ell_1(x)+5\cdot\ell_2(x)
 Podemos comprobar que: $p(0)=1$, $p(1)=2$ y $p(2)=5$, como queríamos.
 \\\\En ocasiones podemos optimizar considerablemente este tiempo para casos en los que se nos pide calcular $f(x)$ dados $f(1),f(2),\cdots,f(n)$, ya que en este caso $x_i=i$, de forma que podemos sustituir para obtener
 \[
-p(x) = \sum_{i=0}^{n} f(i) \cdot \prod_{j \neq i} \frac{x - j}{i - j}
+p(x) = \sum_{i=0}^{n} f(i) \cdot \prod_{j \neq i} \frac{x - j}{i - j}.
 \]
 Podríamos preguntarnos por qué esto es una optimización. Nótemos que
 \[
-\prod_{j \neq i} x-j=(x-1)(x-2)\cdots(x-(i-1))(x-(i+1))\cdots(x-n)
-\] 
+\prod_{j \neq i} (x-j)=(x-1)(x-2)\cdots(x-(i-1))(x-(i+1))\cdots(x-n),
+\]
 entonces al menos para el numerador podemos precalcular los prefijos, es decir guardamos en un vector $x-1$, $(x-1)(x-2)$, $(x-1)(x-2)(x-3)$, $\cdots$, $(x-1)(x-2)\cdots(x-n)$ y los sufijos $(x-n)$, $(x-n)(x-(n-1))$ y así hasta $(x-n)(x-(n-1))\cdots(x-1)$, de forma que cuando queramos hacer la multiplicación de arriba podamos hacerlo en tiempo $O(1)$ multiplicando el prefijo $(x-1)\cdots(x-(i-1))$ con el prefijo $(x-n)\cdots(x-(i+1))$.
 \\\\Nótese que en el caso de no tener módulo podemos simplemente precalcular $(x-1)(x-2)\cdots (x-n)$ y dividir entre $(x-i)$ cuando ocupemos calcularlo para un $i$.
 \\\\Para el denominador también podemos hacer algo similar, pues
 \[
-\prod_{j \neq i} i-j=(i-1)(i-2)\cdots(i-(i-1))(i-(i+1))\cdots(i-n)
-\] 
+\prod_{j \neq i} (i-j)=(i-1)(i-2)\cdots(i-(i-1))(i-(i+1))\cdots(i-n),
+\]
 notemos que dividiendo en dos como arriba ambas partes de la multiplicación se pueden expresar como factoriales, es decir
 \[
-=(i-1)!(-1)^{n-i}(n-i)!
-\] 
-Para esto entonces nos interesará poder precalcular los factoriales 
-$0!, 1!, \dots, n!$ en un arreglo, de forma que el denominador para cada $i$, 
+(i-1)!(-1)^{n-i}(n-i)!.
+\]
+Para esto entonces nos interesará poder precalcular los factoriales
+$0!, 1!, \dots, n!$ en un arreglo, de forma que el denominador para cada $i$,
 es decir $(i-1)!(-1)^{n-i}(n-i)!$, se pueda obtener en $O(1)$ simplemente 
 indexando el arreglo. Y así para cada $i$ también lo podemos calcular en $O(1)$.
 
@@ -285,7 +298,7 @@ correspondiente.
 Como tenemos que calcular tanto numerador como denominador para cada $i$, calcular $f(x)$ nos cuesta $O(n)$.
 \\\\\textbf{Ejercicio.} Para practicar lo visto, resolvamos el siguiente problema: dados $n$ y $k$ tales que $0 \leq k \leq 10^6$ y $1 \leq n \leq 10^9$, calcular
 \[
-f(n)=\sum_{i=1}^{n} i^k
+f(n)=\sum_{i=1}^{n} i^k.
 \]
 e imprimir la respuesta módulo $10^9+7$. Por ejemplo, si $n=4$ y $k=2$, se pide
 \[
@@ -372,10 +385,15 @@ int main() {
  
 En la sección pasada ya trabajamos con polinomios. Una duda que nos puede surgir al manipularlos es ¿cómo multiplicarlos eficientemente? Supongamos que tenemos un polinomio  $A(x) = \sum_{i=0}^{n-1} a_i x^i$ y otro $B(x) = \sum_{i=0}^{n-1} b_i x^i$, el producto de ambos es $C(x) = A(x) \cdot B(x)$ y tiene coeficientes:
 \[
-c_k = \sum_{i+j=k} a_i b_j
+c_k = \sum_{i+j=k} a_i b_j.
 \]
+<<<<<<< Updated upstream
  
 Esta operación se llama \textbf{convolución} y calcularla directamente cuesta $O(n^2)$, cuando $n \approx 10^5$, esto es alrededor de $10^{10}$ operaciones, tiempo que nos daría TLE al intentar solucionar un problema de esta forma en la ICPC. El objetivo de $FFT$ será poder hacer esta multiplicación en $O(n \log n)$.
+=======
+
+Esta operación se llama \textbf{convolución} y calcularla directamente cuesta $O(n^2)$, cuando $n \approx 10^5$, esto es $10^{10}$ operaciones, tiempo que nos daría TLE al intentar solucionar un problema de esta forma en la ICPC. El objetivo de $FFT$ será poder hacer esta multiplicación en $O(n \log n)$.
+>>>>>>> Stashed changes
 
 De la sección de arriba sabemos que si tenemos un polinomio de grado $n-1$, este lo podemos determinar evaluando $n$ puntos diferentes. Basado en esto, nos gustaría tener para ambos polinomios $A$ y $B$ sus valores en $n$ puntos estratégicos para entonces multiplicar estos valores y obtener valores del polinomio $C$. 
 
@@ -529,23 +547,25 @@ vector<ll> multiply_fft(vector<ll> a, vector<ll> b) {
 \textbf{Descripción: }\url{https://cses.fi/problemset/task/1722}
 
 En este problema nos dan la recurrencia:
-\[F_n = F_{n-2}+F_{n-1}\]
+\[
+F_n = F_{n-2}+F_{n-1}.
+\]
 Notemos que tiene la forma $F_n = C_1 F_{n-1} + C_2 F_{n-2}$ con $C_1 = C_2 = 1$, de donde la matriz de transición es:
 \[
 \begin{pmatrix} F_n \\ F_{n-1} \end{pmatrix}
 = \begin{pmatrix} C_1 & C_2 \\ 1 & 0 \end{pmatrix}
 \begin{pmatrix} F_{n-1} \\ F_{n-2} \end{pmatrix}
 =\begin{pmatrix} 1 & 1 \\ 1 & 0 \end{pmatrix}
-\begin{pmatrix} F_{n-1} \\ F_{n-2} \end{pmatrix}
+\begin{pmatrix} F_{n-1} \\ F_{n-2} \end{pmatrix}.
 \]
-Entonces si queremos encontrar $F_n$, con $n\geq 1$ podemos elevar la matriz a la $n-1$ potencia y realizar el producto.
+Entonces si queremos encontrar $F_n$, con $n\geq 1$ podemos elevar la matriz a la $n-1$ potencia y realizar el producto:
 \[
 \begin{pmatrix} F_n \\ F_{n-1} \end{pmatrix}
-= 
+=
 \begin{pmatrix} 1 & 1 \\ 1 & 0 \end{pmatrix}^{n-1}
 \begin{pmatrix} F_1 \\ F_0 \end{pmatrix}
 =\begin{pmatrix} 1 & 1 \\ 1 & 0 \end{pmatrix}^{n-1}
-\begin{pmatrix} 1 \\ 0 \end{pmatrix}
+\begin{pmatrix} 1 \\ 0 \end{pmatrix}.
 \]
 La potencia se calcula de la misma forma que la exponenciación binaria (sección~\ref{sec:expbin}), pero aplicada a matrices. En lugar de multiplicar números, multiplicamos matrices $2\times2$ en cada paso. El caso $n=0$ se maneja directamente regresando $0$.
 Notemos que como  $n \leq 10^{18}$, todas las multiplicaciones deben hacerse módulo $10^9 + 7$ usando \texttt{long long} para evitar
@@ -553,15 +573,21 @@ overflow.
 \\\\Ver \href{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/1722.cpp}{código}.
 
 \subsection*{5.4.2 \href{https://cses.fi/problemset/task/1723}{Graph Paths I (CSES 1723)}}
+<<<<<<< Updated upstream
 
 \textbf{Descripción: }\url{https://cses.fi/problemset/task/1723}
 
 En este problema nos dan una gráfica dirigida. Podríamos pensar que este es un problema en el que necesitamos algún algoritmo de gráficas, pero la realidad es que podemos resolverlo con exponenciación de matrices. Notemos que podemos expresar la gráfica por medio de una matriz de adyacencia $M$. Esta tendrá $M[i][j]=1$ si hay una arista de $i$ a $j$, de lo contrario, tendrá $0$. 
+=======
+En este problema nos dan una gráfica dirigida. Podríamos pensar que este es un problema en el que necesitamos algún algoritmo de gráficas, pero la realidad es que podemos resolverlo con exponenciación de matrices. Notemos que podemos expresar la gráfica por medio de una matriz de adyacencia $M$. Esta tendrá $M[i][j]=1$ si hay una arista de $i$ a $j$, de lo contrario, tendrá $0$.
+>>>>>>> Stashed changes
 \\\\Cuando calculamos $M^2$ lo que hacemos es:
-\[(M^2)[i][j] = \sum_{k=1}^{n} M[i][k] \cdot M[k][j]\]
-Se va a sumar $M[i][k] \cdot M[k][j]$ por vértice $k$ tal que exista la arista $i$-$k$ y la arista $k$-$j$, por lo que $M^2[i][j]$ cuenta los caminos de longitud $2$ de $i$ a $j$. Veamos que esto se cumple para cualquier $k$ positivo por inducción. Supongamos que $M^{k-1}[i][j]$ cuenta los caminos de longitud $k-1$ de $i$ a $j$, entonces 
 \[
-(M^k)[i][j] = \sum_{m=1}^{n} (M^{k-1})[i][m] \cdot M[m][j]
+(M^2)[i][j] = \sum_{k=1}^{n} M[i][k] \cdot M[k][j].
+\]
+Se va a sumar $M[i][k] \cdot M[k][j]$ por vértice $k$ tal que exista la arista $i$-$k$ y la arista $k$-$j$, por lo que $M^2[i][j]$ cuenta los caminos de longitud $2$ de $i$ a $j$. Veamos que esto se cumple para cualquier $k$ positivo por inducción. Supongamos que $M^{k-1}[i][j]$ cuenta los caminos de longitud $k-1$ de $i$ a $j$, entonces
+\[
+(M^k)[i][j] = \sum_{m=1}^{n} (M^{k-1})[i][m] \cdot M[m][j].
 \]
 Notemos que $M^k$ suma para cada posible penúltimo vértice $m$ en el camino de $i$ a $j$, el número de caminos de longitud $k-1$ de $i$ a $m$ multiplicado por $M[m][j]$ es decir, solo se cuentan los caminos si existe alguna arista $m$-$j$, pues de lo contrario no podría existir ese camino.
 \\\\La respuesta al problema es entonces $M^k[1][n]$, que se calcula con exponenciación de matrices. Como los valores pueden ser grandes, se calculan módulo $10^9+7$.

@@ -26,7 +26,7 @@ Si en una reunión cada persona estrecha la mano con algunos asistentes, podemos
 \\\\
 En todo grafo $G = (V, E)$:
 \[
-\sum_{v \in V} \deg(v) = 2|E|
+\sum_{v \in V} \deg(v) = 2|E|.
 \]
 
 $Demostración$. Cada arista $\{u, v\}$ contribuye exactamente $1$ al grado de $u$ y $1$ al grado de $v$, es decir, contribuye $2$ a la suma total de grados. Sumando sobre todas las aristas: $\sum_v \deg(v) = 2|E|$. 
@@ -36,7 +36,7 @@ En todo grafo, el número de vértices de grado impar es par.
 $Demostración$.
 Sea $I$ el conjunto de vértices de grado impar y $P$ el de grado par. Entonces:
 \[
-2|E| = \sum_{v \in I} \deg(v) + \sum_{v \in P} \deg(v)
+2|E| = \sum_{v \in I} \deg(v) + \sum_{v \in P} \deg(v).
 \]
 El segundo término es par (suma de números pares). Como $2|E|$ es par, el primer término también debe serlo.
 \\\\
@@ -77,17 +77,17 @@ no puede existir.
 En una gráfica $G$:
 \begin{itemize}
     \item Un \textbf{camino euleriano} es un camino que recorre cada
-          arista exactamente una vez.
+          arista exactamente una vez;
     \item Un \textbf{circuito euleriano} es un camino euleriano que
-          empieza y termina en el mismo vértice.
+          empieza y termina en el mismo vértice;
     \item $G$ es \textbf{euleriano} si tiene un circuito euleriano.
 \end{itemize}
 \end{definition}
  
-Sea $G$ conexa. Entonces:
+Sea $G$ conexa~\cite{illinois_euler}. Entonces:
 \begin{itemize}
     \item $G$ tiene un \textbf{circuito euleriano} si y solo si todo
-          vértice tiene grado par.
+          vértice tiene grado par;
     \item $G$ tiene un \textbf{camino euleriano} (no circuito) si y solo
           si exactamente dos vértices tienen grado impar, y el camino
           debe empezar en uno de ellos y terminar en el otro.
@@ -250,7 +250,7 @@ int kosaraju(int n) {
 \subsection*{Gráfica de condensación}
  
 Una vez encontradas las SCCs, podemos construir la \textbf{gráfica de
-condensación}, una gráfica donde cada nodo representa una SCC y hay una arista de la SCC $i$ a la SCC $j$ si existe alguna arista en $G$ de un nodo en $i$ a un nodo en $j$. Esta gráfica siempre es un DAG (gráfica dirigida acíclica).
+condensación}, una gráfica donde cada nodo representa una SCC y hay una arista de la SCC $i$ a la SCC $j$ si existe alguna arista en $G$ de un nodo en $i$ a un nodo en $j$. Esta gráfica siempre es un DAG (gráfica dirigida acíclica)~\cite{cpalgos_scc}.
  
 \begin{figure}[H]
 \centering
@@ -307,7 +307,7 @@ Este caso especial se llama \textbf{2-SAT}.
 \\\\
 La observación fundamental que reduce este problema a $SCC$ es que toda disyunción de 2 literales $(a \lor b)$ es equivalente a dos implicaciones:
 \[
-\neg a \Rightarrow b \qquad \text{y} \qquad \neg b \Rightarrow a
+\neg a \Rightarrow b \qquad \text{y} \qquad \neg b \Rightarrow a.
 \]
 Si $a$ es falso, entonces $b$ debe ser verdadero (y viceversa).
 \\\\
@@ -445,7 +445,7 @@ en que el DFS lo visitó. Ahora definimos $\texttt{low}[v]$ como el menor $\text
 \texttt{low}[v] = \min \begin{cases}
 \texttt{disc}[v] \\
 \texttt{disc}[u] & \text{para toda arista hacia atrás } (v,u) \\
-\texttt{low}[w] & \text{para todo hijo } w \text{ de } v \text{ en el árbol DFS}
+\texttt{low}[w] & \text{para todo hijo } w \text{ de } v \text{ en el árbol DFS}.
 \end{cases}
 \]
 Intuitivamente, $\texttt{low}[v]$ mide qué tan ``arriba'' puede
@@ -476,10 +476,10 @@ escapar el subárbol de $v$ sin usar la arista que lo conecta a su padre. En la 
     {$\texttt{disc}[w]=3,\ \texttt{low}[w]=3$};
 \end{tikzpicture}
 \end{figure}
-Para que una arista $(uv)$  con $v$ hijo de $u$ n el DFS sea un puente, se debe cumplir que $\texttt{low}[v] > \texttt{disc}[u]$. Ya que eso significa que el subárbol de $v$ no puede alcanzar a $u$ sin pasar por la arista $(u,v)$. Dicho esto, es lógico que la condición para que un vértice $u$ sea punto de articulación sea:
+Para que una arista $(uv)$  con $v$ hijo de $u$ n el DFS sea un puente, se debe cumplir que $\texttt{low}[v] > \texttt{disc}[u]$~\cite{cpalgos_bridges}. Ya que eso significa que el subárbol de $v$ no puede alcanzar a $u$ sin pasar por la arista $(u,v)$. Dicho esto, es lógico que la condición para que un vértice $u$ sea punto de articulación sea~\cite{cf_bridges}:
 \begin{itemize}
     \item Si $u$ es la raíz del DFS, es punto de articulación si tiene
-          $\geq 2$ hijos en el árbol DFS.
+          $\geq 2$ hijos en el árbol DFS;
     \item Si $u$ no es raíz, es punto de articulación si tiene algún hijo $v$ tal con $\texttt{low}[v] \geq \texttt{disc}[u]$.
 \end{itemize}
 Finalmente, la implementación nos quedaría:
@@ -530,8 +530,8 @@ Un \textbf{árbol} es un grafo conexo, es decir, todos sus vértices están cone
  
 Para un grafo $G$ con $n$ vértices, las siguientes afirmaciones son equivalentes:
 \begin{enumerate}
-    \item $G$ es conexo y acíclico.
-    \item $G$ es conexo y tiene exactamente $n-1$ aristas.
+    \item $G$ es conexo y acíclico;
+    \item $G$ es conexo y tiene exactamente $n-1$ aristas;
     \item Entre todo par de vértices existe exactamente un camino simple.
 \end{enumerate}
  
@@ -716,7 +716,7 @@ void build(int u, int p) {
  El patrón estándar para cualquier problema que use descomposición por centroide es este problema, subir por los $O(\log n)$ ancestros en el árbol de centroide y agregar o consultar información en cada uno. Lo que varía entre problemas es qué información se guarda y cómo se combina.
 \section{Ancestro común más bajo (LCA)\adv}
 \advnote{Requiere árboles con raíz y, para la versión eficiente, preprocesamiento (binary lifting). Puede omitirse en una primera lectura.}
-Dado un árbol con raíz, el \textbf{ancestro común más bajo} (LCA) de dos vértices $u$ y $v$ es el vértice más abajo que es ancestro de ambos.
+Dado un árbol con raíz, el \textbf{ancestro común más bajo} (LCA) de dos vértices $u$ y $v$ es el vértice más abajo que es ancestro de ambos~\cite{youtube_lca}.
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}[
@@ -747,11 +747,11 @@ Imaginemos que tenemos un árbol en forma de cadena ($1 - 2 - 3 - \cdots - n$), 
 \\\\
 Entonces necesitamos precalcular, para cada nodo $v$ y cada $k$:
 \[
-\texttt{up}[v][k] = \text{ancestro de } v \text{ a distancia } 2^k
+\texttt{up}[v][k] = \text{ancestro de } v \text{ a distancia } 2^k.
 \]
 La forma de calcular esto será con una recurrencia, el ancestro a distancia $2^k$ es el ancestro a distancia $2^{k-1}$ del ancestro a distancia $2^{k-1}$:
 \[
-\texttt{up}[v][0] = \text{padre}(v), \qquad \texttt{up}[v][k] = \texttt{up}[\texttt{up}[v][k-1]][k-1]
+\texttt{up}[v][0] = \text{padre}(v), \qquad \texttt{up}[v][k] = \texttt{up}[\texttt{up}[v][k-1]][k-1].
 \]
  
 Como estamos subiendo en potencias de $2$, $\lfloor \log_2 n \rfloor + 1$ niveles basta para cubrir cualquier distancia hasta $n$. En la siguiente imagen, vemos como para el arbol que es una cadena que mencionamos antes, esta forma de encontrar el ancestro sí resulta eficiente. Para el nodo $v$, los ancestros a distancia $2^0=1$, $2^1=2$ y $2^2=4$ se precalculan. Para subir 5 niveles, basta un salto de 4 y un salto de 1, solo 2 operaciones.
@@ -938,10 +938,10 @@ Un \textbf{flujo factible} es una función $f: E \to \mathbb{R}_{\geq 0}$
 que satisface:
 \begin{itemize}
     \item \textbf{Capacidad}: $0 \leq f(u,v) \leq c(u,v)$ para toda
-          arista, no se puede superar el ancho de banda del cable.
+          arista, no se puede superar el ancho de banda del cable;
     \item \textbf{Conservación}: para todo $v \neq s, t$:
           \[
-          \sum_{u} f(u,v) = \sum_{w} f(v,w)
+          \sum_{u} f(u,v) = \sum_{w} f(v,w).
           \]
           lo que llega a un servidor intermedio también sale de él.
 \end{itemize}
@@ -1312,11 +1312,15 @@ struct Dinic {
 \subsection{Teorema max-flow min-cut}
 \begin{definition} Un \textbf{corte $s$-$t$} es una división de los vértices de $V$ en dos partes $(S, T)$ con $s \in S$ y $t \in T$. La \textbf{capacidad del corte} es la suma de las capacidades de los cables que van de $S$ a $T$:
 \[
-\text{cap}(S,T) = \sum_{\substack{u \in S,\, v \in T \\ (u,v)\in E}} c(u,v)
+\text{cap}(S,T) = \sum_{\substack{u \in S,\, v \in T \\ (u,v)\in E}} c(u,v).
 \]
 El \textbf{corte mínimo} es el de menor capacidad.
 \end{definition}
+<<<<<<< Updated upstream
 Un teorema muy importante es el \textbf{Teorema de Flujo Máximo y Corte Mínimo} que nos dice que el valor del flujo máximo de $s$ a $t$ es igual a la capacidad del corte mínimo $s$-$t$\footnote{\url{https://www.cs.toronto.edu/~lalla/373s16/notes/MFMC.pdf}}.
+=======
+Un teorema muy importante es el \textbf{Teorema de Flujo Máximo y Corte Mínimo}~\cite{toronto_mfmc}, que nos dice que el valor del flujo máximo de $s$ a $t$ es igual a la capacidad del corte mínimo $s$-$t$.
+>>>>>>> Stashed changes
 \\\\
 Después de correr Dinic, si hacemos BFS en el grafo residual desde $s$.
 Los nodos alcanzables forman $S$ y los no alcanzables $T$. Los cables
@@ -1661,7 +1665,7 @@ En un grafo bipartito con lados $L$ y $R$, existe un matching que
 empareja todos los vértices de $L$ si y solo si para todo
 $S \subseteq L$:
 \[
-|N(S)| \geq |S|
+|N(S)| \geq |S|.
 \]
 donde $N(S)$ es el conjunto de vecinos de $S$ en $R$.
  

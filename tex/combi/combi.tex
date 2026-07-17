@@ -31,29 +31,30 @@ Son $5$ grupos de $4$ parejas cada uno, o sea $5\cdot 4 = 20$ en total. Otra agr
 
 El número de permutaciones de tomar $r$ elementos tomados de un conjunto de $n$ distintos es:
 \[
-P(n, r) = n \cdot (n-1) \cdots (n-r+1) = \frac{n!}{(n-r)!}
+P(n, r) = n \cdot (n-1) \cdots (n-r+1) = \frac{n!}{(n-r)!}.
 \]
 
 Esto es así porque si tenemos $n$ opciones para la primera elección, una vez que lo escogimos, nos quedan $n-1$ opciones para la segunda elección, y así hasta que hayamos hecho las $r$ elecciones. Nótese que cuando $n=r$ estamos calculando de cuántas formas se puede reordenar un conjunto completo y usando la fórmula se vuelve simplemente $n!$. Esto nos dice que en el ejemplo de arriba las formas de escoger al CEO y VP son $P(5,2)=20$.
- 
+
 \subsection*{Permutaciones con repetición}
 
-Hay casos donde los $n$ elementos de donde elegimos no son todos distintos, veamos por ejemplo la cantidad de formas distintas en que se puede reordenar la palabra \texttt{MISSISSIPPI}, 
- 
+Hay casos donde los $n$ elementos de donde elegimos no son todos distintos, veamos por ejemplo la cantidad de formas distintas en que se puede reordenar la palabra \texttt{MISSISSIPPI},
+
 Si los $n$ elementos no son todos distintos, por ejemplo, hay $n_1$ copias del elemento 1, $n_2$ del elemento 2, etc., con $n_1 + n_2 + \cdots + n_k = n$, el número de permutaciones distintas es:
 \[
-\frac{n!}{n_1!\, n_2! \cdots n_k!}
+\frac{n!}{n_1!\, n_2! \cdots n_k!}.
 \]
 
 El denominador divide las repeticiones que no generan acomodos distintos, de forma que en el ejemplo de arriba notemos hay 11 letras, 1 M, 4 I, 4 S, 2 P, de donde las maneras de reordenarle son
- \[\dfrac{11!}{1!\,4!\,4!\,2!} = 34\,650\]
+\[
+\dfrac{11!}{1!\,4!\,4!\,2!} = 34\,650.
+\]
 
 \section{Combinaciones}
 Si ahora quisieramos de los 5 empleados agarrar 2 para que formen parte de una brigada, no podemos aplicar directamente lo que aprendimos en permutaciones porque aquí el orden no importa. Si primero elegimos al número 4 y luego al 2, es lo mismo que si elegiéramos al 2 y después al 4, no hay distinción pues ambos formarán parte de la misma brigada. Lo que sí aprendimos es que las formas de permutar un conjunto de $r$ elementos es $r!$, entonces notemos que podemos calcular las permutaciones y luego dividir entre $r!$ que son los ordenamientos de cada selección que producen el mismo subconjunto. Es decir, si queremos hacer una selección de $r$ elementos de un conjunto de $n$ donde el orden no importa, el número de combinaciones es:
 \[
-\binom{n}{r} = \frac{P(n,r)}{r!} = \frac{n!}{r!\,(n-r)!}
+\binom{n}{r} = \frac{P(n,r)}{r!} = \frac{n!}{r!\,(n-r)!}.
 \]
-
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}[every node/.style={font=\small}]
@@ -76,18 +77,20 @@ Si ahora quisieramos de los 5 empleados agarrar 2 para que formen parte de una b
 \end{figure}
  
 A las combinaciones también se les llama coeficientes binomiales porque son los coeficientes de la expresión $(a+b)^n$ de la siguiente forma:
-\[(a+b)^n=\binom{n}{0}a^n+\binom{n}{1}a^{n-1}b+\binom{n}{2}a^{n-2}b^2+\cdots + \binom{n}{n}b^n\]
+\[
+(a+b)^n=\binom{n}{0}a^n+\binom{n}{1}a^{n-1}b+\binom{n}{2}a^{n-2}b^2+\cdots + \binom{n}{n}b^n.
+\]
 \\\\
-Algunas propiedades útiles para recordar son (se recomienda al lector intentar probar algunas de ellas):
- 
+Algunas propiedades útiles para recordar son (se recomienda al lector intentar probar algunas de ellas; véase~\cite{perez_combinatoria}):
+
 \begin{itemize}
-    \item Simetría: $\binom{n}{r} = \binom{n}{n-r}$
-    \item Factorizacion: $\binom{n}{r} = \frac{n}{r}\binom{n-1}{r-1}$
-    \item Identidad de pascal: $\binom{n-1}{r-1} + \binom{n-1}{r} = \binom{n}{r}$
-    \item Suma sobre $k$: $\sum_{k=0}^{n}\binom{n}{k}=2^n$
-    \item Suma sobre $m$: $\sum_{m=0}^{n}\binom{m}{k}=\binom{n+1}{k+1}$
-    \item Suma alternada: $\sum_{r=0}^{n} (-1)^r\binom{n}{r} = 0$
-    \item Suma de cuadrados: $\binom{n}{0}^2+\binom{n}{1}^2+\cdots+\binom{n}{n}^2=\binom{2n}{n}$
+    \item Simetría: $\binom{n}{r} = \binom{n}{n-r}$,
+    \item Factorización: $\binom{n}{r} = \frac{n}{r}\binom{n-1}{r-1}$,
+    \item Identidad de Pascal: $\binom{n-1}{r-1} + \binom{n-1}{r} = \binom{n}{r}$,
+    \item Suma sobre $k$: $\sum_{k=0}^{n}\binom{n}{k}=2^n$,
+    \item Suma sobre $m$: $\sum_{m=0}^{n}\binom{m}{k}=\binom{n+1}{k+1}$,
+    \item Suma alternada: $\sum_{r=0}^{n} (-1)^r\binom{n}{r} = 0$,
+    \item Suma de cuadrados: $\binom{n}{0}^2+\binom{n}{1}^2+\cdots+\binom{n}{n}^2=\binom{2n}{n}$.
 \end{itemize}
 
 Si solo haremos calculos rápidos sin módulo y sin números grandes podemos implementar directamente
@@ -165,18 +168,26 @@ En ocasiones cuando tenemos conjuntos querremos saber cuántos elementos tiene s
 
 \textit{Ejemplo.} Si $A=\{1,2,3,4\}$ y $B=\{3,4,5,6\}$, entonces $|A|+|B|=8$, pero $A\cup B=\{1,2,3,4,5,6\}$ solo tiene $6$ elementos: el $3$ y el $4$ aparecieron una vez al contar $A$ y otra al contar $B$. Es por esto que en realidad $|A \cup B|=|A| + |B| - |A \cap B|$, es decir, restamos una vez los que se están contando doble (aquí $|A\cap B|=|\{3,4\}|=2$ y $6=8-2$).
 \\\\Similarmente si tuviésemos tres conjuntos $A,B,C$, notemos que al sumar $|A|+|B|+|C|$ estamos contando los elementos que están en dos de los conjuntos doble como en el caso de dos conjuntos. Más aún, los elementos que están en los tres conjuntos, están siendo contados tres veces, y al restar todas las intersecciones de dos conjuntos se están restando tres veces, por lo que habrá que sumarlos, es decir:
-\[|A \cup B \cup C|=|A|+|B|+|C|-|A \cap B|-|A \cap C|-|B \cap C|+|A \cap B \cap C|\]
-Usando esta misma lógica para $n$ conjuntos nos da el llamado \textbf{principio de inclusión-exclusión}. Este nos dice que si tenemos conjuntos $A_1,\cdots, A_n$ entonces tenemos que
-\[|\bigcup_{i=1}^{n}A_i|=\sum_{i=1}^{n}|A_i|-\sum_{i<j}|A_i \cap A_j|+\cdots+(-1)^{n+1}|A_1\cap \cdots \cap A_n|\]
+\[
+|A \cup B \cup C|=|A|+|B|+|C|-|A \cap B|-|A \cap C|-|B \cap C|+|A \cap B \cap C|.
+\]
+Usando esta misma lógica para $n$ conjuntos nos da el llamado \textbf{principio de inclusión-exclusión}~\cite{cf_incexc}. Este nos dice que si tenemos conjuntos $A_1,\cdots, A_n$ entonces tenemos que
+\[
+|\bigcup_{i=1}^{n}A_i|=\sum_{i=1}^{n}|A_i|-\sum_{i<j}|A_i \cap A_j|+\cdots+(-1)^{n+1}|A_1\cap \cdots \cap A_n|.
+\]
 Esta fórmula general puede parecer abstracta; la aplicamos en el ejercicio siguiente.
 
 \textbf{Ejercicio.} Dados $N$, $L$ y $R$, calcular cuántos enteros $x$ del intervalo $[L,R]$ son coprimos con $N$ (\href{https://acm.hdu.edu.cn/showproblem.php?pid=4135}{Co-prime, LCPC 2011}). \textit{Ejemplo.} Con $N=6$, $L=1$ y $R=10$ se piden los $x\in\{1,2,\ldots,10\}$ con $\gcd(x,6)=1$; como $6=2\cdot 3$, basta que $x$ no sea múltiplo de $2$ ni de $3$, y los que cumplen son $1$, $5$ y $7$, así que la respuesta es $3$.
 
 \textit{Solución.} Nótese que si hacemos $f(X)$ el número de $x$ coprimos con $N$ en el intervalo $[1,X]$, la respuesta será $f(R)-f(L-1)$. Si bien podríamos intentar calcular la cantidad de números coprimos con $N$ en el intervalo, es más fácil calcular lo opuesto, es decir, cuántos comparten un factor primo con $N$.
 \\\\Con la criba podemos encontrar todos los factores primos $p_1,p_2,\cdots,p_r$ de $N$. Ahora, sea $D_i$ los números divisibles por $p_i$ en el intervalo $[1,X]$, entonces $|D_i|=\lfloor \frac{X}{p_i} \rfloor$ por inclusión exclusión tenemos que:
-\[|D_1 \cup D_2 \cup \cdots \cup D_r|=\sum_{i}\lfloor \frac{X}{p_i} \rfloor - \sum_{i < j}\lfloor \frac{X}{p_i p_j} \rfloor + \sum_{i < j < k}\lfloor \frac{X}{p_i p_j p_k} \rfloor - \cdots\]
+\[
+|D_1 \cup D_2 \cup \cdots \cup D_r|=\sum_{i}\lfloor \frac{X}{p_i} \rfloor - \sum_{i < j}\lfloor \frac{X}{p_i p_j} \rfloor + \sum_{i < j < k}\lfloor \frac{X}{p_i p_j p_k} \rfloor - \cdots,
+\]
 y así tenemos que:
-\[f(X)=X-|D_1 \cup \cdots \cup D_r|\]
+\[
+f(X)=X-|D_1 \cup \cdots \cup D_r|.
+\]
 de forma que ya solo tenemos que implementarlo. Para esto, iteraremos sobre los $2^r$ subconjuntos de factores primos de $N$. Para este tipo de problemas es importante analizar la complejidad. Nótese que $2 \times 3 \times 5 \times 7 \times 11 \times 13 \times 17 \times 19 > 10^6$, de forma que si $N \leq 10^9$, este tendrá a lo más $9$ factores primos distintos, por lo que iterar sobre los $2^9=512$ subconjuntos sí es algo que se puede hacer rapidamente. En el código, el número de bits encendidos de la máscara indica cuántos primos hay en el subconjunto (y por tanto el signo en inclusión-exclusión).
 \begin{lstlisting}[language=C++]
 long long countCoprimeUpTo(long long limit, const vector<long long>& primes) {
@@ -208,8 +219,10 @@ Complete el programa principal usando \texttt{countCoprimeUpTo} para responder e
 \section{Barras y estrellas}
  Supongamos que tenemos $r$ niños y $n$ juguetes, ¿de cuántas formas podemos distribuir los juguetes entre los niños?. En este problema no hay restricciones, un niño puede tener 0 o todos los juguetes. Para resolver este problema usaremos ''palitos'' que separen los juguetes en secciones. Por ejemplo, supongamos que tenemos 3 niños y 5 juguetes, entonces un acomodo donde el primer niño reciba dos juguetes, el segundo dos y tercero uno se puede representar de la siguiente forma
  \[\includegraphics[scale=0.7]{imgs/image.png}\]
- De la misma forma si quisiéramos $r$ regiones, ocuparíamos $r-1$ palitos. Al colocar los $r-1$ palitos con  los $n$ juguetes tenemos en total $n+r-1$ objetos que hay que acomodar en una fila. Si todos los objetos fueran distinguibles tendríamos un total de $(n+r-1)!$ formas de acomodarlos; sin embargo, notemos que no hay forma de distinguir un palito de los demás, así como un juguete de los otros juguetes, por lo tanto, usando permutaciones con repetición debemos quitar las  permutaciones generadas al permutar los juguetes entre sí $n!$ y los palitos entre sí $(r-1)!$. Así, la cantidad de formas de distribuir los juguetes es:
- \[\frac{(n+r-1)!}{n!(r-1)!}\]
+ De la misma forma si quisiéramos $r$ regiones, ocuparíamos $r-1$ palitos. Al colocar los $r-1$ palitos con  los $n$ juguetes tenemos en total $n+r-1$ objetos que hay que acomodar en una fila. Si todos los objetos fueran distinguibles tendríamos un total de $(n+r-1)!$ formas de acomodarlos; sin embargo, notemos que no hay forma de distinguir un palito de los demás, así como un juguete de los otros juguetes, por lo tanto, usando permutaciones con repetición debemos quitar las  permutaciones generadas al permutar los juguetes entre sí $n!$ y los palitos entre sí $(r-1)!$. Así, la cantidad de formas de distribuir los juguetes es~\cite{cf_stars}:
+ \[
+\frac{(n+r-1)!}{n!(r-1)!}.
+ \]
  Esto también nos deja un resultado interesante y es que la ecuación $x_1+x_2+\cdots+x_r=n$ donde $0\leq x_i$ tiene una cantidad de soluciones $\frac{(n+r-1)!}{n!(r-1)!}$.
 
 \section{Lema de Burnside\adv}
@@ -237,31 +250,31 @@ Estas reglas básicamente dicen que la acción es compatible con la estructura d
 
 La \textbf{órbita} de un objeto $x \in X$ es el conjunto de todos los objetos a los que puede llegar $x$ al aplicarle alguna operación de $G$:
 \[
-G \cdot x := \{g \cdot x \mid g \in G\}
+G \cdot x := \{g \cdot x \mid g \in G\}.
 \]
 
 Esta es la noción clave, dos objetos son \emph{equivalentes} si están en la misma órbita. Nuestro objetivo es contar el número de órbitas $|X/G|$.
 
 Para cada operación $g \in G$, sus \textbf{puntos fijos} son los objetos que no cambian al aplicarla:
 \[
-X^g := \{x \in X \mid g \cdot x = x\}
+X^g := \{x \in X \mid g \cdot x = x\}.
 \]
 
-\textbf{Lema de Burnside:}
+\textbf{Lema de Burnside}~\cite{cf_burnside}:
 \\El número de órbitas es igual al promedio del número de puntos fijos sobre todas las operaciones:
 \[
-|X/G| = \frac{1}{|G|} \sum_{g \in G} |X^g|
+|X/G| = \frac{1}{|G|} \sum_{g \in G} |X^g|.
 \]
-La demostración completa puede consultarse en línea.\footnote{\url{https://artofproblemsolving.com/wiki/index.php/Burnside's_Lemma}}.
+La demostración completa puede consultarse en~\cite{youkn0wwho_burnside}.
 
-Usemos este lema en el caso del problema de collares de $n$ cuentas con $k$ colores donde dos collares son iguales si uno se obtiene del otro por rotación. En este caso, $X$ son todas las coloraciones: $|X| = k^n$. 
+Usemos este lema en el caso del problema de collares de $n$ cuentas con $k$ colores donde dos collares son iguales si uno se obtiene del otro por rotación. En este caso, $X$ son todas las coloraciones: $|X| = k^n$.
 \\\\Nótese que si tenemos un collar con $n$ cuentas numeradas $1,2,\cdots, n$ en círculo con $k$ colores diferentes. La rotación por $r$ posiciones envía la cuenta $i$ a la posición $i+r (\mod n)$ por lo que hay $n$ rotaciones distintas $r=0,1,\cdots, n-1$ donde $r=0$ es la identidad, es decir, no rotar. Dos formas de colorear las cuentas son la misma si alguna se obtiene de la otra bajo alguna rotación. Estas rotaciones serán precisamente nuestro grupo $G$ que actuará sobre $X$.
 
-Ahora, notemos que nos interesa saber el número de órbitas porque nos interesa la cantidad de collares diferentes y cada órbita es un collar diferente. Sabiendo esto, queremos entonces aplicar el lema de Burnside y para ello nos interesa saber cuántos objetos fija la rotación por $r$ posiciones. Notemos entonces que la rotación $r$ fija una coloración si y solo si esta es periódica con periodo $gcd(r,n)$ ya que la cuenta $i$ debe tener el mismo color que la cuenta $i+r$ y esto agrupa las cuentas en exactamente $gcd(r,n)$ clases donde todas las cuentas deben tener el mismo color. Y ya que cada una puede tener $k$ colores diferentes, tenemos que hay $k^{gcd(r,n)}$ coloraciones fijas. 
+Ahora, notemos que nos interesa saber el número de órbitas porque nos interesa la cantidad de collares diferentes y cada órbita es un collar diferente. Sabiendo esto, queremos entonces aplicar el lema de Burnside y para ello nos interesa saber cuántos objetos fija la rotación por $r$ posiciones. Notemos entonces que la rotación $r$ fija una coloración si y solo si esta es periódica con periodo $gcd(r,n)$ ya que la cuenta $i$ debe tener el mismo color que la cuenta $i+r$ y esto agrupa las cuentas en exactamente $gcd(r,n)$ clases donde todas las cuentas deben tener el mismo color. Y ya que cada una puede tener $k$ colores diferentes, tenemos que hay $k^{gcd(r,n)}$ coloraciones fijas.
 \\\\
 Entonces por el lema de Burnside tenemos que:
 \[
-|X/G| = \frac{1}{n} \sum_{r=0}^{n-1} k^{\gcd(r,n)}
+|X/G| = \frac{1}{n} \sum_{r=0}^{n-1} k^{\gcd(r,n)}.
 \]
 La implementación entonces queda:
 \begin{lstlisting}[language=C++]
@@ -417,9 +430,9 @@ Sea $T_n$ el número de triangulaciones de un polígono de $n+2$ lados. Fijamos 
 \end{figure}
 Al fijar el triángulo que contiene la arista fijada con tercer vértice $k=2$, el polígono se divide en dos subpolígonos independientes: el subpolígono izquierdo (vértices $0,1,\ldots,k$) con $T_{k-1}$ triangulaciones, y el derecho (vértices $k, k+1,\ldots, n+1$) con $T_{n-k}$ triangulaciones.
 \\\\
-Notemos que los dos subpolígonos son independientes, es decir, la triangulación de uno no afecta al otro. Por lo tanto el número de triangulaciones con tercer vértice $k$ es exactamente su producto $T_{k-1} \cdot T_{n-k}$. Sumando sobre todas las elecciones posibles de $k$, tenemos que:
+Notemos que los dos subpolígonos son independientes, es decir, la triangulación de uno no afecta al otro. Por lo tanto el número de triangulaciones con tercer vértice $k$ es exactamente su producto $T_{k-1} \cdot T_{n-k}$. Sumando sobre todas las elecciones posibles de $k$, tenemos que~\cite{cf_catalan}:
 \[
-T_n = \sum_{k=1}^{n} T_{k-1} \cdot T_{n-k}
+T_n = \sum_{k=1}^{n} T_{k-1} \cdot T_{n-k}.
 \]
 En programación competitiva esta recurrencia casi siempre se resuelve con \textbf{programación dinámica} o \textbf{memorización}: guardamos $C_0,C_1,\ldots,C_n$ en un arreglo (una ``tabla'' de una fila) y vamos llenándolo de izquierda a derecha, porque para calcular $C_n$ solo hacen falta valores $C_0,\ldots,C_{n-1}$ ya conocidos. La base es $C_0=1$ (el polígono degenerado con $0$ triángulos internos).
 
@@ -476,7 +489,7 @@ vector<long long> catalanNumbers(int n) {
 
 Esta secuencia de números se llama \textbf{números de Catalan} y se denota $C_n = T_n$. Otra forma de expresar estos números es:
 \[
-C_n = \frac{1}{n+1}\binom{2n}{n}
+C_n = \frac{1}{n+1}\binom{2n}{n}.
 \]
 Nótese que estos números nos serán útiles cuando estemos resolviendo un problema en el que haya una estructura de tamaño $n$ que se pueda dividir en dos partes independientes de tamaños $k-1$ y $n-k$ en donde las contribuciones de cada parte se multipliquen, algunos ejemplos de problemas donde se usan son:
 \begin{itemize}
@@ -494,11 +507,11 @@ Por ejemplo, $S(4,2) = 7$, las 7 formas de partir $\{1,2,3,4\}$ en 2 subconjunto
 \{1\}|\{2,3,4\},\quad \{2\}|\{1,3,4\},\quad \{3\}|\{1,2,4\},\quad \{4\}|\{1,2,3\},
 \]
 \[
-\{1,2\}|\{3,4\},\quad \{1,3\}|\{2,4\},\quad \{1,4\}|\{2,3\}
+\{1,2\}|\{3,4\},\quad \{1,3\}|\{2,4\},\quad \{1,4\}|\{2,3\}.
 \]
 Para calcularlos contamos con la recurrencia:
 \[
-S(n,k) = k \cdot S(n-1,k) + S(n-1,k-1)
+S(n,k) = k \cdot S(n-1,k) + S(n-1,k-1),
 \]
 con $S(0,0) = 1$ y $S(n,0) = S(0,k) = 0$ para $n,k > 0$.
  
@@ -513,9 +526,9 @@ La intuición detrás de esta recurrencia consiste en observar que el elemento $
  
 El $n$-ésimo \textbf{número de Bell} $B_n$ cuenta el total de particiones de un conjunto de $n$ elementos en subconjuntos no vacíos, sin importar cuántos subconjuntos haya:
 \[
-B_n = \sum_{k=0}^{n} S(n,k)
+B_n = \sum_{k=0}^{n} S(n,k).
 \]
- 
+
 Es decir, $B_n$ es la suma de números de stirling de segundo tipo. Sin embargo, calcular todos los números de stirling de segundo tipo para calcular los números de Bell puede ser muy costoso computacionalmente, hay una forma más eficiente de calcularlos por medio del \textbf{triángulo de Bell}, el cual es un triángulo de números que se construye así:
 \begin{itemize}
     \item La primera entrada de cada fila es igual a la última entrada de la fila anterior: $T[i][0] = T[i-1][i-1]$.
@@ -540,20 +553,33 @@ $\mathbf{15}$ & $20$ & $27$ & $37$ & $52$ \\
     En cualquiera de las triangulaciones, la máxima cantidad de aristas que apoyarán al peso máximo son dos, ya que podemos colorear $2$ vértices de un color y el tercero del otro color. La forma en la que maximizamos el peso entonces será haciendo que la excluida sea la de menor peso.
     \\\\
     Ahora, un triángulo coloreado de forma que se maximice el peso puede aportar $1$ o $2$ rojos, llamemosle de tipo $A$ o tipo $B$ respectivamente. Notemos que tenemos $\frac{n}{3}$ triángulos,por lo que si hay $x$ triángulos coloreados de tipo $A$ tenemos $\frac{n}{3}-x$ de tipo $B$. Como queremos que haya $\frac{n}{2}$ vértices coloreados rojos tenemos que:
-    \[x+2(\frac{n}{3}-x)=\frac{n}{2}\]
-    \[x=\frac{n}{6}\]
+    \[
+    x+2\Bigl(\frac{n}{3}-x\Bigr)=\frac{n}{2},
+    \]
+    \[
+    x=\frac{n}{6}.
+    \]
     De esta forma vemos que hay $C(\frac{n}{3},\frac{n}{6})$ formas de elegir los $\frac{n}{6}$ triángulos que colorearemos de tipo $A$. Como ya se elegió que tipo será, para cada triángulo $i$ habrá $c_i$ formas de colorearlo, donde $c_i$ son las formas de colorear un triángulo $i$ de forma que tenga peso máximo y sea de alguno de los dos tipos (no importa cuál porque son simétricos). Nótese que $c_i$ es igual a contar las formas en las que elegir el vértice que tendra color diferente a los demás en el triángulo, es decir, la cantidad de vértices de peso mínimo. Dicho esto finalmente la respuesta nos queda:
+<<<<<<< Updated upstream
     \[\binom{\frac{n}{3}}{\frac{n}{6}}\prod_{i=1}^{\frac{n}{3}}c_i\]
     \\\\
     Código
     \\\\
     Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/1795D.cpp}.
+=======
+    \[
+    \binom{\frac{n}{3}}{\frac{n}{6}}\prod_{i=1}^{\frac{n}{3}}c_i.
+    \]
+\\\\
+    Ver \href{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/1795D.cpp}{código}.
+>>>>>>> Stashed changes
 
 \subsection*{7.10.2 \href{https://cses.fi/problemset/task/2064}{Bracket Squences I (CSES 2064)}}
 
 \textbf{Descripción: }\url{https://cses.fi/problemset/task/2064}
 
   Nótese que una secuencia de $n=2m$ brackets es válida si tiene $m$ brackets de apertura, $m$ de cierre y para cualquier posición la cantidad de brackets de apertura hasta esa posición, es decir en el prefijo, es mayor o igual a la de cierre.
+<<<<<<< Updated upstream
   \\\\Si no tuvieramos ninguna restricción sobre los prefijos entonces la cantidad total de secuencias sería simplemente la forma de colocar $m$ aperturas en $n$ posiciones, es decir: $\binom{n}{m}$. Entonces nos interesa encotnrar cuál es la cantidad de secuencias inválidas para restarlas de las secuencias totales y encotnrar cuántas secuencias válidas hay. Tomemos una secuencia de brackets inválida cualquiera, notemos que entonces esta tiene un prefijo donde los cierres son mayores a las aperturas. En ese prefijo, cambiemos todos los brackets de apertura por los de cierre y los de cierre por los de apertura. Notemos que entonces la secuencia nueva tiene $m+1$ aperturas y $m-1$ cierres. Esto nos da una biyección entre las secuencias inválidas de $m$ aperturas y $m$ cierres y todas las secuencias posibles con $m+1$ aperturas y $m-1$ cierres que son $\binom{n}{m+1}$ de donde tenemos que:
   \[\binom{2m}{m}-\binom{2m}{m+1}=\frac{1}{m+1}\binom{2m}{m}\]
   Notemos que esta fórmula es exactamente la fórmula de los números de Catalán, por lo que para calcular las secuencias válidas de $n$ brackets, basta con calcular el $n$-ésimo número de Catalán.
@@ -561,6 +587,17 @@ $\mathbf{15}$ & $20$ & $27$ & $37$ & $52$ \\
     Código
     \\\\
     Ver \codelink{https://cses.fi/paste/a095f196a9c6a0561095b74/}.
+=======
+  \\\\Si no tuvieramos ninguna restricción sobre los prefijos entonces la cantidad total de secuencias sería simplemente la forma de colocar $m$ aperturas en $n$ posiciones, es decir: $\binom{n}{m}$. Entonces nos interesa encontrar cuál es la cantidad de secuencias inválidas para restarlas de las secuencias totales y encontrar cuántas secuencias válidas hay. Tomemos una secuencia de brackets inválida cualquiera, notemos que entonces esta tiene un prefijo donde los cierres son mayores a las aperturas. En ese prefijo, cambiemos todos los brackets de apertura por los de cierre y los de cierre por los de apertura. Notemos que entonces la secuencia nueva tiene $m+1$ aperturas y $m-1$ cierres. Esto nos da una biyección entre las secuencias inválidas de $m$ aperturas y $m$ cierres y todas las secuencias posibles con $m+1$ aperturas y $m-1$ cierres que son $\binom{n}{m+1}$ de donde tenemos que:
+  \[
+  \binom{2m}{m}-\binom{2m}{m+1}=\frac{1}{m+1}\binom{2m}{m}.
+  \]
+  \begin{samepage}
+      Esta es la fórmula de los números de Catalán, por lo que para calcular las secuencias válidas de $n$ brackets, basta con calcular el $n$-ésimo número de Catalán.
+  \\\\
+    Ver \href{https://cses.fi/paste/a095f196a9c6a0561095b74/}{código.}
+  \end{samepage}
+>>>>>>> Stashed changes
 \section{Problemas}
 \begin{itemize}
     \item[7.11.1] \href{https://cses.fi/problemset/task/1715/}{String Distribution (CSES 1715)}
