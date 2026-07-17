@@ -1316,11 +1316,7 @@ struct Dinic {
 \]
 El \textbf{corte mínimo} es el de menor capacidad.
 \end{definition}
-<<<<<<< Updated upstream
-Un teorema muy importante es el \textbf{Teorema de Flujo Máximo y Corte Mínimo} que nos dice que el valor del flujo máximo de $s$ a $t$ es igual a la capacidad del corte mínimo $s$-$t$\footnote{\url{https://www.cs.toronto.edu/~lalla/373s16/notes/MFMC.pdf}}.
-=======
 Un teorema muy importante es el \textbf{Teorema de Flujo Máximo y Corte Mínimo}~\cite{toronto_mfmc}, que nos dice que el valor del flujo máximo de $s$ a $t$ es igual a la capacidad del corte mínimo $s$-$t$.
->>>>>>> Stashed changes
 \\\\
 Después de correr Dinic, si hacemos BFS en el grafo residual desde $s$.
 Los nodos alcanzables forman $S$ y los no alcanzables $T$. Los cables

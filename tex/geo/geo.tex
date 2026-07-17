@@ -407,13 +407,10 @@ ninguna de las dos condiciones se satisface y la arista simplemente no se cuenta
 \lstinputlisting[language=C++, firstline=56, lastline=82]{./tex/geo/codes/geo.cpp}
 \subsection*{Teorema de Pick}
 Si tenemos un polígono cuyos vértices están todos en coordenadas enteras, se cumple la siguiente fórmula:
-<<<<<<< Updated upstream
-\[A=I+\frac{B}{2}-1\]
-donde $A$ es el área del polígono, $I$ son los puntos con coordenadas enteras dentro del polígono y $B$ los puntos con coordenadas enteras que están sobre el perímetro del polígono.\footnote{\url{https://www.gaussianos.com/el-teorema-de-pick/}}.
-=======
-\[A=I+\frac{B}{2}-1.\]
+\[
+A=I+\frac{B}{2}-1,
+\]
 donde $A$ es el área del polígono, $I$ son los puntos con coordenadas enteras dentro del polígono y $B$ los puntos con coordenadas enteras que están sobre el perímetro del polígono~\cite{pick}.
->>>>>>> Stashed changes
 \section{Convex Hull}
 Dado un conjunto de puntos $S \subset \mathbb{R}^2$, su \textbf{envolvente convexa} (\textit{convex hull}) intuitivamente es la figura que se formaría si colocamos una liga estirada alrededor de todos los puntos. Más formalmente es el polígono convexo más pequeño que los contiene a todos. En la imagen siguiente $S$ son todos los puntos negros y el hull es el polígono dibujado de verde.
 

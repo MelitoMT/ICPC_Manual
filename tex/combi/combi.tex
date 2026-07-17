@@ -560,44 +560,28 @@ $\mathbf{15}$ & $20$ & $27$ & $37$ & $52$ \\
     x=\frac{n}{6}.
     \]
     De esta forma vemos que hay $C(\frac{n}{3},\frac{n}{6})$ formas de elegir los $\frac{n}{6}$ triángulos que colorearemos de tipo $A$. Como ya se elegió que tipo será, para cada triángulo $i$ habrá $c_i$ formas de colorearlo, donde $c_i$ son las formas de colorear un triángulo $i$ de forma que tenga peso máximo y sea de alguno de los dos tipos (no importa cuál porque son simétricos). Nótese que $c_i$ es igual a contar las formas en las que elegir el vértice que tendra color diferente a los demás en el triángulo, es decir, la cantidad de vértices de peso mínimo. Dicho esto finalmente la respuesta nos queda:
-<<<<<<< Updated upstream
-    \[\binom{\frac{n}{3}}{\frac{n}{6}}\prod_{i=1}^{\frac{n}{3}}c_i\]
+    \[
+    \binom{\frac{n}{3}}{\frac{n}{6}}\prod_{i=1}^{\frac{n}{3}}c_i.
+    \]
     \\\\
     Código
     \\\\
     Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/1795D.cpp}.
-=======
-    \[
-    \binom{\frac{n}{3}}{\frac{n}{6}}\prod_{i=1}^{\frac{n}{3}}c_i.
-    \]
-\\\\
-    Ver \href{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/1795D.cpp}{código}.
->>>>>>> Stashed changes
 
 \subsection*{7.10.2 \href{https://cses.fi/problemset/task/2064}{Bracket Squences I (CSES 2064)}}
 
 \textbf{Descripción: }\url{https://cses.fi/problemset/task/2064}
 
   Nótese que una secuencia de $n=2m$ brackets es válida si tiene $m$ brackets de apertura, $m$ de cierre y para cualquier posición la cantidad de brackets de apertura hasta esa posición, es decir en el prefijo, es mayor o igual a la de cierre.
-<<<<<<< Updated upstream
-  \\\\Si no tuvieramos ninguna restricción sobre los prefijos entonces la cantidad total de secuencias sería simplemente la forma de colocar $m$ aperturas en $n$ posiciones, es decir: $\binom{n}{m}$. Entonces nos interesa encotnrar cuál es la cantidad de secuencias inválidas para restarlas de las secuencias totales y encotnrar cuántas secuencias válidas hay. Tomemos una secuencia de brackets inválida cualquiera, notemos que entonces esta tiene un prefijo donde los cierres son mayores a las aperturas. En ese prefijo, cambiemos todos los brackets de apertura por los de cierre y los de cierre por los de apertura. Notemos que entonces la secuencia nueva tiene $m+1$ aperturas y $m-1$ cierres. Esto nos da una biyección entre las secuencias inválidas de $m$ aperturas y $m$ cierres y todas las secuencias posibles con $m+1$ aperturas y $m-1$ cierres que son $\binom{n}{m+1}$ de donde tenemos que:
-  \[\binom{2m}{m}-\binom{2m}{m+1}=\frac{1}{m+1}\binom{2m}{m}\]
+  \\\\Si no tuvieramos ninguna restricción sobre los prefijos entonces la cantidad total de secuencias sería simplemente la forma de colocar $m$ aperturas en $n$ posiciones, es decir: $\binom{n}{m}$. Entonces nos interesa encontrar cuál es la cantidad de secuencias inválidas para restarlas de las secuencias totales y encontrar cuántas secuencias válidas hay. Tomemos una secuencia de brackets inválida cualquiera, notemos que entonces esta tiene un prefijo donde los cierres son mayores a las aperturas. En ese prefijo, cambiemos todos los brackets de apertura por los de cierre y los de cierre por los de apertura. Notemos que entonces la secuencia nueva tiene $m+1$ aperturas y $m-1$ cierres. Esto nos da una biyección entre las secuencias inválidas de $m$ aperturas y $m$ cierres y todas las secuencias posibles con $m+1$ aperturas y $m-1$ cierres que son $\binom{n}{m+1}$ de donde tenemos que:
+  \[
+  \binom{2m}{m}-\binom{2m}{m+1}=\frac{1}{m+1}\binom{2m}{m}.
+  \]
   Notemos que esta fórmula es exactamente la fórmula de los números de Catalán, por lo que para calcular las secuencias válidas de $n$ brackets, basta con calcular el $n$-ésimo número de Catalán.
     \\\\
     Código
     \\\\
     Ver \codelink{https://cses.fi/paste/a095f196a9c6a0561095b74/}.
-=======
-  \\\\Si no tuvieramos ninguna restricción sobre los prefijos entonces la cantidad total de secuencias sería simplemente la forma de colocar $m$ aperturas en $n$ posiciones, es decir: $\binom{n}{m}$. Entonces nos interesa encontrar cuál es la cantidad de secuencias inválidas para restarlas de las secuencias totales y encontrar cuántas secuencias válidas hay. Tomemos una secuencia de brackets inválida cualquiera, notemos que entonces esta tiene un prefijo donde los cierres son mayores a las aperturas. En ese prefijo, cambiemos todos los brackets de apertura por los de cierre y los de cierre por los de apertura. Notemos que entonces la secuencia nueva tiene $m+1$ aperturas y $m-1$ cierres. Esto nos da una biyección entre las secuencias inválidas de $m$ aperturas y $m$ cierres y todas las secuencias posibles con $m+1$ aperturas y $m-1$ cierres que son $\binom{n}{m+1}$ de donde tenemos que:
-  \[
-  \binom{2m}{m}-\binom{2m}{m+1}=\frac{1}{m+1}\binom{2m}{m}.
-  \]
-  \begin{samepage}
-      Esta es la fórmula de los números de Catalán, por lo que para calcular las secuencias válidas de $n$ brackets, basta con calcular el $n$-ésimo número de Catalán.
-  \\\\
-    Ver \href{https://cses.fi/paste/a095f196a9c6a0561095b74/}{código.}
-  \end{samepage}
->>>>>>> Stashed changes
 \section{Problemas}
 \begin{itemize}
     \item[7.11.1] \href{https://cses.fi/problemset/task/1715/}{String Distribution (CSES 1715)}

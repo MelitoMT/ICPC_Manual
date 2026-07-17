@@ -48,7 +48,7 @@ $\displaystyle\sum_{i=1}^{n} i =$          & $\dfrac{n(n+1)}{2}$, \\
 $\displaystyle\sum_{i=1}^{n} i^2 = $        & $\dfrac{n(n+1)(2n+1)}{6}$, \\
 $\displaystyle\sum_{i=1}^{n} i^3 = $        & $\left(\dfrac{n(n+1)}{2}\right)^2$, \\
 $\displaystyle\sum_{i=0}^{n-1} r^i = $      & $\dfrac{r^n-1}{r-1}$ \quad ($r \neq 1$), \\
-$\displaystyle\sum_{i=1}^{n} \frac{1}{i} \approx $ & $ \ln n + \gamma$ \quad (armónica). \\
+$\displaystyle\sum_{i=1}^{n} \frac{1}{i} \approx $ & $ \ln n $ \quad (armónica). \\
 
 \end{tabular}
 \end{table}
@@ -387,13 +387,7 @@ En la sección pasada ya trabajamos con polinomios. Una duda que nos puede surgi
 \[
 c_k = \sum_{i+j=k} a_i b_j.
 \]
-<<<<<<< Updated upstream
- 
 Esta operación se llama \textbf{convolución} y calcularla directamente cuesta $O(n^2)$, cuando $n \approx 10^5$, esto es alrededor de $10^{10}$ operaciones, tiempo que nos daría TLE al intentar solucionar un problema de esta forma en la ICPC. El objetivo de $FFT$ será poder hacer esta multiplicación en $O(n \log n)$.
-=======
-
-Esta operación se llama \textbf{convolución} y calcularla directamente cuesta $O(n^2)$, cuando $n \approx 10^5$, esto es $10^{10}$ operaciones, tiempo que nos daría TLE al intentar solucionar un problema de esta forma en la ICPC. El objetivo de $FFT$ será poder hacer esta multiplicación en $O(n \log n)$.
->>>>>>> Stashed changes
 
 De la sección de arriba sabemos que si tenemos un polinomio de grado $n-1$, este lo podemos determinar evaluando $n$ puntos diferentes. Basado en esto, nos gustaría tener para ambos polinomios $A$ y $B$ sus valores en $n$ puntos estratégicos para entonces multiplicar estos valores y obtener valores del polinomio $C$. 
 
@@ -573,14 +567,10 @@ overflow.
 \\\\Ver \href{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/1722.cpp}{código}.
 
 \subsection*{5.4.2 \href{https://cses.fi/problemset/task/1723}{Graph Paths I (CSES 1723)}}
-<<<<<<< Updated upstream
 
 \textbf{Descripción: }\url{https://cses.fi/problemset/task/1723}
 
-En este problema nos dan una gráfica dirigida. Podríamos pensar que este es un problema en el que necesitamos algún algoritmo de gráficas, pero la realidad es que podemos resolverlo con exponenciación de matrices. Notemos que podemos expresar la gráfica por medio de una matriz de adyacencia $M$. Esta tendrá $M[i][j]=1$ si hay una arista de $i$ a $j$, de lo contrario, tendrá $0$. 
-=======
 En este problema nos dan una gráfica dirigida. Podríamos pensar que este es un problema en el que necesitamos algún algoritmo de gráficas, pero la realidad es que podemos resolverlo con exponenciación de matrices. Notemos que podemos expresar la gráfica por medio de una matriz de adyacencia $M$. Esta tendrá $M[i][j]=1$ si hay una arista de $i$ a $j$, de lo contrario, tendrá $0$.
->>>>>>> Stashed changes
 \\\\Cuando calculamos $M^2$ lo que hacemos es:
 \[
 (M^2)[i][j] = \sum_{k=1}^{n} M[i][k] \cdot M[k][j].
