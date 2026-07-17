@@ -32,7 +32,7 @@ El \textbf{máximo común divisor} de dos números $a$ y $b$, denotado $\gcd(a,b
 
 \textit{Ejemplo ($\text{gcd}$ y $\text{lcm}$).} Si $a = 12$ y $b = 18$, entonces los divisores de $12$ son
 \[
-\{1,2,3,4,6,12\}
+\{1,2,3,4,6,12\},
 \]
 y los divisores de $18$ son
 \[
@@ -42,7 +42,7 @@ Los divisores comunes son $\{1,2,3,6\}$, así que $\gcd(12,18) = 6$.
 
 De manera análoga, los primeros múltiplos positivos de $12$ son
 \[
-\{12,24,36,48,\dots\}
+\{12,24,36,48,\dots\},
 \]
 y los de $18$ son
 \[
@@ -62,17 +62,17 @@ El primero que aparece en ambas listas es $36$, por lo que $\text{lcm}(12,18) = 
 
 Podría parecer que esto nos da una implementación directa de $\text{lcm}$, pero aquí aparece una diferencia importante entre la teoría y la práctica. Matemáticamente,
 \[
-\text{lcm}(a,b) = \frac{a \cdot b}{\gcd(a,b)} = \left(\frac{a}{\gcd(a,b)}\right) \cdot b
+\text{lcm}(a,b) = \frac{a \cdot b}{\gcd(a,b)} = \left(\frac{a}{\gcd(a,b)}\right) \cdot b.
 \]
 son expresiones equivalentes. Sin embargo, en una implementación real el orden de las operaciones sí importa. Si se usa un \texttt{int} de $32$ bits, normalmente se pueden representar valores entre $-2^{31}$ y $2^{31}-1$, es decir, aproximadamente hasta $10^9$ en magnitud. Con \texttt{long long}, que usualmente ocupa $64$ bits, el rango llega de $-2^{63}$ a $2^{63}-1$, aproximadamente hasta $10^{18}$.
 
 \textit{Ejemplo (\textit{overflow} en $\text{lcm}$).} Si $a = 10^{10}$ y $b = 10^9$, el producto $ab = 10^{19}$ ya no cabe en un \texttt{long long}, y si se hace esa multiplicación primero aparece un \textit{overflow}.\footnote{En programación, \textit{overflow} significa que el resultado de una operación queda fuera del rango que el tipo de dato puede representar. Cuando eso ocurre, el valor almacenado deja de ser confiable.} Aunque la fórmula sea correcta en el papel, conviene implementar
 \[
-\boxed{\texttt{lcm(a, b) = a / gcd(a, b) * b}}
+\boxed{\texttt{lcm(a, b) = a / gcd(a, b) * b}}.
 \]
 dividiendo antes de multiplicar para mantener los valores en el rango.
 
-Hasta aquí relacionamos $\text{lcm}(a,b)$ con $\gcd(a,b)$. Para \emph{calcular} $\gcd(a,b)$ se usa el algoritmo de Euclides.
+Hasta aquí relacionamos $\text{lcm}(a,b)$ con $\gcd(a,b)$. Para \emph{calcular} $\gcd(a,b)$ se usa el algoritmo de Euclides~\cite{perez_numeros}.
 
 \textbf{Algoritmo de Euclides.} Para enteros $a$ y $b$ con $b \neq 0$,
 \[
@@ -147,17 +147,17 @@ Las congruencias ayudan a evitar \textit{overflow}: si trabajamos módulo $m$, c
 \label{sec:expbin}
 \paragraph{Exponenciación modular.} El problema de calcular $a^b \bmod m$ aparece constantemente. Por ejemplo, para $2^7$ una forma ingenua es
 \[
-2 \cdot 2 \cdot 2 \cdot 2 \cdot 2 \cdot 2 \cdot 2,
+2 \cdot 2 \cdot 2 \cdot 2 \cdot 2 \cdot 2 \cdot 2.
 \]
 lo cual requiere $6$ multiplicaciones. En cambio, si reutilizamos resultados intermedios, podemos hacer
 \[
-2^2 = 4, \qquad 2^4 = (2^2)^2 = 16, \qquad 2^7 = 2^4 \cdot 2^2 \cdot 2,
+2^2 = 4, \qquad 2^4 = (2^2)^2 = 16, \qquad 2^7 = 2^4 \cdot 2^2 \cdot 2.
 \]
 y con ello reducimos notablemente el número de operaciones. Esta es la idea detrás de la exponenciación rápida: en lugar de construir la potencia multiplicando uno por uno, aprovechamos que podemos ir partiendo el exponente y recombinando resultados ya calculados.
 
 \textbf{Propiedad (exponenciación rápida).} Para $b \ge 1$ se puede escribir (en la práctica con división entera de $b$ entre $2$ en cada paso):
 \[
-a^b = \begin{cases} (a^{b/2})^2 & \text{si } b \text{ es par}, \\ a \cdot a^{b-1} & \text{si } b \text{ es impar}. \end{cases}
+a^b = \begin{cases} (a^{b/2})^2 & \text{si } b \text{ es par}, \\ a \cdot a^{b-1} & \text{si } b \text{ es impar}. \end{cases}.
 \]
 De aquí un algoritmo $O(\log b)$; en cada paso se puede reducir módulo $m$ para obtener $a^b \bmod m$.
 
@@ -187,7 +187,7 @@ long long power(long long base, long long exponent, long long mod) {
 
 \textit{Ejemplo.} Los números $2$, $3$, $5$, $7$ y $11$ son primos; $4$ no lo es, pues $4 = 2\cdot 2$.
 
-\textbf{Teorema Fundamental de la Aritmética.} Todo entero $n > 1$ se puede escribir de forma única (salvo el orden) como producto de potencias de primos.
+\textbf{Teorema Fundamental de la Aritmética.} Todo entero $n > 1$ se puede escribir de forma única (salvo el orden) como producto de potencias de primos~\cite{perez_numeros}.
 
 \textit{Ejemplo.}
 \[
@@ -280,38 +280,38 @@ for (int i = 2; i * i <= n; i++) {
 
 \section{Lema de Bézout}
 
-\textbf{Lema (Bézout).} Para cualesquiera enteros $a$ y $b$ no ambos cero, existen enteros $x$ e $y$ tales que
+\textbf{Lema (Bézout)}~\cite{perez_numeros}. Para cualesquiera enteros $a$ y $b$ no ambos cero, existen enteros $x$ e $y$ tales que
 \[
 ax + by = \gcd(a, b).
 \]
 
 \textit{Ejemplo (coeficientes).} Si $a = 12$ y $b = 18$, entonces $\gcd(12,18) = 6$ y una elección es
 \[
-12(-1) + 18(1) = 6,
+12(-1) + 18(1) = 6.
 \]
 es decir $x = -1$, $y = 1$. Otra elección válida es $12(2) + 18(-1) = 6$, o sea $x = 2$, $y = -1$. Los enteros $x$ e $y$ no son únicos.
 
 \textbf{Propiedad (familia de soluciones).} Si $(x_0,y_0)$ satisface $ax_0 + by_0 = \gcd(a,b)$ y $g = \gcd(a,b)$, entonces para todo $k \in \mathbb{Z}$,
 \[
-\bigl(x_0 + k\,\tfrac{b}{g},\; y_0 - k\,\tfrac{a}{g}\bigr)
+\bigl(x_0 + k\,\tfrac{b}{g},\; y_0 - k\,\tfrac{a}{g}\bigr).
 \]
 también es solución de $ax + by = g$.
 
 \textbf{Propiedad (solubilidad de $ax+by=c$).} La ecuación
 \[
-ax + by = c
+ax + by = c.
 \]
 tiene solución $(x,y)$ en enteros si y solo si $\gcd(a,b) \mid c$.
 
 \textit{Ejemplo.} La ecuación $12x + 18y = 6$ tiene solución porque $\gcd(12,18)=6$ divide $6$. En cambio, $12x + 18y = 5$ no tiene solución en enteros, pues $6 \nmid 5$.
 
-\textbf{Algoritmo de Euclides extendido}: calcula $\gcd(a,b)$ y además encuentra $x,y$ con
+\textbf{Algoritmo de Euclides extendido}~\cite{perez_numeros}: calcula $\gcd(a,b)$ y además encuentra $x,y$ con
 \[
-ax + by = \gcd(a,b)
+ax + by = \gcd(a,b).
 \] 
 La idea del algoritmo extendido es seguir los mismos pasos del Algoritmo de Euclides, pero rastrear cómo se expresa cada residuo como combinación lineal de $a$ y $m$. En cada paso de la división $r_{i-1} = q_i \cdot r_i + r_{i+1}$ se actualizan los coeficientes:
 \[
-x_{i+1} = x_{i-1} - q_i \cdot x_i \qquad y_{i+1} = y_{i-1} - q_i \cdot y_i
+x_{i+1} = x_{i-1} - q_i \cdot x_i, \qquad y_{i+1} = y_{i-1} - q_i \cdot y_i.
 \]
 partiendo de $(x_0, y_0) = (1, 0)$ para $a$ y $(x_1, y_1) = (0, 1)$ para $b$.
 
@@ -319,10 +319,10 @@ partiendo de $(x_0, y_0) = (1, 0)$ para $a$ y $(x_1, y_1) = (0, 1)$ para $b$.
 
 \textbf{Paso 1.} Divisiones de Euclides:
 \[
-30 = 1 \cdot 18 + 12
+30 = 1 \cdot 18 + 12,
 \]
 \[
-18 = 1 \cdot 12 + 6
+18 = 1 \cdot 12 + 6,
 \]
 \[
 12 = 2 \cdot 6 + 0.
@@ -390,7 +390,7 @@ a \cdot a^{-1} \equiv 1 \pmod{m}.
 
 En problemas suele ``dividirse'' módulo $m$ multiplicando por el inverso:
 \[
-\frac{a}{b} \bmod m \;\equiv\; a \cdot b^{-1} \pmod{m},
+\frac{a}{b} \bmod m \;\equiv\; a \cdot b^{-1} \pmod{m}.
 \]
 siempre que $b^{-1}$ exista módulo $m$.
 
@@ -404,7 +404,7 @@ Ahora llevamos la misma idea a módulo $7$: como no dividimos directamente en ar
 \]
 Aquí $5! \equiv 1$, $(2!)^{-1} \equiv 2^{-1} \equiv 4$ y $(3!)^{-1} \equiv 6^{-1} \equiv 6 \pmod{7}$, luego
 \[
-\binom{5}{2} \equiv 1\cdot 4\cdot 6 = 24 \equiv 3 \pmod{7},
+\binom{5}{2} \equiv 1\cdot 4\cdot 6 = 24 \equiv 3 \pmod{7}.
 \]
 y coincide con $10 \equiv 3 \pmod{7}$.
 
@@ -415,7 +415,7 @@ Este enfoque aparece con frecuencia en la ICPC con módulos primos grandes (por 
 2 \cdot 0 \equiv 0,\quad
 2 \cdot 1 \equiv 2,\quad
 2 \cdot 2 \equiv 0,\quad
-2 \cdot 3 \equiv 2 \pmod{4},
+2 \cdot 3 \equiv 2 \pmod{4}.
 \]
 y el residuo $1$ nunca aparece al multiplicar por $2$ módulo $4$.
 
@@ -446,7 +446,7 @@ long long modularInverse(long long a, long long m) {
 \end{lstlisting}
 Nótese que al final en lugar de devolver $x$, devolvemos \verb|(x % m + m) % m|, esto es porque el coeficiente $x$ que devuelve \texttt{extendedGcd} puede ser negativo. Por ejemplo, el inverso de $3$ módulo $7$ es $5$, pero el algoritmo puede devolver $x = -2$, que es equivalente, pues $-2 \equiv 5 \pmod 7$. La expresión \verb|(x % m + m) % m| convierte cualquier $x$ a un número congruente a $x$ positivo en $[0, m)$.
 
-Cuando $m = p$ es primo y $\gcd(a,p)=1$, el pequeño teorema de Fermat implica que
+Cuando $m = p$ es primo y $\gcd(a,p)=1$, el pequeño teorema de Fermat~\cite{perez_numeros} implica que
 \[
 a^{p-1} \equiv 1 \pmod{p}.
 \]
@@ -458,13 +458,13 @@ A veces necesitamos el inverso de cada $i \in \{1,\ldots,m-1\}$ a la vez. Llamar
 
 Cuando el módulo es un primo $p$, existe un método lineal $O(p)$ que rellena \texttt{inv[i]}. Partimos de $\texttt{inv}[1]=1$. Para $i \ge 2$, la división euclidiana
 \[
-p = \left\lfloor \frac{p}{i} \right\rfloor \cdot i + (p \bmod i)
+p = \left\lfloor \frac{p}{i} \right\rfloor \cdot i + (p \bmod i).
 \]
 y manipulación módulo $p$ llevan a la recurrencia usual (equivalente a la que implementa el código de abajo).
 
 \textbf{Propiedad (recurrencia de inversos módulo $p$ primo).} Para $2 \le i < p$,
 \[
-i^{-1} \equiv -\left\lfloor \frac{p}{i} \right\rfloor \cdot (p \bmod i)^{-1} \pmod{p},
+i^{-1} \equiv -\left\lfloor \frac{p}{i} \right\rfloor \cdot (p \bmod i)^{-1} \pmod{p}.
 \]
 donde $(p \bmod i)^{-1}$ ya está en \texttt{inv}[$p \bmod i$]. Esto funciona porque $p \bmod i$ siempre cae entre $1$ e $i-1$ (cuando $2 \le i < p$), así que ese índice corresponde a un valor ya calculado en iteraciones anteriores.
 
@@ -501,14 +501,14 @@ vector<long long> modularInversesUpTo(int limit, long long primeMod) {
 
 Diremos que dos enteros son \textbf{primos relativos} o \textbf{coprimos} si su máximo común divisor es $1$.
 
-\textbf{Pequeño teorema de Fermat}: Si $p$ es primo y $\gcd(a, p) = 1$, entonces
+\textbf{Pequeño teorema de Fermat}~\cite{perez_numeros}: Si $p$ es primo y $\gcd(a, p) = 1$, entonces
 \[
 a^{p-1} \equiv 1 \pmod{p}.
 \]
 
 En particular, si multiplicamos ambos lados por $a^{-1}$ (que existe módulo $p$ porque $\gcd(a,p)=1$), obtenemos
 \[
-a^{p-2} \equiv a^{-1} \pmod{p},
+a^{p-2} \equiv a^{-1} \pmod{p}.
 \]
 que es la identidad que ya usamos arriba para calcular inversos módulo un primo.
 
@@ -519,7 +519,7 @@ que es la identidad que ya usamos arriba para calcular inversos módulo un primo
 El pequeño teorema de Fermat aplica cuando el módulo es un primo $p$.
 El teorema de Euler generaliza esta idea a cualquier entero $m \ge 2$: si $\gcd(a,m)=1$, entonces una potencia de $a$ vuelve a dar $1$ módulo $m$, y ese exponente es $\phi(m)$, donde $\phi(m)$ cuenta los residuos invertibles módulo $m$.
 
-\textbf{Teorema de Euler}: Sea $m \ge 2$ un entero y sea $\phi(m)$ el número de enteros en $\{1,2,\ldots,m\}$ que son coprimos con $m$ (la \textbf{función $\phi$ de Euler}). Si $\gcd(a,m)=1$, entonces
+\textbf{Teorema de Euler}~\cite{perez_numeros}: Sea $m \ge 2$ un entero y sea $\phi(m)$ el número de enteros en $\{1,2,\ldots,m\}$ que son coprimos con $m$ (la \textbf{función $\phi$ de Euler}). Si $\gcd(a,m)=1$, entonces
 \[
 a^{\phi(m)} \equiv 1 \pmod{m}.
 \]
@@ -551,7 +551,7 @@ x \equiv b\,a^{-1} \pmod{m}.
 
 Si $g > 1$, pero $g \mid b$, escribimos $a = g a'$, $m = g m'$ y $b = g b'$ con enteros $a'$, $m'$ y $b'$. Se cumple $\gcd(a',m') = 1$ (al dividir $a$ y $m$ por su máximo común divisor). Además, $m \mid (ax-b)$ si y solo si $m' \mid (a'x-b')$, es decir
 \[
-a' x \equiv b' \pmod{m'},
+a' x \equiv b' \pmod{m'}.
 \]
 que es el caso coprimo y se resuelve multiplicando por el inverso de $a'$ módulo $m'$.
 
@@ -559,7 +559,7 @@ que es el caso coprimo y se resuelve multiplicando por el inverso de $a'$ módul
 
 \subsection*{Teorema chino del residuo}
 
-\textbf{Teorema (chino del residuo, dos congruencias).} Sean $n_1,n_2 \ge 1$ y $a_1,a_2$ enteros. El sistema
+\textbf{Teorema (chino del residuo, dos congruencias)}~\cite{cf_crt}. Sean $n_1,n_2 \ge 1$ y $a_1,a_2$ enteros. El sistema
 \begin{align*}
 x &\equiv a_1 \pmod{n_1}, \\
 x &\equiv a_2 \pmod{n_2},
@@ -618,7 +618,7 @@ $\phi(n)$ cuenta cuántos enteros del conjunto $\{1,2,\ldots,n\}$ son coprimos c
 \]
 Usando las fórmulas de potencias primas,
 \[
-\phi(4)=2^2-2^1=2,\qquad \phi(3)=3-1=2,
+\phi(4)=2^2-2^1=2,\qquad \phi(3)=3-1=2.
 \]
 de modo que
 \[
@@ -626,7 +626,7 @@ de modo que
 \]
 En efecto, los coprimos con $12$ entre $1$ y $12$ son $1$, $5$, $7$ y $11$.
 
-\textbf{Propiedad (primos y potencias).} Si $p$ es primo y $k\ge 1$, entonces
+\textbf{Propiedad (primos y potencias).} Si $p$ es primo y $k\ge 1$, entonces~\cite{cpalgos_phi}
 \[
 \phi(p) = p-1, \qquad \phi(p^k) = p^k - p^{k-1} = p^{k-1}(p-1).
 \]
@@ -644,7 +644,7 @@ En efecto, en $\{1,\ldots,p^k\}$ hay exactamente $p^{k-1}$ múltiplos de $p$, qu
 Entonces
 \[
 \phi(1)+\phi(2)+\phi(3)+\phi(4)+\phi(6)+\phi(12)
-=1+1+2+2+2+4=12,
+=1+1+2+2+2+4=12.
 \]
 
 \paragraph{Cálculo de $\phi(n)$ por factorización.} El siguiente código recorre los primos que dividen a $n$ y actualiza un acumulador según $\phi(p^k)=p^k-p^{k-1}$ implícitamente (resta una fracción por cada $p$). Tiene complejidad $O(\sqrt{n})$.
@@ -728,13 +728,13 @@ La función de Möbius $\mu:\mathbb{Z}^+\to\{-1,0,1\}$ se define por
 1 & \text{si } n = 1, \\
 (-1)^k & \text{si } n \text{ es producto de } k \text{ primos distintos}, \\
 0 & \text{si } n \text{ es divisible por un cuadrado } > 1.
-\end{cases}
+\end{cases}.
 \]
 Es multiplicativa: si $\gcd(a,b)=1$, entonces $\mu(ab)=\mu(a)\mu(b)$.
 
 \textit{Ejemplo.} \(\mu(1)=1\). Además, \(\mu(30)=\mu(2\cdot 3\cdot 5)=(-1)^3=-1\) porque es producto de \(3\) primos distintos. En cambio, \(\mu(12)=0\) ya que \(12\) es divisible por \(2^2\).
 
-\textbf{Propiedad (inversión de Möbius).} Si $g(n)=\sum_{d\mid n} f(d)$ para todo $n$, entonces
+\textbf{Propiedad (inversión de Möbius).} Si $g(n)=\sum_{d\mid n} f(d)$ para todo $n$, entonces~\cite{cf_mobius}
 \[
 f(n) = \sum_{d\mid n} \mu(d)\,g(n/d).
 \]
@@ -742,11 +742,11 @@ Recíprocamente, esta fórmula determina $f$ a partir de $g$.
 
 \textit{Ejemplo (inversión en un caso sencillo).} Si \(f(n)=1\) para todo \(n\), entonces
 \[
-g(n)=\sum_{d\mid n} f(d)=\sum_{d\mid n} 1=\tau(n),
+g(n)=\sum_{d\mid n} f(d)=\sum_{d\mid n} 1=\tau(n).
 \]
 la cantidad de divisores de \(n\). Aplicando inversión de Möbius,
 \[
-f(n)=\sum_{d\mid n}\mu(d)\,g(n/d)=\sum_{d\mid n}\mu(d)\,\tau(n/d)=1,
+f(n)=\sum_{d\mid n}\mu(d)\,g(n/d)=\sum_{d\mid n}\mu(d)\,\tau(n/d)=1.
 \]
 lo cual recupera exactamente la función original.
 
@@ -756,7 +756,7 @@ lo cual recupera exactamente la función original.
 \begin{cases}
 1 & \text{si } n = 1, \\
 0 & \text{si } n > 1.
-\end{cases}
+\end{cases}.
 \]
 Usaremos la notación de \textbf{Iverson}: $[P]$ vale $1$ si la afirmación $P$ es verdadera y $0$ si no; por ejemplo $[\gcd(4,8)=4]=1$. Entonces $\sum_{d \mid n} \mu(d) = [n=1]$.
 

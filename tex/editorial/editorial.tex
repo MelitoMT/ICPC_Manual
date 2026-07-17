@@ -6,7 +6,7 @@ En este capítulo se recogen las editoriales de los problemas propuestos en el m
 ¿Qué pasa si el último dígito de un número es $9$?
 \subsection*{Solución}
 Notemos que para cualquier número $x$, si su último dígito no es $9$ entonces $f(x+1)=f(x)+1$. En el caso en el que el último dígito sea $9$, tendremos que al sumarle $1$, el último dígito se convertirá en $0$, de forma que $f(x+1)< f(x)$. Solamente tenemos que contar cuántos números terminan en $9$ de $1$ a $n$. Como solo hay uno cada $10$ tenemos que la respuesta es:
-\[\lfloor \frac{n+1}{10} \rfloor\]
+\[\lfloor \frac{n+1}{10} \rfloor.\]
 \subsection*{Código}
 Ver \codelink{https://codeforces.com/contest/1553/submission/376093836}.
 
@@ -27,10 +27,10 @@ Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/edit
 \subsection*{Solución}
 La primera observación importante es que $a,b,c$ son a lo más $10^9$, por lo que $b^c$ puede ser enorme, de forma que calcular $a^{b^c}$ directamente usando exponenciación binaria sería muy lento.
 \\\\
-Notemos que $a\leq 10^9$ por lo que como $10^9+7$ es primo, son coprimos entre sí. Lo anterior, nos permite usar el pequeño teorema de fermat que nos dice que si $\text{lcm}(a,p)=1$:
-\[a^{p-1}\equiv 1 \,\mod p\]
+Notemos que $a\leq 10^9$ por lo que como $10^9+7$ es primo, son coprimos entre sí. Lo anterior, nos permite usar el pequeño teorema de fermat~\cite{perez_numeros} que nos dice que si $\text{lcm}(a,p)=1$:
+\[a^{p-1}\equiv 1 \,\mod p.\]
 De lo anterior tenemos que
-\[a^{b^c} \equiv a^{b^c \mod (p-1)} \mod p\]
+\[a^{b^c} \equiv a^{b^c \mod (p-1)} \mod p.\]
 Ahora, podemos calcular $b^c \, \mod (p-1)$, con exponenciación binaria, de forma que nos queda un número $x\leq 10^9+6$, y ahora podemos calcular $a^x$ de la misma forma. Debemos tener cuidado con el caso $a=0$, en este caso $a^{b^c}=0$.
 \subsection*{Código}
 Ver \codelink{https://cses.fi/paste/59f7146d402d82ade95b1e/}.
@@ -55,8 +55,8 @@ está en $z$ (si es que llega a estar) se pueden ver como una congruencia.
 Notemos que como después de $Z$ unidades de tiempo, todas las bestias se estarán moviendo en ciclos, entonces lo primero que podemos hacer es revisar para cada una de las primeras $Z$ unidades dónde está cada bestia, si al menos dos no están en el mismo zoológico, significa que en esa unidad no están todas juntas, entonces nos pasamos a la siguiente. Si encontramos una unidad de tiempo donde todas las bestias están en el mismo zoológico ya tenemos nuestra respuesta.
 \\\\
 En caso de que no hayamos encontrado nuestra respuesta en las primeras $Z$ unidades de tiempo, ahora todos los movimientos de las bestias serán en ciclo. Para cada una tenemos que encontrar en qué tiempo está en cada uno de los zoólogicos. Nótese que para un zoológico $z_i$, si una bestia $j$ que se mueve en un ciclo de longitud $c_j$ lo visita en la unidad de tiempo $t$, también lo visitará en la unidad de tiempo $t+c_j$, es decir la bestia estará en ese zoológico en una unidad de tiempo $x$ si:
-\[x \equiv t \, \mod c_j\]
-Para cada zoológico $z_i$ revisaremos que todas las bestias pasen por él en algun momento de su ciclo (de lo contrario ese zoológico no puede ser la respuesta) y después, para cada bestia, obtendremos la congruencia usando el tiempo en el que visitó el zoológico y la longitud de su ciclo. Aplicaremos el teorema chino del residuo para resolver el sistema de congruencias lo que nos devolverá el menor tiempo posible en el que todas las bestias están en $z_i$ a la vez (o $-1$ en caso de que nunca pueda pasar). La respuesta será el menor tiempo sobre todos los zoólogicos.
+\[x \equiv t \, \mod c_j.\]
+Para cada zoológico $z_i$ revisaremos que todas las bestias pasen por él en algun momento de su ciclo (de lo contrario ese zoológico no puede ser la respuesta) y después, para cada bestia, obtendremos la congruencia usando el tiempo en el que visitó el zoológico y la longitud de su ciclo. Aplicaremos el teorema chino del residuo~\cite{cf_crt} para resolver el sistema de congruencias lo que nos devolverá el menor tiempo posible en el que todas las bestias están en $z_i$ a la vez (o $-1$ en caso de que nunca pueda pasar). La respuesta será el menor tiempo sobre todos los zoólogicos.
 \\\\
 La idea del problema es sencilla; sin embargo se recomienda tener cuidado con la implementación para poder indicar correctamente cuando un zoológico no aparece en un ciclo.
 \subsection*{Código}
@@ -74,14 +74,14 @@ cada query en $O(\log M)$ en lugar de $O(M)$?
 \subsection*{Solución}
 El chef $i$ está disponible en la hora $t$ si y solo si:
 \[
-t \equiv r_i \pmod{d_i}
+t \equiv r_i \pmod{d_i}.
 \]
 Para que un rollo con chefs $c_1, \ldots, c_p$ pueda prepararse,
 necesitamos $t$ que satisfaga todas las congruencias simultáneamente.
-Esto es un sistema de congruencias que podemos resolver con el teorema chino del residuo.
+Esto es un sistema de congruencias que podemos resolver con el teorema chino del residuo~\cite{cf_crt}.
  \\\\
 Nótese que como todos los $d_i$ son potencias de 2, el $\text{lcm}$ del sistema es simplemente $L = \max(d_{c_1}, \ldots, d_{c_p})$, también potencia de 2. La condición para que el sistema tenga solución es ver que si $d_{c_j} = \max(d_{c_1}, \ldots, d_{c_p})$ entonces debe suceder que para todo $i \in \{1,\cdots, p\}$ :
-\[r_{c_j} \equiv r_{c_i} \mod d_{c_j}\]
+\[r_{c_j} \equiv r_{c_i} \mod d_{c_j}.\]
 \\\\
 Si el sistema tiene solución entonces existe $t \in [0, L)$ tal que
 satisface todas las congruencias, por la condición anterior este es simplemente $r_{c_j}$. Si el sistema no tiene solución, el rollo no se puede preparar.
@@ -141,7 +141,7 @@ Llamemos $f(n)$ son las formas de obtener suma $n$ lanzando el dado. Notemos que
 ¿La observación de $f(n-1)$ también se cumple para $f(n-2)$? ¿Qué hay de $f(n-3)$?
 \subsection*{Solución}
 A primer vistazo, este problema parece de combinatoria o DP, pero en realidad este problema se resuelve usando recurrencias. El último dado tiene $6$ resultados diferentes, si el último dado muestra $1$, la suma de los lanzamientos anteriores debe ser $n-1$ o de lo contrario nuestra suma final no podría ser $n$. Esto se cumple para todos los resultados del dado, es decir, que si nos sale $6$, la suma acumulada debería ser $n-6$. Esta observación nos sugiere que
-\[f(n)=f(n-1)+f(n-2)+f(n-3)+f(n-4)+f(n-5)+f(n-6)\]
+\[f(n)=f(n-1)+f(n-2)+f(n-3)+f(n-4)+f(n-5)+f(n-6).\]
 Como $n\leq10^{18}$ no podemos calcular $f(n)$ iterativametne. Aplicando exponenciación de matrices, la matriz de transición es:
 \[
 \begin{pmatrix} f(n)\\ f(n-1)\\ f(n-2)\\ f(n-3)\\ f(n-4)\\ f(n-5) \end{pmatrix}
@@ -154,7 +154,7 @@ Como $n\leq10^{18}$ no podemos calcular $f(n)$ iterativametne. Aplicando exponen
 0 & 0 & 0 & 1 & 0 & 0 \\
 0 & 0 & 0 & 0 & 1 & 0
 \end{pmatrix}
-\begin{pmatrix} f(n-1)\\ f(n-2)\\ f(n-3)\\ f(n-4)\\ f(n-5)\\ f(n-6) \end{pmatrix}
+\begin{pmatrix} f(n-1)\\ f(n-2)\\ f(n-3)\\ f(n-4)\\ f(n-5)\\ f(n-6) \end{pmatrix}.
 \]
 Sólo hay $1$ forma de obtener $1$ como suma (y $0$ formas para números negativos), entonces podemos simplemente calcular:
 \[
@@ -168,7 +168,7 @@ Sólo hay $1$ forma de obtener $1$ como suma (y $0$ formas para números negativ
 0 & 0 & 0 & 1 & 0 & 0 \\
 0 & 0 & 0 & 0 & 1 & 0
 \end{pmatrix}^{n}
-\begin{pmatrix} 1\\ 0\\ 0\\ 0\\ 0\\ 0 \end{pmatrix}
+\begin{pmatrix} 1\\ 0\\ 0\\ 0\\ 0\\ 0 \end{pmatrix}.
 \]
 La complejidad es $O(6^3 \log n) = O(\log n)$.
 \subsection*{Código}
@@ -185,24 +185,24 @@ Podemos calcular $f(v,x)$ para $x \in \{1,2,...,n+1\}$ con $n\leq 3000$ en tiemp
 Definimos $f(v,x)$ como el número de formas de asignar salarios al
 subárbol de $v$ dado que $v$ tiene salario $x$:
 \[
-f(v,x)=\prod_{i=1}^{k} \sum_{j=1}^{x} f(s_i,j)
+f(v,x)=\prod_{i=1}^{k} \sum_{j=1}^{x} f(s_i,j),
 \]
 donde $s_1,\ldots,s_k$ son los hijos de $v$. Para cualquier nodo $v$,
 definimos $g(v,x)$ como las formas de asignar salario \textbf{a lo
 más} $x$ al subárbol de $v$:
 \[
-g(v,x)=\sum_{j=1}^{x} f(v,j)
+g(v,x)=\sum_{j=1}^{x} f(v,j).
 \]
 Notemos que la respuesta final es $g(1,d)$.
 \\\\
 \textbf{¿Qué grado tiene este polinomio?} Si $v$ es una hoja,
 $f(v,x)=1$ (grado 0) y $g(v,x)=x$ (grado 1). En general:
 \[
-f(v,x)=\prod_{i=1}^{k}g(s_i,x)
+f(v,x)=\prod_{i=1}^{k}g(s_i,x).
 \]
 los grados de los $g(s_i,x)$ se suman, entonces:
 \[
-\deg(f(v,x))=\sum_{i=1}^{k} \deg(g(s_i,x))
+\deg(f(v,x))=\sum_{i=1}^{k} \deg(g(s_i,x)).
 \]
 Y como $g(v,x)=\sum_{j=1}^{x}f(v,j)$ sube el grado en 1, el grado
 de $g(v,x)$ es igual al \textbf{número de nodos en el subárbol de $v$}.
@@ -216,7 +216,7 @@ Ver \codelink{https://codeforces.com/problemset/submission/995/375695448}.
 \editorialproblem{6.5.3 Hail Mary (Autoría $\filledstar$)}
 \subsection*{Hint1}
 Para cada posición $i$
-\[IDF[i]=\sum_{j=0}^{m-1} s_j \cdot r_{i+j}\]
+\[IDF[i]=\sum_{j=0}^{m-1} s_j \cdot r_{i+j}.\]
 ¿Se parece esta suma a alguna que hayas visto antes?
 \subsection*{Hint2}
 Si recorremos $s$ al revés, es decir $s^{\text{rev}}[j] = s[m-1-j]$ . ¿Puedes
@@ -225,12 +225,12 @@ expresar $\text{IDF}[i]$ usando $s^{\text{rev}}$?
 Cuando hay que multiplicar dos arreglos eficientemente, puede ser una señal de que FFT puede ser útil, este problmema es un claro ejemplo.
 El IDF en la posición $i$ es:
 \[
-\text{IDF}[i] = \sum_{j=0}^{m-1} s_j \cdot r_{i+j}
+\text{IDF}[i] = \sum_{j=0}^{m-1} s_j \cdot r_{i+j}.
 \]
 Definimos $s^{\text{rev}}[j] = s[m-1-j]$ y calculamos la convolución
 $s^{\text{rev}} * r$:
 \[
-(s^{\text{rev}} * r)[k] = \sum_j s[m-1-j] \cdot r[k-j]
+(s^{\text{rev}} * r)[k] = \sum_j s[m-1-j] \cdot r[k-j].
 \]
 Si consideramos el cambio de variable $u = m-1-j$ podemos simplificar la expresión un poco:
 \[
@@ -238,7 +238,7 @@ Si consideramos el cambio de variable $u = m-1-j$ podemos simplificar la expresi
 \]
 Notemos entonces que si $i = k-m+1$ (es decir $k = m-1+i$):
 \[
-= \sum_u s[u] \cdot r[i+u] = \text{IDF}[i]
+= \sum_u s[u] \cdot r[i+u] = \text{IDF}[i].
 \]
 lo que se ve como una convolución tradicional para calcular con FFT. Tenemos entonces que $\text{IDF}[i] = (s^{\text{rev}} * r)[m-1+i]$. Calculamos
 todos los valores de IDF con una sola FFT en $O((n+m)\log(n+m))$. Finalmente evaluamos para cada indice $i$ si cae en  $[\,F, \infty)$ (feliz), en $[1, E]$ (enojado) o ninguna.
@@ -257,7 +257,7 @@ Lo primero que tenemos que hacer es definir nuestro arreglo $b$ de $1$s y $0$s y
 \\\\
 Definimos $f[v]$ como la cantidad de $i$ tal que $s_i=v$, esto lo podemos calcular rapidamente al mismo tiempo que calculamos los $s_i$, para cada uno simplemente incrementamos $f[s_i]$ en $1$. Para $k>0$, como los prefijos son no decrecientes (es una suma acumulada de $0$s y $1$s), $s_j - s_i = k > 0$ implica $j > i$, entonces:
 \[
-\text{res}[k] = \sum_{v=0}^{n} f[v] \cdot f[v+k] \qquad (k > 0)
+\text{res}[k] = \sum_{v=0}^{n} f[v] \cdot f[v+k] \qquad (k > 0).
 \]
 \begin{samepage}
 Queremos calcular $\sum_v f[v] \cdot f[v+k]$ para todos los $k$ simultáneamente. Definamos $\tilde{f}[i] = f[n-i]$ y calculemos la convolución $f * \tilde{f}$ en el índice $n-k$:
@@ -265,16 +265,16 @@ Queremos calcular $\sum_v f[v] \cdot f[v+k]$ para todos los $k$ simultáneamente
 (f * \tilde{f})[n-k]
 = \sum_{v=0}^{n} f[v] \cdot \tilde{f}[n-k-v]
 = \sum_{v=0}^{n} f[v] \cdot f[n-(n-k-v)]
-= \sum_{v=0}^{n} f[v] \cdot f[v+k]
+= \sum_{v=0}^{n} f[v] \cdot f[v+k].
 \]
 Entonces $\text{ans}[k] = (f * \tilde{f})[n-k]$ para $k > 0$. A la operación $\sum_v f[v] \cdot f[v+k]$ se le llama\textbf{autocorrelación} de $f$, y calcularla para todos los $k$
 con FFT cuesta $O(n \log n)$.
 \end{samepage}
 \\\\Notemos que solo hemos mencionado la respuesta para $k>0$, esto porque
-\[(f * \tilde{f})[n] = \sum_v f[v]^2\]
+\[(f * \tilde{f})[n] = \sum_v f[v]^2,\]
 cuenta todos los pares $(i,j)$ con $s_i = s_j$ sin restricción de orden incluyendo $i=j$ e $i>j$, por lo que debemos refilledstar los $n+1$ pares con $i=j$ y dividir entre 2:
 \[
-\text{ans}[0] = \frac{(f * \tilde{f})[n] - (n+1)}{2}
+\text{ans}[0] = \frac{(f * \tilde{f})[n] - (n+1)}{2}.
 \]
 \subsection*{Código}
 Ver \codelink{https://codeforces.com/contest/993/submission/375820964}.
@@ -288,7 +288,7 @@ Queremos todas las diferencias de pares...¿Qué algoritmo usamos cuando queremo
 \subsection*{Solución}
 Definimos $f[v]=1$ si $v\in \{a_0, \cdots, a_n\}$, de lo contrario $f[v]=0$. Definamos $\tilde{f}[i]=f[x-i]$ y calculemos la convolución $f * \tilde{f}$:
 \[
-(f * \tilde{f})[x-d] = \sum_{v} f[v] \cdot f[v+d]
+(f * \tilde{f})[x-d] = \sum_{v} f[v] \cdot f[v+d].
 \]
 Notemos que este valor es positivo si y solo si existe algún par $(a_i, a_j)$
 con $a_j - a_i = d$. Encontrar esto para todas las diferencias $d \in \{1, \ldots, x-1\}$ en $O(x \log x)$ se calcula eficientemente con FFT.
@@ -305,19 +305,19 @@ Puede que se necesite multiplicar más de dos polinomios. ¿Cómo podemos organi
 \subsection*{Solución}
 Si solamente hubiera un semáforo con tiempo $t_1$, hay exactamente una forma en la que el conductor espera cada uno de los tiempos. Entonces dado un $k$ la cantidad de formas en las que la suma total de espera de $1$ semáforo sea $k$ (a lo que denotaremos $f_{t_1}[k]$)la podemos ver como:
 \[
-f_{t_1}[k] = \begin{cases} 1 & \text{si } 0 \leq k \leq t_1 - 1 \\ 0 & \text{en otro caso} \end{cases}
+f_{t_1}[k] = \begin{cases} 1 & \text{si } 0 \leq k \leq t_1 - 1 \\ 0 & \text{en otro caso} \end{cases}.
 \]
 \\\\
 Ahora, dados dos semáforos con ciclos $t_1$ y $t_2$, notemos que las formas de que la suma de tiempos sea $k$ es buscar la cantidad de pares $(a,b)$ tal que $a+b=k$ y $a\in {0,\cdots,t_1-1}$ y $b\in{0,\cdots,t_2-1}$, es decir:
 \[
-    f_{\{t_1,t_2\}}[k]=\sum_{i=0}^{k}f_{t_1}[i]f_{t_2}[k-i]
+    f_{\{t_1,t_2\}}[k]=\sum_{i=0}^{k}f_{t_1}[i]f_{t_2}[k-i].
 \]
 Este problema para dos semáforos lo podríamos resolver con FFT multiplicando los arreglos que guarden las formas de sumar $k$ para cada semáforo. Si agregaramos un tercer semáforo $t_3$, podemos utilizar la misma lógica, pero ahora buscar los pares $(c,d)$ tal que $c+d=k$, $c$ sea suma de dos números $a$ y $b$ correspondientes a los primeros dos semáforos (definido como arriba) y $d\in {0,\cdots t_3-1}$.
 \\\\Lo anterior nos sugiere que podemos multiplicar los primeros dos semáforos y luego ese producto multiplicarlo por el arreglo del tercer semáforo y así consecutivamente hasta el semáforo $t_m$. Este razonamiento es correcto, sin embargo, poco óptimo, pues correriamos el algoritmo de FFT un total de $m$ veces con un arreglo que cada vez se hace más grande. Necesitamos algo un poco más eficiente.
 \\\\
 La observación clave es que si tenemos dos conjuntos de semáforos $S_1={t_1,t_2}$ y $S_2={t_3,t_4}$, las formas de que la suma total de espera sea $k$ serán las formas de tener un par $(a,b)$ tal que $a$ es una suma de tiempos de semáforos en $S_1$ y $b$ una suma de tiempos de semáforos en $S_2$, es decir:
 \[
-    f_{S_1\cup S_2}[k]=\sum_{i=0}^{k}f_{S_1}[i]f_{S_2}[k-i]
+    f_{S_1\cup S_2}[k]=\sum_{i=0}^{k}f_{S_1}[i]f_{S_2}[k-i].
 \]
 Nótese que $f_{S1}$ y $f_{S_2}$ se calculan como hicimos arriba para dos semáforos.
 \\\\
@@ -336,15 +336,15 @@ Si todos los $n$ caracteres fueran distintos, habría $n!$ permutaciones posible
  
 Por lo tanto, el número de cadenas distintas es:
 \[
-\frac{n!}{f_1! \cdot f_2! \cdots f_{26}!}
+\frac{n!}{f_1! \cdot f_2! \cdots f_{26}!},
 \]
 donde $f_i$ es la frecuencia de la $i$-ésima letra.
 Como se nos pide la respuesta módulo $10^9+7$ que es primo, la división $\frac{n!}{\prod f_i!}$ se calcula como:
 \[
-n! \cdot \left(\prod_{i} f_i!\right)^{-1} \bmod p
+n! \cdot \left(\prod_{i} f_i!\right)^{-1} \bmod p,
 \]
 usando el inverso modular $a^{-1} \equiv a^{p-2} \pmod{p}$ por el
-pequeño teorema de Fermat.
+pequeño teorema de Fermat~\cite{perez_numeros}.
 \subsection*{Código}
 Ver \codelink{https://cses.fi/paste/9cb680d81b74829410ac8df/}.
  
@@ -354,15 +354,15 @@ Si cada pared lo contamos como una cuenta de un solo color, ¿se parece a algún
 \subsection*{Hint2}
 Cada pared se puede colorear de $c^{n^2}$ formas.
 \subsection*{Solución}
-En este problema tenemos un polígono de $m$ lados, cada pared tiene $n\times n$ cuadros coloreados de $c$ colores. Llamemos $X$ a todas las combinaciones posibles de asignar los colores a todos los cuadros de los $m$ lados. Por el lema de Burnside tenemos que los diseños distintos serán:
-\[\frac{1}{m} \sum_{r=0}^{m-1}|X^{g_r}|\]
+En este problema tenemos un polígono de $m$ lados, cada pared tiene $n\times n$ cuadros coloreados de $c$ colores. Llamemos $X$ a todas las combinaciones posibles de asignar los colores a todos los cuadros de los $m$ lados. Por el lema de Burnside~\cite{cf_burnside} tenemos que los diseños distintos serán:
+\[\frac{1}{m} \sum_{r=0}^{m-1}|X^{g_r}|,\]
 donde $|X^{g_r}|$ son la cantidad de diseños fijos bajo la rotación de $r$ posiciones.
 \\\\Notemos que similar al problema de collares, una rotación de $r$ posiciones fija una coloración si y solo si esta es periodica con periodo $gcd(r,m)$ ya que la pared $i$ debe ser igual a la pared $i+r$ y así se agrupan las paredes en $gcd(r,m)$ clases. Ahora, como cada pared puede tener $c^{n^2}$ coloraciones diferentes tenemos entonces que:
-\[|X^{g_r}|=(c^{n^2})^{gcd(m,r)}\]
+\[|X^{g_r}|=(c^{n^2})^{gcd(m,r)},\]
 por lo que la respuesta es
-\[\frac{1}{m}\sum_{r=0}^{m-1}(c^{n^2})^{gcd(r,m)}\]
+\[\frac{1}{m}\sum_{r=0}^{m-1}(c^{n^2})^{gcd(r,m)}.\]
 Ahora, notemos que varios valores de $r$ tendrán el mismo $gcd(r,m)$, entonces $r=d\cdot k$ con $gcd(k,m/d)=1$ y $0 < k <m/d$, la cantidad de esos $k$ es exactamente $\phi(m/d)$, por lo que podemos agrupar por $gcd$, es decir:
-\[\frac{1}{m}\sum_{d|m}\phi(m/d)\cdot c^{n^2 \cdot d}\]
+\[\frac{1}{m}\sum_{d|m}\phi(m/d)\cdot c^{n^2 \cdot d}.\]
 \subsection*{Código}
 Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/101873B.cpp}.
 
@@ -373,8 +373,8 @@ Podemos traducir el problema a un problema de caminos que no pasan la diagonal.
 Pensemos que los duelos ganados y perdidos de Isagi se pueden representar en una gráfica, en el eje $x$ tendremos la cantidad de juegos ganados y en $y$ la cantidad de perdidos, nótese que la condición de siempre ganar más o la misma cantidad de duelos que los que se pierdan se traduce en que $(x,y)$ nunca puede tocar la diagonal $y=x+1$. Es decir queremos contar la cantidad de caminos de $(0,0)$ a $(n,n)$, tal que nunca tocamos esa diagonal.
 \\\\
 Usemos una estrategia similar a la que usamos en el problema de los paréntesis, tomemos cualquier camino no válido y consideremos el primer punto $p$ donde toca la diagonal $y=x+1$. Reflejemos la secuencia de direcciones desde ese punto al final del camino, es decir, cada paso hacia arriba (duelo perdido) por paso hacia la derecha (duelo ganado) y viceversa. Nótese que la parte final del camino original va de $p=(k,k+1)$ para algún $k$ a $(n,n)$ usando $n-k$ pasos a la derecha y $n-k-1$ pasos hacia arriba. Después de reflejar, como se invirtieron los pasos, tendremos que llegamos a $(k+(n-k-1,k+1+(n-k)))=(n-1,n+1)$. Esto nos da una biyección entre los caminos no válidos y los caminos de $(0,0)$ a $(n-1,n+1)$, los cuales son $\binom{2n}{n-1}$. Entonces la respuesta es el total de caminos de $(0,0)$ a $(n,n)$ quitándole los inválidos, es decir:
-\[\binom{2n}{n}-\binom{2n}{n-1}=\binom{2n}{n}-\frac{n}{n+1}\binom{2n}{n}=\frac{1}{n+1}\binom{2n}{n}\]
-Nótese que entonces tenemos que calcular el $n$-ésimo número de Catalán.
+\[\binom{2n}{n}-\binom{2n}{n-1}=\binom{2n}{n}-\frac{n}{n+1}\binom{2n}{n}=\frac{1}{n+1}\binom{2n}{n}.\]
+Nótese que entonces tenemos que calcular el $n$-ésimo número de Catalán~\cite{cf_catalan}.
 \subsection*{Código}
 Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/bluelock.cpp}.
 
@@ -424,15 +424,15 @@ de cruce.
 \\\\
 Ya que analizamos cómo se comportan las baldosas definiremos un arreglo $dp[j][\pi]$ que guardará las formas de llenar las columnas $1 \ldots j$ sin bloquear a ningún mago, terminando en la permutación $\pi$. Nótese que antes de procesar cualquier columna cada mago $i$ está en su fila $i$ por lo que:
 \[
-dp[0][\text{id}] = 1, \qquad dp[0][\pi] = 0 \text{ para } \pi \neq \text{id}
+dp[0][\text{id}] = 1, \qquad dp[0][\pi] = 0 \text{ para } \pi \neq \text{id}.
 \]
 Ahora, si ya tenemos calculado $dp[j][\pi]$ para cada permutación $\pi$ tal que $dp[j][\pi]>0$ y cada partición válida de la columna $j+1$ dado $\pi$ calcularemos la nueva permutación $\pi'$ y acumularemos:
 \[
-dp[j+1][\pi'] \mathrel{+}= dp[j][\pi]
+dp[j+1][\pi'] \mathrel{+}= dp[j][\pi].
 \]
  Finalmente, para la respuesta sumamos sobre todas las permutaciones finales:
 \[
-\text{ans} = \sum_{\pi} dp[m][\pi]
+\text{ans} = \sum_{\pi} dp[m][\pi].
 \]
 
 \subsection*{Código}
@@ -446,13 +446,13 @@ Sea $x_i \geq 0$ el número de ladrillos en la columna $i$, y $x_{\text{pile}} \
 \[
 x_1 + x_2 + \cdots + x_C + x_{\text{pile}} = n,
 \quad x_i \geq 0,
-\quad \sum_{i=1}^{C} x_i \geq 1
+\quad \sum_{i=1}^{C} x_i \geq 1.
 \]
 El número de soluciones sin la restricción $\sum x_i \geq 1$ es $\binom{n+C}{C}$ (barras y estrellas con $C+1$ variables). Restamos el único caso donde $\sum x_i = 0$, es decir, $x_{\text{pile}} = n$ y todas las columnas vacías, por lo que la respuesta es:
 \[
-\binom{n+C}{C} - 1
+\binom{n+C}{C} - 1.
 \]
-Notemos que $\binom{n+C}{C} = \frac{(n+C)!}{n! \cdot C!}$. Como $p = 10^6+3$ es primo y $n+C \leq 700000 < p$, $(n+C)!$, $n!$ y $C!$ no son divisibles por $p$. Entonces podemos calcular la división modular usando el pequeño Teorema de Fermat.
+Notemos que $\binom{n+C}{C} = \frac{(n+C)!}{n! \cdot C!}$. Como $p = 10^6+3$ es primo y $n+C \leq 700000 < p$, $(n+C)!$, $n!$ y $C!$ no son divisibles por $p$. Entonces podemos calcular la división modular usando el pequeño Teorema de Fermat~\cite{perez_numeros}.
 \subsection*{Código}
 Ver \codelink{https://codeforces.com/problemset/submission/690/377859415}.
 
@@ -519,7 +519,7 @@ posición intermedia queda cubierta automáticamente por el convex hull
 de $(b_i + p_1) \cup (b_i + p_2)$. Entonces la región que el estadio
 debe contener para el beyblade $i$ es:
 \[
-r_i = \text{conv}\!\left((b_i + p_1) \cup (b_i + p_2)\right)
+r_i = \text{conv}\!\left((b_i + p_1) \cup (b_i + p_2)\right).
 \]
 
 El estadio debe contener $r_i$ para todo $i$, entonces debe contener
@@ -530,23 +530,23 @@ regiones $r_i$.
 Como cada $r_i$ es el convex hull de $(b_i + p_1) \cup (b_i + p_2)$,
 basta tomar el convex hull de todos los vértices trasladados:
 \[
-\text{estadio} = \text{convexHull}\!\left(\bigcup_{i=1}^{n} \{v + p_{i_1} : v \in b_i\} \cup \{v + p_{i_2} : v \in b_i\}\right)
+\text{estadio} = \text{convexHull}\!\left(\bigcup_{i=1}^{n} \{v + p_{i_1} : v \in b_i\} \cup \{v + p_{i_2} : v \in b_i\}\right).
 \]
 
 El convex hull tiene vértices con coordenadas enteras (pues los vértices
 de los beyblades y las trayectorias son enteros). Por el Teorema
 de Pick:
 \[
-A = I + \frac{B}{2} - 1
+A = I + \frac{B}{2} - 1,
 \]
 donde $A$ es el área del polígono, $I$ es el número de puntos enteros
 estrictamente interiores y $B$ es el número de puntos enteros en el
 borde. Despejando:
 \[
-I = A - \frac{B}{2} + 1 = \frac{2A - B + 2}{2}
+I = A - \frac{B}{2} + 1 = \frac{2A - B + 2}{2}.
 \]
 Notemos que el número de puntos con coordenadas enteras en un segmento de $(x_1,y_1)$ a $(x_2,y_2)$ sin contar los extremos es $gcd(|x_2-x_1|,|y_2-y_1|)-1$, esto debido a que los puntos enteros son de la forma:
-\[(x_1+t\frac{x_2-x_1}{d},y_1+t\frac{y_2-y_1}{d})\]
+\[(x_1+t\frac{x_2-x_1}{d},y_1+t\frac{y_2-y_1}{d}),\]
 en donde $d=gcd(|x_2-x_1|,|y_2-y_1|)$ y $t\in \{1,\ldots d\}$. Es decir, hay $d+1$ puntos en total contando ambos extremos, es decir $d-1$ más $2$ extremos. Podemos calcular esto para cada arista del polígono convexo del estadio para calcular $B$. $A$ lo podemos calcular con la fórmula de shoelace.
 
 La complejidad es $O(nk \log(nk))$ donde $n$ es el número de beyblades y $k$ el número máximo de vértices por beyblade.
@@ -601,7 +601,7 @@ $b=(b_x,b_y)$ tiene $g := \gcd(|a_x-b_x|,\ |a_y-b_y|) + 1$ puntos enteros (inclu
 \[
 \gcd(|a_x-b_x|,|a_y-b_y|) \geq m
 \iff
-a_x \equiv b_x \pmod{m} \ \text{y}\ a_y \equiv b_y \pmod{m}
+a_x \equiv b_x \pmod{m} \ \text{y}\ a_y \equiv b_y \pmod{m}.
 \]
 
 \textit{($\Leftarrow$)} Si $m \mid (a_x-b_x)$ y
@@ -613,7 +613,7 @@ positivo, y mayor o igual a $m$.
 $g = \gcd(|a_x-b_x|,|a_y-b_y|) \geq m$. El vector
 $v=\left(\frac{b_x-a_x}{g}, \frac{b_y-a_y}{g}\right)$ es entero. Definimos
 \[
-c = a + m \cdot \left(\frac{b_x-a_x}{g}, \frac{b_y-a_y}{g}\right)
+c = a + m \cdot \left(\frac{b_x-a_x}{g}, \frac{b_y-a_y}{g}\right).
 \]
 Como $0 \leq m/g \leq 1$, el punto $c$ está sobre el segmento $[a,b]$ y como el polígono es convexo, $c$ también
 está dentro del polígono. Además $c$ tiene coordenadas enteras, y $c - a = m \cdot v$, así que
@@ -675,18 +675,18 @@ P(u \to v) = \prod_{i=0}^{t-1} \frac{1}{\text{deg'}(w_i)}
 \text{deg'}(w_i) = \begin{cases}
 \deg(w_0) & \text{si } i = 0 \\
 \deg(w_i) - 1 & \text{si } i > 0
-\end{cases}
+\end{cases}.
 \]
  
 Recordemos también, que el camino sólo es válido si la suma acumulada de espiritualidades es $\leq k$:
 \[
-\sum_{i=0}^{t} e_{w_i} \leq k
+\sum_{i=0}^{t} e_{w_i} \leq k.
 \]
  
 Como tenemos $n$ nodos, la probabilidad de empezar en cualquiera de ellos es $\frac{1}{n}$, de donde para cada nodo $v$ la probabilidad de encontrarle es:
 \[
 P_v = \frac{1}{n} \sum_{u=1}^{n} P(u \to v) \cdot
-\left[\sum_{w \in \text{camino}(u,v)} e_w \leq k\right]
+\left[\sum_{w \in \text{camino}(u,v)} e_w \leq k\right].
 \]
 Una vez que desglosamos lo que necesitamos calcular, viene el problema de no poder calcularlo con fuerza bruta , la suma $\sum_u P(u \to v)$ recorre todos los pares $(u,v)$. Calcularla directamente cuesta $O(n^2)$. La \textbf{descomposición de centroide} permite descomponer esta suma eficientemente, para cada centroide $c$, contamos los pares $(u,v)$ cuyo camino pasa por $c$.
 
@@ -699,7 +699,7 @@ en $u \to c \to v$. Definimos dos probabilidades:
           \[
           \texttt{pt}[u] = \frac{1}{\deg(u)} \cdot
           \prod_{\substack{w \in \text{camino}(u,c) \\ w \neq u}}
-          \frac{1}{\deg(w) - 1}
+          \frac{1}{\deg(w) - 1}.
           \]
  
     \item \texttt{pf}: la probabilidad
@@ -707,7 +707,7 @@ en $u \to c \to v$. Definimos dos probabilidades:
           \[
           \texttt{pf}[v] = \frac{1}{\deg(c)} \cdot
           \prod_{\substack{w \in \text{camino}(c,v) \\ w \neq c}}
-          \frac{1}{\deg(w) - 1}
+          \frac{1}{\deg(w) - 1}.
           \]
 \end{itemize}
  
@@ -719,7 +719,7 @@ Entonces la probabilidad de $c \to v$ como vértice intermedio es:
 \texttt{pf$_{m}$}[v] = \frac{1}{\deg(c)-1} \cdot
 \prod_{\substack{w \in \text{camino}(c,v) \\ w \neq c}}
 \frac{1}{\deg(w) - 1}
-= \texttt{pf}[v] \cdot \frac{\deg(c)}{\deg(c)-1}
+= \texttt{pf}[v] \cdot \frac{\deg(c)}{\deg(c)-1}.
 \]
 El factor \texttt{f$_m$} $= \frac{\deg(c)}{\deg(c)-1}$
 convierte \texttt{pf} en \texttt{pf$_{m}$}.
@@ -748,11 +748,11 @@ Ahora, no podemos simplemente contar todos los pares de vértices porque buscamo
 \\\\Si tuvieramos los subárboles $A$, $B$ y $C$, lo que podemos hacer es procesar los subárboles en orden manteniendo un arreglo llamado \texttt{prev}, es decir, primero procesamos $A$ y metemos todos sus vértices en \texttt{prev}. Luego, procesamos $B$ contamos los pares $(u,v)$, ($u \in \texttt{prev}, v \in \text{B}$) y ($u \in \text{B}, v \in \texttt{prev}$), y agregamos $B$ a $\texttt{prev}$. Cuando queramos procesar $C$, queremos los pares $(u,v)$ tal que $u\in C, v \in (A \cup B)$ o $u\in (A \cup B), v \in C$, pero los elementos de $A\cup B$ son exactamente \texttt{prev}, entonces podemos simplemente hacer lo mismo que hicimos con $B$, y después agregar $C$ a \texttt{prev}.
 
 Para cada par $(u,v)$ la probabilidad de llegar a $v$ empezando en $u$ es $\texttt{pt}[u]*\texttt{pf}_m[v]$ siempre que se cumpla $\texttt{sum}[u]+\texttt{sum}[v]-e_c \leq k$, es decir, $\texttt{sum}[u] \leq k - \texttt{sum}[v]+ e_c$. Nótese que podemos guardar un arreglo \texttt{prevOrden} de pares $\{\texttt{sum}, \texttt{pt}\}$ ordenado por $\texttt{sum}$ de todos los vértices en $\texttt{prev}$, así para cada $v$, podemos hacer una búsqueda binaria sobre \texttt{prevOrden} para saber qué $u$ sí considerar, es decir:
-\[\texttt{res}[v]=\sum_{\substack{u \in \texttt{prev} \\ sum[u]\leq t_v}} \texttt{pt}[u]\cdot \texttt{pf}_m[v]\]
+\[\texttt{res}[v]=\sum_{\substack{u \in \texttt{prev} \\ sum[u]\leq t_v}} \texttt{pt}[u]\cdot \texttt{pf}_m[v],\]
 donde $t_v$ es $k - \texttt{sum}[v]+ e_c$.
 
 Ahora, la suma anterior nos costaría $O(n)$, pero como $\texttt{pf}_m[v]$ es constante, podemos precalcular la suma en una suma de prefijos de \texttt{prevOrden} y realizar un solo producto.
-\[\texttt{res}[v] =\texttt{pf}m[v] \cdot \sum_{\substack{u \in \texttt{prev} \\ sum[u]\leq t_v}} \texttt{pt}[u]\]
+\[\texttt{res}[v] =\texttt{pf}m[v] \cdot \sum_{\substack{u \in \texttt{prev} \\ sum[u]\leq t_v}} \texttt{pt}[u].\]
 
 Para cada par $(u,v)$ estamos agregando a la respuesta la probabilidad de llegar a $v$ empezando a $u$, pero falta la otra dirección: la probabilidad de llegar a $u$ empezando en $v$, para esto simplemente podemos utilizar una estrategia análoga a la de arriba, un arreglo de pares ${\texttt{sum}, \texttt{pt}}$ llamado \texttt{sub} ordenado por \texttt{sum}, pero esta vez, el arreglo será de los vértices del subárbol actual, así como su suma de prefijos. Después, iteraramos sobre nuestro arreglo \texttt{prev} y para cada uno haremos una búsqueda binaria sobre \texttt{sub} para encontrar qué $v$ podemos usar (misma lógica de despejar la resta). Tras esto, de forma análoga a cómo que hicimos anteriormente, a $\texttt{res}[u]$ le sumaremos $\texttt{pf}_m[u]\cdot \sum_{\substack{v \in \texttt{sub} \\ sum[v]\leq t_u}} \texttt{pt}[v]$, donde la suma la tenemos calculada en el arreglo de suma de prefijos.
 \\\\
