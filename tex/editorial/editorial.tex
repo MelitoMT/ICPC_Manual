@@ -8,7 +8,7 @@ En este capítulo se recogen las editoriales de los problemas propuestos en el m
 Notemos que para cualquier número $x$, si su último dígito no es $9$ entonces $f(x+1)=f(x)+1$. En el caso en el que el último dígito sea $9$, tendremos que al sumarle $1$, el último dígito se convertirá en $0$, de forma que $f(x+1)< f(x)$. Solamente tenemos que contar cuántos números terminan en $9$ de $1$ a $n$. Como solo hay uno cada $10$ tenemos que la respuesta es:
 \[\lfloor \frac{n+1}{10} \rfloor.\]
 \subsection*{Código}
-Ver \codelink{https://codeforces.com/contest/1553/submission/376093836}.
+Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/1553A.cpp}.
 
 \editorialproblem{5.10.2 Two Divisors (Codeforces 1916B)}
 \subsection*{Hint1}
@@ -33,7 +33,7 @@ De lo anterior tenemos que
 \[a^{b^c} \equiv a^{b^c \mod (p-1)} \mod p.\]
 Ahora, podemos calcular $b^c \, \mod (p-1)$, con exponenciación binaria, de forma que nos queda un número $x\leq 10^9+6$, y ahora podemos calcular $a^x$ de la misma forma. Debemos tener cuidado con el caso $a=0$, en este caso $a^{b^c}=0$.
 \subsection*{Código}
-Ver \codelink{https://cses.fi/paste/59f7146d402d82ade95b1e/}.
+Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/cses712.cpp}.
 
 \editorialproblem{5.10.4 Short Task (Codeforces 1512G)}
 \subsection*{Hint1}
@@ -43,7 +43,7 @@ Notemos que calcular $n$ para cada querie es muy costoso en cuestión de tiempo.
 \\\\
 En lugar de calcular $d(n)$ para cada $n$ individualmente, podemos calcularlo para todos a la vez, es decir, para $k \in [1, 10^7]$ sumaremos $k$ a todos sus múltiplos porque eso es lo que contribuye a $d()$ de cada múltiplo. Este proceso es una idea parecida a la criba de Eratóstenes, y similarmente su complejidad es $O(n \log n)$.
 \subsection*{Código}
-Ver \codelink{https://codeforces.com/contest/1512/submission/196458896}.
+Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/1512G.cpp}.
 
 \editorialproblem{5.10.5 Fantastic Beasts (Latin American Regional 2018)}
 \subsection*{Hint 1}
@@ -172,7 +172,8 @@ Sólo hay $1$ forma de obtener $1$ como suma (y $0$ formas para números negativ
 \]
 La complejidad es $O(6^3 \log n) = O(\log n)$.
 \subsection*{Código}
-Ver \codelink{https://cses.fi/paste/48e6570bd3a36951107242d/}.
+Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/cses1092.cpp}.
+
 \editorialproblem{6.5.2 Cowmpany Compensation (Codeforces 995F)}
 \subsection*{Hint1}
 Considera una función $f(v,x)$, el número de formas de asignar salarios al subárbol $v$ asignando salario $x$ a $v$. ¿De qué depende el valor de $f(v,x)$?
@@ -211,7 +212,7 @@ Por lo tanto $\deg(g(1,x)) = n$ el número total de vértices.
 Podemos calcular $g(1,1), g(1,2), \ldots, g(1,n+1)$ en $O(n^2)$ con DP procesando los nodos de hojas a raíz. Para cada nodo $v$ y cada $x$, calculamos $f(v,x) = \prod_{i=1}^{k} g(s_i,x)$ y luego $g(v,x) = g(v,x-1) + f(v,x)$, guardando ambos valores en memoria
 para evitar repetir cálculos. Con $n+1$ puntos evaluados en $x=1,2,\ldots,n+1$ (puntos consecutivos), aplicamos interpolación de Lagrange con la simplificación para puntos consecutivos para evaluar el polinomio en $d$ en $O(n)$.
 \subsection*{Código}
-Ver \codelink{https://codeforces.com/problemset/submission/995/375695448}.
+Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/995F.cpp}.
 
 \editorialproblem{6.5.3 Hail Mary (Autoría $\filledstar$)}
 \subsection*{Hint1}
@@ -277,8 +278,7 @@ cuenta todos los pares $(i,j)$ con $s_i = s_j$ sin restricción de orden incluye
 \text{ans}[0] = \frac{(f * \tilde{f})[n] - (n+1)}{2}.
 \]
 \subsection*{Código}
-Ver \codelink{https://codeforces.com/contest/993/submission/375820964}.
-
+Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/993E.cpp}.
 
 \editorialproblem{6.5.5 Running Competition (Codeforces 1398G)}
 \subsection*{Hint1}
@@ -295,7 +295,7 @@ con $a_j - a_i = d$. Encontrar esto para todas las diferencias $d \in \{1, \ldot
 \\\\
 Finalmente, tenemos que responder las queries, para cada etapa $l_t$, queremos el mayor divisor de $l_t' = l_t/2$ de la forma $d + y$ donde $d$ es una diferencia válida. Llamemosle $D = d + y$, entonces $D$ es un divisor válido si $D-y=d$ es una diferencia válida. Este último cambio de variable nos permite buscar directamente divisores de $l_t'$ y verificar en $O(1)$ si son válidos.\\\\A continuación, iteraremos sobre los divisores de $l_t'$ en orden decreciente, esto lo hacemos revisando los enteros de $1$ a $\sqrt{l_t'}$ y agregando los que le dividan a un arreglo, recordemos que es mejor usar la condición $i*i<l_t'$ que $i<\sqrt{l_t'}$ para no meternos con decimales. Tras esto, verificaremos en $O(1)$ si $D - y$ es diferencia válida usando el arreglo obtenido de la convolucion. Es decir, revisaremos que $D>y$ y que la posición $D-y$ no sea $0$.
 \subsection*{Código}
-Ver \codelink{https://codeforces.com/contest/1398/submission/375853380}.
+Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/1398G.cpp}.
 
 \editorialproblem{6.5.6 Rumbo al Mundial (Autoría $\filledstar$)}
 \subsection*{Hint1}
@@ -346,7 +346,7 @@ n! \cdot \left(\prod_{i} f_i!\right)^{-1} \bmod p,
 usando el inverso modular $a^{-1} \equiv a^{p-2} \pmod{p}$ por el
 pequeño teorema de Fermat~\cite{perez_numeros}.
 \subsection*{Código}
-Ver \codelink{https://cses.fi/paste/9cb680d81b74829410ac8df/}.
+Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/cses1715.cpp}.
  
 \editorialproblem{7.11.2 Buildings (2017-2018 ACM-ICPC GCPC)}
 \subsection*{Hint1}
@@ -454,7 +454,7 @@ El número de soluciones sin la restricción $\sum x_i \geq 1$ es $\binom{n+C}{C
 \]
 Notemos que $\binom{n+C}{C} = \frac{(n+C)!}{n! \cdot C!}$. Como $p = 10^6+3$ es primo y $n+C \leq 700000 < p$, $(n+C)!$, $n!$ y $C!$ no son divisibles por $p$. Entonces podemos calcular la división modular usando el pequeño Teorema de Fermat~\cite{perez_numeros}.
 \subsection*{Código}
-Ver \codelink{https://codeforces.com/problemset/submission/690/377859415}.
+Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/690D2.cpp}.
 
 \editorialproblem{8.7.1 Balloons (2013-2014 ICPC Brazil Subregional)}
 \subsection*{Hint 1}
@@ -641,7 +641,7 @@ La complejidad es $O(5000 \cdot m)$ para ambas pasadas.
 \subsection*{Código}
 Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/105216.cpp}.
 
-\editorialproblem{9.11.1 Finding a centroid}
+\editorialproblem{9.11.1 Finding a centroid (CSES 2079)}
 \subsection*{Hint1}
 Si elegimos un vértice del árbol, ¿cómo sabemos que es un centroide?
 \subsection*{Solución}
@@ -649,7 +649,7 @@ Un vértice $c$ es centroide si cada subárbol tiene a lo más $\frac{n}{2}$ vé
 
 El subárbol hacia arriba de $u$ tiene $n-sz[u] < \frac{n}{2}$, donde $sz[u]$ es el tamaño de subárbol de $u$ que dijimos era mayor a $\frac{n}{2}$, por lo que si elegimos a $u$ como candidato para centroide, ya no tenemos que preocuparnos por todos los vértices que no estaban en su subárbol, pues ya cumplen la condición, simplemente volveremos a evaluar considerando solo los vértices en el subárbol de $u$ y de encontrar algún subárbol con más de $\frac{n}{2}$ vértices, volvemos a realizar el mismo procedimiento hasta encontrar el centroide.
 \subsection*{Código}
-Ver \codelink{https://cses.fi/paste/155eeecc0f435b8c10ac77e/}.
+Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/cses2079.cpp}.
 
 \editorialproblem{9.11.2 Zuko vs Aang (Autoría $\filledstar$)}
 \subsection*{Hint 1}
@@ -780,7 +780,7 @@ Marcamos cada vértice del árbol de componentes con $1$ si esa componente conti
 Nota de implementación: con $n$ hasta $3\times10^5$, las DFS recursivas (para encontrar puentes) pueden causar \textit{stack overflow} en gráficas tipo cadena. Conviene implementarlas \textbf{iterativamente} con una pila explícita. La complejidad es $O(n+m)$.
 
 \subsection*{Código}
-Ver \codelink{https://codeforces.com/contest/652/submission/217948279}.
+Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/625E.cpp}.
 
 \editorialproblem{9.11.4 Brick Walls (Codeforces 1404E)}
 
@@ -803,6 +803,6 @@ vértices $-$ los vértices en la cobertura mínima. En una gráfica bipartita, 
 
 Por lo tanto la respuesta es la cantidad total de bordes quitándole el matching máximo.
 \subsection*{Código}
-Ver \codelink{https://codeforces.com/contest/1404/submission/254010265}.
+Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/1404E.cpp}.
 
 

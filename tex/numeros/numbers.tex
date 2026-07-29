@@ -947,7 +947,7 @@ Para módulo no primo o cuando $\gcd(a,m) > 1$, hay variantes que reducen al cas
     Esta suma puede parecer muy grande, sin embargo, $L_j$ crece muy rápido, pues por definición $L_j$ es divisible por todos los números hasta $j$. Para $n \leq 10^{16}$, basta calcular hasta $j = 40$, pues $L_{41} > 10^{16}$, haciendo que
     los demás términos sean $0$. En la implementación, haremos la suma hasta encontrar el primer término $0$, ahí pararemos y ya tendremos el resultado.
     \\\\
-    Ver \codelink{https://codeforces.com/contest/1542/submission/251341276}.
+    Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/1542C.cpp}.
 \subsection*{6.9.2 \href{https://codeforces.com/problemset/problem/1725/H}{Hot Black Hot White (COMPFEST 14)}}
 
 \textbf{Descripción: }\url{https://codeforces.com/problemset/problem/1725/H}
@@ -962,7 +962,7 @@ Para módulo no primo o cuando $\gcd(a,m) > 1$, hay variantes que reducen al cas
     \end{align*}
     Notemos que $0^2\equiv 0  \mod 3$, $1^2 \equiv 1  \mod 3$ y $2^2 \equiv 1 \, \mod 3$. Si tenemos al menos $\frac{n}{2}$ piedras tal que $A_i^2\equiv 0  \mod 3$, entonces podemos colorear $\frac{n}{2}$ de esas de un solo color, así cuando haya dos colores diferentes tendremos que $A_i^2+A_j^2\equiv 0^2 +A_j^2 \equiv A_j^2  \mod 3$ y como ningún número al cuadrado es congruente con $2$ módulo $3$, podemos hacer $Z=2$. Por otro lado, si no hay al menos $\frac{n}{2}$ que lo cumplan, significa que hay al menos $\frac{n}{2}$ tal que $A_i^2 \equiv 1  \mod 3$, entonces coloreamos $\frac{n}{2}$ de ellas de un mismo color y así no habrá ningún par de rocas de diferente color tal que ambas tengan $A_j^2 \equiv 0$. De donde podemos hacer $Z=0$.
     \\\\
-    Ver \codelink{https://codeforces.com/contest/1725/submission/201205415}.
+    Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/1725H.cpp}.
 \subsection*{6.9.3 \href{https://lightoj.com/problem/monkey-tradition}{Monkey Tradition (Light OJ)}}
 
 \textbf{Descripción: }\url{https://lightoj.com/problem/monkey-tradition}
