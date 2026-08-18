@@ -538,7 +538,46 @@ vector<ll> multiply_fft(vector<ll> a, vector<ll> b) {
 \section{Ejercicios}
 \subsection*{5.4.1 \href{https://cses.fi/problemset/task/1722}{Fibonacci Numbers (CSES 1722)}}
 
-\textbf{Descripción: }\url{https://cses.fi/problemset/task/1722}
+\begin{center}
+\fbox{
+\begin{minipage}{0.95\linewidth}
+\begin{center}
+\textbf{Fibonacci Numbers}\\
+\textbf{time limit:} 1.00 s\\
+\textbf{memory limit:} 512 MB
+\end{center}
+
+The Fibonacci numbers can be defined as follows:
+\begin{itemize}
+    \item $F_0 = 0$
+    \item $F_1 = 1$
+    \item $F_n = F_{n-2} + F_{n-1}$
+\end{itemize}
+
+Your task is to calculate the value of $F_n$ for a given $n$.
+
+\vspace{0.5em}
+\textbf{Input}\\
+The only input line has an integer $n$.
+
+\vspace{0.5em}
+\textbf{Output}\\
+Print the value of $F_n$ modulo $10^9+7$.
+
+\vspace{0.5em}
+\textbf{Constraints}\\
+$0 \leq n \leq 10^{18}$
+
+\vspace{0.5em}
+\textbf{Example}\\
+\textbf{Input}\\
+\texttt{10}
+
+\textbf{Output}\\
+\texttt{55}
+\end{minipage}
+}
+\end{center}
 
 En este problema nos dan la recurrencia:
 \[
@@ -569,7 +608,45 @@ Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/edit
 
 \subsection*{5.4.2 \href{https://cses.fi/problemset/task/1723}{Graph Paths I (CSES 1723)}}
 
-\textbf{Descripción: }\url{https://cses.fi/problemset/task/1723}
+\begin{center}
+\fbox{
+\begin{minipage}{0.95\linewidth}
+\begin{center}
+\textbf{Graph Paths I}\\
+\textbf{time limit:} 1.00 s\\
+\textbf{memory limit:} 512 MB
+\end{center}
+
+Consider a directed graph that has $n$ nodes and $m$ edges. Your task is to count the number of paths from node $1$ to node $n$ with exactly $k$ edges.
+
+\vspace{0.5em}
+\textbf{Input}\\
+The first input line contains three integers $n$, $m$ and $k$: the number of nodes and edges, and the length of the path. The nodes are numbered $1,2,\dots,n$.
+
+Then, there are $m$ lines describing the edges. Each line contains two integers $a$ and $b$: there is an edge from node $a$ to node $b$.
+
+\vspace{0.5em}
+\textbf{Output}\\
+Print the number of paths modulo $10^9+7$.
+
+\vspace{0.5em}
+\textbf{Constraints}\\
+$1 \leq n \leq 100$, $1 \leq m \leq n(n-1)$, $1 \leq k \leq 10^9$, $1 \leq a,b \leq n$
+
+\vspace{0.5em}
+\textbf{Example}\\
+\textbf{Input}\\
+\texttt{3 4 8}\\
+\texttt{1 2}\\
+\texttt{2 3}\\
+\texttt{3 1}\\
+\texttt{3 2}
+
+\textbf{Output}\\
+\texttt{2}
+\end{minipage}
+}
+\end{center}
 
 En este problema nos dan una gráfica dirigida. Podríamos pensar que este es un problema en el que necesitamos algún algoritmo de gráficas, pero la realidad es que podemos resolverlo con exponenciación de matrices. Notemos que podemos expresar la gráfica por medio de una matriz de adyacencia $M$. Esta tendrá $M[i][j]=1$ si hay una arista de $i$ a $j$, de lo contrario, tendrá $0$.
 \\\\Cuando calculamos $M^2$ lo que hacemos es:
