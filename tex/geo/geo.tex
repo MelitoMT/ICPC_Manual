@@ -593,7 +593,42 @@ Usualmente no se recomienda implementar Bentley-Oattmann en concursos, ya que su
 \section{Ejercicios}
 \subsection*{8.6.1 \href{https://acm.timus.ru/problem.aspx?space=1&num=1469}{No Smoking! (Timus 1469)}}
 
-\textbf{Descripción: }\url{https://acm.timus.ru/problem.aspx?space=1&num=1469}
+\begin{center}
+\fbox{
+\begin{minipage}{0.95\linewidth}
+\begin{center}
+\textbf{1469. No Smoking!}\\
+\textbf{time limit:} 1.5 second\\
+\textbf{memory limit:} 64 MB
+\end{center}
+
+Vasya is a good boy, but he has a bad habit: he smokes. All the time that Petya is Vasya's friend, he's been trying to cure Vasya of this habit. But he never succeeded, because Vasya doesn't want to leave off smoking.
+
+Recently Petya invented a new way to cure his friend. Vasya is a sloven, so his cigarettes are not in a pack but lie scattered on a big table. Petya wants to take away one cigarette every day so that Vasya wouldn't notice it. Petya wants to take away a cigarette that intersect other cigarettes on the table. Help Petya to determine if he can start to implement his plan.
+
+\vspace{0.5em}
+\textbf{Input}\\
+A cigarette is a segment with non-zero length. The first line contains the number of cigarettes on Vasya's table $N$ ($1 \leq N \leq 50000$). The next $N$ lines describe the cigarettes: in the $(i+1)$st line there are integers $x_1$, $y_1$, $x_2$, $y_2$, which are the coordinates of the ends of the $i$th cigarette ($-10000 \leq x_1, y_1, x_2, y_2 \leq 10000$).
+
+\vspace{0.5em}
+\textbf{Output}\\
+If Petya can start to implement his plan, then in the first line you should output the word ``YES'', and the second line should contain numbers $i$ and $j$, where $i$ is the number of the cigarette that must be taken away, and $j$ is the number of the intersecting cigarette.
+
+If Petya can take away no cigarettes, then output ``NO''.
+
+\vspace{0.5em}
+\textbf{Example}\\
+\textbf{Input}\\
+\texttt{2}\\
+\texttt{0 0 2 2}\\
+\texttt{0 2 2 0}
+
+\textbf{Output}\\
+\texttt{YES}\\
+\texttt{1 2}
+\end{minipage}
+}
+\end{center}
 
 Este problema es una aplicación directa del algoritmo de \textit{Shamos-Hoey} descrito en esta sección, con una pequeña adición: además de detectar si existe una intersección, necesitamos imprimir cuáles dos segmentos se intersectan.
  
@@ -604,7 +639,41 @@ Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/edit
 
 \subsection*{8.7.2 \href{https://acm.timus.ru/problem.aspx?space=1&num=1418}{Military Story (Ural State University Championship 2005)}}
 
-\textbf{Descripción: }\url{https://acm.timus.ru/problem.aspx?space=1&num=1418}
+\begin{center}
+\fbox{
+\begin{minipage}{0.95\linewidth}
+\begin{center}
+\textbf{1418. Military Story}\\
+\textbf{time limit:} 2.0 second\\
+\textbf{memory limit:} 64 MB
+\end{center}
+
+Military headquaters plan to develop a better protection for a spaceport. They suppose that the spaceport would be best protected if it is surrounded with as many fences as possible and each fence is patroled by armed guards. The corresponding order was issued and military engineers started to develop a project.
+
+Wishing to be promoted, sergeant Stupid sent soldiers to dig in fence poles before the project was actually ready. Without much thinking, the soldiers put a lot of poles at random. Help the sergeant to decide how to make barbwire fences using the poles so that the number of fences is maximal.
+
+\vspace{0.5em}
+\textbf{Input}\\
+The first line contains an integer $3 \leq N \leq 4000$, which is the number of the poles. Each of the following $N$ lines contains two integers $0 \leq x, y \leq 10000$, which are the coordinates of a corresponding pole. No two poles have the same position.
+
+\vspace{0.5em}
+\textbf{Output}\\
+Output the maximal possible number of nested fences that can be constructed. Each fence should be a non-self-intersecting polygon with a non-zero area, whose vertices are the poles. Different fences should not have common points.
+
+\vspace{0.5em}
+\textbf{Example}\\
+\textbf{Input}\\
+\texttt{4}\\
+\texttt{100 100}\\
+\texttt{200 100}\\
+\texttt{100 200}\\
+\texttt{300 300}
+
+\textbf{Output}\\
+\texttt{1}
+\end{minipage}
+}
+\end{center}
 
 La cerca más exterior que podemos construir con un conjunto de puntos es su casco convexo. Una vez construida esa cerca, los puntos que la forman quedan usados. La siguiente cerca más exterior (adentro de la anterior) es el convex hull de los puntos restantes, y así
 sucesivamente.

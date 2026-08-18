@@ -1707,7 +1707,46 @@ $i$ a la tarea $j$, minimizar el costo total. La mejor referencia que he encontr
 \section{Ejercicios}
 \subsection*{9.10.1 \href{https://codeforces.com/problemset/problem/808/F}{Card Game (Codeforces 808F)}}
 
-\textbf{Descripción: }\url{https://codeforces.com/problemset/problem/808/F}
+\begin{center}
+\fbox{
+\begin{minipage}{0.95\linewidth}
+\begin{center}
+\textbf{F. Card Game}\\
+\textbf{time limit per test:} 2 seconds\\
+\textbf{memory limit per test:} 256 megabytes
+\end{center}
+
+Digital collectible card games have become very popular recently. So Vova decided to try one of these.
+
+Vova has $n$ cards in his collection. Each of these cards is characterised by its power $p_i$, magic number $c_i$ and level $l_i$. Vova wants to build a deck with total power not less than $k$, but magic numbers may not allow him to do so: Vova can't place two cards in a deck if the sum of the magic numbers written on these cards is a prime number. Also Vova cannot use a card if its level is greater than the level of Vova's character.
+
+At the moment Vova's character's level is $1$. Help Vova to determine the minimum level he needs to reach in order to build a deck with the required total power.
+
+\vspace{0.5em}
+\textbf{Input}\\
+The first line contains two integers $n$ and $k$ ($1 \leq n \leq 100$, $1 \leq k \leq 100000$).
+
+Then $n$ lines follow, each of these lines contains three numbers that represent the corresponding card: $p_i$, $c_i$ and $l_i$ ($1 \leq p_i \leq 1000$, $1 \leq c_i \leq 100000$, $1 \leq l_i \leq n$).
+
+\vspace{0.5em}
+\textbf{Output}\\
+If Vova won't be able to build a deck with required power, print $-1$. Otherwise print the minimum level Vova has to reach in order to build a deck.
+
+\vspace{0.5em}
+\textbf{Example}\\
+\textbf{Input}\\
+\texttt{5 8}\\
+\texttt{5 5 1}\\
+\texttt{1 5 4}\\
+\texttt{4 6 3}\\
+\texttt{1 12 4}\\
+\texttt{3 12 1}
+
+\textbf{Output}\\
+\texttt{4}
+\end{minipage}
+}
+\end{center}
 
 Si un conjunto de cartas con $l_i \leq L$ permite alcanzar potencia $\geq k$, entonces
 también lo permite cualquier nivel mayor (hay más cartas disponibles). Podemos hacer búsqueda binaria sobre el nivel necesario.
@@ -1746,9 +1785,67 @@ La complejidad es $O(\log n)$ para las iteraciones de búsqueda binaria, cada un
 \\\\
 Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/808F.cpp}.
 
-\subsection*{9.10.2 \href{https://www.spoj.com/problems/QTREE2/}{Query on a tree III (SPOJ)}}
+\subsection*{9.10.2 \href{https://www.spoj.com/problems/QTREE2/}{Query on a tree II (SPOJ)}}
 
-\textbf{Descripción: }\url{https://www.spoj.com/problems/QTREE2/}
+\begin{center}
+\fbox{
+\begin{minipage}{0.95\linewidth}
+\begin{center}
+\textbf{QTREE2 - Query on a tree II}\\
+\textbf{time limit:} 1 s\\
+\textbf{memory limit:} 1536 MB
+\end{center}
+
+You are given a tree (an undirected acyclic connected graph) with $N$ nodes, and edges numbered $1, 2, 3 \dots N-1$. Each edge has an integer value assigned to it, representing its length.
+
+We will ask you to perfrom some instructions of the following form:
+\begin{itemize}
+    \item \texttt{DIST a b}: ask for the distance between node $a$ and node $b$, or
+    \item \texttt{KTH a b k}: ask for the $k$-th node on the path from node $a$ to node $b$.
+\end{itemize}
+
+For example, if $N=6$ and the edges are \texttt{1 2 1}, \texttt{2 4 1}, \texttt{2 5 2}, \texttt{1 3 1}, \texttt{3 6 2} (an edge \texttt{a b c} connects node $a$ and node $b$ with cost $c$), the path from node $4$ to node $6$ is $4 \to 2 \to 1 \to 3 \to 6$. Then \texttt{DIST 4 6} is $5$ ($1+1+1+2=5$) and \texttt{KTH 4 6 4} is $3$ (the $4$-th node on the path from node $4$ to node $6$ is $3$).
+
+\vspace{0.5em}
+\textbf{Input}\\
+The first line of input contains an integer $t$, the number of test cases ($t \leq 25$). $t$ test cases follow.
+
+For each test case:
+\begin{itemize}
+    \item In the first line there is an integer $N$ ($N \leq 10000$).
+    \item In the next $N-1$ lines, the $i$-th line describes the $i$-th edge: a line with three integers \texttt{a b c} denotes an edge between $a$, $b$ of cost $c$ ($c \leq 100000$).
+    \item The next lines contain instructions \texttt{DIST a b} or \texttt{KTH a b k}.
+    \item The end of each test case is signified by the string \texttt{DONE}.
+\end{itemize}
+
+There is one blank line between successive tests.
+
+\vspace{0.5em}
+\textbf{Output}\\
+For each \texttt{DIST} or \texttt{KTH} operation, write one integer representing its result.
+
+Print one blank line after each test.
+
+\vspace{0.5em}
+\textbf{Example}\\
+\textbf{Input}\\
+\texttt{1}\\
+\texttt{6}\\
+\texttt{1 2 1}\\
+\texttt{2 4 1}\\
+\texttt{2 5 2}\\
+\texttt{1 3 1}\\
+\texttt{3 6 2}\\
+\texttt{DIST 4 6}\\
+\texttt{KTH 4 6 4}\\
+\texttt{DONE}
+
+\textbf{Output}\\
+\texttt{5}\\
+\texttt{3}
+\end{minipage}
+}
+\end{center}
 
  Para resolver el primer tipo de consulta notemos que el camino de $a$ a $b$ pasa por su LCA $L$, y se descompone en el camino $a \to L$ más el camino $L \to b$. Si guardamos para cada vértice la distancia acumulada desde la raíz
 (\texttt{distRoot}), entonces:

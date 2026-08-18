@@ -561,7 +561,46 @@ Regresando al problema de la oficina, la respuesta es $B_{10}=115,975$.
 \section{Ejercicios}
 \subsection*{7.10.1 \href{https://codeforces.com/contest/1795/problem/D}{Triangle Coloring (Codeforces 1795D)}}
 
-\textbf{Descripción: }\url{https://codeforces.com/contest/1795/problem/D}
+\begin{center}
+\fbox{
+\begin{minipage}{0.95\linewidth}
+\begin{center}
+\textbf{D. Triangle Coloring}\\
+\textbf{time limit per test:} 3 seconds\\
+\textbf{memory limit per test:} 512 megabytes
+\end{center}
+
+You are given an undirected graph consisting of $n$ vertices and $n$ edges, where $n$ is divisible by $6$. Each edge has a weight, which is a positive (greater than zero) integer.
+
+The graph has the following structure: it is split into $\frac{n}{3}$ triples of vertices, the first triple consisting of vertices $1, 2, 3$, the second triple consisting of vertices $4, 5, 6$, and so on. Every pair of vertices from the same triple is connected by an edge. There are no edges between vertices from different triples.
+
+You have to paint the vertices of this graph into two colors, red and blue. Each vertex should have exactly one color, there should be exactly $\frac{n}{2}$ red vertices and $\frac{n}{2}$ blue vertices. The coloring is called valid if it meets these constraints.
+
+The weight of the coloring is the sum of weights of edges connecting two vertices with different colors.
+
+Let $W$ be the maximum possible weight of a valid coloring. Calculate the number of valid colorings with weight $W$, and print it modulo $998244353$.
+
+\vspace{0.5em}
+\textbf{Input}\\
+The first line contains one integer $n$ ($6 \leq n \leq 3 \cdot 10^5$, $n$ is divisible by $6$).
+
+The second line contains $n$ integers $w_1, w_2, \dots, w_n$ ($1 \leq w_i \leq 1000$), the weights of the edges. Edge $1$ connects vertices $1$ and $2$, edge $2$ connects vertices $1$ and $3$, edge $3$ connects vertices $2$ and $3$, edge $4$ connects vertices $4$ and $5$, edge $5$ connects vertices $4$ and $6$, edge $6$ connects vertices $5$ and $6$, and so on.
+
+\vspace{0.5em}
+\textbf{Output}\\
+Print one integer, the number of valid colorings with maximum possible weight, taken modulo $998244353$.
+
+\vspace{0.5em}
+\textbf{Example}\\
+\textbf{Input}\\
+\texttt{12}\\
+\texttt{1 3 3 7 8 5 2 2 2 2 4 2}
+
+\textbf{Output}\\
+\texttt{36}
+\end{minipage}
+}
+\end{center}
 
     En cualquiera de las triangulaciones, la máxima cantidad de aristas que apoyarán al peso máximo son dos, ya que podemos colorear $2$ vértices de un color y el tercero del otro color. La forma en la que maximizamos el peso entonces será haciendo que la excluida sea la de menor peso.
     \\\\
@@ -583,7 +622,46 @@ Regresando al problema de la oficina, la respuesta es $B_{10}=115,975$.
 
 \subsection*{7.10.2 \href{https://cses.fi/problemset/task/2064}{Bracket Squences I (CSES 2064)}}
 
-\textbf{Descripción: }\url{https://cses.fi/problemset/task/2064}
+\begin{center}
+\fbox{
+\begin{minipage}{0.95\linewidth}
+\begin{center}
+\textbf{Bracket Sequences I}\\
+\textbf{time limit:} 1.00 s\\
+\textbf{memory limit:} 512 MB
+\end{center}
+
+Your task is to calculate the number of valid bracket sequences of length $n$. For example, when $n=6$, there are $5$ sequences:
+\begin{itemize}
+    \item \texttt{()()()}
+    \item \texttt{()(())}
+    \item \texttt{(())()}
+    \item \texttt{((()))}
+    \item \texttt{(()())}
+\end{itemize}
+
+\vspace{0.5em}
+\textbf{Input}\\
+The only input line has an integer $n$.
+
+\vspace{0.5em}
+\textbf{Output}\\
+Print the number of sequences modulo $10^9+7$.
+
+\vspace{0.5em}
+\textbf{Constraints}\\
+$1 \leq n \leq 10^6$
+
+\vspace{0.5em}
+\textbf{Example}\\
+\textbf{Input}\\
+\texttt{6}
+
+\textbf{Output}\\
+\texttt{5}
+\end{minipage}
+}
+\end{center}
 
   Nótese que una sucesión de $n=2m$ paréntesis es válida si tiene $m$ paréntesis de apertura, $m$ de cierre y para cualquier posición la cantidad de paréntesis de apertura hasta esa posición, es decir en el prefijo, es mayor o igual a la de cierre.
   \\\\Si no tuvieramos ninguna restricción sobre los prefijos entonces la cantidad total de secuencias sería simplemente la forma de colocar $m$ aperturas en $n$ posiciones, es decir: $\binom{n}{m}$. Entonces nos interesa encontrar cuál es la cantidad de secuencias inválidas para restarlas de las secuencias totales y encontrar cuántas secuencias válidas hay. Tomemos una secuencia de paréntesis inválida cualquiera, notemos que entonces esta tiene un prefijo donde los cierres son mayores a las aperturas. En ese prefijo, cambiemos todos los paréntesis de apertura por los de cierre y los de cierre por los de apertura. Notemos que entonces la secuencia nueva tiene $m+1$ aperturas y $m-1$ cierres. Esto nos da una biyección entre las secuencias inválidas de $m$ aperturas y $m$ cierres y todas las secuencias posibles con $m+1$ aperturas y $m-1$ cierres que son $\binom{n}{m+1}$ de donde tenemos que:

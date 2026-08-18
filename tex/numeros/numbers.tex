@@ -917,7 +917,50 @@ Para módulo no primo o cuando $\gcd(a,m) > 1$, hay variantes que reducen al cas
 \section{Ejercicios}
 \subsection*{6.9.1 \href{https://codeforces.com/contest/1542/problem/C}{Strange Function (Codeforces 1542C)}}
 
-\textbf{Descripción: }\url{https://codeforces.com/contest/1542/problem/C}
+\begin{center}
+\fbox{
+\begin{minipage}{0.95\linewidth}
+\begin{center}
+\textbf{C. Strange Function}\\
+\textbf{time limit per test:} 1 second\\
+\textbf{memory limit per test:} 256 megabytes
+\end{center}
+
+Let $f(i)$ denote the minimum positive integer $x$ such that $x$ is not a divisor of $i$.
+
+Compute $\sum_{i=1}^n f(i)$ modulo $10^9+7$. In other words, compute $f(1)+f(2)+\dots+f(n)$ modulo $10^9+7$.
+
+\vspace{0.5em}
+\textbf{Input}\\
+The first line contains a single integer $t$ ($1 \leq t \leq 10^4$), the number of test cases. Then $t$ cases follow.
+
+The only line of each test case contains a single integer $n$ ($1 \leq n \leq 10^{16}$).
+
+\vspace{0.5em}
+\textbf{Output}\\
+For each test case, output a single integer $ans$, where $ans=\sum_{i=1}^n f(i)$ modulo $10^9+7$.
+
+\vspace{0.5em}
+\textbf{Example}\\
+\textbf{Input}\\
+\texttt{6}\\
+\texttt{1}\\
+\texttt{2}\\
+\texttt{3}\\
+\texttt{4}\\
+\texttt{10}\\
+\texttt{10000000000000000}
+
+\textbf{Output}\\
+\texttt{2}\\
+\texttt{5}\\
+\texttt{7}\\
+\texttt{10}\\
+\texttt{26}\\
+\texttt{366580019}
+\end{minipage}
+}
+\end{center}
 
     Construyamos la siguiente tabla, en las filas colocaremos los valores de $i$ y en las columnas los valores de $k$ y pondremos una estrella en la celda $(i,j)$ si $f(i)\geq k$:
     \[
@@ -950,7 +993,47 @@ Para módulo no primo o cuando $\gcd(a,m) > 1$, hay variantes que reducen al cas
     Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/1542C.cpp}.
 \subsection*{6.9.2 \href{https://codeforces.com/problemset/problem/1725/H}{Hot Black Hot White (COMPFEST 14)}}
 
-\textbf{Descripción: }\url{https://codeforces.com/problemset/problem/1725/H}
+\begin{center}
+\fbox{
+\begin{minipage}{0.95\linewidth}
+\begin{center}
+\textbf{H. Hot Black Hot White}\\
+\textbf{time limit per test:} 1 second\\
+\textbf{memory limit per test:} 256 megabytes
+\end{center}
+
+One day, you are accepted as being Dr. Chanek's assistant. The first task given by Dr. Chanek to you is to take care and store his magical stones.
+
+Dr. Chanek has $N$ magical stones with $N$ being an even number. Those magical stones are numbered from $1$ to $N$. Magical stone $i$ has a strength of $A_i$. A magical stone can be painted with two colours, namely the colour black or the colour white. You are tasked to paint the magical stones with the colour black or white and store the magical stones into a magic box with a magic coefficient $Z$ ($0 \leq Z \leq 2$). The painting of the magical stones must be done in a way such that there are $\frac{N}{2}$ black magical stones and $\frac{N}{2}$ white magical stones.
+
+Define $\text{concat}(x,y)$ for two integers $x$ and $y$ as the result of concatenating the digits of $x$ to the left of $y$ in their decimal representation without changing the order. As an example, $\text{concat}(10,24)$ will result in $1024$.
+
+For a magic box with a magic coefficient $Z$, magical stone $i$ will react with magical stone $j$ if the colours of both stones are different and $\text{concat}(A_i, A_j) \times \text{concat}(A_j, A_i) + A_i \times A_j \equiv Z \mod 3$. A magical stone that is reacting will be very hot and dangerous. Because of that, you must colour the magical stones and determine the magic coefficient $Z$ of the magic box in a way such that there is no magical stone that reacts, or report if it is impossible.
+
+\vspace{0.5em}
+\textbf{Input}\\
+The first line contains a single even integer $N$ ($2 \leq N \leq 10^5$), the number of magical stones Dr. Chanek has.
+
+The second line contains $N$ integers $A_1, A_2, \ldots, A_N$ ($1 \leq A_i \leq 10^9$), the strengths of all magical stones.
+
+\vspace{0.5em}
+\textbf{Output}\\
+If it is not possible to satisfy the condition of the problem, output $-1$.
+
+Otherwise, output two lines. The first line contains an integer $Z$ denoting the magic coefficient of the magic box. The second line contains a string $S$ of length $N$. $S_i$ is $0$ if magical stone $i$ is coloured black or $1$ if magical stone $i$ is coloured white. If there are more than one possibilities of colouring and choosing the magic coefficient $Z$, output any of them.
+
+\vspace{0.5em}
+\textbf{Example}\\
+\textbf{Input}\\
+\texttt{4}\\
+\texttt{4 10 9 14}
+
+\textbf{Output}\\
+\texttt{0}\\
+\texttt{1001}
+\end{minipage}
+}
+\end{center}
 
     Antes de indagar en cómo elegir $Z$ o cómo pintar las rocas mágicas, vamos a intentar simplificar la expresión que nos dan: $concat(A_i, A_j) \times concat(A_j, A_i) + A_i \times A_j \equiv Z \, \mod 3$.
     \\\\Veamos que si $k$ es la cantidad de digitos de $A_j$ entonces $concat(A_i, A_j)=A_i \times 10^k + A_j$ y más aún como $10^k \equiv 1^k \equiv 1\, \mod 3$ tenemos que:
@@ -965,7 +1048,57 @@ Para módulo no primo o cuando $\gcd(a,m) > 1$, hay variantes que reducen al cas
     Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/1725H.cpp}.
 \subsection*{6.9.3 \href{https://lightoj.com/problem/monkey-tradition}{Monkey Tradition (Light OJ)}}
 
-\textbf{Descripción: }\url{https://lightoj.com/problem/monkey-tradition}
+\begin{center}
+\fbox{
+\begin{minipage}{0.95\linewidth}
+\begin{center}
+\textbf{Monkey Tradition}\\
+\textbf{time limit:} 1 second\\
+\textbf{memory limit:} 64 MB
+\end{center}
+
+In `MonkeyLand', there is a traditional game called ``Bamboo Climbing''. The rules of the game are as follows:
+\begin{enumerate}
+    \item There are $N$ monkeys who play this game and there are $N$ bamboos of equal heights. Let the height be $L$ meters.
+    \item Each monkey stands in front of a bamboo and every monkey is assigned a different bamboo.
+    \item When the whistle is blown, the monkeys start climbing the bamboos and they are not allowed to jump to a different bamboo throughout the game.
+    \item Since they are monkeys, they usually climb by jumping. And in each jump, the $i$th monkey can jump exactly $p_i$ meters ($p_i$ is a prime). After a while when a monkey finds that he cannot jump because one more jump may get him out of the bamboo, he reports the remaining length $r_i$ that he is not able to cover.
+    \item And before the game, each monkey is assigned a distinct $p_i$.
+    \item The monkey, who has the lowest $r_i$, wins.
+\end{enumerate}
+
+Now, the organizers have found all the information of the game last year, but unluckily they haven't found the height of the bamboo. To be more exact, they know $N$, all $p_i$ and corresponding $r_i$, but not $L$. So, you came forward and found the task challenging and so, you want to find $L$, from the given information.
+
+\vspace{0.5em}
+\textbf{Input}\\
+Input starts with an integer $T$ ($\leq 10000$), denoting the number of test cases.
+
+Each case starts with a line containing an integer $n$ ($1 \leq n \leq 12$). Each of the next $n$ lines contains two integers $p_i$ ($1 < p_i < 40$, $p_i$ is a prime) and $r_i$ ($0 < r_i < p_i$). All $p_i$ will be distinct.
+
+\vspace{0.5em}
+\textbf{Output}\\
+For each case, print the case number and the minimum possible value of $L$ that satisfies the above conditions. If there is no solution, print \texttt{Impossible}.
+
+\vspace{0.5em}
+\textbf{Example}\\
+\textbf{Input}\\
+\texttt{2}\\
+\texttt{3}\\
+\texttt{5 4}\\
+\texttt{7 6}\\
+\texttt{11 3}\\
+\texttt{4}\\
+\texttt{2 1}\\
+\texttt{3 2}\\
+\texttt{5 3}\\
+\texttt{7 1}
+
+\textbf{Output}\\
+\texttt{Case 1: 69}\\
+\texttt{Case 2: 113}
+\end{minipage}
+}
+\end{center}
 
 Notemos que si a un monito, le faltó $r_i$ para llegar a la cima de su bambú dando saltos $p_i$, esto significa que la altura $L$ cumple que $L\equiv r_i \, \mod \,p_i$. Esto nos deja con un sistema de congruencias:
 \begin{align*}
