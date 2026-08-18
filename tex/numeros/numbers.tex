@@ -1,7 +1,7 @@
 En programación competitiva, dominar o al menos tener buenas nociones de los conceptos principales de teoría de números no es un lujo, sino una necesidad. A lo largo de este texto y en la práctica dentro de la ICPC, el lector encontrará problemas donde aparecen de manera natural ideas como divisibilidad, números primos, residuos, máximo común divisor y aritmética modular. En términos generales, la teoría de números estudia las propiedades de los enteros, y por ello ofrece un lenguaje muy útil para describir, simplificar y resolver muchos problemas clásicos de concurso.
 \section{Bases}
 
-\textbf{Definición.} Decimos que $a$ \textbf{divide} a $b$ (y escribimos $a \mid b$) si existe un entero $k$ tal que $b = ka$.
+\textbf{Definición.} Decimos que $a$ \textbf{divide} a $b$ (y escribimos $a \mid b$) si existe un entero $k$ tal que $b = ka$. Escribimos $a \nmid b$ si $a$ no divide a $b$.
 
 \textit{Ejemplo.} Se cumple $4 \mid 20$ porque $20 = 4 \cdot 5$ (aquí $k = 5$). En cambio, $6 \nmid 20$, pues no existe ningún entero $k$ con $20 = 6k$.
 
@@ -9,21 +9,21 @@ Veamos propiedades de la divisibilidad que aparecen con frecuencia en competenci
 
 \textbf{Propiedad 1.} Si un mismo número divide a otros dos, entonces también divide a su suma y su diferencia:
 \[
-a \mid b \text{  y  } a \mid c \implies a \mid (b \pm c).
+a \mid b \text{  y  } a \mid c \quad \text{ implica } \quad a \mid (b \pm c).
 \]
 
 \textit{Ejemplo.} Como $3 \mid 12$ y $3 \mid 21$, entonces $3 \mid (21-12) = 9$ y $3 \mid (21+12) = 33$.
 
 \textbf{Propiedad 2.} Si un número divide a otro, entonces también divide cualquier múltiplo de ese segundo número:
 \[
-a \mid b \implies a \mid bc.
+a \mid b \quad \text{ implica } \quad a \mid bc.
 \]
 
 \textit{Ejemplo.} Como $4 \mid 12$, también $4 \mid (12 \cdot 5) = 60$.
 
-\textbf{Propiedad 3.} Si un número divide a un segundo y ese segundo divide a un tercero, entonces el primero divide al tercero:
+\textbf{Propiedad 3. (Transitividad)} Si un número divide a un segundo y ese segundo divide a un tercero, entonces el primero divide al tercero:
 \[
-a \mid b \text{ y } b \mid c \implies a \mid c.
+a \mid b \text{ y } b \mid c \quad \text{ implica } \quad a \mid c.
 \]
 
 \textit{Ejemplo.} Como $2 \mid 8$ y $8 \mid 40$, se sigue que $2 \mid 40$.
@@ -74,11 +74,14 @@ dividiendo antes de multiplicar para mantener los valores en el rango.
 
 Hasta aquí relacionamos $\text{lcm}(a,b)$ con $\gcd(a,b)$. Para \emph{calcular} $\gcd(a,b)$ se usa el algoritmo de Euclides~\cite{perez_numeros}.
 
-\textbf{Algoritmo de Euclides.} Para enteros $a$ y $b$ con $b \neq 0$,
+\textbf{Lema.} Para enteros $a$ y $b$ con $b \neq 0$,
 \[
 \gcd(a, b) = \gcd(b, a \bmod b).
 \]
 Cualquier divisor común de $a$ y $b$ también divide a $a \bmod b = a - \lfloor a/b \rfloor \cdot b$, y viceversa.
+
+\textbf{Algoritmo de Euclides.} 
+El lema anterior sugiere un procedimiento recursivo. Mientras $ b \neq 0$, sustituimos $(a,b)$ por $(b, a \bmod b)$, cuando $b=0$ el algoritmo termina y devuelve $a$, pues $\gcd(a,0)=a$.
 
 \textit{Ejemplo.} Si $a = 30$ y $b = 18$, entonces
 \[
@@ -88,7 +91,7 @@ Los divisores comunes de $30$ y $18$ son $\{1,2,3,6\}$, y esos mismos números t
 \[
 \gcd(30,18) = \gcd(18,12) = 6.
 \]
-Se repite el paso hasta obtener residuo $0$; el último resto no nulo es $\gcd(a,b)$.
+Repitiendo el proceso, $\gcd(18,12)=\gcd(12,6)=\gcd(6,0)=6$.
 
 \paragraph{Implementación.} Una versión recursiva típica es la siguiente:
 
@@ -102,7 +105,7 @@ long long lcm(long long a, long long b) {
 }
 \end{lstlisting}
  
-La complejidad es $O(\log \min(a,b))$. En C++17 puedes usar directamente \texttt{std::gcd}.
+La complejidad es $O(\log \min(a,b))$. En C++17 se puede usar directamente \texttt{std::gcd}.
 
 \section{Aritmética modular}
 
@@ -145,7 +148,7 @@ En sumas y productos, cada término puede sustituirse por otro congruente módul
 
 Las congruencias ayudan a evitar \textit{overflow}: si trabajamos módulo $m$, conviene reducir cada resultado intermedio con \texttt{a \% m} (ajustando signos si hace falta).
 \label{sec:expbin}
-\paragraph{Exponenciación modular.} El problema de calcular $a^b \bmod m$ aparece constantemente. Por ejemplo, para $2^7$ una forma ingenua es
+\paragraph{Aplicación: Exponenciación modular.} El problema de calcular $a^b \bmod m$ aparece constantemente. Por ejemplo, para $2^7$ una forma ingenua es
 \[
 2 \cdot 2 \cdot 2 \cdot 2 \cdot 2 \cdot 2 \cdot 2.
 \]
@@ -153,13 +156,13 @@ lo cual requiere $6$ multiplicaciones. En cambio, si reutilizamos resultados int
 \[
 2^2 = 4, \qquad 2^4 = (2^2)^2 = 16, \qquad 2^7 = 2^4 \cdot 2^2 \cdot 2.
 \]
-y con ello reducimos notablemente el número de operaciones. Esta es la idea detrás de la exponenciación rápida: en lugar de construir la potencia multiplicando uno por uno, aprovechamos que podemos ir partiendo el exponente y recombinando resultados ya calculados.
+Esta es la idea detrás de la \textbf{exponenciación rápida}: en lugar de construir la potencia multiplicando uno por uno, aprovechamos que podemos ir partiendo el exponente y recombinando resultados ya calculados.
 
-\textbf{Propiedad (exponenciación rápida).} Para $b \ge 1$ se puede escribir (en la práctica con división entera de $b$ entre $2$ en cada paso):
+\textbf{Exponenciación rápida.} Para $b \ge 1$ se puede escribir (en la práctica con división entera de $b$ entre $2$ en cada paso):
 \[
 a^b = \begin{cases} (a^{b/2})^2 & \text{si } b \text{ es par}, \\ a \cdot a^{b-1} & \text{si } b \text{ es impar}. \end{cases}.
 \]
-De aquí un algoritmo $O(\log b)$; en cada paso se puede reducir módulo $m$ para obtener $a^b \bmod m$.
+Con ello tenemos un algoritmo que reduce el número de multiplicaciones de $\text{O}(b)$ a $\text{O}(\log(b))$. Para calcular $a^{128}$ necesitaríamos $127$ operaciones de la forma ingenua, mientras que con la exponenciación rápida solo necesitamos $7$ (duplicando el exponente en cada caso).
 
 \paragraph{Implementación.}
 
@@ -187,18 +190,19 @@ long long power(long long base, long long exponent, long long mod) {
 
 \textit{Ejemplo.} Los números $2$, $3$, $5$, $7$ y $11$ son primos; $4$ no lo es, pues $4 = 2\cdot 2$.
 
-\textbf{Teorema Fundamental de la Aritmética.} Todo entero $n > 1$ se puede escribir de forma única (salvo el orden) como producto de potencias de primos~\cite{perez_numeros}.
+\textbf{Teorema Fundamental de la Aritmética.} Todo entero $n > 1$ se puede escribir de forma única (salvo el orden) como
+$$n=p_1^{a_1} \cdot p_2^{a_1} \cdots p_k^{a_k}$$ donde $p_1,p_2,\cdots,p_k$ son primos distintos y $a_i \geq 1$~\cite{perez_numeros}.
 
 \textit{Ejemplo.}
 \[
 12 = 2^2 \cdot 3, \qquad 60 = 2^2 \cdot 3 \cdot 5.
 \]
 
-\textbf{Propiedad (prueba de primalidad hasta $\sqrt{n}$).} Si $n$ es un número compuesto (es mayor a $1$ y tiene más de dos divisores positivos), entonces existen enteros $a$ y $b$ con $n = ab$ y $1 < a, b < n$. No pueden cumplirse a la vez $a > \sqrt{n}$ y $b > \sqrt{n}$, pues entonces $ab > n$. Por tanto, todo compuesto posee un divisor $d$ con $1 < d \le \lfloor\sqrt{n}\rfloor$. Para determinar si un número es compuesto, basta probar divisibilidad con los enteros en ese rango.
+\textbf{Propiedad (prueba de primalidad hasta $\sqrt{n}$).} Si $n$ es un número compuesto (es mayor a $1$ y tiene más de dos divisores positivos), entonces existen enteros $a$ y $b$ con $n = ab$ y $1 < a, b < n$. No pueden cumplirse a la vez $a > \sqrt{n}$ y $b > \sqrt{n}$, pues entonces $ab > n$. Por tanto, todo número compuesto posee un divisor $d$ con $1 < d \le \lfloor\sqrt{n}\rfloor$. Para determinar si un número es compuesto, basta probar divisibilidad con los enteros en ese rango.
 
 \textit{Ejemplo.} Como $91 = 7\cdot 13$ y $7 \le \sqrt{91}$, al buscar factores de $91$ basta llegar hasta $\lfloor\sqrt{91}\rfloor = 9$; al hallar $7$ se concluye que $91$ no es primo.
 
-Si ningún entero entre $2$ y $\lfloor\sqrt{n}\rfloor$ divide a $n$, entonces $n$ es primo. Esto da un algoritmo $O(\sqrt{n})$.
+Si ningún entero entre $2$ y $\lfloor\sqrt{n}\rfloor$ divide a $n$, entonces $n$ es primo. Esto implica la existencia de un algoritmo de tiempo $O(\sqrt{n})$.
 
 \paragraph{Implementación (\texttt{esPrimo}).}
 
@@ -276,14 +280,16 @@ for (int i = 2; i * i <= n; i++) {
 }
 \end{lstlisting}
  
-\paragraph{Complejidad.} La criba anterior corre en $O(n \log \log n)$, prácticamente lineal; suele ser viable hasta $n \approx 10^7$ con memoria razonable. Para $n$ mayor o para tener el \emph{menor factor primo} de cada entero (útil para factorizar rápido) existen variantes en tiempo $O(n)$; véase la referencia \cite{cpalg-sieve}.
+\paragraph{Complejidad.} La criba anterior corre en $O(n \log \log n)$, prácticamente lineal; suele ser viable hasta $n \approx 10^7$ con memoria lineal. Para $n$ mayor o para tener el \emph{menor factor primo} de cada entero (útil para factorizar rápido) existen variantes en tiempo $O(n)$; véase la referencia \cite{cpalg-sieve}.
 
 \section{Lema de Bézout}
+\textbf{Definición.} Una combinación lineal de dos enteros $a$ y $b$ es cualquier expresión de la forma $ax+by$ con $x,y$ enteros.
 
-\textbf{Lema (Bézout)}~\cite{perez_numeros}. Para cualesquiera enteros $a$ y $b$ no ambos cero, existen enteros $x$ e $y$ tales que
+\textbf{Lema (Bézout)}~\cite{perez_numeros}. Para cualesquiera enteros $a$ y $b$ no ambos cero, existen enteros $x$ y $y$ tales que
 \[
 ax + by = \gcd(a, b).
 \]
+es decir, $\gcd(a,b)$ se puede escribir como combinación lineal de $a$ y $b$.
 
 \textit{Ejemplo (coeficientes).} Si $a = 12$ y $b = 18$, entonces $\gcd(12,18) = 6$ y una elección es
 \[
@@ -303,7 +309,7 @@ ax + by = c.
 \]
 tiene solución $(x,y)$ en enteros si y solo si $\gcd(a,b) \mid c$.
 
-\textit{Ejemplo.} La ecuación $12x + 18y = 6$ tiene solución porque $\gcd(12,18)=6$ divide $6$. En cambio, $12x + 18y = 5$ no tiene solución en enteros, pues $6 \nmid 5$.
+\textit{Ejemplo.} La ecuación $12x + 18y = 6$ tiene solución porque $\gcd(12,18)=6$, de donde $\gcd(12,18)$ divide $6$. En cambio, $12x + 18y = 5$ no tiene solución en enteros, pues $6 \nmid 5$.
 
 \textbf{Algoritmo de Euclides extendido}~\cite{perez_numeros}: calcula $\gcd(a,b)$ y además encuentra $x,y$ con
 \[
@@ -375,24 +381,24 @@ long long extendedGcd(long long a, long long b, long long& x, long long& y) {
 }
 \end{lstlisting}
 
-La complejidad es la misma que Euclides: $O(\log \min(a,b))$.
+La complejidad es la misma que la del algoritmo de Euclides: $O(\log \min(a,b))$. Esto se debe a que la magnitud de la entrada disminuye al menos a la mitad cada paso.
 
 \section{Inverso multiplicativo modular}
 
-En aritmética usual, el inverso de $a \neq 0$ es $\frac{1}{a}$, es decir el número que cumple $a \cdot \frac{1}{a} = 1$. En congruencias se busca lo mismo \emph{módulo} $m$.
+En aritmética usual, el inverso de $a \neq 0$ es $\frac{1}{a}$, es decir el número que cumple $a \cdot \frac{1}{a} = 1$. En congruencias buscamos lo mismo: dado un entero $a$ y un módulo $m$, queremos otro entero tal que su producto con $a$ nos devuelva $1 \pmod{m}$.
 
 \textbf{Definición.} Dados enteros $a$ y $m$ con $m \ge 2$, un \textbf{inverso multiplicativo} de $a$ módulo $m$ es un entero $a^{-1}$ tal que
 \[
 a \cdot a^{-1} \equiv 1 \pmod{m}.
 \]
 
-\textit{Ejemplo.} El inverso de $3$ módulo $7$ es $5$, pues $3 \cdot 5 = 15 \equiv 1 \pmod{7}$.
+\textit{Ejemplo.} Un inverso de $3$ módulo $7$ es $5$, pues $3 \cdot 5 = 15 \equiv 1 \pmod{7}$.
 
-En problemas suele ``dividirse'' módulo $m$ multiplicando por el inverso:
+En problemas suele aparecer la necesidad de ``dividir'' módulo $m$. Interpretamos $\frac{a}{b} \pmod{m}$ como el producto
 \[
-\frac{a}{b} \bmod m \;\equiv\; a \cdot b^{-1} \pmod{m}.
+a \cdot b^{-1} \pmod{m}.
 \]
-siempre que $b^{-1}$ exista módulo $m$.
+cuando $b^{-1}$ exista módulo $m$.
 
 \textit{Ejemplo (combinaciones módulo $7$).} Primero recordemos la definición usual:
 \[
@@ -410,7 +416,7 @@ y coincide con $10 \equiv 3 \pmod{7}$.
 
 Este enfoque aparece con frecuencia en la ICPC con módulos primos grandes (por ejemplo $10^9+7$).
 
-\textit{Ejemplo (inverso inexistente).} Con $m = 4$ y $a = 2$, si existiera $b$ con $2b \equiv 1 \pmod{4}$ tendríamos un imposible, porque
+\textit{Ejemplo (inverso inexistente).} Con $m = 4$ y $a = 2$, si existiera $b$ con $2b \equiv 1 \pmod{4}$ tendríamos un imposible, porque todo entero es congruente módulo $4$ a alguno de los enteros $0,1,2,3$, así que basta revisar estos cuatro casos:
 \[
 2 \cdot 0 \equiv 0,\quad
 2 \cdot 1 \equiv 2,\quad
@@ -446,12 +452,6 @@ long long modularInverse(long long a, long long m) {
 \end{lstlisting}
 Nótese que al final en lugar de devolver $x$, devolvemos \verb|(x % m + m) % m|, esto es porque el coeficiente $x$ que devuelve \texttt{extendedGcd} puede ser negativo. Por ejemplo, el inverso de $3$ módulo $7$ es $5$, pero el algoritmo puede devolver $x = -2$, que es equivalente, pues $-2 \equiv 5 \pmod 7$. La expresión \verb|(x % m + m) % m| convierte cualquier $x$ a un número congruente a $x$ positivo en $[0, m)$.
 
-Cuando $m = p$ es primo y $\gcd(a,p)=1$, el pequeño teorema de Fermat~\cite{perez_numeros} implica que
-\[
-a^{p-1} \equiv 1 \pmod{p}.
-\]
-Multiplicando ambos lados por $a^{-1}$ se obtiene $a^{p-2} \equiv a^{-1} \pmod{p}$. Así, el inverso modular se puede calcular también como una potencia, usando exponenciación modular en tiempo $O(\log p)$. Esta vía es útil cuando ya se tiene implementada la exponenciación rápida y no se quiere depender de \texttt{extendedGcd} en ese momento.
-
 \subsection*{Inversos para cada número módulo $m$}
 
 A veces necesitamos el inverso de cada $i \in \{1,\ldots,m-1\}$ a la vez. Llamar \texttt{extendedGcd} por cada $i$ cuesta del orden de $O(m \log m)$.
@@ -466,7 +466,7 @@ y manipulación módulo $p$ llevan a la recurrencia usual (equivalente a la que 
 \[
 i^{-1} \equiv -\left\lfloor \frac{p}{i} \right\rfloor \cdot (p \bmod i)^{-1} \pmod{p}.
 \]
-donde $(p \bmod i)^{-1}$ ya está en \texttt{inv}[$p \bmod i$]. Esto funciona porque $p \bmod i$ siempre cae entre $1$ e $i-1$ (cuando $2 \le i < p$), así que ese índice corresponde a un valor ya calculado en iteraciones anteriores.
+dónde $(p \bmod i)^{-1}$ ya está en \texttt{inv}[$p \bmod i$]. Esto funciona porque $p \bmod i$ siempre cae entre $1$ e $i-1$ (cuando $2 \le i < p$), así que ese índice corresponde a un valor ya calculado en iteraciones anteriores. Necesitamos que $p$ sea primo para que esta recurrencia esté bien definida todo el rango $\{1,\dots, p_1\}$. Si $p$ no fuera primo, algún $i$ podría no tener inverso y la recurrencia fallaría. 
 
 \textit{Ejemplo ($p=7$).} La tabla queda:
 
@@ -481,7 +481,7 @@ $\texttt{inv}[i]$ & $1$ & $4$ & $5$ & $2$ & $3$ & $6$ \\
 \end{tabular}
 \end{center}
 
-Comprobación rápida: $2 \cdot 4 = 8 \equiv 1 \pmod{7}$ y $3 \cdot 5 = 15 \equiv 1 \pmod{7}$. Aquí $p$ debe ser primo y normalmente $m = p$.
+Comprobación rápida: $2 \cdot 4 = 8 \equiv 1 \pmod{7}$ y $3 \cdot 5 = 15 \equiv 1 \pmod{7}$.
 
 \paragraph{Implementación.}
 
@@ -510,16 +510,16 @@ En particular, si multiplicamos ambos lados por $a^{-1}$ (que existe módulo $p$
 \[
 a^{p-2} \equiv a^{-1} \pmod{p}.
 \]
-que es la identidad que ya usamos arriba para calcular inversos módulo un primo.
+Así, el inverso modular se puede calcular también como una potencia, usando exponenciación modular en tiempo $O(\log p)$. Esta vía es útil cuando ya se tiene implementada la exponenciación rápida y no se quiere depender de \texttt{extendedGcd} en ese momento.
 
 \textit{Ejemplo.} Con $p = 7$ y $a = 2$, se cumple $2^6 = 64 \equiv 1 \pmod{7}$.
 
+
 \subsection*{Teorema de Euler}
 
-El pequeño teorema de Fermat aplica cuando el módulo es un primo $p$.
-El teorema de Euler generaliza esta idea a cualquier entero $m \ge 2$: si $\gcd(a,m)=1$, entonces una potencia de $a$ vuelve a dar $1$ módulo $m$, y ese exponente es $\phi(m)$, donde $\phi(m)$ cuenta los residuos invertibles módulo $m$.
+\textbf{Definición.} Para un entero $m\geq 1$, definimos la \textbf{función $\phi(m)$ de Euler} como el número de enteros en $\{1,2,\dots,m\}$ que son coprimos con $m$.
 
-\textbf{Teorema de Euler}~\cite{perez_numeros}: Sea $m \ge 2$ un entero y sea $\phi(m)$ el número de enteros en $\{1,2,\ldots,m\}$ que son coprimos con $m$ (la \textbf{función $\phi$ de Euler}). Si $\gcd(a,m)=1$, entonces
+\textbf{Teorema de Euler}~\cite{perez_numeros}: Sea $m \ge 2$ un entero, si $\gcd(a,m)=1$, entonces
 \[
 a^{\phi(m)} \equiv 1 \pmod{m}.
 \]
@@ -585,14 +585,14 @@ Si $x_1$ y $x_2$ son dos soluciones, entonces $x_1 \equiv x_2 \pmod{n_1}$ y $x_1
 
 En implementaciones conviene reducir módulo $\text{lcm}(n_1,n_2)$ (o módulos intermedios) en cada paso para controlar el \textit{overflow}.
 
-El mismo procedimiento se extiende a $k$ congruencias $x \equiv a_i \pmod{n_i}$: se fusionan dos a dos, reemplazando cada par por una sola congruencia módulo el mínimo común múltiplo de los módulos involucrados, hasta obtener una congruencia única. Una cota razonable de coste es $O\bigl(k \log \text{lcm}(n_1,\ldots,n_k)\bigr)$ si en cada paso se usa Euclides extendido sobre enteros acotados por dicho lcm.
+El mismo procedimiento se extiende a $k$ congruencias $x \equiv a_i \pmod{n_i}$: se fusionan dos a dos, reemplazando cada par por una sola congruencia módulo el mínimo común múltiplo de los módulos involucrados, hasta obtener una congruencia única. Una cota razonable de costo es $O\bigl(k \log \text{lcm}(n_1,\ldots,n_k)\bigr)$ si en cada paso se usa Euclides extendido sobre enteros acotados por dicho lcm.
 
 \textit{Ejemplo.} Busquemos $x$ que satisfaga el sistema
 \begin{align*}
 x &\equiv 2 \pmod{3}, \\
 x &\equiv 3 \pmod{5}.
 \end{align*}
-Escribimos $x = 2 + 3b$; entonces $2 + 3b \equiv 3 \pmod{5}$, es decir $3b \equiv 1 \pmod{5}$. Como $3^{-1} \equiv 2 \pmod{5}$, obtenemos $b \equiv 2 \pmod{5}$. Con $b = 2$ resulta $x = 2 + 3\cdot 2 = 8$, y en efecto $8 \equiv 2 \pmod{3}$ y $8 \equiv 3 \pmod{5}$. Como $\gcd(3,5)=1$, el módulo de unicidad es $\text{lcm}(3,5)=15$, así que todas las soluciones son $x \equiv 8 \pmod{15}$.
+Escribimos $x = 2 + 3b$; entonces $2 + 3b \equiv 3 \pmod{5}$, es decir $3b \equiv 1 \pmod{5}$. Como $3^{-1} \equiv 2 \pmod{5}$, obtenemos $b \equiv 2 \pmod{5}$. Con $b = 2$ resulta $x = 2 + 3\cdot 2 = 8$, y en efecto $8 \equiv 2 \pmod{3}$ y $8 \equiv 3 \pmod{5}$. Como $\text{lcm}(3,5)=15$, todas las soluciones son $x \equiv 8 \pmod{15}$.
 
 %EJERCICIO IMPLEMENTAR CRT PARA K CONGRUENCIAS
 %https://codeforces.com/contest/982/problem/E
@@ -608,7 +608,7 @@ Si conocemos $f$ en potencias de primos, podemos calcular $f(n)$ para cualquier 
 
 \subsection*{Función $\phi$ de Euler}
 
-$\phi(n)$ cuenta cuántos enteros del conjunto $\{1,2,\ldots,n\}$ son coprimos con $n$ (es decir, $\gcd(k,n)=1$). Equivale al orden del grupo multiplicativo $(\mathbb{Z}/n\mathbb{Z})^\times$ cuando $n\ge 2$.
+La función $\phi(n)$ de Euler cuenta cuántos enteros del conjunto $\{1,2,\ldots,n\}$ son coprimos con $n$ (es decir, $\gcd(k,n)=1$). Equivale al orden del grupo multiplicativo $(\mathbb{Z}/n\mathbb{Z})^\times$ cuando $n\ge 2$.
 
 \textbf{Propiedad (multiplicatividad).} Si $\gcd(a,b)=1$, entonces $\phi(ab)=\phi(a)\phi(b)$.
 
@@ -732,7 +732,7 @@ La función de Möbius $\mu:\mathbb{Z}^+\to\{-1,0,1\}$ se define por
 \]
 Es multiplicativa: si $\gcd(a,b)=1$, entonces $\mu(ab)=\mu(a)\mu(b)$.
 
-\textit{Ejemplo.} \(\mu(1)=1\). Además, \(\mu(30)=\mu(2\cdot 3\cdot 5)=(-1)^3=-1\) porque es producto de \(3\) primos distintos. En cambio, \(\mu(12)=0\) ya que \(12\) es divisible por \(2^2\).
+\textit{Ejemplo.} Veamos que \(\mu(1)=1\). Además, \(\mu(30)=\mu(2\cdot 3\cdot 5)=(-1)^3=-1\) porque es producto de \(3\) primos distintos. En cambio, \(\mu(12)=0\), ya que \(12\) es divisible por \(2^2\).
 
 \textbf{Propiedad (inversión de Möbius).} Si $g(n)=\sum_{d\mid n} f(d)$ para todo $n$, entonces~\cite{cf_mobius}
 \[
@@ -831,7 +831,7 @@ Los ceros corresponden a enteros divisibles por un cuadrado ($4$, $8$, $9$, etc.
 \[
 a^x \equiv b \pmod{m}.
 \]
-A tal $x$ se le llama \textbf{logaritmo discreto} de $b$ en base $a$ módulo $m$. Es el análogo modular de resolver $a^x = b$ en los reales; aquí $x$ solo queda determinado salvo múltiplos del orden de $a$ en el grupo de unidades módulo $m$.
+A tal $x$ se le llama \textbf{logaritmo discreto} de $b$ en base $a$ módulo $m$. Es el análogo modular de resolver $a^x = b$ en los reales; aquí $x$ queda determinado salvo múltiplos del orden de $a$ en el grupo de unidades módulo $m$.
 
 \textit{Ejemplo (existencia y no existencia).} Módulo $7$, las potencias de $3$ son $3^0 \equiv 1$, $3^1 \equiv 3$, $3^2 \equiv 2$, $3^3 \equiv 6$, \ldots; por tanto $x = 2$ resuelve $3^x \equiv 2 \pmod{7}$. En cambio $2^x \equiv 3 \pmod{7}$ no tiene solución, porque $2^x \bmod 7$ solo toma los valores $1$, $2$ y $4$.
 
@@ -840,7 +840,7 @@ A tal $x$ se le llama \textbf{logaritmo discreto} de $b$ en base $a$ módulo $m$
 \paragraph{Baby-step Giant-step (BSGS).} Supongamos $\gcd(a,m)=1$. Sea $n = \lceil \sqrt{m} \rceil$. Todo $x$ en un rango razonable puede escribirse como $x = i n - j$ con $0 \le i,j \le n$. Entonces
 \[
 a^{in-j} \equiv b \pmod{m}
-\quad\Longleftrightarrow\quad
+\text{ si y solo si }
 a^{in} \equiv b\,a^{j} \pmod{m}.
 \]
 Los \emph{baby steps} precalculan $b \cdot a^j \bmod m$ para cada $j$ y los guardan en una tabla (por ejemplo un \texttt{unordered\_map}). Los \emph{giant steps} recorren $i$ y comparan $a^{in} \bmod m$ con esa tabla; si hay coincidencia, se recupera $x = in - j$. La complejidad es $O(\sqrt{m})$ en tiempo y memoria (usando la función \texttt{power} de la sección de exponenciación modular para calcular $a^{in}$).
@@ -932,12 +932,12 @@ Para módulo no primo o cuando $\gcd(a,m) > 1$, hay variantes que reducen al cas
     \]
     Ahora, tenemos dos formas de contar las estrellas de esta tabla, por filas o por columnas. Si contamos por filas lo que haremos será notar que en cada fila $i$ tenemos $f(i)$ estrellas de donde tendremos que la suma total de estrellas es la suma sobre todas las filas, es decir:
     \[\sum_{i=1}^{n}f(i)\]
-    Por otro lado, si contamos por columnas, notaremos que cada columna $k$ tiene $|\{i \leq n | f(i)\geq k\}|$ porque asi definimos la tabla. De aquí que:
-    \[\sum_{i=1}^{n}f(i)=\sum_{i=1}^{\infty}|\{i \leq n | f(i)\geq k\}|\]
+    Por otro lado, si contamos por columnas, notaremos que cada columna $k$ tiene $|\{i \leq n \, \colon\ f(i)\geq k\}|$ porque así definimos la tabla. De aquí que:
+    \[\sum_{i=1}^{n}f(i)=\sum_{i=1}^{\infty}|\{i \leq n \, \colon\ f(i)\geq k\}|\]
     Otra observación importante es que dado $i$, $f(i) = k$ si y solo si $1, 2, \ldots, k-1$ dividen a $i$, pero $k$
     no divide a $i$. Definamos $L_j = \text{gcd}(1, 2, \ldots, j)$ con $L_0 = 1$. Entonces:
     \[
-    f(i) = k \iff L_{k-1} \mid i \text{ y } L_k \nmid i
+    f(i) = k \text{ si y solo si } L_{k-1} \mid i \text{ y } L_k \nmid i
     \]
     En particular, $f(i) \geq k$ si y solo si $L_{k-1} \mid i$, de aquí que el número de $i \leq n$ con $f(i) \geq k$ es $\lfloor n / L_{k-1} \rfloor$. Entonces:
     \[

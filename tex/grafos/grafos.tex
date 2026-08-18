@@ -2,8 +2,8 @@ Una gráfica $G = (V, E)$ consiste en un conjunto de \textbf{vértices} $V$ y un
 \\\\
 Existen dos representaciones estándar de una gráfica, con complejidades muy distintas:
 \begin{itemize}
-    \item \textbf{Lista de adyacencia}: conviene cuando el grafo es \emph{disperso}, es decir, cuando $E \ll V^2$.
-    \item \textbf{Matriz de adyacencia}: conviene cuando se necesitan consultas de aristas en $O(1)$, o cuando $V$ es pequeño ($V \leq 500$) y ese costo de espacio es aceptable.
+    \item \textbf{Lista de adyacencia}: conviene cuando la gráfica es rala, es decir, cuando el número de aristas es mucho menos que el máximo posible $|E| \ll |V|^2$.
+    \item \textbf{Matriz de adyacencia}: conviene cuando la gráfica es densa, cuando se necesitan consultas de adyacencia de aristas en $O(1)$, o cuando $V$ es pequeño ($|V| \leq 500$) y ese costo de espacio es aceptable.
 \end{itemize}
 La tabla resume las operaciones más frecuentes en cada representación.
 
@@ -14,24 +14,24 @@ La tabla resume las operaciones más frecuentes en cada representación.
 \toprule
 \textbf{Operación} & \textbf{Lista de adyacencia} & \textbf{Matriz de adyacencia} \\
 \midrule
-Espacio                    & $O(V + E)$  & $O(V^2)$ \\
+Espacio                    & $O(|V| + |E|)$  & $O(|V|^2)$ \\
 ¿Existe arista $(u,v)$?    & $O(\deg u)$ & $O(1)$ \\
-Vecinos de $u$             & $O(\deg u)$ & $O(V)$ \\
+Vecinos de $u$             & $O(\deg u)$ & $O(|V|)$ \\
 Agregar arista             & $O(1)$      & $O(1)$ \\
 \bottomrule
 \end{tabular}
 \end{table}
 \section{Lema de los apretones de mano}
-Si en una reunión cada persona estrecha la mano con algunos asistentes, podemos contar las ``manos involucradas'' de dos formas: sumando cuántas veces saludó cada persona, o bien contando cada apretón dos veces (una por cada extremo). El lema traduce esa idea a grafos: cada arista aporta $1$ al grado de cada uno de sus dos extremos.
+Si en una reunión cada persona estrecha la mano con algunos asistentes, podemos contar las ``manos involucradas'' de dos formas: sumando cuántas veces saludó cada persona, o bien contando cada apretón dos veces (una por cada persona involucrada en el apretón de manos). El lema traduce esa idea a gráficas: cada arista aporta $1$ al grado de cada uno de sus dos extremos.
 \\\\
-En todo grafo $G = (V, E)$:
+En toda gráfica $G = (V, E)$:
 \[
 \sum_{v \in V} \deg(v) = 2|E|.
 \]
 
 $Demostración$. Cada arista $\{u, v\}$ contribuye exactamente $1$ al grado de $u$ y $1$ al grado de $v$, es decir, contribuye $2$ a la suma total de grados. Sumando sobre todas las aristas: $\sum_v \deg(v) = 2|E|$. 
 
-En todo grafo, el número de vértices de grado impar es par.
+En toda gráfica, el número de vértices de grado impar es par.
 \\\\
 $Demostración$.
 Sea $I$ el conjunto de vértices de grado impar y $P$ el de grado par. Entonces:
@@ -40,7 +40,7 @@ Sea $I$ el conjunto de vértices de grado impar y $P$ el de grado par. Entonces:
 \]
 El segundo término es par (suma de números pares). Como $2|E|$ es par, el primer término también debe serlo.
 \\\\
-Este corolario tiene consecuencias sorprendentes en el ICPC. Por ejemplo: en un torneo (grafo dirigido completo), la suma de grados de salida es $\binom{n}{2}$; argumentos de paridad sobre los grados pueden determinar si cierta configuración es posible sin necesidad de construirla.
+Un resultado análogo de este corolario para digráficas tiene consecuencias sorprendentes en el ICPC. Por ejemplo: en un torneo (una gráfica donde entre cada par de vértices existe una única flecha), la suma de grados de salida es $\binom{n}{2}$; argumentos de paridad sobre los grados pueden determinar si cierta configuración es posible sin necesidad de construirla.
 
 \section{Caminos y circuitos de Euler}
 \subsection*{Los puentes de Königsberg}
@@ -57,10 +57,10 @@ En 1736, Leonhard Euler resolvió el siguiente problema planteado por los habita
   \node (D) at (6, 0)    {$D$};
  
   \draw (A) to[bend left=20]  node[draw=none,above,font=\scriptsize]{1}(B);
-  \draw (A) to[bend right=20] node[draw=none,below,font=\scriptsize]{2}(B);
-  \draw (A) to[bend left=20]  node[draw=none,above,font=\scriptsize]{3}(C);
+  \draw (A) to[bend right=20] node[draw=none,right,font=\scriptsize]{2}(B);
+  \draw (A) to[bend left=20]  node[draw=none,right,font=\scriptsize]{3}(C);
   \draw (A) to[bend right=20] node[draw=none,below,font=\scriptsize]{4}(C);
-  \draw (B) --                node[draw=none,right,font=\scriptsize]{5}(C);
+  \draw (A) --                node[draw=none,below,font=\scriptsize]{5}(D);
   \draw (B) to[bend left=15]  node[draw=none,above,font=\scriptsize]{6}(D);
   \draw (C) to[bend right=15] node[draw=none,below,font=\scriptsize]{7}(D);
 \end{tikzpicture}
@@ -80,7 +80,7 @@ En una gráfica $G$:
           arista exactamente una vez;
     \item Un \textbf{circuito euleriano} es un camino euleriano que
           empieza y termina en el mismo vértice;
-    \item $G$ es \textbf{euleriano} si tiene un circuito euleriano.
+    \item $G$ es \textbf{euleriana} si tiene un circuito euleriano.
 \end{itemize}
 \end{definition}
  
@@ -127,13 +127,12 @@ vector<int> hierholzer(int inicio) {
 }
 \end{lstlisting}
 Muchos problemas se reducen a encontrar un camino o circuito euleriano
-de forma no obvia. El patrón general es construir un grafo donde lo
-que se quiere recorrer son las \textbf{aristas}, no los vértices. Imaginemos que nos dan
-un conjunto de palabras y nos preguntan, ¿es posible ordenarlas en una secuencia tal que la última letra de cada palabra sea la primera de la siguiente? Podemos modelar cada letra como un vértice, cada palabra como una arista dirigida de su primera letra a su última. La
-secuencia existe si y solo si el grafo tiene un camino euleriano.
+de forma no obvia. El patrón general es construir una gráfica donde lo
+que se quiere recorrer son las \textbf{aristas}, no los vértices. Imaginemos que nos dan un conjunto de palabras y nos preguntan, ¿es posible ordenarlas en una sucesión tal que la última letra de cada palabra sea la primera de la siguiente? Podemos modelar cada letra como un vértice, cada palabra como una arista dirigida de su primera letra a su última. La
+sucesión existe si y solo si la gráfica tiene un camino euleriano.
 \section{Componentes fuertemente conexas}
-En un grafo \textbf{no dirigido}, la conectividad es simple, hay un
-camino entre dos nodos o no. Pero en un grafo \textbf{dirigido} la
+En una gráfica \textbf{no dirigido}, la conectividad es simple, hay un
+camino entre dos nodos o no. Pero en una gráfica \textbf{dirigido} la
 situación es más complicada, pues puede haber un camino de $u$ a $v$ sin que
 haya uno de $v$ a $u$.
  
@@ -143,7 +142,7 @@ es un subconjunto maximo de vértices $C$ tal que para todo par
 $u, v \in C$ existe un camino de $u$ a $v$ y un camino de $v$ a $u$.
 \end{definition}
 \subsection{Algoritmo de Kosaraju}
-El algoritmo de Kosaraju encuentra todas las SCCs en $O(V + E)$ con dos DFS. Se apoya en el \textbf{grafo transpuesto} $G^T$ (mismos nodos, aristas invertidas). Las SCCs de $G$ y $G^T$ son las mismas, aunque cambia el orden en que conviene descubrirlas.
+El algoritmo de Kosaraju encuentra todas las SCCs en $O(V + E)$ con dos DFS. Se apoya en la \textbf{gráfica transpuesta} $G^T$ (mismos nodos, aristas invertidas). Las SCCs de $G$ y $G^T$ son las mismas, aunque cambia el orden en que conviene descubrirlas.
 \\\\
 El procedimiento tiene dos pasos:
 \begin{enumerate}
@@ -286,7 +285,7 @@ La gráfica de condensación es útil porque permite aplicar programación
 dinámica sobre el DAG para resolver preguntas sobre la gráfica original.
 \section{2-SAT\adv}
 \advnote{Requiere componentes fuertemente conexas (sección anterior). Puede omitirse en una primera lectura.}
-Motivemos esta sección con este problema: \href{https://codeforces.com/problemset/problem/776/D}{The door problem}. Se nos dice que hay $n$ personas atrapadas en $n$ cuartos (una puerta por cuarto). Hay $m$ interrumptores; en general $m$ puede ser mayor, igual o menor que $n$, y no hay relación fija entre ambos. Activar o desactivar un interrumptor cambia el estado de las puertas que controla. Cada puerta es controlada por exactamente dos interrumptores. ¿Es posible operar los
+Motivemos esta sección con este problema: \href{https://codeforces.com/problemset/problem/776/D}{The door problem}. Se nos dice que hay $n$ personas atrapadas en $n$ cuartos (una puerta por cuarto). Hay $m$ interruptores; en general $m$ puede ser mayor, igual o menor que $n$, y no hay relación fija entre ambos. Activar o desactivar un interruptor cambia el estado de las puertas que controla. Cada puerta es controlada por exactamente dos interruptores. ¿Es posible operar los
 interruptores para que todas las puertas queden desbloqueadas al mismo
 tiempo?
 \\\\
@@ -337,7 +336,7 @@ Esto permite construir una gráfica dirigida con $2n$ nodos ($x_i$ y $\neg x_i$ 
 \end{tikzpicture}
 \end{figure}
 
-Una fórmula 2-SAT es satisfacible si y solo si en el grafo de implicaciones ninguna variable $x_i$ está en la misma SCC que su negación $\neg x_i$. Si la fórmula es satisfacible, la asignación se obtiene directamente de los números de SCC que asigna Kosaraju:
+Una fórmula 2-SAT es satisfacible si y solo si en la gráfica de implicaciones ninguna variable $x_i$ está en la misma SCC que su negación $\neg x_i$. Si la fórmula es satisfacible, la asignación se obtiene directamente de los números de SCC que asigna Kosaraju:
  
 \begin{itemize}
     \item $x_i = \text{verdadero}$ si $\text{comp}(x_i) > \text{comp}(\neg x_i)$
@@ -348,7 +347,7 @@ SCC tiene número mayor garantiza que ninguna implicación se viola, siempre se 
 \\\\
 \\\\
 En el problema de las puertas, cada puerta controlada por los interruptores $a$ y $b$ genera restricciones de exactamente esta forma.
-\\\\Si la puerta está abierta, necesitamos que ambos interrumptores que la controlan se activen (sean verdaderos) o que ninguno lo haga (sean falsos). 
+\\\\Si la puerta está abierta, necesitamos que ambos interruptores que la controlan se activen (sean verdaderos) o que ninguno lo haga (sean falsos). 
 Esto se expresa con dos restricciones:
 \begin{itemize}
     \item Si $x_a$ es verdadero, $x_b$ también debe serlo:
@@ -356,7 +355,7 @@ Esto se expresa con dos restricciones:
     \item Si $x_b$ es verdadero, $x_a$ también debe serlo:
           $(x_a \lor \neg x_b)$
 \end{itemize}
-Si está bloqueada, necesitamos que solamente uno de los interrumptores se active.
+Si está bloqueada, necesitamos que solamente uno de los interruptores se active.
 \begin{itemize}
     \item Si $x_a$ es verdadero, $x_b$ debe ser falso:
           $(\neg x_a \lor \neg x_b)$
@@ -396,17 +395,17 @@ Nótese el siguiente ejemplo, si la central $4$ falla, las centrales
 \end{figure}
   
 \begin{definition}[Puente y punto de articulación]
-En un grafo conexo $G$:
+En una gráfica conexo $G$:
 \begin{itemize}
-    \item Una arista es un \textbf{puente} si al eliminarla el grafo
+    \item Una arista es un \textbf{puente} si al eliminarla la gráfica
           se desconecta.
     \item Un vértice es un \textbf{punto de articulación} si al
-          eliminarlo (junto con sus aristas incidentes) el grafo se
+          eliminarlo (junto con sus aristas incidentes) la gráfica se
           desconecta.
 \end{itemize}
 \end{definition}
 
-En la siguiente gráfica, la arista roja $d$-$e$ es un puente. Los vértices $d$ y $e$ porque al eliminarlos desconectan la gráfica.
+En la siguiente gráfica, la arista roja $d$-$e$ es un puente. Los vértices $d$ y $e$ son puntos de articulación porque al eliminarlos desconectan la gráfica.
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}[
@@ -526,23 +525,23 @@ este algoritmo.
  
 \section{Árboles}
  
-Un \textbf{árbol} es un grafo conexo, es decir, todos sus vértices están conectados por un camino, sin ciclos. Esta definición es solo una de varias caracterizaciones equivalentes, todas igualmente válidas como definición y útiles en distintos contextos.
+Un \textbf{árbol} es una gráfica conexa, es decir, todos sus vértices están conectados por un camino, sin ciclos. Esta definición es solo una de varias caracterizaciones equivalentes, todas igualmente válidas como definición y útiles en distintos contextos.
  
-Para un grafo $G$ con $n$ vértices, las siguientes afirmaciones son equivalentes:
+Para un gráfica $G$ con $n$ vértices, las siguientes afirmaciones son equivalentes:
 \begin{enumerate}
-    \item $G$ es conexo y acíclico;
-    \item $G$ es conexo y tiene exactamente $n-1$ aristas;
+    \item $G$ es conexa y acíclica;
+    \item $G$ es conexa y tiene exactamente $n-1$ aristas;
     \item Entre todo par de vértices existe exactamente un camino simple.
 \end{enumerate}
  
 La caracterización (3), camino único entre todo par, será importante porque convierte preguntas sobre caminos en preguntas sobre estructura del árbol. Es la base del LCA y de la mayoría de técnicas sobre árboles.
  
-Para motivar este capítulo de árboles, véamos el problema \href{https://codeforces.com/contest/342/problem/E}{Xenia and Tree}, en este nos dan un árbol con n nodos. El nodo $1$ está pintado de rojo y los demás de azul. Nos darán queries de dos tipos:
+Para motivar este capítulo de árboles, véamos el problema \href{https://codeforces.com/contest/342/problem/E}{Xenia and Tree}, en este nos dan un árbol con n nodos. El nodo $1$ está pintado de rojo y los demás de azul. Nos pedirán consultas de dos tipos:
 \begin{itemize}
     \item[1.] Nos dan un numero $a$ que corresponde a un nodo azul y tenemos que pintarlo rojo.
     \item[2.] Nos dan un numero $b$ que corresponde a un nodo del arbol y tenemos que imprimir la distancia entre $b$ y el nodo rojo más cercano.
 \end{itemize}
-Nótese que calcular la distancia a cada uno de los nodos rojos cada que nos dan una querie no es eficiente y en este problema que nos pueden dar $10^5$ queries en un arbol de $10^5$ vértices, esta solución ingenua resultaría en $TLE$. Veremos algunas herramientas que nos ayudarían a resolver este problema.
+Nótese que calcular la distancia a cada uno de los nodos rojos cada que nos piden una consulta no es eficiente y en este problema que nos pueden pedir $10^5$ consultas en un árbol de $10^5$ vértices, esta solución ingenua resultaría en $TLE$. Veremos algunas herramientas que nos ayudarían a resolver este problema.
 
 \section{Centroide\adv}
 \advnote{Requiere manejo cómodo de árboles (DFS, subtamaños). Puede omitirse en una primera lectura.}
@@ -569,7 +568,7 @@ El \textbf{centroide} de un árbol es un vértice $c$ tal que al eliminarlo, nin
 \end{tikzpicture}
 \end{figure}
  
-\subsubsection*{Descomposición por centroide}
+\subsubsection*{Descomposición por centroides}
 
 Tomemos un árbol más grande que el anterior y tomemos su centroide $c$. Al eliminarlo, el árbol se divide en varias componentes, cada una de tamaño $\leq \lfloor n/2 \rfloor$. Nótese que entonces cualquier camino de un nodo $v$ en una componente a otro $u$ en otra componente, este pasa por $c$, entonces si quisieramos la distancia entre $u$ y $v$ podemos sumar la distancia entre $c$ y $v$ y la distancia entre $c$ y $u$.
 
@@ -607,7 +606,7 @@ Tomemos un árbol más grande que el anterior y tomemos su centroide $c$. Al eli
 \end{figure}
  La observación anterior solo resuelve caminos entre componentes distintas. Pero los nodos rojos también pueden estar en la misma componente que $v$. La solución es aplicar el mismo argumento recursivamente, cada componente tiene su propio centroide, y todo camino dentro de ella que no pasa por ese centroide, pasará por el centroide de alguna subcomponente más pequeña.
 
- Esto define el \textbf{árbol de centroide}: tomamos el centroide $c$ del árbol completo como raíz, recursamos en cada componente que queda al eliminarlo, y los centroides de esas componentes se vuelven hijos de $c$ en el árbol de centroide.
+ Esto define el \textbf{árbol de centroide}: tomamos el centroide $c$ del árbol completo como raíz, y aplicamos el mismo proceso recursivamente en cada componente que queda al eliminarlo, y los centroides de esas componentes se vuelven hijos de $c$ en el árbol de centroide.
  
 \begin{figure}[H]
 \centering
@@ -645,14 +644,14 @@ Volviendo al problema, con el árbol de centroide construido, mantenemos para ca
 \[
 \texttt{minDist}[c] = \min_{u \text{ rojo}} \text{dist}(c,\, u)
 \]
-la distancia mínima desde $c$ a cualquier nodo rojo en el subárbol \emph{original} sobre el que $c$ fue centroide. Inicialmente $\texttt{minDist}[c] = \infty$ para todo $c$. Ahora, cada que recibamos una query del tipo $1$, en la que nos pidan pintar un vértice $v$ de rojo, para todo nodo $c$ ancestro de $v$ en el árbol de centroide, debemos actualizar:
+la distancia mínima desde $c$ a cualquier nodo rojo en el subárbol \emph{original} sobre el que $c$ fue centroide. Inicialmente $\texttt{minDist}[c] = \infty$ para todo $c$. Ahora, cada que nos pidan una consulta del tipo $1$, en la que nos pidan pintar un vértice $v$ de rojo, para todo nodo $c$ ancestro de $v$ en el árbol de centroide, debemos actualizar:
 \[
 \texttt{minDist}[c] \leftarrow \min\, \!\bigl(\texttt{mindist}[c],\ \text{dist}(v, c)\bigr)
 \]
 Como hay $O(\log n)$ ancestros, esta operación cuesta $O(\log n)$ llamadas a \texttt{dist}.
  
 \medskip
-Para el segundo tipo de query notemos que para cualquier nodo rojo $u$, existe un ancestro $c$ de $v$ en el árbol de centroide tal que el camino de $v$ a $u$ pasa por $c$.
+Para el segundo tipo de consulta notemos que para cualquier nodo rojo $u$, existe un ancestro $c$ de $v$ en el árbol de centroide tal que el camino de $v$ a $u$ pasa por $c$.
 Entonces la respuesta es:
 \[
 \min_{c \text{ ancestro de } v \text{ en árbol de centroide}} \bigl(\text{dist}(v, c) + \texttt{minDist}[c]\bigr)
@@ -661,7 +660,7 @@ De nuevo $O(\log n)$ llamadas a \texttt{dist}.
 \\\\
 Podría parecer que ya logramos optimizar la solución, sin embargo, estamos olvidando un detalle ¿cuánto cuesta calcular $\text{dist}(v, c)$?
 \\\\
-La forma más directa es hacer un BFS o DFS desde $c$ cada vez, pero eso cuesta $O(n)$ por llamada. Con $O(\log n)$ ancestros por query y $m$ queries, el costo total sería $O(mn \log n)$ que para $n = m = 10^5$ da $\sim 10^{11}$ operaciones. Demasiado lento.
+La forma más directa es hacer un BFS o DFS desde $c$ cada vez, pero eso cuesta $O(n)$ por llamada. Con $O(\log n)$ ancestros por consulta y $m$ consultas, el costo total sería $O(mn \log n)$ que para $n = m = 10^5$ da $\sim 10^{11}$ operaciones. Demasiado lento.
 \\\\
 Necesitamos calcular $\text{dist}(u, v)$ en $O(\log n)$. Esto se logra con el \textbf{ancestro común más bajo} (LCA), que veremos en la siguiente sección.
 \\\\
@@ -741,7 +740,7 @@ Dado un árbol con raíz, el \textbf{ancestro común más bajo} (LCA) de dos vé
 \end{figure}
 La solución más directa que podríamos pensar es ver qué nodo está más bajo o profundo y llevarlo al mismo nivel que el otro subiendo de a un paso, luego subir ambos juntos hasta que coincidan. Por ejemplo para $c$ y $u$ en la figura de arriba, primero subiríamos $u$ a su ancestro $d$ y ya que ambos $d$ y $c$ estpan en el mismo nivel, los subiriamos a su ancestro $a$ que como coincide, diríamos que este es su $LCA$.
 \\\\
-Imaginemos que tenemos un árbol en forma de cadena ($1 - 2 - 3 - \cdots - n$), calcular $\text{LCA}(1, n)$ cuesta $O(n)$ pasos. Con $m$ queries, el costo total es $O(mn)$, lo que nos deja con el mismo problema que teníamos antes, necesitamos algo más eficiente. En lugar de subir de $1$ en $1$, ¿podríamos subir de a $2^k$ niveles de una vez?
+Imaginemos que tenemos un árbol en forma de cadena ($1 - 2 - 3 - \cdots - n$), calcular $\text{LCA}(1, n)$ cuesta $O(n)$ pasos. Con $m$ consultas, el costo total es $O(mn)$, lo que nos deja con el mismo problema que teníamos antes, necesitamos algo más eficiente. En lugar de subir de $1$ en $1$, ¿podríamos subir de a $2^k$ niveles de una vez?
 \\\\
  Para subir $d$ niveles desde un nodo $v$, podemos descomponer $d$ en potencias de 2 (como en la representación binaria) y dar saltos de tamaño $1, 2, 4, 8, \ldots$ según corresponda. Si $d = 13 = 8 + 4 + 1$, damos un salto de 8, luego uno de 4, luego uno de 1, tres saltos en lugar de 13.
 \\\\
@@ -890,8 +889,8 @@ Finalmente, volviendo al problema, con \texttt{dist(u, v)} implementado en $O(\l
 \begin{enumerate}
     \item Preprocesar LCA con DFS. $O(n \log n)$.
     \item Construir el árbol de centroide. $O(n \log n)$.
-    \item Para cada query de tipo 1 (pintar $v$), subir $O(\log n)$ ancestros en el árbol de centroide, calcular \texttt{dist} en $O(\log n)$ en cada uno. $O(\log^2 n)$.
-    \item Para cada query de tipo 2 (distancia mínima desde $v$), igual que el tipo 1, subir $O(\log n)$ ancestros en el árbol de centroide calculando \texttt{dist} en $O(\log n)$ en cada uno. $O(\log^2 n)$.
+    \item Para cada consulta de tipo 1 (pintar $v$), subir $O(\log n)$ ancestros en el árbol de centroide, calcular \texttt{dist} en $O(\log n)$ en cada uno. $O(\log^2 n)$.
+    \item Para cada consulta de tipo 2 (distancia mínima desde $v$), igual que el tipo 1, subir $O(\log n)$ ancestros en el árbol de centroide calculando \texttt{dist} en $O(\log n)$ en cada uno. $O(\log^2 n)$.
 \end{enumerate}
  
 Nótese que la complejidad es $O(n \log n + m \log^2 n)$, que para $n = m = 10^5$ da $\sim 10^7$ operaciones, lo que sí es eficiente.
@@ -899,7 +898,7 @@ Nótese que la complejidad es $O(n \log n + m \log^2 n)$, que para $n = m = 10^5
 \textbf{Ejercicio.} Implementar la solución completa del problema \href{https://codeforces.com/contest/342/problem/E}{Xenia and Tree (Codeforces 342E)} usando lo visto en esta sección.
  
 \section{Flujo máximo\adv}
-\advnote{Tema avanzado de gráficas: incluye Ford--Fulkerson, Dinic, matching y los teoremas de König y Hall. Puede omitirse en una primera lectura.}
+\advnote{Tema avanzado de gráficas: incluye Ford--Fulkerson, Dinic, emparejamiento y los teoremas de König y Hall. Puede omitirse en una primera lectura.}
 Imagina que tienes una red de servidores conectados por cables. Cada cable tiene un ancho de banda máximo (en MB/s). Quieres descargar un archivo de un servidor $s$ a un servidor $t$ lo más rápido posible. Puedes dividir la descarga en varias rutas que pasen información simultáneamente, pero ningún cable puede superar su capacidad. ¿Cuántos MB/s puedes transferir en total?
  
 \begin{figure}[H]
@@ -1026,7 +1025,7 @@ Lo primero que haríamos sería buscar cualquier ruta de $s$ a $t$ con capacidad
   \end{scope}
 \end{tikzpicture}
 \end{figure}
-Mirando el grafo residual, buscamos otra ruta de $s$ a $t$. Vemos que $s\to v\to t$ no funciona porque $v\to t$ está saturado (capacidad
+Mirando la gráfica residual, buscamos otra ruta de $s$ a $t$. Vemos que $s\to v\to t$ no funciona porque $v\to t$ está saturado (capacidad
 residual 0).
 \\\\
 Pero notemos que la ruta $s \to v \to u \to t$ usa la \textbf{arista inversa} $v\to u$ y así ``cancela'' 1 MB/s que íbamos enviando de $u$ a $v$, y lo redirige directamente de $u$ a $t$.
@@ -1236,7 +1235,7 @@ struct Dinic {
         adj[v].push_back(edgeId++);
     }
 
-    // Construye el grafo de niveles en la red residual.
+    // Construye el grafica de niveles en la red residual.
     bool bfs() {
         while (!q.empty()) {
             int u = q.front();
@@ -1318,16 +1317,16 @@ El \textbf{corte mínimo} es el de menor capacidad.
 \end{definition}
 Un teorema muy importante es el \textbf{Teorema de Flujo Máximo y Corte Mínimo}~\cite{toronto_mfmc}, que nos dice que el valor del flujo máximo de $s$ a $t$ es igual a la capacidad del corte mínimo $s$-$t$.
 \\\\
-Después de correr Dinic, si hacemos BFS en el grafo residual desde $s$.
+Después de correr Dinic, si hacemos BFS en el gráfica residual desde $s$.
 Los nodos alcanzables forman $S$ y los no alcanzables $T$. Los cables
 saturados de $S$ a $T$ forman el corte mínimo.
 \\\\
-Este teorema tiene consecuencias directas que usaremos en la sección siguiente de matching.
+Este teorema tiene consecuencias directas que usaremos en la sección siguiente de emparejamiento.
 \\\\
-Una aplicación bonita que podemos darle es encontrar \textbf{caminos arista-disjuntos}, es decir, el número máximo de caminos de $s$ a
+Una aplicación bonita que podemos darle es encontrar \textbf{caminos ajenos por aristas}, es decir, el número máximo de caminos de $s$ a
 $t$ que no comparten aristas. Este problema se traduce en buscar el mínimo número de aristas cuyo corte desconecta $s$ de $t$. Se calcula dando capacidad 1 a cada arista y corriendo flujo máximo.
  
-\subsection{Matching máximo}
+\subsection{Emparejamiento máximo}
 
 Para motivar esta sección, veamos el siguiente problema, \href{https://vjudge.net/problem/UVA-11419}{SAM I AM}, en este problema, hay una cuadrícula $R \times C$ con $N$ enemigos en ciertas celdas. Un cañón dispara en línea recta y elimina a todos los enemigos de una fila o columna. ¿Cuál es la mínima cantidad de disparos que se necesitan para eliminar a todos los enemigos y qué filas o columnas hay que disparar?
 \\\\Podríamos intentar una estrategia greedy, es decir, intentar disparar las filas o columnas que tengan más enemigos, pero veámos en el siguiente ejemplo que pueden existir situaciones en las que alguna fila y columna tengan el mismo número de enemigos y no dé lo mismo cuál quitar. La solución optima es disparar la columna $1$ y $3$. Sin embargo, nuestro algoritmo greedy no tiene forma de distinguir entre la fila $1$ y las columnas $1$ y $3$ entonces podría iniciar disparando la fila $1$ y después, las filas $1$ y $3$, gastando $3$ disparos.
@@ -1389,7 +1388,7 @@ Necesitamos otra forma de pensar el problema. Podemos intentar modelarlo como un
 \end{tikzpicture}
 \end{figure}
 
-Nótese entonces que queremos seleccionar un conjunto de vértices $S$ de forma que cualquier arista tenga al menos un extremo en $S$, a esto se le llama \textbf{cobertura de vértices}. Queremos entonces la cobertura de menor tamaño, en gráficas generales este problema es $NP$, pero en gráficas bipartitas como esta resulta que la clave para resolver el problema es usar flujo máximo.
+Nótese entonces que queremos seleccionar un conjunto de vértices $S$ de forma que cualquier arista tenga al menos un extremo en $S$, a esto se le llama \textbf{cubierta de vértices}. Queremos entonces la cubierta de menor tamaño, en gráficas generales este problema es \textit{NP-completo}, pero en gráficas bipartitas como esta resulta que la clave para resolver el problema es usar flujo máximo.
 \\\\Esto puede parecer raro porque la gráfica que construimos no parece indicar por ningún lado un flujo, pero podemos cosntruir la red agregando un nodo $s$ conectado a cada fila y un nodo $t$ conectado a cada columna. A todas las aristas les pondremos capacidad $1$.
 \begin{figure}[H]
 \centering
@@ -1423,10 +1422,10 @@ Nótese entonces que queremos seleccionar un conjunto de vértices $S$ de forma 
 Si corremos Dinic en esta red, el flujo máximo resulta ser 3, que es
 exactamente el número mínimo de disparos que necesitamos. ¿Casualidad? Como veremos en esta sección, no lo es.
 
-\begin{definition}Un \textbf{matching} es un subconjunto de aristas tal que ningún vértice es extremo de más de una arista. El \textbf{matching máximo} es el de mayor cardinalidad.
+\begin{definition}Un \textbf{emparejamiento} es un subconjunto de aristas tal que ningún vértice es extremo de más de una arista. El \textbf{emparejamiento máximo} es el de mayor cardinalidad.
 \end{definition}
  
-Traducido al problema que estamos resolviendo, un matching en nuestra gráfica es un conjunto de enemigos tal que no hay dos en la misma fila ni en la misma columna. El matching máximo es el mayor conjunto así.
+Traducido al problema que estamos resolviendo, un emparejamiento en nuestra gráfica es un conjunto de enemigos tal que no hay dos en la misma fila ni en la misma columna. El emparejamiento máximo es el mayor conjunto así.
  
 \begin{figure}[H]
 \centering
@@ -1449,17 +1448,17 @@ Traducido al problema que estamos resolviendo, un matching en nuestra gráfica e
   \draw[teal,very thick] (f1)--(c1);
   \draw[teal,very thick] (f2)--(c2);
   \draw[teal,very thick] (f3)--(c4);
-  \node[draw=none,font=\small,teal] at (2,-0.8) {matching máximo = 3};
+  \node[draw=none,font=\small,teal] at (2,-0.8) {emparejamiento máximo = 3};
 \end{tikzpicture}
 \end{figure}
 
-\subsection*{Hopcroft-Karp: Dinic en bipartitos}
+\subsection*{Hopcroft-Karp: Dinic en gráficas bipartitas}
  
-El matching máximo en una gráfica bipartita se puede calcular directamente
+El emparejamiento máximo en una gráfica bipartita se puede calcular directamente
 con la red de flujo anterior usando Dinic. Pero como esta gráfica tiene
 estructura especial (bipartito, todas las capacidades 1), se puede
 optimizar, el algoritmo \textbf{Hopcroft-Karp} es exactamente Dinic
-aplicado a gráficas bipartitos, con complejidad $O(E\sqrt{V})$ en lugar
+aplicado a gráficas bipartitas, con complejidad $O(E\sqrt{V})$ en lugar
 de $O(V^2 E)$.
  
 \begin{lstlisting}[language=C++]
@@ -1499,7 +1498,7 @@ bool bfs() {
     return found;
 }
 
-// Intenta aumentar el matching desde u siguiendo las capas de BFS.
+// Intenta aumentar el emparejamiento desde u siguiendo las capas de BFS.
 bool dfs(int u) {
     for (int v : adj[u]) {
         int w = matchR[v];
@@ -1517,24 +1516,23 @@ int hopcroftKarp() {
     fill(matchL + 1, matchL + n + 1, 0);
     fill(matchR + 1, matchR + m + 1, 0);
 
-    int matching = 0;
+    int emparejamiento = 0;
     while (bfs()) {
         for (int u = 1; u <= n; u++) {
             if (!matchL[u] && dfs(u)) {
-                matching++;
+                emparejamiento++;
             }
         }
     }
-    return matching;
+    return emparejamiento;
 }
 \end{lstlisting}
 
 \subsection{Teorema de König}
-El \textbf{teorema de König} nos dice que en una gráfica bipartita el matching máximo es igual a la cobertura mínima de vértices\footnote{\url{https://www.math.nagoya-u.ac.jp/~richard/teaching/s2024/SML_Li_2.pdf}}.
+El \textbf{teorema de König} nos dice que en una gráfica bipartita el emparejamiento máximo es igual a la cubierta mínima de vértices\footnote{\url{https://www.math.nagoya-u.ac.jp/~richard/teaching/s2024/SML_Li_2.pdf}}.
 \\\\
-Veámos la red del problema de los cañones. El flujo máximo = matching
-máximo (cada unidad de flujo es un par emparejado). El corte mínimo =
-cubierta mínima (los vértices del corte son exactamente las
+Veámos la red del problema de los cañones. El flujo máximo equivale al emparejamiento
+máximo (cada unidad de flujo es un par emparejado). El corte mínimo corresponde a la cubierta mínima (los vértices del corte son exactamente las
 filas/columnas que hay que disparar). Por el teorema anterior, son lo mismo, entonces calculado el flujo máximo, ¿cómo construir la cubierta mínima?
 Supongamos que tenemos esta cuadrícula con los enemigos:
 \begin{figure}[H]
@@ -1573,10 +1571,10 @@ Supongamos que tenemos esta cuadrícula con los enemigos:
 \end{tikzpicture}
 \end{figure}
 
-Podemos usar Hopcroft-Karp o Dinic para encontrar el matching máximo de tamaño 3 con las aristas:
+Podemos usar Hopcroft-Karp o Dinic para encontrar el emparejamiento máximo de tamaño 3 con las aristas:
 $f_1\text{-}c_1,\ f_2\text{-}c_2,\ f_3\text{-}c_4$.
 \\\\
-Lo siguiente que haremos, será partir desde cada vértice libre del lado izquierdo, en este caso solo tenemos $f_4$ y alternar aristas fuera/dentro del matching. En la figura de abajo, usamos $f_4\to c_2$ que está fuera del matching, luego $c_2\to f_2$ que está dentro del matching y ya no tenemos a dónde movernos pues $c_2\to f_2$ ya fue visitada.
+Lo siguiente que haremos, será partir desde cada vértice libre del lado izquierdo, en este caso solo tenemos $f_4$ y alternar aristas fuera/dentro del emparejamiento. En la figura de abajo, usamos $f_4\to c_2$ que está fuera del emparejamiento, luego $c_2\to f_2$ que está dentro del emparejamiento y ya no tenemos a dónde movernos pues $c_2\to f_2$ ya fue visitada.
  
 \begin{figure}[H]
 \centering
@@ -1655,9 +1653,9 @@ $c_4$ & No  & No \\
 \textbf{Ejercicio.} Completar la solución del problema \href{https://vjudge.net/problem/UVA-11419}{SAM I AM}.
 
 \subsection{Teorema de Hall}
-Una pregunta natural que podría surgir es ¿cuándo existe un matching que empareja \textbf{todos} los vértices de un lado?
+Una pregunta natural que podría surgir es ¿cuándo existe un emparejamiento que empareja a \textbf{todos} los vértices de un lado?
 \\\\
-En un grafo bipartito con lados $L$ y $R$, existe un matching que
+En una gráfica bipartita con lados $L$ y $R$, existe un emparejamiento que
 empareja todos los vértices de $L$ si y solo si para todo
 $S \subseteq L$:
 \[
@@ -1683,7 +1681,7 @@ donde $N(S)$ es el conjunto de vecinos de $S$ en $R$.
     \node[draw=none,red,font=\scriptsize] at (0,0.2)  {$S$, $|S|=3$};
     \node[draw=none,teal,font=\scriptsize]  at (3,0.8)  {$N(S)$, $|N(S)|=2$};
     \node[draw=none,font=\small] at (1.5,-0.4) {No existe};
-    \node[draw=none,font=\small] at (1.5,-0.9) {matching perfecto};
+    \node[draw=none,font=\small] at (1.5,-0.9) {emparejamiento perfecto};
   \end{scope}
  
   \begin{scope}[xshift=6cm]
@@ -1695,12 +1693,12 @@ donde $N(S)$ es el conjunto de vecinos de $S$ en $R$.
     \node (z2) at (3,1) {$z$};
     \draw[gray!40] (a2)--(x2) (a2)--(y2) (b2)--(y2) (c2)--(y2) (c2)--(z2);
     \draw[teal,very thick] (a2)--(x2) (b2)--(y2) (c2)--(z2);
-    \node[draw=none,font=\small] at (1.5,-0.9) {Matching perfecto existe};
+    \node[draw=none,font=\small] at (1.5,-0.9) {emparejamiento perfecto existe};
   \end{scope}
 \end{tikzpicture}
 \end{figure}
-\subsection*{Matching de peso mínimo}
-Cuando las aristas tienen pesos y queremos el matching perfecto de costo
+\subsection*{emparejamiento de peso mínimo}
+Cuando las aristas tienen pesos y queremos el emparejamiento perfecto de costo
 mínimo (o máximo), se usa el \textbf{algoritmo Húngaro} (Kuhn-Munkres),
 con complejidad $O(n^3)$. Aparece en problemas de asignación óptima: dados
 $n$ trabajadores, $n$ tareas, y costos $c_{ij}$ de asignar el trabajador
@@ -1717,26 +1715,25 @@ también lo permite cualquier nivel mayor (hay más cartas disponibles). Podemos
 Dado un nivel $L$, construimos una gráfica $G$ donde cada carta disponible (con $l_i \leq L$) es un vértice, con peso $p_i$, y conectamos dos
 cartas $i,j$ con una arista si $c_i+c_j$ es primo es decir, si no pueden estar juntas en el mazo. Un subconjunto $S$ es un mazo válido si y solo si $S$ es un conjunto independiente en $G$ (no contiene ninguna arista).
 
-Sea $P$ la suma de potencias de todas las cartas disponibles (con $l_i \leq L$). Buscamos un subconjunto $S$ sin pares prohibidos con $\sum_{i\in S} p_i \geq k$. Esto es equivalente a encontrar el conjunto descartado $D = V\setminus S$ de peso mínimo  tal que $D$ sea una cobertura de vértices de todas las aristas prohibidas, es decir, toda pareja prohibida tiene al menos un extremo en $D$ (así $S$ queda libre de conflictos). La condición para verificar que es un conjunto válido es
+Sea $P$ la suma de potencias de todas las cartas disponibles (con $l_i \leq L$). Buscamos un subconjunto $S$ sin pares prohibidos con $\sum_{i\in S} p_i \geq k$. Esto es equivalente a encontrar el conjunto descartado $D = V\setminus S$ de peso mínimo  tal que $D$ sea una cubierta de vértices de todas las aristas prohibidas, es decir, toda pareja prohibida tiene al menos un extremo en $D$ (así $S$ queda libre de conflictos). La condición para verificar que es un conjunto válido es
 $P - \text{peso}(D) \geq k$.
  
-Por el teorema de König, la covertura de vértices de peso mínimo en una gráfica bipartita es igual al matching máximo.
+Por el teorema de König, la covertura de vértices de peso mínimo en una gráfica bipartita es igual al emparejamiento máximo.
  
 Notemos que si $c_i+c_j$ es un primo mayor que 2, entonces $c_i+c_j$ es impar, así que $c_i$ y $c_j$ tienen paridades distintas. Esto
 sugiere separar las cartas en dos grupos — pares e impares y las aristas prohibidas solo conectarían cartas de grupos distintos, dando un gráfica bipartita.
  
 Lo anterior tiene un caso especial si $c_i=1$, pues el único primo par es 2, y $1+1=2$. Entonces dos cartas con $c_i=c_j=1$ son
-mutuamente prohibidas, pero ambas caen en el lado "impar", haciendo que la gráfica no sea bipartita. Para solucionar esto, notemos que si tomamos dos o más cartas con $c=1$, hay
+mutuamente prohibidas, pero ambas caen en el lado ``impar'', haciendo que la gráfica no sea bipartita. Para solucionar esto, notemos que si tomamos dos o más cartas con $c=1$, hay
 un par prohibido entre ellas siempre. Por lo
 tanto, en el conjunto óptimo $S$, a lo más puede haber una carta con $c=1$. Por lo que para cada $L$, si hubiera varias cartas con $c=1$ disponibles, tomaremos la de mayor potencia.
  
-Sean $A$ las cartas con $c_i$ impar, y $B$ las
-cartas con $c_i$ par disponibles con nivel $L$:
- 
+Sean $A$ las cartas con $c_i$ impar, y $B$ las cartas con $c_i$ par disponibles con nivel $L$. Entonces, construiremos nuestra gráfica poniendo flechas como sigue: 
+
 \begin{itemize}
-    \item \textbf{Fuente $\to$ carta} $\in A$, con capacidad $p_i$.
-    \item \textbf{Carta} $j \in B \to$ \textbf{Sumidero}, con capacidad $p_j$.
-    \item \textbf{Carta} $i \to$ \textbf{Carta} $j$ (impar a par), con capacidad $\infty$, si $c_i+c_j$ es primo.
+    \item Una flecha desde la fuente a cada carta $i$ en $A$, con capacidad $p_i$.
+    \item Una flecha desde cada carta $j$ en $B$ hacia el sumidero, con capacidad $p_j$.
+    \item Una flecha de $i$ a $j$ (impar a par), con capacidad $\infty$, si $c_i+c_j$ es primo.
 \end{itemize}
  
 Un corte finito en esta red nunca incluye aristas $\infty$ (impar$\to$par), esas aristas garantizan que si una carta impar $i$ y una carta par $j$ tienen $c_i+c_j$ primo, al menos

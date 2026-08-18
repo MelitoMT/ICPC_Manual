@@ -2,24 +2,24 @@ Desde inicios de la civilización el contar ha sido de utilidad, y aunque para c
 \section{Bases}
 \subsection*{Principio de multiplicación}
 Supongamos que vamos a comprar un helado en una tienda donde puedes escoger cono de sabor vainilla o chocolate, helado de fresa, mango o chicle y de toppings chispas de chocolate o cereal. ¿Cuántas maneras diferentes hay de elegir un helado diferente?
-\\\\Pensemos que así como podemos elegir la combinación {vainilla, fresa, chispitas} podemos elegir la combinación {chocolate, fresa, chispitas} o {vainilla, mango, cereal}. Hay bastantes formas de combinar los sabores y notemos que el hecho de que elijamos un sabor de cono, no limita para nada nuestra eleccion de helado o de topping. Es así como llegamos a la conclusión que por cada sabor de cono podemos elegir cualquiera de los 3 helados y cualquiera de los 2 toppings, y cada combinación será diferente, de donde tendremos $2\times 3 \times 2=12$ formas de elegir un helado.
+\\\\Pensemos que así como podemos elegir la combinación {vainilla, fresa, chispitas}, también podemos elegir la combinación {chocolate, fresa, chispitas}, o {vainilla, mango, cereal}. Hay bastantes formas de combinar los sabores y notemos que el hecho de que elijamos un sabor de cono, no limita para nada nuestra eleccion de helado o de topping. Es así como llegamos a la conclusión que las elecciones son independientes y por cada sabor de cono podemos elegir cualquiera de los 3 helados y cualquiera de los 2 toppings, y cada combinación será diferente, de donde tendremos $2\times 3 \times 2=12$ formas de elegir un helado.
 \\\\Esto se llama \textbf{principio de multiplicación} y nos dice que si una tarea se divide en $k$ etapas \textbf{independientes}, es decir la elección de una etapa no limita las opciones de las demás, con $n_1, n_2, \ldots, n_k$ formas de realizar cada una, el número total de formas de completar la tarea es $n_1 n_2 \cdots n_k$.
  
 \subsection*{Principio de adición}
 Ahora supongamos que en la heladería nos dicen que además de los helados, ofrecen aguas frescas de 5 sabores, si quisieramos solamente comprar un solo artículo de la heladería, ¿de cuántas formas podríamos hacerlo? Pues bien, ya vimos que tenemos 12 helados diferentes, a esto le sumaremos las 5 opciones de agua pues al comprar un sólo artículo tenemos que elegir una de las dos opciones y así obtenemos que hay 17 formas diferentes de realizar la tarea.
-\\\\Esto se llama \textbf{principio de adición} y nos dice que si una tarea puede completarse de $A$ \textbf{o} de $B$ formas, donde $A$ y $B$ son mutuamente excluyentes, el total es $|A| + |B|$.
+\\\\Esto se llama \textbf{principio de adición} y nos dice que si una tarea puede completarse de $A$ formas o de $B$ formas (no simultáneamente), y $A$ y $B$ son mutuamente excluyentes, el total es $|A| + |B|$.
  
 \subsection*{Principio del complemento}
 
-Imaginemos que queremos comprar un helado que no sea de chicle, ¿de cuántas formas podemos hacerlo? Calcularlo directamente sería ver todas las opciones que no tienen chicle. A veces esta tarea es más complicada que calcular lo opuesto, es decir, vamos a contar cuántos helados diferentes tienen chicle, notemos que si el sabor de helado esta fijo, tenemos 2 opciones de cono y 2 de toppings, es decir 4 opciones. Ahora podemos simplemente restar a los 12 que teníamos, la cantidad que sí tienen chicle, dejándonos con 8. Esta idea se llama \textbf{principio del complemento} y nos conviene usarla cuando los casos no deseados tienen una estructura más simple que los deseados.
+Ahora, ¿qué sucede si no nos gusta el chicle?, ¿de cuántas formas podemos comprar un helado que no lleve chicle? Si calculamos las formas directamente tendríamos que contar todas las combinaciones cuyo helado es de un sabor distinto a chicle. A veces esta tarea es más complicada que calcular lo opuesto, es decir, vamos a contar cuántos helados diferentes tienen chicle, notemos que si el sabor de helado está fijo, tenemos 2 opciones de cono y 2 de toppings, es decir 4 opciones. Ahora podemos simplemente restar a los 12 que teníamos, la cantidad que sí tienen chicle, dejándonos con 8. Esta idea se llama \textbf{principio del complemento} y nos conviene usarla cuando los casos no deseados tienen una estructura más simple que los deseados.
  
 \subsection*{Principio del palomar}
 
  En la heladería además hay una promoción para motivar la convivencia. Si llegan dos personas con el mismo cumpleaños juntas, se les regalará a ambas personas un helado. ¿Cuántas personas mínimas se necesitan para asegurar que alguien tendrá un helado gratis? Podríamos pensar que se necesitan muchisimas, pero en realidad solo necesitamos 367, esto porque en el peor caso cada una de las primeras 366 personas va a cumplir un día diferente (incluyendo 29 de febrero) y cuando llegue la persona número 367 como todos los cumpleaños ya tienen una persona que cumple ese día, forzosamente compartirá cumpleaños con alguien. Con la misma lógica, en una escuela de 5000 estudiantes no basta con saber que \emph{algún} par comparte cumpleaños: el principio del palomar también nos dice cuántas personas pueden caer, como mínimo, en el \emph{mismo} día. Hay $366$ ``casillas'' posibles (los días del año, contando 29 de febrero); si repartimos $5000$ estudiantes lo más parejo posible entre esas casillas, a cada día le tocan al menos $\lfloor 5000/366\rfloor = 13$ personas, pero sobran $5000 - 366\cdot 13 = 242$ estudiantes que obligan a que al menos $242$ días tengan una persona extra. En consecuencia, \textbf{algún} cumpleaños concentra al menos $14$ personas ($\lceil 5000/366\rceil = 14$): en el peor reparto posible habrá un día con catorce estudiantes que cumplen ese mismo día (y por tanto comparten cumpleaños entre sí). A esta idea se le llama \textbf{principio del palomar}.
 
-\section{Permutaciones}
+\section{Ordenaciones}
 
-Supongamos que queremos escoger el nuevo CEO y VP de una lista de 5 candidatos y queremos saber de cuántas formas diferentes se puede hacer. A esto se le llama \textbf{permutación}: estamos \emph{ordenando} una selección de $2$ personas distintas entre $5$, porque el cargo importa (CEO $\neq$ VP).
+Supongamos que queremos escoger el nuevo CEO y VP de una lista de 5 candidatos y queremos saber de cuántas formas diferentes se puede hacer. A esto se le llama \textbf{ordenaciones sin repetición}: estamos \emph{ordenando} una selección de $2$ personas distintas entre $5$, porque el cargo importa (CEO $\neq$ VP).
 
 \textit{Ejemplo (cómo agrupar las opciones).} Si los candidatos son $A,B,C,D,E$, una forma natural de organizar las $20$ parejas es \textbf{fijar primero al CEO} y listar quién puede ser VP:
 \begin{itemize}
@@ -29,12 +29,14 @@ Supongamos que queremos escoger el nuevo CEO y VP de una lista de 5 candidatos y
 \end{itemize}
 Son $5$ grupos de $4$ parejas cada uno, o sea $5\cdot 4 = 20$ en total. Otra agrupación equivalente es fijar al VP y contar cuántos CEOs quedan; el resultado es el mismo porque en una permutación \emph{el orden de las etapas sí importa}: escoger primero CEO y después VP no es lo mismo que contar combinaciones, donde el par $\{A,B\}$ no distingue quién va en cada puesto.
 
-El número de permutaciones de tomar $r$ elementos tomados de un conjunto de $n$ distintos es:
+El número de ordenaciones sin repetición de tomar $r$ elementos tomados de un conjunto de $n$ distintos es:
 \[
 P(n, r) = n \cdot (n-1) \cdots (n-r+1) = \frac{n!}{(n-r)!}.
 \]
 
 Esto es así porque si tenemos $n$ opciones para la primera elección, una vez que lo escogimos, nos quedan $n-1$ opciones para la segunda elección, y así hasta que hayamos hecho las $r$ elecciones. Nótese que cuando $n=r$ estamos calculando de cuántas formas se puede reordenar un conjunto completo y usando la fórmula se vuelve simplemente $n!$. Esto nos dice que en el ejemplo de arriba las formas de escoger al CEO y VP son $P(5,2)=20$.
+
+Un caso importante de las ordenaciones se da cuando queremos contar las formas de seleccionar $n$ objetos de $n$ opciones. En este caso, le llamaremos permutación.
 
 \subsection*{Permutaciones con repetición}
 
@@ -51,7 +53,7 @@ El denominador divide las repeticiones que no generan acomodos distintos, de for
 \]
 
 \section{Combinaciones}
-Si ahora quisieramos de los 5 empleados agarrar 2 para que formen parte de una brigada, no podemos aplicar directamente lo que aprendimos en permutaciones porque aquí el orden no importa. Si primero elegimos al número 4 y luego al 2, es lo mismo que si elegiéramos al 2 y después al 4, no hay distinción pues ambos formarán parte de la misma brigada. Lo que sí aprendimos es que las formas de permutar un conjunto de $r$ elementos es $r!$, entonces notemos que podemos calcular las permutaciones y luego dividir entre $r!$ que son los ordenamientos de cada selección que producen el mismo subconjunto. Es decir, si queremos hacer una selección de $r$ elementos de un conjunto de $n$ donde el orden no importa, el número de combinaciones es:
+Si ahora quisieramos de los 5 empleados elegir 2 para que formen parte de una brigada, no podemos aplicar directamente lo que aprendimos en ordenaciones porque aquí el orden no importa. Si primero elegimos al número 4 y luego al 2, es lo mismo que si elegiéramos al 2 y después al 4, no hay distinción pues ambos formarán parte de la misma brigada. Lo que sí aprendimos es que las formas de permutar un conjunto de $r$ elementos es $r!$, entonces notemos que podemos calcular las permutaciones y luego dividir entre $r!$ que son los ordenamientos de cada selección que producen el mismo subconjunto. Es decir, si queremos hacer una selección de $r$ elementos de un conjunto de $n$ donde el orden no importa, el número de combinaciones es:
 \[
 \binom{n}{r} = \frac{P(n,r)}{r!} = \frac{n!}{r!\,(n-r)!}.
 \]
@@ -171,7 +173,7 @@ En ocasiones cuando tenemos conjuntos querremos saber cuántos elementos tiene s
 \[
 |A \cup B \cup C|=|A|+|B|+|C|-|A \cap B|-|A \cap C|-|B \cap C|+|A \cap B \cap C|.
 \]
-Usando esta misma lógica para $n$ conjuntos nos da el llamado \textbf{principio de inclusión-exclusión}~\cite{cf_incexc}. Este nos dice que si tenemos conjuntos $A_1,\cdots, A_n$ entonces tenemos que
+Usando esta misma lógica para $n$ conjuntos obtenemos el llamado \textbf{principio de inclusión-exclusión}~\cite{cf_incexc}. Este nos dice que si tenemos conjuntos $A_1,\cdots, A_n$ entonces tenemos que
 \[
 |\bigcup_{i=1}^{n}A_i|=\sum_{i=1}^{n}|A_i|-\sum_{i<j}|A_i \cap A_j|+\cdots+(-1)^{n+1}|A_1\cap \cdots \cap A_n|.
 \]
@@ -228,7 +230,9 @@ Complete el programa principal usando \texttt{countCoprimeUpTo} para responder e
 \section{Lema de Burnside\adv}
 \advnote{Formaliza el conteo bajo simetría con acciones de grupo. Basta con la intuición de ``órbitas'' y ``puntos fijos''; no se asume un curso de álgebra abstracta. Puede omitirse en una primera lectura.}
 
-Hay una clase de problemas de conteo donde la respuesta no es simplemente contar objetos, sino contar objetos \textbf{distintos bajo simetría}. Tomemos el ejemplo clásico: ¿cuántos collares distintos se pueden hacer con $n$ cuentas de $k$ colores, si dos collares son el mismo cuando uno se obtiene del otro por rotación? Contar directamente sobrecontea el mismo collar $n$ veces (una por cada rotación). \textit{Ejemplo.} Con $n=3$ cuentas y $k=2$ colores (digamos rojo $R$ y verde $G$) hay $2^3=8$ coloraciones si numeramos las posiciones, pero varias son el mismo collar al rotar: \texttt{R-R-G}, \texttt{G-R-R} y \texttt{R-G-R} describen un solo collar; lo mismo \texttt{R-G-G}, \texttt{G-G-R} y \texttt{G-R-G}. En total solo hay $4$ collares distintos (\texttt{RRR}, \texttt{GGG} y esos dos tipos mixtos), no $8$. El lema de Burnside resuelve exactamente esta clase de problemas.
+Hay una clase de problemas de conteo donde la respuesta no es simplemente contar objetos, sino contar objetos \textbf{distintos bajo simetría}. Tomemos el ejemplo clásico: ¿cuántos collares distintos se pueden hacer con $n$ cuentas de $k$ colores, si dos collares son el mismo cuando uno se obtiene del otro por rotación? Contar directamente sobrecuenta el mismo collar $n$ veces (una por cada rotación). 
+
+\textit{Ejemplo.} Con $n=3$ cuentas y $k=2$ colores (digamos rojo $R$ y verde $G$) hay $2^3=8$ coloraciones si numeramos las posiciones, pero varias son el mismo collar al rotar: \texttt{R-R-G}, \texttt{G-R-R} y \texttt{R-G-R} describen un solo collar; lo mismo \texttt{R-G-G}, \texttt{G-G-R} y \texttt{G-R-G}. En total solo hay $4$ collares distintos (\texttt{RRR}, \texttt{GGG} y esos dos tipos mixtos), no $8$. El lema de Burnside resuelve exactamente esta clase de problemas.
 
 Para formalizar ``dos objetos son el mismo si uno se obtiene del otro por alguna simetría'', necesitamos el concepto de \textbf{acción de grupo}.
 
@@ -238,19 +242,15 @@ Tenemos dos ingredientes:
     \item Un conjunto $G$ de \textbf{operaciones} (simetrías) que podemos aplicar. En el ejemplo de los collares, $G$ son las $n$ rotaciones posibles.
 \end{itemize}
 
-La acción de $G$ sobre $X$ es una función que a cada par $(g, x)$ le asigna un nuevo objeto $g \cdot x \in X$ — el resultado de aplicar la operación $g$ al objeto $x$. Para que sea una acción de grupo debe cumplir:
-\begin{itemize}
-    \item La operación identidad no cambia nada: $e \cdot x = x$.
-    \item Aplicar dos operaciones seguidas es lo mismo que aplicar su composición: $g_1 \cdot (g_2 \cdot x) = (g_1 \cdot g_2) \cdot x$.
-\end{itemize}
+La acción de $G$ sobre $X$ es una función que a cada par $(g, x)$ le asigna un nuevo objeto $g \cdot x \in X$ (el resultado de aplicar la operación $g$ al objeto $x$). Además, para que sea una acción de grupo se debe cumplir que $e \cdot x = x$ (la operación identidad no cambia nada) y que dadas dos operaciones $g_1$ y $g_2$, $g_1 \cdot (g_2 \cdot x) = (g_1 \cdot g_2) \cdot x$ (aplicar dos operaciones seguidas es lo mismo que aplicar su composición).
 
 Estas reglas básicamente dicen que la acción es compatible con la estructura del grupo y son fáciles de verificar en la práctica.
 
 \subsection{Órbitas y puntos fijos}
 
-La \textbf{órbita} de un objeto $x \in X$ es el conjunto de todos los objetos a los que puede llegar $x$ al aplicarle alguna operación de $G$:
+La \textbf{órbita} de un objeto $x \in X$, denotada $G \dot x$ es el conjunto de todos los objetos a los que puede llegar $x$ al aplicarle alguna operación de $G$:
 \[
-G \cdot x := \{g \cdot x \mid g \in G\}.
+G \cdot x = \{g \cdot x \mid g \in G\}.
 \]
 
 Esta es la noción clave, dos objetos son \emph{equivalentes} si están en la misma órbita. Nuestro objetivo es contar el número de órbitas $|X/G|$.
@@ -268,7 +268,7 @@ X^g := \{x \in X \mid g \cdot x = x\}.
 La demostración completa puede consultarse en~\cite{youkn0wwho_burnside}.
 
 Usemos este lema en el caso del problema de collares de $n$ cuentas con $k$ colores donde dos collares son iguales si uno se obtiene del otro por rotación. En este caso, $X$ son todas las coloraciones: $|X| = k^n$.
-\\\\Nótese que si tenemos un collar con $n$ cuentas numeradas $1,2,\cdots, n$ en círculo con $k$ colores diferentes. La rotación por $r$ posiciones envía la cuenta $i$ a la posición $i+r (\mod n)$ por lo que hay $n$ rotaciones distintas $r=0,1,\cdots, n-1$ donde $r=0$ es la identidad, es decir, no rotar. Dos formas de colorear las cuentas son la misma si alguna se obtiene de la otra bajo alguna rotación. Estas rotaciones serán precisamente nuestro grupo $G$ que actuará sobre $X$.
+\\\\Nótese que si tenemos un collar con $n$ cuentas numeradas $1,2,\dots, n$ en círculo con $k$ colores diferentes. La rotación por $r$ posiciones envía la cuenta $i$ a la posición $i+r (\mod n)$ por lo que hay $n$ rotaciones distintas, es decir, una por cada valor diferente que puede tomar $r$ del conjunto $\{0,1,\dots, n-1\}$ donde $r=0$ es la identidad, es decir, no rotar. Dos formas de colorear las cuentas son la misma si alguna se obtiene de la otra bajo alguna rotación. Estas rotaciones serán precisamente nuestro grupo $G$ que actuará sobre $X$.
 
 Ahora, notemos que nos interesa saber el número de órbitas porque nos interesa la cantidad de collares diferentes y cada órbita es un collar diferente. Sabiendo esto, queremos entonces aplicar el lema de Burnside y para ello nos interesa saber cuántos objetos fija la rotación por $r$ posiciones. Notemos entonces que la rotación $r$ fija una coloración si y solo si esta es periódica con periodo $gcd(r,n)$ ya que la cuenta $i$ debe tener el mismo color que la cuenta $i+r$ y esto agrupa las cuentas en exactamente $gcd(r,n)$ clases donde todas las cuentas deben tener el mismo color. Y ya que cada una puede tener $k$ colores diferentes, tenemos que hay $k^{gcd(r,n)}$ coloraciones fijas.
 \\\\
@@ -500,6 +500,10 @@ Nótese que estos números nos serán útiles cuando estemos resolviendo un prob
 \section{Números de Stirling de segundo tipo\adv}
 \advnote{Extensión del conteo de particiones; útil en problemas específicos. Puede omitirse en una primera lectura.}
  
+En una oficina se acumuló el trabajo en fechas de vacaciones, en total hay 10 tareas pendientes por hacer y 5 trabajadores. Como no todos tenían la misma disponibilidad, se decidió repartir las tareas al azar, forzando a que cada uno haga al menos una. Para esto, primero se van a dividir las 10 tareas en 5 subconjuntos no vacíos; después, cada trabajador sacará un papelito que le diga qué subconjunto de tareas debe realizar. El jefe se pregunta, ¿de cuántas formas se pueden dividir las 10 tareas en los 5 subconjuntos (antes de repartir los papelitos)?
+
+A primera vista, podríamos intentar resolver esto con las herramientas que ya conocemos. Por ejemplo, podríamos intentar ordenar las tareas y cortar la lista de tareas en 5 partes; sin embargo, una misma partición de subconjuntos se puede obtener de muchos órdenes distintos de las tareas, por lo que estaríamos sobrecontando. Tampoco podemos resolverlo con combinaciones, pues en estas se elige un subconjunto de tamaño fijo de uno más grande, mientras que en este caso queremos repartir todas las tareas en 5 subconjuntos cuyo tamaño no está fijo (pueden tener 1 tarea o 4 tareas y seguir siendo válidos). Necesitamos una herramienta nueva, es aquí donde entran los números de Stirling de segundo tipo.
+
 Los \textbf{números de Stirling de segundo tipo} $S(n,k)$ cuentan el número de formas de partir un conjunto de $n$ elementos en exactamente $k$ subconjuntos no vacíos.
  
 Por ejemplo, $S(4,2) = 7$, las 7 formas de partir $\{1,2,3,4\}$ en 2 subconjuntos no vacíos son:
@@ -520,16 +524,22 @@ La intuición detrás de esta recurrencia consiste en observar que el elemento $
     \item $n$ forma un subconjunto solo, en este caso partimos $\{1,\ldots,n-1\}$ en $k-1$ subconjuntos de $S(n-1,k-1)$ formas, y $\{n\}$ es el $k$-ésimo subconjunto.
     \item $n$ comparte subconjunto con otros elementos, en este caso partimos $\{1,\ldots,n-1\}$ en $k$ subconjuntos de $S(n-1,k)$ formas, y agregamos $n$ a cualquiera de los $k$ subconjuntos existentes.
 \end{itemize}
+
+Volviendo al problema de tareas en la oficina al inicio de la sección, notemos que justamente queremos repartir 10 elementos en 5 subconjuntos no vacíos, por lo que la respuesta es simplemente $S(10,5)=42,525$, que se puede calcular con la recurrencia anterior en tiempo $O(n\cdot k)$.
  
 \section{Números de Bell\adv}
 \advnote{Depende de los números de Stirling de segundo tipo (sección anterior). Puede omitirse en una primera lectura.}
  
+En la misma oficina vista en la sección anterior, de nuevo se tienen 10 tareas pendientes; sin embargo, tras la última repartición de tareas, hubo muchas quejas, pues la gente con peor suerte consideró que no fue justo. En esta ocasión, las 10 tareas se dividirán en equipos de trabajo. Cada tarea será responsabilidad de un equipo solamente. Todos los equipos deben tener al menos una tarea asignada y no importa cuántos equipos haya (podrían ser 1 o hasta 10 equipos). El jefe se pregunta ¿de cuántas formas se pueden dividir las tareas en equipos sin fijar cuántos habrá?
+
+A primera vista, parece un problema muy similar al de la sección anterior; sin embargo, ahora $k$ no está fijo, dividir las tareas entre 3 equipos es igual de aceptable que entre 7. Es aquí donde podríamos pensar en calcular $S(10,k)$ para cada valor posible de $k$ (de 1 a 10) y sumar los resultados. Esto sí funciona, a esta suma se le conoce como número de Bell.
+
 El $n$-ésimo \textbf{número de Bell} $B_n$ cuenta el total de particiones de un conjunto de $n$ elementos en subconjuntos no vacíos, sin importar cuántos subconjuntos haya:
 \[
 B_n = \sum_{k=0}^{n} S(n,k).
 \]
 
-Es decir, $B_n$ es la suma de números de stirling de segundo tipo. Sin embargo, calcular todos los números de stirling de segundo tipo para calcular los números de Bell puede ser muy costoso computacionalmente, hay una forma más eficiente de calcularlos por medio del \textbf{triángulo de Bell}, el cual es un triángulo de números que se construye así:
+Es decir, $B_n$ es la suma de números de Stirling de segundo tipo. Sin embargo, calcular todos los números de Stirling de segundo tipo para calcular los números de Bell puede ser muy costoso computacionalmente, hay una forma más eficiente de calcularlos por medio del \textbf{triángulo de Bell}, el cual es un triángulo de números que se construye así:
 \begin{itemize}
     \item La primera entrada de cada fila es igual a la última entrada de la fila anterior: $T[i][0] = T[i-1][i-1]$.
     \item El resto de la fila sigue la regla: $T[i][j] = T[i][j-1] + T[i-1][j-1]$.
@@ -545,6 +555,9 @@ $\mathbf{5}$ & $7$ & $10$ & $15$ \\
 $\mathbf{15}$ & $20$ & $27$ & $37$ & $52$ \\
 \end{tabular}
 \end{center}
+
+Regresando al problema de la oficina, la respuesta es $B_{10}=115,975$.
+
 \section{Ejercicios}
 \subsection*{7.10.1 \href{https://codeforces.com/contest/1795/problem/D}{Triangle Coloring (Codeforces 1795D)}}
 
@@ -572,12 +585,12 @@ $\mathbf{15}$ & $20$ & $27$ & $37$ & $52$ \\
 
 \textbf{Descripción: }\url{https://cses.fi/problemset/task/2064}
 
-  Nótese que una secuencia de $n=2m$ brackets es válida si tiene $m$ brackets de apertura, $m$ de cierre y para cualquier posición la cantidad de brackets de apertura hasta esa posición, es decir en el prefijo, es mayor o igual a la de cierre.
-  \\\\Si no tuvieramos ninguna restricción sobre los prefijos entonces la cantidad total de secuencias sería simplemente la forma de colocar $m$ aperturas en $n$ posiciones, es decir: $\binom{n}{m}$. Entonces nos interesa encontrar cuál es la cantidad de secuencias inválidas para restarlas de las secuencias totales y encontrar cuántas secuencias válidas hay. Tomemos una secuencia de brackets inválida cualquiera, notemos que entonces esta tiene un prefijo donde los cierres son mayores a las aperturas. En ese prefijo, cambiemos todos los brackets de apertura por los de cierre y los de cierre por los de apertura. Notemos que entonces la secuencia nueva tiene $m+1$ aperturas y $m-1$ cierres. Esto nos da una biyección entre las secuencias inválidas de $m$ aperturas y $m$ cierres y todas las secuencias posibles con $m+1$ aperturas y $m-1$ cierres que son $\binom{n}{m+1}$ de donde tenemos que:
+  Nótese que una sucesión de $n=2m$ paréntesis es válida si tiene $m$ paréntesis de apertura, $m$ de cierre y para cualquier posición la cantidad de paréntesis de apertura hasta esa posición, es decir en el prefijo, es mayor o igual a la de cierre.
+  \\\\Si no tuvieramos ninguna restricción sobre los prefijos entonces la cantidad total de secuencias sería simplemente la forma de colocar $m$ aperturas en $n$ posiciones, es decir: $\binom{n}{m}$. Entonces nos interesa encontrar cuál es la cantidad de secuencias inválidas para restarlas de las secuencias totales y encontrar cuántas secuencias válidas hay. Tomemos una secuencia de paréntesis inválida cualquiera, notemos que entonces esta tiene un prefijo donde los cierres son mayores a las aperturas. En ese prefijo, cambiemos todos los paréntesis de apertura por los de cierre y los de cierre por los de apertura. Notemos que entonces la secuencia nueva tiene $m+1$ aperturas y $m-1$ cierres. Esto nos da una biyección entre las secuencias inválidas de $m$ aperturas y $m$ cierres y todas las secuencias posibles con $m+1$ aperturas y $m-1$ cierres que son $\binom{n}{m+1}$ de donde tenemos que:
   \[
   \binom{2m}{m}-\binom{2m}{m+1}=\frac{1}{m+1}\binom{2m}{m}.
   \]
-  Notemos que esta fórmula es exactamente la fórmula de los números de Catalán, por lo que para calcular las secuencias válidas de $n$ brackets, basta con calcular el $n$-ésimo número de Catalán.
+  Notemos que esta fórmula es exactamente la fórmula de los números de Catalán, por lo que para calcular las secuencias válidas de $n$ paréntesis, basta con calcular el $n$-ésimo número de Catalán.
 \\\\
 Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/cses2064.cpp}.
 \section{Problemas}

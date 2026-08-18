@@ -13,7 +13,7 @@ Notemos que si sumamos cada una de las $n$ columnas, cada una suma $n+1$. Sumar 
 \sum_{i=1}^{n} i = 1 + 2 + \cdots + n = \frac{n(n+1)}{2}.
 \]
 
-Esta suma es un ejemplo de \textbf{progresión aritmética}, más generalmente una progresión aritmética es una sucesión de números $\{a_1,a_2, a_3 \cdots \}$ tal que cualquier término se puede obtener del anterior al sumarle una cantidad fija $d$. Usando la idea de arriba podemos deducir que para cualquier progresión aritmética
+Esta suma es un ejemplo de \textbf{progresión aritmética}, más generalmente una progresión aritmética es una sucesión de números $\{a_1,a_2, a_3, \dots \}$ tal que cualquier término se puede obtener del anterior al sumarle una cantidad fija $d$. Usando la idea de arriba podemos deducir que para cualquier progresión aritmética
 \[
 a_1+\cdots + a_n = \frac{n(a_1+a_n)}{2}.
 \]
@@ -74,7 +74,7 @@ Ahora, como el sumando $\frac{1}{j}$ no depende de $i$, la suma interna es simpl
 Lo que parecía difícil se vuelve más sencillo al cambiar el orden.
 
 \section{Recurrencias}
-La sucesión ${0,1,1,2,3,5,8,\cdots}$ es muy famosa y es conocida como la sucesión de Fibonacci. La forma en la que se nos enseña a definirla es haciendo el primer término $F_0=0$, el segundo $F_1=1$ y desde ahí calcular los siguientes con la recurrencia
+La sucesión ${0,1,1,2,3,5,8,\dots}$ es muy famosa y es conocida como la sucesión de Fibonacci. La forma en la que se nos enseña a definirla es haciendo el primer término $F_0=0$, el segundo $F_1=1$ y desde ahí calcular los siguientes con la recurrencia
 \[
 F_n=F_{n-1}+F_{n-2}.
 \]
@@ -167,7 +167,7 @@ for(int i = n; i <= k; i ++){
     }
 }
 \end{lstlisting}
-Este procedimiento tiene una complejidad $O(nk)$, es recomendable por simplicidad usarse en casos donde $nk<1e7$ para evitar TLE.
+Este procedimiento tiene una complejidad $O(nk)$, es recomendable por simplicidad usarse en casos donde $nk<1e7$ para evitar TLE (Time Limit Exceeded).
 \subsection{Solución con Matrices}
 De la solución con programación dinámica notemos que para cada paso solo nos importa tener la información de los $n$ últimos términos, y todos los demás podemos olvidarlos. Si guardamos los $n$ últimos elementos en una matriz columna, podemos aplicarle una transformación lineal para obtener los siguientes elementos. Si originalmente teníamos los elementos $\{R_1,R_2,\cdots,R_n\}$, después de la transformación lineal tendremos los elementos $\{R_{2},R_{3},\cdots,R_{n+1}\}$. La transformación lineal es relativamente sencilla y consiste en multiplicar por una matriz cuadrada como sigue
 
@@ -198,7 +198,7 @@ R_2\\
 Podríamos entonces pensar que, ya que cada multiplicación cambia los índices en uno, tendríamos que hacer $k-n$ multiplicaciones para obtener el término $k$, podríamos hacerlo, pero hacer esto
 nos implicaría una complejidad $O(n^3(k-n))$ (el algoritmo más sencillo para multiplicar dos
 matrices de $n\times n$ es el trivial por definición, que consiste en calcular cada una de las
-$n^2$ entradas del producto como una suma de $n$ productos, dando una complejidad $O(n^3)$). En realidad podemos multiplicar la matriz cuadrada por si misma $k-n$ veces usando exponenciación binaria\footnote{Ver sección de exponenciación binaria}, de esta forma obtenemos el $k$ ésimo término en tiempo $O(n^3log(k-n))$.
+$n^2$ entradas del producto como una suma de $n$ productos, dando una complejidad $O(n^3)$). En realidad podemos multiplicar la matriz cuadrada por si misma $k-n$ veces usando exponenciación rápida\footnote{Ver sección de exponenciación rápida}, de esta forma obtenemos el $k$ ésimo término en tiempo $O(n^3log(k-n))$.
 
 %https://codeforces.com/gym/103443/problem/E
 \section{Polinomios e interpolación de Lagrange}
@@ -224,7 +224,7 @@ $x$ pueden ser muy grandes). Basta con agregar la operación \texttt{\% mod} en 
 
 Ahora que sabemos cómo evaluar un polinomio, el resto de esta sección queremos resolver el problema de: dados $n$ puntos cualesquiera (con $x$ distintas), encontrar un polinomio que pasa por todos ellos. A esto se le llama interpolación de Lagrange. 
 \\\\Es importante mencionar que dados  $n+1$ puntos distintos $(x_0, y_0), (x_1, y_1), \ldots, (x_n, y_n)$, existe un \textbf{único} polinomio de grado a lo más $n$ que pasa por todos ellos.
-\\\\El razonamiento detrás de por qué esto es cierto es sencillo. Supongamos que no se cumple, es decir, que hay dos polinomios diferentes $p$ y $q$ de grado $\leq n$ que pasan por todos los puntos dados. Entonces tendremos que $p-q$ es un polinomio de grado $\leq n$ que tiene $n+1$ raíces (los $x_i$), pero sabemos que un polinomio no nulo de grado $\leq n$ tiene a lo más $n$ raíces \footnote{https://www.matem.unam.mx/~max/AS2/N6.pdf}, de donde tenemos que debe ser nulo, es decir $p-q=0$, por lo que $p=q$.
+\\\\El razonamiento detrás de por qué esto es cierto es sencillo. Supongamos que no se cumple, es decir, que hay dos polinomios diferentes $p$ y $q$ de grado menor o igual a $n$ que pasan por todos los puntos dados. Entonces tendremos que $p-q$ es un polinomio de grado $\leq n$ que tiene $n+1$ raíces (los $x_i$), pero sabemos que un polinomio no nulo de grado $\leq n$ tiene a lo más $n$ raíces \footnote{https://www.matem.unam.mx/~max/AS2/N6.pdf}, de donde tenemos que debe ser nulo, es decir $p-q=0$, por lo que $p=q$.
 \\\\
 Esto nos dice que $n+1$ puntos determinan completamente un polinomio de grado $n$. La pregunta es: ¿cómo construirlo? La idea de Lagrange es construir el polinomio interpolante como una suma de piezas, donde cada pieza se encarga de un solo punto.
  
@@ -271,7 +271,7 @@ Podríamos preguntarnos por qué esto es una optimización. Nótemos que
 \prod_{j \neq i} (x-j)=(x-1)(x-2)\cdots(x-(i-1))(x-(i+1))\cdots(x-n),
 \]
 entonces al menos para el numerador podemos precalcular los prefijos, es decir guardamos en un vector $x-1$, $(x-1)(x-2)$, $(x-1)(x-2)(x-3)$, $\cdots$, $(x-1)(x-2)\cdots(x-n)$ y los sufijos $(x-n)$, $(x-n)(x-(n-1))$ y así hasta $(x-n)(x-(n-1))\cdots(x-1)$, de forma que cuando queramos hacer la multiplicación de arriba podamos hacerlo en tiempo $O(1)$ multiplicando el prefijo $(x-1)\cdots(x-(i-1))$ con el prefijo $(x-n)\cdots(x-(i+1))$.
-\\\\Nótese que en el caso de no tener módulo podemos simplemente precalcular $(x-1)(x-2)\cdots (x-n)$ y dividir entre $(x-i)$ cuando ocupemos calcularlo para un $i$.
+\\\\Nótese que en el caso de no tener módulo podemos simplemente precalcular $(x-1)(x-2)\cdots (x-n)$ y dividir entre $(x-i)$ cuando necesitemos calcularlo para un $i$.
 \\\\Para el denominador también podemos hacer algo similar, pues
 \[
 \prod_{j \neq i} (i-j)=(i-1)(i-2)\cdots(i-(i-1))(i-(i+1))\cdots(i-n),
@@ -378,7 +378,7 @@ int main() {
 }
 \end{lstlisting}
 
-\textbf{Ejercicio} Optimizar la interpolación de Lagrange como lo hicimos cuando los puntos son $1, 2, 3, \cdots, n$, para cualquier progresión aritmética.
+\textbf{Ejercicio} Optimizar la interpolación de Lagrange como lo hicimos cuando los puntos son $1, 2, 3, \dots, n$, para cualquier progresión aritmética.
 \\
  
 \section{Transformada rápida de Fourier (FFT) y NTT}
@@ -561,7 +561,7 @@ Entonces si queremos encontrar $F_n$, con $n\geq 1$ podemos elevar la matriz a l
 =\begin{pmatrix} 1 & 1 \\ 1 & 0 \end{pmatrix}^{n-1}
 \begin{pmatrix} 1 \\ 0 \end{pmatrix}.
 \]
-La potencia se calcula de la misma forma que la exponenciación binaria (sección~\ref{sec:expbin}), pero aplicada a matrices. En lugar de multiplicar números, multiplicamos matrices $2\times2$ en cada paso. El caso $n=0$ se maneja directamente regresando $0$.
+La potencia se calcula de la misma forma que la exponenciación rápida (sección~\ref{sec:expbin}), pero aplicada a matrices. En lugar de multiplicar números, multiplicamos matrices $2\times2$ en cada paso. El caso $n=0$ se maneja directamente regresando $0$.
 Notemos que como  $n \leq 10^{18}$, todas las multiplicaciones deben hacerse módulo $10^9 + 7$ usando \texttt{long long} para evitar
 overflow.
 \\\\
@@ -571,7 +571,7 @@ Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/edit
 
 \textbf{Descripción: }\url{https://cses.fi/problemset/task/1723}
 
-En este problema nos dan una gráfica dirigida. Podríamos pensar que este es un problema en el que necesitamos algún algoritmo de gráficas, pero la realidad es que podemos resolverlo con exponenciación de matrices. Notemos que podemos expresar la gráfica por medio de una matriz de adyacencia $M$. Esta tendrá $M[i][j]=1$ si hay una arista de $i$ a $j$, de lo contrario, tendrá $0$.
+En este problema nos dan una gráfica dirigida. Aunque este es un problema de gráficas en esencia, no necesitamos ninguna estructura de datos elaborada para resolverlo. Notemos que podemos expresar la gráfica por medio de una matriz de adyacencia $M$. Esta tendrá $M[i][j]=1$ si hay una arista de $i$ a $j$, de lo contrario, tendrá $0$.
 \\\\Cuando calculamos $M^2$ lo que hacemos es:
 \[
 (M^2)[i][j] = \sum_{k=1}^{n} M[i][k] \cdot M[k][j].
