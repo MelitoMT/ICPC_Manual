@@ -914,8 +914,10 @@ long long babyStepGiantStep(long long a, long long b, long long m) {
 \end{lstlisting}
 
 Para módulo no primo o cuando $\gcd(a,m) > 1$, hay variantes que reducen al caso coprimo; véase la referencia \cite{cpalg-discrete-log-general}.
+
+\newpage
 \section{Ejercicios}
-\subsection*{6.9.1 \href{https://codeforces.com/contest/1542/problem/C}{Strange Function (Codeforces 1542C)}}
+\subsection*{5.9.1 \href{https://codeforces.com/contest/1542/problem/C}{Strange Function (Codeforces 1542C)}}
 
 \begin{center}
 \fbox{
@@ -991,7 +993,8 @@ For each test case, output a single integer $ans$, where $ans=\sum_{i=1}^n f(i)$
     los demás términos sean $0$. En la implementación, haremos la suma hasta encontrar el primer término $0$, ahí pararemos y ya tendremos el resultado.
     \\\\
     Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/1542C.cpp}.
-\subsection*{6.9.2 \href{https://codeforces.com/problemset/problem/1725/H}{Hot Black Hot White (COMPFEST 14)}}
+
+\subsection*{5.9.2 \href{https://codeforces.com/problemset/problem/1725/H}{Hot Black Hot White (COMPFEST 14)}}
 
 \begin{center}
 \fbox{
@@ -1009,8 +1012,12 @@ Dr. Chanek has $N$ magical stones with $N$ being an even number. Those magical s
 Define $\text{concat}(x,y)$ for two integers $x$ and $y$ as the result of concatenating the digits of $x$ to the left of $y$ in their decimal representation without changing the order. As an example, $\text{concat}(10,24)$ will result in $1024$.
 
 For a magic box with a magic coefficient $Z$, magical stone $i$ will react with magical stone $j$ if the colours of both stones are different and $\text{concat}(A_i, A_j) \times \text{concat}(A_j, A_i) + A_i \times A_j \equiv Z \mod 3$. A magical stone that is reacting will be very hot and dangerous. Because of that, you must colour the magical stones and determine the magic coefficient $Z$ of the magic box in a way such that there is no magical stone that reacts, or report if it is impossible.
-
-\vspace{0.5em}
+\end{minipage}
+}
+\end{center}
+\begin{center}
+\fbox{
+\begin{minipage}{0.95\linewidth}
 \textbf{Input}\\
 The first line contains a single even integer $N$ ($2 \leq N \leq 10^5$), the number of magical stones Dr. Chanek has.
 
@@ -1034,7 +1041,6 @@ Otherwise, output two lines. The first line contains an integer $Z$ denoting the
 \end{minipage}
 }
 \end{center}
-
     Antes de indagar en cómo elegir $Z$ o cómo pintar las rocas mágicas, vamos a intentar simplificar la expresión que nos dan: $concat(A_i, A_j) \times concat(A_j, A_i) + A_i \times A_j \equiv Z \, \mod 3$.
     \\\\Veamos que si $k$ es la cantidad de digitos de $A_j$ entonces $concat(A_i, A_j)=A_i \times 10^k + A_j$ y más aún como $10^k \equiv 1^k \equiv 1\, \mod 3$ tenemos que:
     \[concat(A_j, A_i)\equiv A_i+A_j  \mod 3\]
@@ -1046,7 +1052,7 @@ Otherwise, output two lines. The first line contains an integer $Z$ denoting the
     Notemos que $0^2\equiv 0  \mod 3$, $1^2 \equiv 1  \mod 3$ y $2^2 \equiv 1 \, \mod 3$. Si tenemos al menos $\frac{n}{2}$ piedras tal que $A_i^2\equiv 0  \mod 3$, entonces podemos colorear $\frac{n}{2}$ de esas de un solo color, así cuando haya dos colores diferentes tendremos que $A_i^2+A_j^2\equiv 0^2 +A_j^2 \equiv A_j^2  \mod 3$ y como ningún número al cuadrado es congruente con $2$ módulo $3$, podemos hacer $Z=2$. Por otro lado, si no hay al menos $\frac{n}{2}$ que lo cumplan, significa que hay al menos $\frac{n}{2}$ tal que $A_i^2 \equiv 1  \mod 3$, entonces coloreamos $\frac{n}{2}$ de ellas de un mismo color y así no habrá ningún par de rocas de diferente color tal que ambas tengan $A_j^2 \equiv 0$. De donde podemos hacer $Z=0$.
     \\\\
     Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/1725H.cpp}.
-\subsection*{6.9.3 \href{https://lightoj.com/problem/monkey-tradition}{Monkey Tradition (Light OJ)}}
+\subsection*{5.9.3 \href{https://lightoj.com/problem/monkey-tradition}{Monkey Tradition (Light OJ)}}
 
 \begin{center}
 \fbox{
@@ -1113,13 +1119,13 @@ el cual podemos resolver con el teorema chino del residuo directamente. La únic
 Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/monkeyTradition.cpp}.
 \section{Problemas}
 \begin{itemize}
-    \item[6.10.1] \href{https://codeforces.com/problemset/problem/1553/A}{Digits Sum (Codeforces 1553A)}
-    \item[6.10.2] \href{https://codeforces.com/contest/1916/problem/B}{Two Divisors (Codeforces 1916B)}
-    \item[6.10.3] \href{https://cses.fi/problemset/task/1712}{Exponentiation II (CSES 1712)}
-    \item[6.10.4] \href{https://codeforces.com/problemset/problem/1512/G}{Short Task (Codeforces 1512G)}
+    \item[5.10.1] \href{https://codeforces.com/problemset/problem/1553/A}{Digits Sum (Codeforces 1553A)}
+    \item[5.10.2] \href{https://codeforces.com/contest/1916/problem/B}{Two Divisors (Codeforces 1916B)}
+    \item[5.10.3] \href{https://cses.fi/problemset/task/1712}{Exponentiation II (CSES 1712)}
+    \item[5.10.4] \href{https://codeforces.com/problemset/problem/1512/G}{Short Task (Codeforces 1512G)}
     %CRT
-    \item[6.10.5] \href{https://matcomgrader.com/problem/9547/fantastic-beasts/}{Fantastic Beasts (Latam Regional Contest 2018)}
-    \item[6.10.6] \href{https://codeforces.com/group/DH4HPwQlLU/contest/689800/problem/C}{Sushi Lovers (Autoría $\filledstar$)}
-    \item[6.10.7] \href{https://codeforces.com/group/DH4HPwQlLU/contest/689800/problem/F}{Pociones Locas (Autoría $\filledstar$)}
+    \item[5.10.5] \href{https://matcomgrader.com/problem/9547/fantastic-beasts/}{Fantastic Beasts (Latam Regional Contest 2018)}
+    \item[5.10.6] \href{https://codeforces.com/group/DH4HPwQlLU/contest/689800/problem/C}{Sushi Lovers (Autoría $\filledstar$)}
+    \item[5.10.7] \href{https://codeforces.com/group/DH4HPwQlLU/contest/689800/problem/F}{Pociones Locas (Autoría $\filledstar$)}
 
 \end{itemize}

@@ -88,7 +88,7 @@ Sea $G$ conexa~\cite{illinois_euler}. Entonces:
 \begin{itemize}
     \item $G$ tiene un \textbf{circuito euleriano} si y solo si todo
           vértice tiene grado par;
-    \item $G$ tiene un \textbf{camino euleriano} (no circuito) si y solo
+    \item $G$ tiene un \textbf{camino euleriano} que no es circuito si y solo
           si exactamente dos vértices tienen grado impar, y el camino
           debe empezar en uno de ellos y terminar en el otro.
 \end{itemize}
@@ -132,22 +132,22 @@ que se quiere recorrer son las \textbf{aristas}, no los vértices. Imaginemos qu
 sucesión existe si y solo si la gráfica tiene un camino euleriano.
 \section{Componentes fuertemente conexas}
 En una gráfica \textbf{no dirigido}, la conectividad es simple, hay un
-camino entre dos nodos o no. Pero en una gráfica \textbf{dirigido} la
+camino entre dos vértices o no. Pero en una gráfica \textbf{dirigido} la
 situación es más complicada, pues puede haber un camino de $u$ a $v$ sin que
 haya uno de $v$ a $u$.
  
 \begin{definition}
 Una \textbf{componente fuertemente conexa} (SCC) de una gráfica dirigida
-es un subconjunto maximo de vértices $C$ tal que para todo par
+es un subconjunto máximo de vértices $C$ tal que para todo par
 $u, v \in C$ existe un camino de $u$ a $v$ y un camino de $v$ a $u$.
 \end{definition}
 \subsection{Algoritmo de Kosaraju}
-El algoritmo de Kosaraju encuentra todas las SCCs en $O(V + E)$ con dos DFS. Se apoya en la \textbf{gráfica transpuesta} $G^T$ (mismos nodos, aristas invertidas). Las SCCs de $G$ y $G^T$ son las mismas, aunque cambia el orden en que conviene descubrirlas.
+El algoritmo de Kosaraju encuentra todas las SCCs en $O(V + E)$ con dos DFS. Se apoya en la \textbf{gráfica transpuesta} $G^T$ (mismos vértices, aristas invertidas). Las SCCs de $G$ y $G^T$ son las mismas, aunque cambia el orden en que conviene descubrirlas.
 \\\\
 El procedimiento tiene dos pasos:
 \begin{enumerate}
-    \item \textbf{DFS en $G$.} Al terminar de explorar cada nodo, lo añadimos al final de una lista \texttt{order}. Un nodo se registra tarde cuando aún quedaban descendientes por visitar; por eso el último de la lista pertenece a una SCC sin aristas entrantes desde otras componentes.
-    \item \textbf{DFS en $G^T$, en orden inverso.} Recorremos \texttt{order} de atrás hacia adelante. Cada vez que encontramos un nodo sin componente asignada, lanzamos un DFS en $G^T$ desde ahí. Ese DFS descubre \emph{exactamente} una SCC: en $G^T$ las aristas que salían hacia otras componentes se volvieron entradas, así que no podemos salir de la componente actual.
+    \item \textbf{DFS en $G$.} Al terminar de explorar cada vértice, lo añadimos al final de una lista \texttt{order}. Un vértice se registra tarde cuando aún quedaban descendientes por visitar; por eso el último de la lista pertenece a una SCC sin aristas entrantes desde otras componentes.
+    \item \textbf{DFS en $G^T$, en orden inverso.} Recorremos \texttt{order} de atrás hacia adelante. Cada vez que encontramos un vértice sin componente asignada, lanzamos un DFS en $G^T$ desde ahí. Ese DFS descubre \emph{exactamente} una SCC: en $G^T$ las aristas que salían hacia otras componentes se volvieron entradas, así que no podemos salir de la componente actual.
 \end{enumerate}
  
 \begin{figure}[H]
@@ -184,9 +184,9 @@ El procedimiento tiene dos pasos:
 \end{tikzpicture}
 \end{figure}
  
-En el ejemplo de la figura las SCCs son $\{a,b,c\}$ y $\{d,e,f\}$. Veamos el algoritmo paso a paso suponiendo que los nodos se numeran $a=0,b=1,c=2,d=3,e=4,f=5$ y que el primer DFS recorre $G$ en ese orden.
+En el ejemplo de la figura las SCCs son $\{a,b,c\}$ y $\{d,e,f\}$. Veamos el algoritmo paso a paso suponiendo que los vértices se numeran $a=0,b=1,c=2,d=3,e=4,f=5$ y que el primer DFS recorre $G$ en ese orden.
 
-\textbf{Paso 1 (DFS en $G$).} Empezamos en $a$: visitamos $a \to b \to c$; desde $c$ seguimos a $d$, luego $d \to e \to f$, y al retroceder registramos cada nodo al terminar:
+\textbf{Paso 1 (DFS en $G$).} Empezamos en $a$: visitamos $a \to b \to c$; desde $c$ seguimos a $d$, luego $d \to e \to f$, y al retroceder registramos cada vértice al terminar:
 \[
 \texttt{order} = [f,\, e,\, d,\, c,\, b,\, a].
 \]
@@ -195,7 +195,7 @@ El último en la lista es $a$, de la componente $\{a,b,c\}$. Intuitivamente, al 
 \textbf{Paso 2 (DFS en $G^T$, orden inverso).} Procesamos \texttt{order} de derecha a izquierda:
 \begin{itemize}
     \item Desde $a$ (primero en este orden): en $G^T$ solo podemos retroceder por aristas invertidas dentro de $\{a,b,c\}$ (ciclo $a \to c \to b \to a$). Las flechas $b \to d$ y $c \to d$ de $G$ se vuelven $d \to b$ y $d \to c$ en $G^T$, pero $d$ aún no se visita desde $a$ porque esas aristas \emph{entran} a $\{a,b,c\}$, no salen de $a$. Resultado: $\{a,b,c\}$ recibe \texttt{comp} $= 0$.
-    \item Los nodos $b$ y $c$ ya tienen componente; el siguiente libre es $d$. Desde $d$ en $G^T$ alcanzamos $e \to f \to d$ y también los predecesores $b,c$ (ya visitados). Solo se agrega $\{d,e,f\}$ con \texttt{comp} $= 1$.
+    \item Los vértices $b$ y $c$ ya tienen componente; el siguiente libre es $d$. Desde $d$ en $G^T$ alcanzamos $e \to f \to d$ y también los predecesores $b,c$ (ya visitados). Solo se agrega $\{d,e,f\}$ con \texttt{comp} $= 1$.
 \end{itemize}
 Así cada llamada a \texttt{dfs2} aísla exactamente una SCC.
  
@@ -203,7 +203,7 @@ Así cada llamada a \texttt{dfs2} aísla exactamente una SCC.
 vector<int> adj[MAXN], radj[MAXN];  // G y G^T
 bool visited[MAXN];
 vector<int> order;                  // orden de salida del primer DFS
-int comp[MAXN];                     // SCC de cada nodo
+int comp[MAXN];                     // SCC de cada vertice
 
 void dfs1(int v) {
     visited[v] = true;
@@ -249,7 +249,7 @@ int kosaraju(int n) {
 \subsection*{Gráfica de condensación}
  
 Una vez encontradas las SCCs, podemos construir la \textbf{gráfica de
-condensación}, una gráfica donde cada nodo representa una SCC y hay una arista de la SCC $i$ a la SCC $j$ si existe alguna arista en $G$ de un nodo en $i$ a un nodo en $j$. Esta gráfica siempre es un DAG (gráfica dirigida acíclica)~\cite{cpalgos_scc}.
+condensación}, una gráfica donde cada vértice representa una SCC y hay una arista de la SCC $i$ a la SCC $j$ si existe alguna arista en $G$ de un vértice en $i$ a un vértice en $j$. Esta gráfica siempre es un DAG (gráfica dirigida acíclica)~\cite{cpalgos_scc}.
  
 \begin{figure}[H]
 \centering
@@ -310,7 +310,7 @@ La observación fundamental que reduce este problema a $SCC$ es que toda disyunc
 \]
 Si $a$ es falso, entonces $b$ debe ser verdadero (y viceversa).
 \\\\
-Esto permite construir una gráfica dirigida con $2n$ nodos ($x_i$ y $\neg x_i$ para cada variable) donde cada disyunción agrega dos aristas.
+Esto permite construir una gráfica dirigida con $2n$ vértices ($x_i$ y $\neg x_i$ para cada variable) donde cada disyunción agrega dos aristas.
  
 \begin{figure}[H]
 \centering
@@ -433,10 +433,10 @@ En la siguiente gráfica, la arista roja $d$-$e$ es un puente. Los vértices $d$
 Regresando al problema de las centrales, notemos que el problema nos pide imprimir cuántos puntos de articulación tiene la gráfica dada. Podríamos intentar revisar cada vértice y ver si al quitarlo desconecta la gráfica con $BFS/DFS$ pero esto costaría $O((V+E)V)$ lo que nos daría $TLE$, necesitamos algo más eficiente.
 \\\\
 Al hacer DFS, el árbol de llamadas forma un árbol DFS. Las
-aristas que no forman parte de este árbol conectan un nodo con algún \textbf{ancestro} suyo les llamaremos aristas hacia atrás.
+aristas que no forman parte de este árbol conectan un vértice con algún \textbf{ancestro} suyo les llamaremos aristas hacia atrás.
 \\\\
-La idea para cosntruir un algoritmo más eficiente es ver que un nodo $U$ es punto de articulación si tiene algún hijo $V$ tal que
-\textbf{ningún nodo del subárbol de $V$ puede llegar a un ancestro de
+La idea para construir un algoritmo más eficiente es ver que un vértice $U$ es punto de articulación si tiene algún hijo $V$ tal que
+\textbf{ningún vértice del subárbol de $V$ puede llegar a un ancestro de
 $U$ sin pasar por $U$}. Para revisar esto, asignamos a cada vértice
 un tiempo de descubrimiento $\texttt{disc}[v]$ que corresponde al orden
 en que el DFS lo visitó. Ahora definimos $\texttt{low}[v]$ como el menor $\texttt{disc}$ alcanzable desde el subárbol de $v$:
@@ -536,12 +536,12 @@ Para un gráfica $G$ con $n$ vértices, las siguientes afirmaciones son equivale
  
 La caracterización (3), camino único entre todo par, será importante porque convierte preguntas sobre caminos en preguntas sobre estructura del árbol. Es la base del LCA y de la mayoría de técnicas sobre árboles.
  
-Para motivar este capítulo de árboles, véamos el problema \href{https://codeforces.com/contest/342/problem/E}{Xenia and Tree}, en este nos dan un árbol con n nodos. El nodo $1$ está pintado de rojo y los demás de azul. Nos pedirán consultas de dos tipos:
+Para motivar este capítulo de árboles, veamos el problema \href{https://codeforces.com/contest/342/problem/E}{Xenia and Tree}, en este nos dan un árbol con $n$ vértice. El vértice $1$ está pintado de rojo y los demás de azul. Nos pedirán consultas de dos tipos:
 \begin{itemize}
-    \item[1.] Nos dan un numero $a$ que corresponde a un nodo azul y tenemos que pintarlo rojo.
-    \item[2.] Nos dan un numero $b$ que corresponde a un nodo del arbol y tenemos que imprimir la distancia entre $b$ y el nodo rojo más cercano.
+    \item[1.] Nos dan un número $a$ que corresponde a un vértice azul y tenemos que pintarlo de rojo.
+    \item[2.] Nos dan un número $b$ que corresponde a un vértice del árbol y tenemos que imprimir la distancia entre $b$ y el vértice rojo más cercano.
 \end{itemize}
-Nótese que calcular la distancia a cada uno de los nodos rojos cada que nos piden una consulta no es eficiente y en este problema que nos pueden pedir $10^5$ consultas en un árbol de $10^5$ vértices, esta solución ingenua resultaría en $TLE$. Veremos algunas herramientas que nos ayudarían a resolver este problema.
+Nótese que calcular la distancia a cada uno de los vértices rojos cada que nos piden una consulta no es eficiente y en este problema que nos pueden pedir $10^5$ consultas en un árbol de $10^5$ vértices, esta solución ingenua resultaría en $TLE$. Veremos algunas herramientas que nos ayudarían a resolver este problema.
 
 \section{Centroide\adv}
 \advnote{Requiere manejo cómodo de árboles (DFS, subtamaños). Puede omitirse en una primera lectura.}
@@ -570,7 +570,7 @@ El \textbf{centroide} de un árbol es un vértice $c$ tal que al eliminarlo, nin
  
 \subsubsection*{Descomposición por centroides}
 
-Tomemos un árbol más grande que el anterior y tomemos su centroide $c$. Al eliminarlo, el árbol se divide en varias componentes, cada una de tamaño $\leq \lfloor n/2 \rfloor$. Nótese que entonces cualquier camino de un nodo $v$ en una componente a otro $u$ en otra componente, este pasa por $c$, entonces si quisieramos la distancia entre $u$ y $v$ podemos sumar la distancia entre $c$ y $v$ y la distancia entre $c$ y $u$.
+Tomemos un árbol más grande que el anterior y tomemos su centroide $c$. Al eliminarlo, el árbol se divide en varias componentes, cada una de tamaño $\leq \lfloor n/2 \rfloor$. Nótese que entonces cualquier camino de un vértice $v$ en una componente a otro $u$ en otra componente, este pasa por $c$. Por tanto, la distancia entre $u$ y $v$ podemos sumar la distancia entre $c$ y $v$ y la distancia entre $c$ y $u$.
 
 \begin{figure}[H]
 \centering
@@ -604,7 +604,7 @@ Tomemos un árbol más grande que el anterior y tomemos su centroide $c$. Al eli
   \node[draw=none, blue!40, font=\scriptsize] at (7.25, 5.5) {comp. 3};
 \end{tikzpicture}
 \end{figure}
- La observación anterior solo resuelve caminos entre componentes distintas. Pero los nodos rojos también pueden estar en la misma componente que $v$. La solución es aplicar el mismo argumento recursivamente, cada componente tiene su propio centroide, y todo camino dentro de ella que no pasa por ese centroide, pasará por el centroide de alguna subcomponente más pequeña.
+ La observación anterior solo resuelve caminos entre componentes distintas. Pero los vértices rojos también pueden estar en la misma componente que $v$. La solución es aplicar el mismo argumento recursivamente, cada componente tiene su propio centroide, y todo camino dentro de ella que no pasa por ese centroide, pasará por el centroide de alguna subcomponente más pequeña.
 
  Esto define el \textbf{árbol de centroide}: tomamos el centroide $c$ del árbol completo como raíz, y aplicamos el mismo proceso recursivamente en cada componente que queda al eliminarlo, y los centroides de esas componentes se vuelven hijos de $c$ en el árbol de centroide.
  
@@ -635,23 +635,23 @@ Tomemos un árbol más grande que el anterior y tomemos su centroide $c$. Al eli
 \end{tikzpicture}
 \end{figure}
 
-Notemos entonces que para cualquier par de nodos $u$ y $v$, existe un ancestro común en el árbol de centroide tal que el camino entre los nodos en el árbol original pasa por ese ancestro, el cual es el ancestro común de $u$ y $v$, por ejemplo, para $g$ y $e$ en el árbol anterior, este es $c$, es decir el primer ancestro que comparten. En caso de $e$ y $a$, es $b$.
+Notemos entonces que para cualquier par de vértices $u$ y $v$, existe un ancestro común más bajo (LCA) $w$ en el árbol de centroide tal que el camino entre los vértices $u$ y $v$ en el árbol original pasa por $w$; este es el primer ancestro común de $u$ y $v$ en el árbol de centroide. Por ejemplo, para $g$ y $e$ en el árbol anterior, este es $c$, es decir el primer ancestro que comparten. En caso de $e$ y $a$, es $b$.
 
 %NOTA (buscar algun recuadro de color para estas cosas)
-Una propiedad importante es que el árbol de centroide tiene profundidad $O(\log n)$, ya que cada vez que bajamos un nivel, el subárbol tiene tamaño $\leq \lfloor n/2 \rfloor$ (por la propiedad del centroide). Tras $k$ niveles el tamaño es $\leq n/2^k$. La recursión termina cuando el tamaño llega a 1, es decir a profundidad $\lceil \log_2 n \rceil$, esto es relevante para calcular la compleljidad del algortimo.
+Una propiedad importante es que el árbol de centroide tiene profundidad $O(\log n)$, ya que cada vez que bajamos un nivel, el subárbol tiene tamaño $\leq \lfloor n/2 \rfloor$ (por la propiedad del centroide). Tras $k$ niveles el tamaño es $\leq n/2^k$. La recursión termina cuando el tamaño llega a 1, es decir, la profundidad es a lo más $\lceil \log_2 n \rceil$, esto es relevante para calcular la compleljidad del algortimo.
 
-Volviendo al problema, con el árbol de centroide construido, mantenemos para cada nodo $c$:
+Volviendo al problema, con el árbol de centroide construido, mantenemos para cada vértice $c$:
 \[
 \texttt{minDist}[c] = \min_{u \text{ rojo}} \text{dist}(c,\, u)
 \]
-la distancia mínima desde $c$ a cualquier nodo rojo en el subárbol \emph{original} sobre el que $c$ fue centroide. Inicialmente $\texttt{minDist}[c] = \infty$ para todo $c$. Ahora, cada que nos pidan una consulta del tipo $1$, en la que nos pidan pintar un vértice $v$ de rojo, para todo nodo $c$ ancestro de $v$ en el árbol de centroide, debemos actualizar:
+la distancia mínima desde $c$ a cualquier vértice rojo en el subárbol \emph{original} sobre el que $c$ fue centroide. Inicialmente $\texttt{minDist}[c] = \infty$ para todo $c$. Ahora, cada que nos pidan una consulta del tipo $1$, en la que nos pidan pintar un vértice $v$ de rojo, para todo vértice $c$ ancestro de $v$ en el árbol de centroide, debemos actualizar:
 \[
 \texttt{minDist}[c] \leftarrow \min\, \!\bigl(\texttt{mindist}[c],\ \text{dist}(v, c)\bigr)
 \]
 Como hay $O(\log n)$ ancestros, esta operación cuesta $O(\log n)$ llamadas a \texttt{dist}.
  
 \medskip
-Para el segundo tipo de consulta notemos que para cualquier nodo rojo $u$, existe un ancestro $c$ de $v$ en el árbol de centroide tal que el camino de $v$ a $u$ pasa por $c$.
+Para el segundo tipo de consulta notemos que para cualquier vértice rojo $u$, existe un ancestro $c$ de $v$ en el árbol de centroide tal que el camino de $v$ a $u$ pasa por $c$.
 Entonces la respuesta es:
 \[
 \min_{c \text{ ancestro de } v \text{ en árbol de centroide}} \bigl(\text{dist}(v, c) + \texttt{minDist}[c]\bigr)
@@ -670,7 +670,7 @@ const int MAXN = 100005;
 
 vector<int> g[MAXN];   // grafica original
 int sz[MAXN];          // tamano del subarbol en la componente actual
-bool removed[MAXN];    // true si el nodo ya fue usado como centroide
+bool removed[MAXN];    // true si el vertice ya fue usado como centroide
 int cpar[MAXN];        // padre en el arbol de centroide (-1 para la raiz)
 
 // Calcula el tamano del subarbol de u en la componente actual.
@@ -695,7 +695,7 @@ int centroid(int u, int p, int treeSz) {
 }
 
 // Construye el arbol de centroide recursivamente.
-// u: cualquier nodo de la componente actual.
+// u: cualquier vertice de la componente actual.
 // p: padre en el arbol de centroide (-1 para la raiz).
 void build(int u, int p) {
     int total = calcSz(u, -1);
@@ -715,7 +715,7 @@ void build(int u, int p) {
  El patrón estándar para cualquier problema que use descomposición por centroide es este problema, subir por los $O(\log n)$ ancestros en el árbol de centroide y agregar o consultar información en cada uno. Lo que varía entre problemas es qué información se guarda y cómo se combina.
 \section{Ancestro común más bajo (LCA)\adv}
 \advnote{Requiere árboles con raíz y, para la versión eficiente, preprocesamiento (binary lifting). Puede omitirse en una primera lectura.}
-Dado un árbol con raíz, el \textbf{ancestro común más bajo} (LCA) de dos vértices $u$ y $v$ es el vértice más abajo que es ancestro de ambos~\cite{youtube_lca}.
+Dado un árbol con raíz, el \textbf{ancestro común más bajo} (LCA) de dos vértices $u$ y $v$ es el vértice de mayor profundidad que es ancestro de ambos~\cite{youtube_lca}.
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}[
@@ -738,13 +738,13 @@ Dado un árbol con raíz, el \textbf{ancestro común más bajo} (LCA) de dos vé
   \node[draw=none, font=\scriptsize, teal] at (3, 0.5) {$\text{LCA}(u,v) = d$};
 \end{tikzpicture}
 \end{figure}
-La solución más directa que podríamos pensar es ver qué nodo está más bajo o profundo y llevarlo al mismo nivel que el otro subiendo de a un paso, luego subir ambos juntos hasta que coincidan. Por ejemplo para $c$ y $u$ en la figura de arriba, primero subiríamos $u$ a su ancestro $d$ y ya que ambos $d$ y $c$ estpan en el mismo nivel, los subiriamos a su ancestro $a$ que como coincide, diríamos que este es su $LCA$.
+La solución más directa que podríamos pensar es ver qué vértice está más bajo o profundo y llevarlo al mismo nivel que el otro subiendo de a un paso, luego subir ambos juntos hasta que coincidan. Por ejemplo para $c$ y $u$ en la figura de arriba, primero subiríamos $u$ a su ancestro $d$ y ya que ambos $d$ y $c$ estpan en el mismo nivel, los subiriamos a su ancestro $a$ que como coincide, diríamos que este es su $LCA$.
 \\\\
 Imaginemos que tenemos un árbol en forma de cadena ($1 - 2 - 3 - \cdots - n$), calcular $\text{LCA}(1, n)$ cuesta $O(n)$ pasos. Con $m$ consultas, el costo total es $O(mn)$, lo que nos deja con el mismo problema que teníamos antes, necesitamos algo más eficiente. En lugar de subir de $1$ en $1$, ¿podríamos subir de a $2^k$ niveles de una vez?
 \\\\
- Para subir $d$ niveles desde un nodo $v$, podemos descomponer $d$ en potencias de 2 (como en la representación binaria) y dar saltos de tamaño $1, 2, 4, 8, \ldots$ según corresponda. Si $d = 13 = 8 + 4 + 1$, damos un salto de 8, luego uno de 4, luego uno de 1, tres saltos en lugar de 13.
+ Para subir $d$ niveles desde un vértice $v$, podemos descomponer $d$ en potencias de 2 (como en la representación binaria) y dar saltos de tamaño $1, 2, 4, 8, \ldots$ según corresponda. Si $d = 13 = 8 + 4 + 1$, damos un salto de 8, luego uno de 4, luego uno de 1, tres saltos en lugar de 13.
 \\\\
-Entonces necesitamos precalcular, para cada nodo $v$ y cada $k$:
+Entonces necesitamos precalcular, para cada vértice $v$ y cada $k$:
 \[
 \texttt{up}[v][k] = \text{ancestro de } v \text{ a distancia } 2^k.
 \]
@@ -753,7 +753,7 @@ La forma de calcular esto será con una recurrencia, el ancestro a distancia $2^
 \texttt{up}[v][0] = \text{padre}(v), \qquad \texttt{up}[v][k] = \texttt{up}[\texttt{up}[v][k-1]][k-1].
 \]
  
-Como estamos subiendo en potencias de $2$, $\lfloor \log_2 n \rfloor + 1$ niveles basta para cubrir cualquier distancia hasta $n$. En la siguiente imagen, vemos como para el arbol que es una cadena que mencionamos antes, esta forma de encontrar el ancestro sí resulta eficiente. Para el nodo $v$, los ancestros a distancia $2^0=1$, $2^1=2$ y $2^2=4$ se precalculan. Para subir 5 niveles, basta un salto de 4 y un salto de 1, solo 2 operaciones.
+Como estamos subiendo en potencias de $2$, $\lfloor \log_2 n \rfloor + 1$ niveles basta para cubrir cualquier distancia hasta $n$. En la siguiente imagen, vemos como para el arbol que es una cadena que mencionamos antes, esta forma de encontrar el ancestro sí resulta eficiente. Para el vértice $v$, los ancestros a distancia $2^0=1$, $2^1=2$ y $2^2=4$ se precalculan. Para subir 5 niveles, basta un salto de 4 y un salto de 1, solo 2 operaciones.
  
 \begin{figure}[H]
 \centering
@@ -781,9 +781,9 @@ Como estamos subiendo en potencias de $2$, $\lfloor \log_2 n \rfloor + 1$ nivele
 \end{tikzpicture}
 \end{figure}
 
-Lo que haremos entonces para calcular el $LCA$  de dos nodos $u$ y $v$ será primero igualar sus profundidades. Si $\text{prof}(u) > \text{prof}(v)$, necesitamos subir $u$ exactamente $d = \text{prof}(u) - \text{prof}(v)$ niveles. Descomponemos $d$ en binario y usamos los saltos correspondientes.
+Lo que haremos entonces para calcular el $LCA$  de dos vértices $u$ y $v$ será primero igualar sus profundidades. Si $\text{prof}(u) > \text{prof}(v)$, necesitamos subir $u$ exactamente $d = \text{prof}(u) - \text{prof}(v)$ niveles. Descomponemos $d$ en binario y usamos los saltos correspondientes.
 \\\\
-Una vez que coinciden, revisamos si $u = v$, ai se cumple, ese es el LCA. De lo contrario, subimos ambos nodos simultáneamente, usando el salto más grande posible tal que $\texttt{up}[u][k] \neq \texttt{up}[v][k]$ (es decir, que no hayan convergido todavía). Después de este proceso, $u$ y $v$ son hijos del LCA.
+Una vez que coinciden, revisamos si $u = v$, ai se cumple, ese es el LCA. De lo contrario, subimos ambos vértices simultáneamente, usando el salto más grande posible tal que $\texttt{up}[u][k] \neq \texttt{up}[v][k]$ (es decir, que no hayan convergido todavía). Después de este proceso, $u$ y $v$ son hijos del LCA.
 
 \begin{lstlisting}[language=C++]
 const int LOG = 17;
@@ -822,7 +822,7 @@ int lca(int u, int v) {
         return u;
     }
 
-    // Subir ambos nodos juntos hasta quedar justo debajo del LCA.
+    // Subir ambos vertices juntos hasta quedar justo debajo del LCA.
     for (int k = LOG - 1; k >= 0; k--) {
         if (up[u][k] != up[v][k]) {
             u = up[u][k];
@@ -834,7 +834,7 @@ int lca(int u, int v) {
 }
 \end{lstlisting}
 
-Notemos que para calcular la distancia entre dos nodos $u$ y $v$, el camino de $u$ a $v$ sube desde $u$ hasta el LCA $d$ y luego baja hasta $v$. La distancia total es la suma de los dos tramos, que se simplifica a $\text{prof}(u)+\text{prof}(v)-2\cdot\text{prof}(\text{LCA})$.
+Notemos que para calcular la distancia entre dos vértices $u$ y $v$, el camino de $u$ a $v$ sube desde $u$ hasta el LCA $d$ y luego baja hasta $v$. La distancia total es la suma de los dos tramos, que se simplifica a $\text{prof}(u)+\text{prof}(v)-2\cdot\text{prof}(\text{LCA})$.
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}[
@@ -1091,10 +1091,9 @@ Notemos que con capacidades enteras, cada iteración aumenta el
 flujo en al menos 1, dando $O(|f^*| \cdot E)$ iteraciones donde $|f^*|$
 es el flujo máximo. Si las capacidades son grandes esto es bastante lento, es por esto que veremos otro algoritmo que lo resuelve más rápido.
 \subsection{Dinic} 
-Dinic resuelve el problema de la cantidad de iteraciones eligiendo
-sistemáticamente los caminos \textbf{más cortos} primero y saturando
-\textbf{todos} los de esa longitud antes de pasar a los más largos. Veámos con el siguiente ejemplo cómo funciona:
- \\\\Lo primero que haremos será correr un $BFS$ desde $s$ para calcular las distancias de $s$ a los nodos y asignar niveles que representaremos con $\ell$. Véase que $t$ es alcanzable a distancia 3 (por $c\to t$) y también a distancia 4 (por $e\to t$),entonces $\ell(t)=3$. Para que una arista $(u,v)$ entre en la gráfica por niveles debe cumplir una regla: $\ell(v) = \ell(u)+1$. La arista $e\to t$ no cumple, pues ($\ell(t)=3 \neq \ell(e)+1=4$) por lo que se ignora.
+Dinic resuelve el problema de la cantidad de iteraciones organizando el trabajo por fases. En cada fase, construye la \textbf{gráfica por niveles} a partir de $s$ mediante BFS, y luego calcula un \textbf{flujo bloqueante} sobre ella, es decir, un flujo tal que ya no queda ningún camino $s$-$t$ disponible dentro de la gráfica por niveles antes de repetir el proceso con niveles más largos. Veamos con el siguiente ejemplo cómo funciona:
+
+Lo primero que haremos será correr un $BFS$ desde $s$ para calcular las distancias de $s$ a los vértices y asignar niveles que representaremos con $\ell$. Véase que $t$ es alcanzable desde $s$ por un camino de longitud $3$ (por $c\to t$). Existe también un camino de longitud $4$ hasta $t$, pero como la distancia toma el camino más corto,  $\ell(t)=3$. Para que una arista $(u,v)$ entre en la gráfica por niveles debe cumplir una regla: $\ell(v) = \ell(u)+1$. La arista $e\to t$ no cumple, pues ($\ell(t)=3 \neq \ell(e)+1=4$) por lo que se ignora.
  
 \begin{figure}[H]
 \centering
@@ -1130,7 +1129,7 @@ sistemáticamente los caminos \textbf{más cortos} primero y saturando
   \node[draw=none,below,font=\scriptsize,gray] at (8,1.1)   {$\ell=3$};
 \end{tikzpicture}
 \end{figure}
-Notemos que el único camino disponible es $s\to a\to c\to t$, el flujo que salga de este será entonces $\min(2,2,1) = 1$. El cable $c\to t$ queda saturado.
+Notemos que el único camino disponible es $s\to a\to c\to t$, el flujo que salga de este será entonces $\min(2,2,1) = 1$. La arista $c\to t$ queda saturada.
 \\\\
 Ahora, el BFS en la gráfica residual ya no puede llegar a $t$ por $c\to t$
 (saturado). Ahora la ruta más corta a $t$ pasa por $e$ y tiene longitud 4:
@@ -1167,8 +1166,8 @@ Ahora, el BFS en la gráfica residual ya no puede llegar a $t$ por $c\to t$
   \node[draw=none,below,font=\scriptsize,gray] at (8,1.1)   {$\ell=4$};
 \end{tikzpicture}
 \end{figure}
-Lo que se hace a continuación es por medio de DFS, encontrar y saturar todos los caminos de longitud 4:
-\\\\
+Lo que se hace a continuación es, por medio de DFS, encontrar caminos $s$-$t$ dentro de esta gráfica por niveles (de longitud 4) y enviar flujo por ellos, repitiendo hasta que ya no quede ningún camino disponible, es decir, hasta obtener un flujo bloqueante.
+
 Para el camino $s\to a\to d\to e\to t$, revisamos el mínimo de las capacidades en el camino, $\min(1,1,2,2) = 1$ y así agregamos $1$ de flujo a cada arista en él, saturando $s\to a$ y $a\to d$.
 \\\\
 Para el camino $s\to b\to d\to e\to t$, haremos lo mismo, recordemos que las capacidades de $d\to e$ y $e\to t$ tienen 1 restante porque usamos parte de su capacidad en el otro camino, entonces vemos el mínimo de las capacidades, $\min(2,2,1,1) = 1$ y sumamos $1$ al flujo de las aristas del camino.
@@ -1199,7 +1198,9 @@ Entonces la red se vería cómo:
 \end{tikzpicture}
 \end{figure}
 Nótese que si quisiésemos hacer otra fase, el BFS ya no encontraría a $t$, por lo que el algoritmo concluye aquí. Para esta red el flujo máximo es $3$. Con esto ya podemos resolver el problema inicial de servidores.
-\\\\
+
+Esto confirma que, en esta fase, alcanzamos un flujo bloqueante, es decir, ya no hay ningún camino $s$-$t$ dentro de la gráfica por niveles actual, aunque en la red original (sin restricción de niveles) sí podría quedar flujo residual disponible.
+
 Nótese que como  la longitud máxima es $|V|-1$, hay a lo más $|V|-1$ fases. Cada fase cuesta $O(VE)$, dando complejidad total $O(V^2 E)$.
 \begin{lstlisting}[language=C++]
 const long long INF = 1e17;
@@ -1318,7 +1319,7 @@ El \textbf{corte mínimo} es el de menor capacidad.
 Un teorema muy importante es el \textbf{Teorema de Flujo Máximo y Corte Mínimo}~\cite{toronto_mfmc}, que nos dice que el valor del flujo máximo de $s$ a $t$ es igual a la capacidad del corte mínimo $s$-$t$.
 \\\\
 Después de correr Dinic, si hacemos BFS en el gráfica residual desde $s$.
-Los nodos alcanzables forman $S$ y los no alcanzables $T$. Los cables
+Los vértices alcanzables forman $S$ y los no alcanzables $T$. Los cables
 saturados de $S$ a $T$ forman el corte mínimo.
 \\\\
 Este teorema tiene consecuencias directas que usaremos en la sección siguiente de emparejamiento.
@@ -1389,7 +1390,7 @@ Necesitamos otra forma de pensar el problema. Podemos intentar modelarlo como un
 \end{figure}
 
 Nótese entonces que queremos seleccionar un conjunto de vértices $S$ de forma que cualquier arista tenga al menos un extremo en $S$, a esto se le llama \textbf{cubierta de vértices}. Queremos entonces la cubierta de menor tamaño, en gráficas generales este problema es \textit{NP-completo}, pero en gráficas bipartitas como esta resulta que la clave para resolver el problema es usar flujo máximo.
-\\\\Esto puede parecer raro porque la gráfica que construimos no parece indicar por ningún lado un flujo, pero podemos cosntruir la red agregando un nodo $s$ conectado a cada fila y un nodo $t$ conectado a cada columna. A todas las aristas les pondremos capacidad $1$.
+\\\\Esto puede parecer raro porque la gráfica que construimos no parece indicar por ningún lado un flujo, pero podemos construir la red agregando un vértice $s$ conectado a cada fila y un vértice $t$ conectado a cada columna. A todas las aristas les pondremos capacidad $1$.
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}[
@@ -1457,7 +1458,7 @@ Traducido al problema que estamos resolviendo, un emparejamiento en nuestra grá
 El emparejamiento máximo en una gráfica bipartita se puede calcular directamente
 con la red de flujo anterior usando Dinic. Pero como esta gráfica tiene
 estructura especial (bipartito, todas las capacidades 1), se puede
-optimizar, el algoritmo \textbf{Hopcroft-Karp} es exactamente Dinic
+optimizar, el algoritmo \textbf{Hopcroft-Karp} es básicamente Dinic
 aplicado a gráficas bipartitas, con complejidad $O(E\sqrt{V})$ en lugar
 de $O(V^2 E)$.
  
@@ -1529,11 +1530,10 @@ int hopcroftKarp() {
 \end{lstlisting}
 
 \subsection{Teorema de König}
-El \textbf{teorema de König} nos dice que en una gráfica bipartita el emparejamiento máximo es igual a la cubierta mínima de vértices\footnote{\url{https://www.math.nagoya-u.ac.jp/~richard/teaching/s2024/SML_Li_2.pdf}}.
+El \textbf{teorema de König} nos dice que en una gráfica bipartita la cardinalidad del emparejamiento máximo es igual a la cardinalidad de la cubierta mínima de vértices\footnote{\url{https://www.math.nagoya-u.ac.jp/~richard/teaching/s2024/SML_Li_2.pdf}}.
 \\\\
-Veámos la red del problema de los cañones. El flujo máximo equivale al emparejamiento
-máximo (cada unidad de flujo es un par emparejado). El corte mínimo corresponde a la cubierta mínima (los vértices del corte son exactamente las
-filas/columnas que hay que disparar). Por el teorema anterior, son lo mismo, entonces calculado el flujo máximo, ¿cómo construir la cubierta mínima?
+Veamos la red del problema de los cañones. El flujo máximo equivale al emparejamiento
+máximo (cada unidad de flujo es un par emparejado). El corte mínimo corresponde a la cubierta mínima; es decir, dado el corte mínimo que es una partición ($S,T$) de los vértices tal que $s\in S$ y $t \in T$, la cubierta mínima se obtiene tomando las filas que quedaron del lado de $T$ y las columnas que quedaron del lado de $S$. Estas son las filas/columnas que hay que disparar. Por el teorema anterior, el tamaño de esta cubierta coincide con el enparejamiento máximo. Entonces calculado el flujo máximo, ¿cómo construir la cubierta mínima?
 Supongamos que tenemos esta cuadrícula con los enemigos:
 \begin{figure}[H]
 \centering
@@ -1603,7 +1603,7 @@ Lo siguiente que haremos, será partir desde cada vértice libre del lado izquie
 \end{tikzpicture}
 \end{figure}
 
-Ahora, para constuir la cubierta usaremos estos vértices que marcamos (los que quedaron en amarillo), la cubierta mínima se forma con:
+Ahora, para construir la cubierta usaremos estos vértices que marcamos (los que quedaron en amarillo), es decir, los vértices alcanzables desde $s$ en la gráfica residual tras calcular el flujo máximo. La cubierta mínima se forma con:
 \begin{itemize}
     \item Los vértices del lado \textbf{izquierdo no marcados}
     \item Los vértices del lado \textbf{derecho marcados}
@@ -1697,13 +1697,13 @@ donde $N(S)$ es el conjunto de vecinos de $S$ en $R$.
   \end{scope}
 \end{tikzpicture}
 \end{figure}
-\subsection*{emparejamiento de peso mínimo}
+\subsection*{Emparejamiento de peso mínimo}
 Cuando las aristas tienen pesos y queremos el emparejamiento perfecto de costo
 mínimo (o máximo), se usa el \textbf{algoritmo Húngaro} (Kuhn-Munkres),
 con complejidad $O(n^3)$. Aparece en problemas de asignación óptima: dados
 $n$ trabajadores, $n$ tareas, y costos $c_{ij}$ de asignar el trabajador
-$i$ a la tarea $j$, minimizar el costo total. La mejor referencia que he encontrado para este algoritmo es \url{https://www.topcoder.com/thrive/articles/Assignment%20Problem%20and%20Hungarian%20Algorithm}.
-
+$i$ a la tarea $j$, minimizar el costo total. En caso de que al lector le interese aprender más de este tema, un buen recurso para aprender este algoritmo es \url{https://www.topcoder.com/thrive/articles/Assignment%20Problem%20and%20Hungarian%20Algorithm}.
+\newpage
 \section{Ejercicios}
 \subsection*{9.10.1 \href{https://codeforces.com/problemset/problem/808/F}{Card Game (Codeforces 808F)}}
 
@@ -1747,7 +1747,6 @@ If Vova won't be able to build a deck with required power, print $-1$. Otherwise
 \end{minipage}
 }
 \end{center}
-
 Si un conjunto de cartas con $l_i \leq L$ permite alcanzar potencia $\geq k$, entonces
 también lo permite cualquier nivel mayor (hay más cartas disponibles). Podemos hacer búsqueda binaria sobre el nivel necesario.
 
@@ -1757,10 +1756,10 @@ cartas $i,j$ con una arista si $c_i+c_j$ es primo es decir, si no pueden estar j
 Sea $P$ la suma de potencias de todas las cartas disponibles (con $l_i \leq L$). Buscamos un subconjunto $S$ sin pares prohibidos con $\sum_{i\in S} p_i \geq k$. Esto es equivalente a encontrar el conjunto descartado $D = V\setminus S$ de peso mínimo  tal que $D$ sea una cubierta de vértices de todas las aristas prohibidas, es decir, toda pareja prohibida tiene al menos un extremo en $D$ (así $S$ queda libre de conflictos). La condición para verificar que es un conjunto válido es
 $P - \text{peso}(D) \geq k$.
  
-Por el teorema de König, la covertura de vértices de peso mínimo en una gráfica bipartita es igual al emparejamiento máximo.
+Para encontrar el $\text{peso}(D)$ mínimo, lo calculamos mediante flujo máximo-corte mínimo sobre una red construida a partir de $G$ como veremos a continuación.
  
 Notemos que si $c_i+c_j$ es un primo mayor que 2, entonces $c_i+c_j$ es impar, así que $c_i$ y $c_j$ tienen paridades distintas. Esto
-sugiere separar las cartas en dos grupos — pares e impares y las aristas prohibidas solo conectarían cartas de grupos distintos, dando un gráfica bipartita.
+sugiere separar las cartas en dos grupos: pares e impares. Así, las aristas prohibidas solo conectarían cartas de grupos distintos, dando una gráfica bipartita.
  
 Lo anterior tiene un caso especial si $c_i=1$, pues el único primo par es 2, y $1+1=2$. Entonces dos cartas con $c_i=c_j=1$ son
 mutuamente prohibidas, pero ambas caen en el lado ``impar'', haciendo que la gráfica no sea bipartita. Para solucionar esto, notemos que si tomamos dos o más cartas con $c=1$, hay
@@ -1781,7 +1780,7 @@ una de las dos aristas (fuente$\to i$ o $j\to$sumidero) debe estar en el corte. 
 P - \text{maxFlow} \geq k
 \]
  
-La complejidad es $O(\log n)$ para las iteraciones de búsqueda binaria, cada una con un max flow en una red de $O(n)$ nodos y $O(n^2)$ aristas.
+La complejidad es $O(\log n)$ para las iteraciones de búsqueda binaria, cada una con un max flow en una red de $O(n)$ vértices y $O(n^2)$ aristas.
 \\\\
 Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/808F.cpp}.
 
@@ -1805,8 +1804,14 @@ We will ask you to perfrom some instructions of the following form:
 \end{itemize}
 
 For example, if $N=6$ and the edges are \texttt{1 2 1}, \texttt{2 4 1}, \texttt{2 5 2}, \texttt{1 3 1}, \texttt{3 6 2} (an edge \texttt{a b c} connects node $a$ and node $b$ with cost $c$), the path from node $4$ to node $6$ is $4 \to 2 \to 1 \to 3 \to 6$. Then \texttt{DIST 4 6} is $5$ ($1+1+1+2=5$) and \texttt{KTH 4 6 4} is $3$ (the $4$-th node on the path from node $4$ to node $6$ is $3$).
+\end{minipage}
+}
+\end{center}
 
-\vspace{0.5em}
+
+\begin{center}
+\fbox{
+\begin{minipage}{0.95\linewidth}
 \textbf{Input}\\
 The first line of input contains an integer $t$, the number of test cases ($t \leq 25$). $t$ test cases follow.
 
@@ -1868,8 +1873,8 @@ de \textbf{aristas} de $a$ a $L$).
  
     \item En caso contrario:
     
-          El $k$-ésimo nodo está en el camino
-          $L \to b$. El nodo está a:
+          El $k$-ésimo vértice está en el camino
+          $L \to b$. El vértice está a:
           \[\text{s} = dist(a,b)-(k-1)\]
           aristas de distancia de $b$ hacia arriba, es decir, el $\text{s}$-ésimo ancestro de $b$.
 \end{itemize}

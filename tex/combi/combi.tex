@@ -574,6 +574,12 @@ You are given an undirected graph consisting of $n$ vertices and $n$ edges, wher
 
 The graph has the following structure: it is split into $\frac{n}{3}$ triples of vertices, the first triple consisting of vertices $1, 2, 3$, the second triple consisting of vertices $4, 5, 6$, and so on. Every pair of vertices from the same triple is connected by an edge. There are no edges between vertices from different triples.
 
+\end{minipage}
+}
+\end{center}
+\begin{center}
+\fbox{
+\begin{minipage}{0.95\linewidth}
 You have to paint the vertices of this graph into two colors, red and blue. Each vertex should have exactly one color, there should be exactly $\frac{n}{2}$ red vertices and $\frac{n}{2}$ blue vertices. The coloring is called valid if it meets these constraints.
 
 The weight of the coloring is the sum of weights of edges connecting two vertices with different colors.
@@ -601,7 +607,6 @@ Print one integer, the number of valid colorings with maximum possible weight, t
 \end{minipage}
 }
 \end{center}
-
     En cualquiera de las triangulaciones, la máxima cantidad de aristas que apoyarán al peso máximo son dos, ya que podemos colorear $2$ vértices de un color y el tercero del otro color. La forma en la que maximizamos el peso entonces será haciendo que la excluida sea la de menor peso.
     \\\\
     Ahora, un triángulo coloreado de forma que se maximice el peso puede aportar $1$ o $2$ rojos, llamemosle de tipo $A$ o tipo $B$ respectivamente. Notemos que tenemos $\frac{n}{3}$ triángulos,por lo que si hay $x$ triángulos coloreados de tipo $A$ tenemos $\frac{n}{3}-x$ de tipo $B$. Como queremos que haya $\frac{n}{2}$ vértices coloreados rojos tenemos que:
@@ -615,9 +620,6 @@ Print one integer, the number of valid colorings with maximum possible weight, t
     \[
     \binom{\frac{n}{3}}{\frac{n}{6}}\prod_{i=1}^{\frac{n}{3}}c_i.
     \]
-    \\\\
-    Código
-    \\\\
     Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/1795D.cpp}.
 
 \subsection*{7.10.2 \href{https://cses.fi/problemset/task/2064}{Bracket Squences I (CSES 2064)}}

@@ -1,6 +1,6 @@
 En este capítulo se recogen las editoriales de los problemas propuestos en el manual. Los nueve problemas de autoría propia se distinguen en el título con la etiqueta (Autoría $\filledstar$).
 \\\\
-\editorialproblem{5.10.1 Digits Sum (Codeforces 1553A)}
+\editorialproblem{Problema 5.10.1 Digits Sum (Codeforces 1553A)}
 
 \subsection*{Hint1}
 ¿Qué pasa si el último dígito de un número es $9$?
@@ -10,7 +10,7 @@ Notemos que para cualquier número $x$, si su último dígito no es $9$ entonces
 \subsection*{Código}
 Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/1553A.cpp}.
 
-\editorialproblem{5.10.2 Two Divisors (Codeforces 1916B)}
+\editorialproblem{Problema 5.10.2 Two Divisors (Codeforces 1916B)}
 \subsection*{Hint1}
 Si $b$ es el mayor divisor de $x$ diferente de $x$, entonces $\frac{x}{b}$ es el menor divisor de $x$ mayor a $1$. Es decir, es el primo más pequeño que divide a $x$.
 \subsection*{Solución}
@@ -19,7 +19,7 @@ Primero veamos el caso donde $a$ no divide a $b$. Podemos sacar $m=lcm(a,b)$, es
 \subsection*{Código}
 Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/1916B.cpp}.
 
-\editorialproblem{5.10.3 Exponentiation II (CSES 712)}
+\editorialproblem{Problema 5.10.3 Exponentiation II (CSES 712)}
 \subsection*{Hint 1}
 ¿Tienen $a$ y $10^9+7$ algún divisor en común?
 \subsection*{Hint 2}
@@ -27,7 +27,7 @@ Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/edit
 \subsection*{Solución}
 La primera observación importante es que $a,b,c$ son a lo más $10^9$, por lo que $b^c$ puede ser enorme, de forma que calcular $a^{b^c}$ directamente usando exponenciación binaria sería muy lento.
 \\\\
-Notemos que $a\leq 10^9$ por lo que como $10^9+7$ es primo, son coprimos entre sí. Lo anterior, nos permite usar el pequeño teorema de fermat~\cite{perez_numeros} que nos dice que si $\text{lcm}(a,p)=1$:
+Notemos que $a\leq 10^9$, dado que $10^9+7$ es primo, $a$ y $10^9+7$ son coprimos. Lo anterior, nos permite usar el pequeño teorema de fermat~\cite{perez_numeros} que nos dice que si $\text{lcm}(a,p)=1$:
 \[a^{p-1}\equiv 1 \,\mod p.\]
 De lo anterior tenemos que
 \[a^{b^c} \equiv a^{b^c \mod (p-1)} \mod p.\]
@@ -35,7 +35,7 @@ Ahora, podemos calcular $b^c \, \mod (p-1)$, con exponenciación binaria, de for
 \subsection*{Código}
 Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/cses712.cpp}.
 
-\editorialproblem{5.10.4 Short Task (Codeforces 1512G)}
+\editorialproblem{Problema 5.10.4 Short Task (Codeforces 1512G)}
 \subsection*{Hint1}
 ¿Qué información podemos guardar para responder cada query en $O(1)$?
 \subsection*{Solución}
@@ -45,7 +45,7 @@ En lugar de calcular $d(n)$ para cada $n$ individualmente, podemos calcularlo pa
 \subsection*{Código}
 Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/1512G.cpp}.
 
-\editorialproblem{5.10.5 Fantastic Beasts (Latin American Regional 2018)}
+\editorialproblem{Problema 5.10.5 Fantastic Beasts (Latin American Regional 2018)}
 \subsection*{Hint 1}
 Como hay $Z \leq 100$ zoológicos, después de $100$ unidades de tiempo, cada bestia se estará moviendo en ciclo.
 \subsection*{Hint 2}
@@ -62,7 +62,7 @@ La idea del problema es sencilla; sin embargo se recomienda tener cuidado con la
 \subsection*{Código}
 Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/9547.cpp}.
 
-\editorialproblem{5.10.6 Sushi Lovers (Autoría $\filledstar$)}
+\editorialproblem{Problema 5.10.6 Sushi Lovers (Autoría $\filledstar$)}
 \subsection*{Hint 1}
 El chef $i$ está disponible en la hora $t$ si y solo si
 $t \equiv r_i \pmod{d_i}$. Para preparar un rollo, todos sus
@@ -120,7 +120,7 @@ Verificar esto para cada query y cada rollo tendría una complejidad de $O(MQ) \
 \subsection*{Código}
 Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/sushiLovers.cpp}.
 
-\editorialproblem{5.10.7 Pociones Locas (Autoría $\filledstar$)}
+\editorialproblem{Problema 5.10.7 Pociones Locas (Autoría $\filledstar$)}
 \subsection*{Hint1}
 Los libros se comportan de forma ciclica módulo $lcm(p_1, p_2, p_3, p_4)$.
 \subsection*{Hint2}
@@ -134,7 +134,7 @@ Ahora notemos que los libros se van a comportar de forma cíclica módulo $p_t$ 
 \subsection*{Código}
 Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/pociones.cpp}.
 
-\editorialproblem{6.5.1 Throwing Dice (CSES 1092)}
+\editorialproblem{Problema 6.5.1 Throwing Dice (CSES 1092)}
 \subsection*{Hint1}
 Llamemos $f(n)$ son las formas de obtener suma $n$ lanzando el dado. Notemos que $f(n-1)$ son las formas de obtener $f(n)$ si el último dado sale $1$.
 \subsection*{Hint2}
@@ -174,7 +174,7 @@ La complejidad es $O(6^3 \log n) = O(\log n)$.
 \subsection*{Código}
 Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/cses1092.cpp}.
 
-\editorialproblem{6.5.2 Cowmpany Compensation (Codeforces 995F)}
+\editorialproblem{Problema 6.5.2 Cowmpany Compensation (Codeforces 995F)}
 \subsection*{Hint1}
 Considera una función $f(v,x)$, el número de formas de asignar salarios al subárbol $v$ asignando salario $x$ a $v$. ¿De qué depende el valor de $f(v,x)$?
 \\\\Notemos que si $v$ es una hoja, $f(v,x)=1$.
@@ -188,7 +188,7 @@ subárbol de $v$ dado que $v$ tiene salario $x$:
 \[
 f(v,x)=\prod_{i=1}^{k} \sum_{j=1}^{x} f(s_i,j),
 \]
-donde $s_1,\ldots,s_k$ son los hijos de $v$. Para cualquier nodo $v$,
+donde $s_1,\ldots,s_k$ son los hijos de $v$. Para cualquier vértice $v$,
 definimos $g(v,x)$ como las formas de asignar salario \textbf{a lo
 más} $x$ al subárbol de $v$:
 \[
@@ -206,15 +206,15 @@ los grados de los $g(s_i,x)$ se suman, entonces:
 \deg(f(v,x))=\sum_{i=1}^{k} \deg(g(s_i,x)).
 \]
 Y como $g(v,x)=\sum_{j=1}^{x}f(v,j)$ sube el grado en 1, el grado
-de $g(v,x)$ es igual al \textbf{número de nodos en el subárbol de $v$}.
+de $g(v,x)$ es igual al \textbf{número de vértices en el subárbol de $v$}.
 Por lo tanto $\deg(g(1,x)) = n$ el número total de vértices.
 \\\\
-Podemos calcular $g(1,1), g(1,2), \ldots, g(1,n+1)$ en $O(n^2)$ con DP procesando los nodos de hojas a raíz. Para cada nodo $v$ y cada $x$, calculamos $f(v,x) = \prod_{i=1}^{k} g(s_i,x)$ y luego $g(v,x) = g(v,x-1) + f(v,x)$, guardando ambos valores en memoria
+Podemos calcular $g(1,1), g(1,2), \ldots, g(1,n+1)$ en $O(n^2)$, con DP procesando los vértices de hojas a raíz. Para cada vértice $v$ y cada $x$, calculamos $f(v,x) = \prod_{i=1}^{k} g(s_i,x)$ y luego $g(v,x) = g(v,x-1) + f(v,x)$, guardando ambos valores en memoria
 para evitar repetir cálculos. Con $n+1$ puntos evaluados en $x=1,2,\ldots,n+1$ (puntos consecutivos), aplicamos interpolación de Lagrange con la simplificación para puntos consecutivos para evaluar el polinomio en $d$ en $O(n)$.
 \subsection*{Código}
 Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/995F.cpp}.
 
-\editorialproblem{6.5.3 Hail Mary (Autoría $\filledstar$)}
+\editorialproblem{Problema 6.5.3 Hail Mary (Autoría $\filledstar$)}
 \subsection*{Hint1}
 Para cada posición $i$
 \[IDF[i]=\sum_{j=0}^{m-1} s_j \cdot r_{i+j}.\]
@@ -246,7 +246,7 @@ todos los valores de IDF con una sola FFT en $O((n+m)\log(n+m))$. Finalmente eva
 \subsection*{Código}
 Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/hailMary.cpp}.
 
-\editorialproblem{6.5.4 Nikita and Order Statistics (Codeforces 993E)}
+\editorialproblem{Problema 6.5.4 Nikita and Order Statistics (Codeforces 993E)}
 \subsection*{Hint1}
 ¿Realmente importa qué número es $a_i$ o sólo si es menor o mayor que $x$? Piensa en $1$s y $0$s.
 \subsection*{Hint2}
@@ -280,7 +280,7 @@ cuenta todos los pares $(i,j)$ con $s_i = s_j$ sin restricción de orden incluye
 \subsection*{Código}
 Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/993E.cpp}.
 
-\editorialproblem{6.5.5 Running Competition (Codeforces 1398G)}
+\editorialproblem{Problema 6.5.5 Running Competition (Codeforces 1398G)}
 \subsection*{Hint1}
 Cualquier vuelta es un rectángulo, es decir $L=2y+2(a_j-a_i)$ con $i < j$, de donde $l_i$ tiene que ser par porque $2y$ y $2(a_j-a_i)$ son ambos pares. Es decir, queremos el mayor $d$ tal que $d+y$ divida a $\frac{l_i}{2}$ y existan $i$ y $j$ tal que $d=a_j-a_i$.
 \subsection*{Hint2}
@@ -297,7 +297,7 @@ Finalmente, tenemos que responder las queries, para cada etapa $l_t$, queremos e
 \subsection*{Código}
 Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/1398G.cpp}.
 
-\editorialproblem{6.5.6 Rumbo al Mundial (Autoría $\filledstar$)}
+\editorialproblem{Problema 6.5.6 Rumbo al Mundial (Autoría $\filledstar$)}
 \subsection*{Hint1}
 Ignoremos por un momento que hay varios semáforos. Si los conductores solamente tuvieran que pasar por un único semáforo. ¿De cuántas formas podría ocurrir que el tiempo de espera sea $k$? ¿Qué sucede si hay dos semáforos?
 \subsection*{Hint2}
@@ -327,7 +327,7 @@ Finalmente iteramos un contador $j$ de $1$ a $T$ y acumulamos en una suma cuánt
 \subsection*{Código}
 Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/mundial.cpp}.
  
-\editorialproblem{7.11.1 String Distribution (CSES 1715)}
+\editorialproblem{Problema 7.11.1 String Distribution (CSES 1715)}
 \subsection*{Hint 1}
 Si todos los carácteres fueran distintos, ¿cuántas permutaciones habría?
 \subsection*{Solución}
@@ -344,11 +344,11 @@ Como se nos pide la respuesta módulo $10^9+7$ que es primo, la división $\frac
 n! \cdot \left(\prod_{i} f_i!\right)^{-1} \bmod p,
 \]
 usando el inverso modular $a^{-1} \equiv a^{p-2} \pmod{p}$ por el
-pequeño teorema de Fermat~\cite{perez_numeros}.
+pequeño teorema de Fermat~\cite{perez_numeros}, que recordemos es válido siempre que $a \neq 0$.
 \subsection*{Código}
 Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/cses1715.cpp}.
  
-\editorialproblem{7.11.2 Buildings (2017-2018 ACM-ICPC GCPC)}
+\editorialproblem{Problema 7.11.2 Buildings (2017-2018 ACM-ICPC GCPC)}
 \subsection*{Hint1}
 Si cada pared lo contamos como una cuenta de un solo color, ¿se parece a algún problema que ya hayamos resuelto?
 \subsection*{Hint2}
@@ -357,7 +357,7 @@ Cada pared se puede colorear de $c^{n^2}$ formas.
 En este problema tenemos un polígono de $m$ lados, cada pared tiene $n\times n$ cuadros coloreados de $c$ colores. Llamemos $X$ a todas las combinaciones posibles de asignar los colores a todos los cuadros de los $m$ lados. Por el lema de Burnside~\cite{cf_burnside} tenemos que los diseños distintos serán:
 \[\frac{1}{m} \sum_{r=0}^{m-1}|X^{g_r}|,\]
 donde $|X^{g_r}|$ son la cantidad de diseños fijos bajo la rotación de $r$ posiciones.
-\\\\Notemos que similar al problema de collares, una rotación de $r$ posiciones fija una coloración si y solo si esta es periodica con periodo $gcd(r,m)$ ya que la pared $i$ debe ser igual a la pared $i+r$ y así se agrupan las paredes en $gcd(r,m)$ clases. Ahora, como cada pared puede tener $c^{n^2}$ coloraciones diferentes tenemos entonces que:
+\\\\Notemos que similar al problema de collares, una rotación de $r$ posiciones fija una coloración si y solo si esta es periódica con periodo $gcd(r,m)$ ya que la pared $i$ debe ser igual a la pared $i+r$ y así se agrupan las paredes en $gcd(r,m)$ clases. Ahora, como cada pared puede tener $c^{n^2}$ coloraciones diferentes tenemos entonces que:
 \[|X^{g_r}|=(c^{n^2})^{gcd(m,r)},\]
 por lo que la respuesta es
 \[\frac{1}{m}\sum_{r=0}^{m-1}(c^{n^2})^{gcd(r,m)}.\]
@@ -366,11 +366,11 @@ Ahora, notemos que varios valores de $r$ tendrán el mismo $gcd(r,m)$, entonces 
 \subsection*{Código}
 Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/101873B.cpp}.
 
-\editorialproblem{7.11.3 Blue Lock Gone Wild (Autoría $\filledstar$)}
+\editorialproblem{Problema 7.11.3 Blue Lock Gone Wild (Autoría $\filledstar$)}
 \subsection*{Hint1}
 Podemos traducir el problema a un problema de caminos que no pasan la diagonal.
 \subsection*{Solución}
-Pensemos que los duelos ganados y perdidos de Isagi se pueden representar en una gráfica, en el eje $x$ tendremos la cantidad de juegos ganados y en $y$ la cantidad de perdidos, nótese que la condición de siempre ganar más o la misma cantidad de duelos que los que se pierdan se traduce en que $(x,y)$ nunca puede tocar la diagonal $y=x+1$. Es decir queremos contar la cantidad de caminos de $(0,0)$ a $(n,n)$, tal que nunca tocamos esa diagonal.
+Pensemos que los duelos ganados y perdidos de Isagi se pueden representar en el plano cartesiano, en el eje $x$ tendremos la cantidad de juegos ganados y en $y$ la cantidad de perdidos, nótese que la condición de siempre ganar más o la misma cantidad de duelos que los que se pierdan se traduce en que $(x,y)$ nunca puede tocar la diagonal $y=x+1$. Es decir queremos contar la cantidad de caminos de $(0,0)$ a $(n,n)$, tal que nunca tocamos esa diagonal.
 \\\\
 Usemos una estrategia similar a la que usamos en el problema de los paréntesis, tomemos cualquier camino no válido y consideremos el primer punto $p$ donde toca la diagonal $y=x+1$. Reflejemos la secuencia de direcciones desde ese punto al final del camino, es decir, cada paso hacia arriba (duelo perdido) por paso hacia la derecha (duelo ganado) y viceversa. Nótese que la parte final del camino original va de $p=(k,k+1)$ para algún $k$ a $(n,n)$ usando $n-k$ pasos a la derecha y $n-k-1$ pasos hacia arriba. Después de reflejar, como se invirtieron los pasos, tendremos que llegamos a $(k+(n-k-1,k+1+(n-k)))=(n-1,n+1)$. Esto nos da una biyección entre los caminos no válidos y los caminos de $(0,0)$ a $(n-1,n+1)$, los cuales son $\binom{2n}{n-1}$. Entonces la respuesta es el total de caminos de $(0,0)$ a $(n,n)$ quitándole los inválidos, es decir:
 \[\binom{2n}{n}-\binom{2n}{n-1}=\binom{2n}{n}-\frac{n}{n+1}\binom{2n}{n}=\frac{1}{n+1}\binom{2n}{n}.\]
@@ -378,7 +378,7 @@ Nótese que entonces tenemos que calcular el $n$-ésimo número de Catalán~\cit
 \subsection*{Código}
 Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/bluelock.cpp}.
 
-\editorialproblem{7.11.4 El torneo de los 3 magos (here we go again) (Autoría $\filledstar$)}
+\editorialproblem{Problema 7.11.4 El torneo de los 3 magos (here we go again) (Autoría $\filledstar$)}
 \subsection*{Hint1}
 \subsection*{Solución}
 Notemos que el estado del laberinto queda completamente descrito por qué mago está en qué fila, es decir una permutación $\pi$ donde $\pi[f]$ es el índice $i$ del mago que ocupa la fila $f$. Si sabemos la permutación actual, podemos determinar exactamente qué mago enfrenta qué criatura en la siguiente columna.
@@ -438,7 +438,7 @@ dp[j+1][\pi'] \mathrel{+}= dp[j][\pi].
 \subsection*{Código}
 Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/magos.cpp}.
 
-\editorialproblem{7.11.5 The Wall (medium) (Helvetic Coding Contest 2016)}
+\editorialproblem{Problema 7.11.5 The Wall (medium) (Helvetic Coding Contest 2016)}
 \subsection*{Hint 1}
 Intenta reducir el problema a barras y estrellas.
 \subsection*{Solución}
@@ -456,7 +456,7 @@ Notemos que $\binom{n+C}{C} = \frac{(n+C)!}{n! \cdot C!}$. Como $p = 10^6+3$ es 
 \subsection*{Código}
 Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/690D2.cpp}.
 
-\editorialproblem{8.7.1 Balloons (2013-2014 ICPC Brazil Subregional)}
+\editorialproblem{Problema 8.7.1 Balloons (2013-2014 ICPC Brazil Subregional)}
 \subsection*{Hint 1}
 La información que nos interesa de un segmento es cuál es el siguiente segmento que tocaría el globo de empezar en el, ¿podemos precalcular el ''siguiente'' de cada segmento?
 \subsection*{Solución}
@@ -504,9 +504,9 @@ queries que pasan por un mismo segmento. Podemos guardar el resultado final de c
 \subsection*{Código}
 Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/101473B.cpp}.
  
-\editorialproblem{8.7.2 Beyblades por decena (Autoría $\filledstar$)}
+\editorialproblem{Problema 8.7.2 Beyblades por decena (Autoría $\filledstar$)}
 \subsection*{Hint1}
-El estadio mínimo que contiene todas las trayectorias de todos los beyblades es el convex hull de cierta unión de polígonos. ¿Cuáles?
+El estadio mínimo que contiene todas las trayectorias de todos los beyblades es el casco convexo de cierta unión de polígonos. ¿Cuáles?
 \subsection*{Hint2}
 En un segmento de línea con extremos enteros hay $gcd(|x_2-x_1|,|y_2-y_1|)+1$ puntos enteros.
 \subsection*{Solución}
@@ -515,7 +515,7 @@ entonces las posiciones extremas del beyblade son el polígono $b_i$
 trasladado a $p_1$ y el polígono $b_i$ trasladado a $p_2$.
  
 Como el beyblade es convexo y la trayectoria es un segmento, cualquier
-posición intermedia queda cubierta automáticamente por el convex hull
+posición intermedia queda cubierta automáticamente por el casco convexo
 de $(b_i + p_1) \cup (b_i + p_2)$. Entonces la región que el estadio
 debe contener para el beyblade $i$ es:
 \[
@@ -524,16 +524,16 @@ r_i = \text{conv}\!\left((b_i + p_1) \cup (b_i + p_2)\right).
 
 El estadio debe contener $r_i$ para todo $i$, entonces debe contener
 $\bigcup_i r_i$. El estadio convexo de área mínima que contiene esta
-unión es el convex hull de todos los puntos de todas las
+unión es el casco convexo de todos los puntos de todas las
 regiones $r_i$.
  
-Como cada $r_i$ es el convex hull de $(b_i + p_1) \cup (b_i + p_2)$,
-basta tomar el convex hull de todos los vértices trasladados:
+Como cada $r_i$ es el casco convexo de $(b_i + p_1) \cup (b_i + p_2)$,
+basta tomar el casco convexo de todos los vértices trasladados:
 \[
-\text{estadio} = \text{convexHull}\!\left(\bigcup_{i=1}^{n} \{v + p_{i_1} : v \in b_i\} \cup \{v + p_{i_2} : v \in b_i\}\right).
+\text{estadio} = \text{cascoConvexo}\!\left(\bigcup_{i=1}^{n} \{v + p_{i_1} : v \in b_i\} \cup \{v + p_{i_2} : v \in b_i\}\right).
 \]
 
-El convex hull tiene vértices con coordenadas enteras (pues los vértices
+El casco convexo tiene vértices con coordenadas enteras (pues los vértices
 de los beyblades y las trayectorias son enteros). Por el Teorema
 de Pick:
 \[
@@ -554,7 +554,7 @@ La complejidad es $O(nk \log(nk))$ donde $n$ es el número de beyblades y $k$ el
 \subsection*{Código}
 Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/beyblade.cpp}.
 
-\editorialproblem{8.7.3 Poligon.io (Autoría $\filledstar$)}
+\editorialproblem{Problema 8.7.3 Poligon.io (Autoría $\filledstar$)}
 \subsection*{Hint 1}
 ¿Basta con verificar si los vértices de un polígono están dentro de otro? Pensar en ejemplos con polígonos no convexos.
 \subsection*{Solución}
@@ -586,7 +586,7 @@ respuesta es el número de jugadores no conquistados.
 \subsection*{Código}
 Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/paper.cpp}.
 
-\editorialproblem{8.7.4 Birthday Cake (2024 ICPC Gran Premio de México 2da Fecha)}
+\editorialproblem{Problema 8.7.4 Birthday Cake (2024 ICPC Gran Premio de México 2da Fecha)}
 
 \subsection*{Hint 1}
 El segmento entre dos puntos enteros $a=(a_x,a_y)$ y
@@ -597,28 +597,24 @@ Verificar cada par de puntos enteros para ver si cumple la condición de tener a
 El segmento entre dos puntos enteros $a=(a_x,a_y)$ y
 $b=(b_x,b_y)$ tiene $g := \gcd(|a_x-b_x|,\ |a_y-b_y|) + 1$ puntos enteros (incluyendo ambos extremos). Por lo tanto, $a$ admite un segmento con al menos $N$ puntos enteros usando $b$ como otro extremo si y solo si $\gcd(|a_x-b_x|,|a_y-b_y|) \geq N-1$. Llamemos $m = N-1$.
 
-\textbf{Afirmación:} para $a \neq b$ puntos con coordenadas enteras en un polígono convexo entonces:
+\textbf{Lema.} Sean $a \neq c$ puntos con coordenadas enteras. Si $a_x \equiv c_x \pmod{m}$ y $a_y \equiv c_y \pmod{m}$, entonces $\gcd(|a_x-c_x|,|a_y-c_y|) \geq m$.
+
+\emph{Demostración.} Como $m \mid (a_x-c_x)$ y $m \mid (a_y-c_y)$, entonces $m$ divide a $\gcd(|a_x-c_x|,|a_y-c_y|)$, y como $a \neq c$ este gcd es positivo, y por lo tanto mayor o igual a $m$.
+
+\begin{samepage}
+\textbf{Afirmación.} Para $a \neq b$ puntos con coordenadas enteras en un polígono convexo, sea $g = \gcd(|a_x - b_x|, |a_y - b_y|)$, si $g \geq m$ existe un punto entero $c$ en el segmento $[a,b]$, con $c \neq a$, tal que
 \[
-\gcd(|a_x-b_x|,|a_y-b_y|) \geq m
-\iff
-a_x \equiv b_x \pmod{m} \ \text{y}\ a_y \equiv b_y \pmod{m}.
+c_x \equiv a_x \pmod{m} \quad \text{y} \quad c_y \equiv a_y \pmod{m}.
 \]
 
-\textit{($\Leftarrow$)} Si $m \mid (a_x-b_x)$ y
-$m \mid (a_y-b_y)$, entonces $m$ divide a
-$\gcd(|a_x-b_x|,|a_y-b_y|)$, y como $a\neq b$ este $\gcd$ es
-positivo, y mayor o igual a $m$.
+\end{samepage}
 
-\textit{($\Rightarrow$)} Sea
-$g = \gcd(|a_x-b_x|,|a_y-b_y|) \geq m$. El vector
-$v=\left(\frac{b_x-a_x}{g}, \frac{b_y-a_y}{g}\right)$ es entero. Definimos
+\emph{Demostración.} Sea $g = \gcd(|a_x - b_x|, |a_y - b_y|) \geq m$. El vector $v = \left(\frac{b_x - a_x}{g}, \frac{b_y - a_y}{g}\right)$ es entero. Definimos
 \[
-c = a + m \cdot \left(\frac{b_x-a_x}{g}, \frac{b_y-a_y}{g}\right).
+c = a + m \cdot \left(\frac{b_x - a_x}{g}, \frac{b_y - a_y}{g}\right).
 \]
-Como $0 \leq m/g \leq 1$, el punto $c$ está sobre el segmento $[a,b]$ y como el polígono es convexo, $c$ también
-está dentro del polígono. Además $c$ tiene coordenadas enteras, y $c - a = m \cdot v$, así que
-$c_x \equiv a_x \pmod m$ y $c_y \equiv a_y \pmod m$. Como
-$m \geq 1$ y el vector primitivo no es nulo, $c \neq a$.
+
+Como $0 \leq m/g \leq 1$, el punto $c$ está sobre el segmento $[a,b]$ y, como el polígono es convexo, $c$ también está dentro del polígono. Además $c$ tiene coordenadas enteras, y $c - a = m \cdot v$, así que $c_x \equiv a_x \pmod{m}$ y $c_y \equiv a_y \pmod{m}$. Como $m \geq 1$ y el vector primitivo no es nulo, $c \neq a$.
 
 Por lo tanto, para cada punto entero $a$ dentro o en el borde del polígono, $a$ es válido si y solo si existe otro punto entero $c$ en el pastel con $(c_x \bmod m, c_y \bmod m) = (a_x \bmod m, a_y \bmod m)$.
 
@@ -641,7 +637,7 @@ La complejidad es $O(5000 \cdot m)$ para ambas pasadas.
 \subsection*{Código}
 Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/105216.cpp}.
 
-\editorialproblem{9.11.1 Finding a centroid (CSES 2079)}
+\editorialproblem{Problema 9.11.1 Finding a centroid (CSES 2079)}
 \subsection*{Hint1}
 Si elegimos un vértice del árbol, ¿cómo sabemos que es un centroide?
 \subsection*{Solución}
@@ -651,23 +647,23 @@ El subárbol hacia arriba de $u$ tiene $n-sz[u] < \frac{n}{2}$, donde $sz[u]$ es
 \subsection*{Código}
 Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/cses2079.cpp}.
 
-\editorialproblem{9.11.2 Zuko vs Aang (Autoría $\filledstar$)}
+\editorialproblem{Problema 9.11.2 Zuko vs Aang (Autoría $\filledstar$)}
 \subsection*{Hint 1}
-Para calcular la probabilidad de encontrar a Aang en un nodo $v$, queremos calcular la suma
+Para calcular la probabilidad de encontrar a Aang en un vértice $v$, queremos calcular la suma
 $\sum_u P(u \to v) \cdot [\text{sum}(u \to v) \leq k]$
-sobre todos los nodos $u$. ¿Qué técnica permite descomponer
-sumas sobre pares de nodos en un árbol?
+sobre todos los vértices $u$. ¿Qué técnica permite descomponer
+sumas sobre pares de vértices en un árbol?
  
 \subsection*{Solución}
  
-Como Zuko no puede repetir templos y el grafo es un árbol, el
+Como Zuko no puede repetir templos y la gráfica es un árbol, el
 único camino de $u$ a $v$ es el camino directo. Si Zuko se desvía
-en algún nodo intermedio, nunca puede regresar porque ya visitó ese
-nodo. Entonces la probabilidad de que Zuko visite $v$ partiendo
+en algún vértice intermedio, nunca puede regresar porque ya visitó ese
+vértice. Entonces la probabilidad de que Zuko visite $v$ partiendo
 de $u$ es la probabilidad de que siga exactamente el camino
 directo $u = w_0, w_1, \ldots, w_t = v$.
  
-En cada nodo $w_i$ del camino, Zuko elige con la misma probabilidad entre sus vecinos no visitados. El único vecino ya visitado es $w_{i-1}$ (de donde vino), excepto en $w_0$ donde no ha visitado a nadie.
+En cada vértice $w_i$ del camino, Zuko elige con la misma probabilidad entre sus vecinos no visitados. El único vecino ya visitado es $w_{i-1}$ (de donde vino), excepto en $w_0$ donde no ha visitado a nadie.
 Entonces la probabilidad de llegar a $v$ desde $u$ es:
 \[
 P(u \to v) = \prod_{i=0}^{t-1} \frac{1}{\text{deg'}(w_i)}
@@ -683,7 +679,7 @@ Recordemos también, que el camino sólo es válido si la suma acumulada de espi
 \sum_{i=0}^{t} e_{w_i} \leq k.
 \]
  
-Como tenemos $n$ nodos, la probabilidad de empezar en cualquiera de ellos es $\frac{1}{n}$, de donde para cada nodo $v$ la probabilidad de encontrarle es:
+Como tenemos $n$ vértices, la probabilidad de empezar en cualquiera de ellos es $\frac{1}{n}$, de donde para cada vértice $v$ la probabilidad de encontrarle es:
 \[
 P_v = \frac{1}{n} \sum_{u=1}^{n} P(u \to v) \cdot
 \left[\sum_{w \in \text{camino}(u,v)} e_w \leq k\right].
@@ -724,17 +720,17 @@ Entonces la probabilidad de $c \to v$ como vértice intermedio es:
 El factor \texttt{f$_m$} $= \frac{\deg(c)}{\deg(c)-1}$
 convierte \texttt{pf} en \texttt{pf$_{m}$}.
  
-Para cada centroide $c$, recorremos cada subárbol y guardaremos para cada vértice $u$ visitado la suma de espiritualidades de $c$ a $u$ (si es mayor a k, ya no exploramos más), pt[$u$], pf[$u$]. Una vez que tenemos la información anterior. Procesaremos los subárboles uno por uno y calcularemos cuánto contribuyen a la respuesta de cada templo $i$ (res[$i$]):
+Para cada centroide $c$, recorreremos cada subárbol y guardaremos para cada vértice $u$ visitado la suma de espiritualidades de $c$ a $u$ (si es mayor a k, ya no exploramos más), pt[$u$], pf[$u$]. Una vez que tenemos la información anterior. Procesaremos los subárboles uno por uno y calcularemos cuánto contribuyen a la respuesta de cada templo $i$ (res[$i$]):
  
 \textit{Caso 1: $u = c$ (Zuko empieza en $c$).}
 \\\\
 Zuko visita $c$ automáticamente (contribuye 1 a \texttt{res[$c$]}
-si $e_c \leq k$). Para cada nodo $v$ en un subárbol, la
+si $e_c \leq k$). Para cada vértice $v$ en un subárbol, la
 probabilidad de visitarlo es \texttt{pf}$[v]$, así que sumamos \texttt{pf}$[v]$ a \texttt{res[$v$]}.
  
 \textit{Caso 2: $v = c$ (Zuko quiere llegar a $c$).}
 \\\\
-Para cada nodo $u$ en un subárbol, la probabilidad de que visite
+Para cada vértice $u$ en un subárbol, la probabilidad de que visite
 $c$ es \texttt{pt}$[u]$, así que sumamos \texttt{pt[$u$]} a \texttt{res[$c$]}.
  
 \textit{Caso 3: $u$ y $v$ en subárboles distintos.}
@@ -747,7 +743,7 @@ restando $e_c$ porque se cuenta dos veces).
 Ahora, no podemos simplemente contar todos los pares de vértices porque buscamos vértices que estén en diferentes subárboles.
 \\\\Si tuvieramos los subárboles $A$, $B$ y $C$, lo que podemos hacer es procesar los subárboles en orden manteniendo un arreglo llamado \texttt{prev}, es decir, primero procesamos $A$ y metemos todos sus vértices en \texttt{prev}. Luego, procesamos $B$ contamos los pares $(u,v)$, ($u \in \texttt{prev}, v \in \text{B}$) y ($u \in \text{B}, v \in \texttt{prev}$), y agregamos $B$ a $\texttt{prev}$. Cuando queramos procesar $C$, queremos los pares $(u,v)$ tal que $u\in C, v \in (A \cup B)$ o $u\in (A \cup B), v \in C$, pero los elementos de $A\cup B$ son exactamente \texttt{prev}, entonces podemos simplemente hacer lo mismo que hicimos con $B$, y después agregar $C$ a \texttt{prev}.
 
-Para cada par $(u,v)$ la probabilidad de llegar a $v$ empezando en $u$ es $\texttt{pt}[u]*\texttt{pf}_m[v]$ siempre que se cumpla $\texttt{sum}[u]+\texttt{sum}[v]-e_c \leq k$, es decir, $\texttt{sum}[u] \leq k - \texttt{sum}[v]+ e_c$. Nótese que podemos guardar un arreglo \texttt{prevOrden} de pares $\{\texttt{sum}, \texttt{pt}\}$ ordenado por $\texttt{sum}$ de todos los vértices en $\texttt{prev}$, así para cada $v$, podemos hacer una búsqueda binaria sobre \texttt{prevOrden} para saber qué $u$ sí considerar, es decir:
+Para cada par $(u,v)$ la probabilidad de llegar a $v$ empezando en $u$ es $\texttt{pt}[u]*\texttt{pf}_m[v]$ siempre que se cumpla $\texttt{sum}[u]+\texttt{sum}[v]-e_c \leq k$, es decir, $\texttt{sum}[u] \leq k - \texttt{sum}[v]+ e_c$. Nótese que podemos guardar un arreglo \texttt{prevOrden} de pares $\{\texttt{sum}, \texttt{pt}\}$ ordenado por $\texttt{sum}$ de todos los vértices en $\texttt{prev}$, así para cada $v$, podemos hacer una búsqueda binaria sobre \texttt{prevOrden} para saber qué $u$ sí debemos considerar, es decir:
 \[\texttt{res}[v]=\sum_{\substack{u \in \texttt{prev} \\ sum[u]\leq t_v}} \texttt{pt}[u]\cdot \texttt{pf}_m[v],\]
 donde $t_v$ es $k - \texttt{sum}[v]+ e_c$.
 
@@ -760,7 +756,7 @@ Nótese que cada que pasemos a un nuevo subárbol, debemos reconstruir las sumas
 \subsection*{Código}
 Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/avatar.cpp}.
 
-\editorialproblem{9.11.3 Pursuit For Artifacts (Codeforces 652E)}
+\editorialproblem{Problema 9.11.3 Pursuit For Artifacts (Codeforces 652E)}
 
 \subsection*{Hint 1}
 Cada puente se puede cruzar a lo más una vez, en cualquier dirección. Si una región de la gráfica no tiene puentes ¿qué vértices dentro de ella puedes visitar sin "gastar" la posibilidad de salir hacia el resto de la gráfica?
@@ -773,7 +769,7 @@ Contrae cada componente sin puentes a un solo vértice. ¿Qué estructura tiene 
 Usando $Tarjan$ encontraremos los puentes de la gráfica, después, por cada componente que encontremos, la contraeremos en un vértice. La gráfica resultante es un árbol cuyas aristas son exactamente los puentes
 originales.
 
-Si la componente que contiene a $a$ (o a $b$, o cualquier componente en el camino entre ambas) tiene una arista con artefacto, Johnny puede desviarse, recoger el artefacto, y seguir su camino sin necesidad de cruzar ningún puente dos veces. Esto es porque dentro de una componente sin puentes siempre existen rutas alternativas que no reutilizan las mismas aristas para entrar y salir por los puntos necesarios.
+Si la componente que contiene a $a$, la que contiene a $b$, o cualquier componente en el camino entre ambas tiene una arista con artefacto, Johnny puede desviarse, recoger el artefacto, y seguir su camino sin necesidad de cruzar ningún puente dos veces. Esto es porque dentro de una componente sin puentes siempre existen rutas alternativas que no reutilizan las mismas aristas para entrar y salir por los puntos necesarios.
 
 Marcamos cada vértice del árbol de componentes con $1$ si esa componente contiene alguna arista interna con artefacto. Cada arista del árbol también tiene su propio valor $0/1$. La respuesta es \textbf{YES} si y solo si, en el camino del árbol desde la componente de $a$ hasta la de $b$, hay algún $1$. Esto último lo podemos verificar con un $BFS/DFS$ en la gráfica construida.
 
@@ -782,7 +778,7 @@ Nota de implementación: con $n$ hasta $3\times10^5$, las DFS recursivas (para e
 \subsection*{Código}
 Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/625E.cpp}.
 
-\editorialproblem{9.11.4 Brick Walls (Codeforces 1404E)}
+\editorialproblem{Problema 9.11.4 Brick Walls (Codeforces 1404E)}
 
 \subsection*{Hint 1}
 Una celda no puede pertenecer a un ladrillo horizontal y a un ladrillo
@@ -799,9 +795,9 @@ borde-H a la frontera entre dos celdas horizontalmente adyacentes $(i,j)$ y $(i,
 horizontalmente.
 
 Construimos una gráfica bipartita, en un lado los bordes-V y en otros los bordes-H. Conectamos un borde-H con un borde-V si comparten una celda. Queremos elegir el máximo conjunto de bordes a activar tal que ninguna arista tenga sus dos vértices en el conjunto. Es decir, buscamos el conjunto independiente máximo, este es el total de
-vértices $-$ los vértices en la cobertura mínima. En una gráfica bipartita, por el teorema de König, la mínima cobertura de vértices es el matching máximo que podemos calcular con flujo máximo.
+vértices quitando los vértices en la cobertura mínima. En una gráfica bipartita, por el teorema de König, el tamaño de la mínima cobertura de vértices es igual tal tamaño del matching máximo que podemos calcular con flujo máximo.
 
-Por lo tanto la respuesta es la cantidad total de bordes quitándole el matching máximo.
+Por lo tanto la respuesta es la cantidad total de bordes menos el tamaño del matching máximo.
 \subsection*{Código}
 Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/1404E.cpp}.
 
