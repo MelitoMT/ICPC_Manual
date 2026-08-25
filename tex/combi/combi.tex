@@ -1,5 +1,8 @@
 Desde inicios de la civilización el contar ha sido de utilidad, y aunque para cosas simples como contar el cambio de una compra basta con contar moneda por moneda, cuando queremos contar cosas más grandes como el número de placas posibles en la ciudad de México o la cantidad de diferentes manos de póker que puedes tener, contar una por una no es un método eficiente ni confiable, pues, lo más probable es que cometamos un error. Es aquí donde entra la necesidad de otras técnicas que estudiaremos a continuación.
 \section{Bases}
+
+Casi cualquier conteo complicado se arma combinando dos reglas muy simples: multiplicar cuando las decisiones son independientes y sumar cuando los casos son ajenos. En esta sección las presentamos con ejemplos cotidianos y luego las usamos para deducir las fórmulas de permutaciones y combinaciones.
+
 \subsection*{Principio de multiplicación}
 Supongamos que vamos a comprar un helado en una tienda donde puedes escoger cono de sabor vainilla o chocolate, helado de fresa, mango o chicle y de toppings chispas de chocolate o cereal. ¿Cuántas maneras diferentes hay de elegir un helado diferente?
 \\\\Pensemos que así como podemos elegir la combinación {vainilla, fresa, chispitas}, también podemos elegir la combinación {chocolate, fresa, chispitas}, o {vainilla, mango, cereal}. Hay bastantes formas de combinar los sabores y notemos que el hecho de que elijamos un sabor de cono, no limita para nada nuestra eleccion de helado o de topping. Es así como llegamos a la conclusión que las elecciones son independientes y por cada sabor de cono podemos elegir cualquiera de los 3 helados y cualquiera de los 2 toppings, y cada combinación será diferente, de donde tendremos $2\times 3 \times 2=12$ formas de elegir un helado.
@@ -559,6 +562,9 @@ $\mathbf{15}$ & $20$ & $27$ & $37$ & $52$ \\
 Regresando al problema de la oficina, la respuesta es $B_{10}=115,975$.
 
 \section{Ejercicios}
+
+Resolvamos con detalle algunos problemas donde las ideas del capítulo aparecen de forma directa. En cada uno incluimos el enunciado, el razonamiento completo que lleva a la solución y un enlace al código.
+
 \subsection*{7.10.1 \href{https://codeforces.com/contest/1795/problem/D}{Triangle Coloring (Codeforces 1795D)}}
 
 \begin{center}
@@ -674,6 +680,9 @@ $1 \leq n \leq 10^6$
 \\\\
 Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/cses2064.cpp}.
 \section{Problemas}
+
+Estos problemas quedan propuestos para practicar por cuenta propia y cubren las técnicas vistas en el capítulo. Si alguno se complica, en el capítulo de Soluciones hay una editorial que da \textit{hints} graduales antes de revelar la solución completa.
+
 \begin{itemize}
     \item[7.11.1] \href{https://cses.fi/problemset/task/1715/}{String Distribution (CSES 1715)}
       %Burnside Lema

@@ -28,6 +28,8 @@ Al definir una estructura propia conviene fijar cuándo dos puntos son iguales y
 
 \section{Bases}
 
+Casi toda la geometría de concurso se reduce a dos operaciones entre vectores: el producto punto y el producto cruz. Con ellas se responden preguntas como si dos vectores son perpendiculares, hacia qué lado de una recta queda un punto o cuál es el área de un triángulo. Vale la pena entenderlas bien, porque el resto del capítulo se construye sobre ellas.
+
 \subsection*{Producto punto}
 
 \textbf{Producto punto}: Dados vectores $a=(a_x,a_y)$ y $b=(b_x,b_y)$ (desde el origen), el \textbf{producto punto} es
@@ -115,6 +117,8 @@ Para comparar $x,y \in A$, basta definir $x<y$ si $x\in N$ y $y\in S$, o si ambo
 \lstinputlisting[language=C++, firstline=51, lastline=54]{./tex/geo/codes/geo.cpp}
 
 \section{Intersecciones}
+
+Decidir si dos objetos se cruzan, y en su caso dónde, es una de las tareas más comunes en geometría computacional. Aquí resolvemos el caso de rectas y segmentos, que es la base de los algoritmos de barrido que veremos después. Es también donde más problemas causan los casos degenerados, así que les damos atención especial.
 
 \textbf{Definición (vector perpendicular en el plano).} Dado $v=(x,y)$, definimos
 \[
@@ -591,6 +595,9 @@ Mayores complicaciones de Bentley-Ottmann:
 Usualmente no se recomienda implementar Bentley-Oattmann en concursos, ya que su implementación son alrededor de 200 líneas con casos delicados de manejar, sería complicado encontrar bugs bajo presión de tiempo, además que los problemas donde se requieren todas las intersecciones usualmente permiten fuerza bruta. Lo más usado es la idea en sí misma aplicada a problemas más sencillos como la unión de área de rectángulos como veremos en los ejemplos a continuación.
 
 \section{Ejercicios}
+
+Resolvamos con detalle algunos problemas donde las ideas del capítulo aparecen de forma directa. En cada uno incluimos el enunciado, el razonamiento completo que lleva a la solución y un enlace al código.
+
 \subsection*{8.6.1 \href{https://acm.timus.ru/problem.aspx?space=1&num=1469}{No Smoking! (Timus 1469)}}
 
 \begin{center}
@@ -685,6 +692,9 @@ No olvidar verificar que el área de cada polígono es no nula.
 
 Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/tim1418.cpp}.
 \section{Problemas}
+
+Estos problemas quedan propuestos para practicar por cuenta propia y cubren las técnicas vistas en el capítulo. Si alguno se complica, en el capítulo de Soluciones hay una editorial que da \textit{hints} graduales antes de revelar la solución completa.
+
 \begin{itemize}
   \item[8.7.1] \href{https://codeforces.com/gym/101473}{Balloon (2013-2014 ICPC Brazil Subregional)}
   \item[8.7.2] \href{https://codeforces.com/group/DH4HPwQlLU/contest/689800/problem/G}{Beyblades por decena (Autoría $\filledstar$)}

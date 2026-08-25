@@ -1,6 +1,8 @@
 En programación competitiva, dominar o al menos tener buenas nociones de los conceptos principales de teoría de números no es un lujo, sino una necesidad. A lo largo de este texto y en la práctica dentro de la ICPC, el lector encontrará problemas donde aparecen de manera natural ideas como divisibilidad, números primos, residuos, máximo común divisor y aritmética modular. En términos generales, la teoría de números estudia las propiedades de los enteros, y por ello ofrece un lenguaje muy útil para describir, simplificar y resolver muchos problemas clásicos de concurso.
 \section{Bases}
 
+Empezamos fijando el vocabulario mínimo que usaremos durante todo el capítulo: divisibilidad, máximo común divisor y mínimo común múltiplo. Son ideas sencillas y probablemente conocidas, pero vale la pena establecer la notación, porque casi todos los resultados posteriores se enuncian en estos términos.
+
 \textbf{Definición.} Decimos que $a$ \textbf{divide} a $b$ (y escribimos $a \mid b$) si existe un entero $k$ tal que $b = ka$. Escribimos $a \nmid b$ si $a$ no divide a $b$.
 
 \textit{Ejemplo.} Se cumple $4 \mid 20$ porque $20 = 4 \cdot 5$ (aquí $k = 5$). En cambio, $6 \nmid 20$, pues no existe ningún entero $k$ con $20 = 6k$.
@@ -109,6 +111,7 @@ La complejidad es $O(\log \min(a,b))$. En C++17 se puede usar directamente \text
 
 \section{Aritmética modular}
 
+La aritmética modular es la herramienta de teoría de números que más aparece en concurso: cualquier problema cuya respuesta se pide ``módulo $10^9+7$'' la necesita. La idea es trabajar con los residuos en lugar de los números completos, lo que mantiene todo dentro de un rango acotado. Antes de formalizarla, veamos de dónde sale de manera natural.
 
 \subsection*{Motivación: ciclos y residuos}
 
@@ -185,6 +188,8 @@ long long power(long long base, long long exponent, long long mod) {
 \end{lstlisting}
 
 \section{Números primos y criba de Eratóstenes}
+
+Los primos son las piezas con las que se construye cualquier entero, y por eso son el punto de partida para factorizar, contar divisores o evaluar las funciones que veremos más adelante. En esta sección respondemos tres preguntas: cómo decidir si un número es primo, cómo factorizarlo y cómo obtener de golpe todos los primos hasta $n$ con la criba de Eratóstenes.
 
 \textbf{Definición.} Un entero $p > 1$ es \textbf{primo} si sus únicos divisores positivos son $1$ y $p$.
 
@@ -283,6 +288,9 @@ for (int i = 2; i * i <= n; i++) {
 \paragraph{Complejidad.} La criba anterior corre en $O(n \log \log n)$, prácticamente lineal; suele ser viable hasta $n \approx 10^7$ con memoria lineal. Para $n$ mayor o para tener el \emph{menor factor primo} de cada entero (útil para factorizar rápido) existen variantes en tiempo $O(n)$; véase la referencia \cite{cpalg-sieve}.
 
 \section{Lema de Bézout}
+
+El lema de Bézout es el resultado que conecta el máximo común divisor con las ecuaciones lineales, y de él salen dos herramientas que usaremos de forma constante: el algoritmo de Euclides extendido y el inverso multiplicativo modular. Conviene verlo antes de entrar a resolver congruencias.
+
 \textbf{Definición.} Una combinación lineal de dos enteros $a$ y $b$ es cualquier expresión de la forma $ax+by$ con $x,y$ enteros.
 
 \textbf{Lema (Bézout)}~\cite{perez_numeros}. Para cualesquiera enteros $a$ y $b$ no ambos cero, existen enteros $x$ y $y$ tales que
@@ -517,6 +525,8 @@ Así, el inverso modular se puede calcular también como una potencia, usando ex
 
 \subsection*{Teorema de Euler}
 
+El pequeño teorema de Fermat solo sirve cuando el módulo es primo. El teorema de Euler es su versión general, válida para cualquier módulo, y es lo que nos permitirá reducir exponentes enormes y calcular inversos cuando el módulo no es primo.
+
 \textbf{Definición.} Para un entero $m\geq 1$, definimos la \textbf{función $\phi(m)$ de Euler} como el número de enteros en $\{1,2,\dots,m\}$ que son coprimos con $m$.
 
 \textbf{Teorema de Euler}~\cite{perez_numeros}: Sea $m \ge 2$ un entero, si $\gcd(a,m)=1$, entonces
@@ -530,8 +540,10 @@ En el caso particular $m = p$ primo, los enteros coprimos con $p$ entre $1$ y $p
 \[
 3^4 = 81 \equiv 1 \pmod{10}.
 \]
-\begin{samepage}
-    \section{Congruencias lineales y Teorema Chino del Residuo}
+\section{Congruencias lineales y Teorema Chino del Residuo}
+
+Hasta ahora hemos aprendido a sumar, multiplicar y dividir módulo $m$. El siguiente paso natural es resolver ecuaciones: dado un módulo, encontrar los valores de la incógnita que cumplen una congruencia. Veremos dos casos frecuentes en concurso, primero una sola congruencia lineal y después un sistema de varias con módulos distintos. El segundo es la herramienta típica cuando un problema nos da los residuos de un número desconocido y pide reconstruirlo.
+
 \subsection*{Congruencia lineal}
 
 Ahora que sabemos calcular inversos modulares, podemos abordar las \textbf{congruencias lineales}: dado un módulo $m$ y enteros $a$ y $b$, buscamos enteros $x$ que satisfagan
@@ -539,8 +551,6 @@ Ahora que sabemos calcular inversos modulares, podemos abordar las \textbf{congr
 ax \equiv b \pmod{m}.
 \]
 Al igual que con los inversos, estas ecuaciones \emph{no siempre} tienen solución.
-
-\end{samepage}
 
 \textbf{Propiedad (existencia de solución).} Sea $g = \gcd(a,m)$. La congruencia $ax \equiv b \pmod{m}$ tiene al menos una solución si y sólo si $g \mid b$.
 
@@ -558,6 +568,8 @@ que es el caso coprimo y se resuelve multiplicando por el inverso de $a'$ módul
 \textit{Ejemplo.} La congruencia $4x \equiv 3 \pmod{8}$ no tiene solución, porque $g = \gcd(4,8) = 4$ y $4 \nmid 3$. En cambio, $10x \equiv 6 \pmod{14}$ sí tiene: aquí $g = \gcd(10,14) = 2$ divide $6$. Dividiendo entre $2$ obtenemos $5x \equiv 3 \pmod{7}$. Como $5^{-1} \equiv 3 \pmod{7}$ (pues $5\cdot 3 = 15 \equiv 1$), resulta $x \equiv 3\cdot 3 \equiv 2 \pmod{7}$, y módulo $14$ las soluciones son $x \equiv 2$ y $x \equiv 9$.
 
 \subsection*{Teorema chino del residuo}
+
+Pasemos ahora de una sola congruencia a un sistema de varias, cada una con su propio módulo. El teorema chino del residuo nos dice cuándo existe un entero compatible con todos los residuos a la vez, y la construcción que veremos lo encuentra fusionando las congruencias de dos en dos.
 
 \textbf{Teorema (chino del residuo, dos congruencias)}~\cite{cf_crt}. Sean $n_1,n_2 \ge 1$ y $a_1,a_2$ enteros. El sistema
 \begin{align*}
@@ -599,6 +611,8 @@ Escribimos $x = 2 + 3b$; entonces $2 + 3b \equiv 3 \pmod{5}$, es decir $3b \equi
 
 \section{Funciones multiplicativas\adv}
 \advnote{Requiere criba, factorización y aritmética modular. Incluye $\phi$, $\mu$ e inversión de Möbius. Puede omitirse en una primera lectura.}
+
+Varias funciones que aparecen al contar divisores o coprimos comparten una propiedad muy cómoda: se pueden evaluar factor primo por factor primo. Formalizar esa propiedad nos permite calcularlas para todos los enteros hasta $n$ con una criba, en vez de factorizar cada número por separado. Aquí definimos esa clase de funciones y estudiamos las dos más útiles en concurso, $\phi$ y $\mu$.
 
 \textbf{Definición.} Una función $f: \mathbb{Z}^+ \to \mathbb{Z}$ es \textbf{multiplicativa} si
 \[
@@ -722,6 +736,8 @@ que coincide con $\phi(1),\ldots,\phi(10)$ (por ejemplo $\phi(10)=4$ porque $1$,
 
 \subsection*{Función de Möbius $\mu$}
 
+La función $\mu$ es la herramienta estándar para contar bajo condiciones de coprimalidad. Nos permite escribir una condición como $\gcd(i,j)=1$ en forma de suma sobre divisores y, con ello, convertir un conteo que parecía exigir inclusión-exclusión sobre primos en una sola suma que se evalúa con una criba. Veremos su definición, la fórmula de inversión y un ejemplo de conteo de pares coprimos.
+
 La función de Möbius $\mu:\mathbb{Z}^+\to\{-1,0,1\}$ se define por
 \[
 \mu(n) = \begin{cases}
@@ -827,6 +843,8 @@ Los ceros corresponden a enteros divisibles por un cuadrado ($4$, $8$, $9$, etc.
 \section{Logaritmo discreto y Baby-step Giant-step\adv}
 \advnote{Requiere exponenciación modular y familiaridad con grupos de unidades módulo $m$. Puede omitirse en una primera lectura.}
 
+En las secciones anteriores calculamos $a^x \bmod m$ conociendo el exponente; aquí resolvemos el problema inverso, es decir, conocemos la potencia y buscamos el exponente. Aparece cuando una cantidad se multiplica por un factor fijo en cada paso y se pregunta en cuántos pasos alcanza un valor dado. La sección es además el ejemplo canónico de la técnica \emph{meet-in-the-middle}, que reaparecerá en otros capítulos.
+
 \textbf{Problema (logaritmo discreto).} Fijados un módulo $m \ge 2$ y enteros $a$ y $b$ con $\gcd(a,m)=1$, se busca un entero $x$ (si existe) tal que
 \[
 a^x \equiv b \pmod{m}.
@@ -917,6 +935,9 @@ Para módulo no primo o cuando $\gcd(a,m) > 1$, hay variantes que reducen al cas
 
 \newpage
 \section{Ejercicios}
+
+Resolvamos con detalle algunos problemas donde las ideas del capítulo aparecen de forma directa. En cada uno incluimos el enunciado, el razonamiento completo que lleva a la solución y un enlace al código.
+
 \subsection*{5.9.1 \href{https://codeforces.com/contest/1542/problem/C}{Strange Function (Codeforces 1542C)}}
 
 \begin{center}
@@ -1087,6 +1108,7 @@ For each case, print the case number and the minimum possible value of $L$ that 
 
 \vspace{0.5em}
 \textbf{Example}\\
+\begin{minipage}[t]{0.48\linewidth}
 \textbf{Input}\\
 \texttt{2}\\
 \texttt{3}\\
@@ -1098,10 +1120,12 @@ For each case, print the case number and the minimum possible value of $L$ that 
 \texttt{3 2}\\
 \texttt{5 3}\\
 \texttt{7 1}
-
+\end{minipage}\hfill
+\begin{minipage}[t]{0.48\linewidth}
 \textbf{Output}\\
 \texttt{Case 1: 69}\\
 \texttt{Case 2: 113}
+\end{minipage}
 \end{minipage}
 }
 \end{center}
@@ -1118,6 +1142,9 @@ el cual podemos resolver con el teorema chino del residuo directamente. La únic
 \\\\
 Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/monkeyTradition.cpp}.
 \section{Problemas}
+
+Estos problemas quedan propuestos para practicar por cuenta propia y cubren las técnicas vistas en el capítulo. Si alguno se complica, en el capítulo de Soluciones hay una editorial que da \textit{hints} graduales antes de revelar la solución completa.
+
 \begin{itemize}
     \item[5.10.1] \href{https://codeforces.com/problemset/problem/1553/A}{Digits Sum (Codeforces 1553A)}
     \item[5.10.2] \href{https://codeforces.com/contest/1916/problem/B}{Two Divisors (Codeforces 1916B)}

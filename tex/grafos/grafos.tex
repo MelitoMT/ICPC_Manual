@@ -43,6 +43,9 @@ El segundo término es par (suma de números pares). Como $2|E|$ es par, el prim
 Un resultado análogo de este corolario para digráficas tiene consecuencias sorprendentes en el ICPC. Por ejemplo: en un torneo (una gráfica donde entre cada par de vértices existe una única flecha), la suma de grados de salida es $\binom{n}{2}$; argumentos de paridad sobre los grados pueden determinar si cierta configuración es posible sin necesidad de construirla.
 
 \section{Caminos y circuitos de Euler}
+
+Nos preguntamos ahora si es posible recorrer una gráfica pasando por cada arista exactamente una vez. La respuesta resulta ser una condición muy simple sobre los grados, lo que hace de este uno de los pocos temas donde reconocer el patrón basta para resolver el problema. Empecemos por el ejemplo histórico que dio origen a la teoría de gráficas.
+
 \subsection*{Los puentes de Königsberg}
 En 1736, Leonhard Euler resolvió el siguiente problema planteado por los habitantes de la ciudad de Königsberg. La ciudad tenía 7 puentes que conectaban 4 zonas de tierra. ¿Es posible dar un paseo cruzando cada puente exactamente una vez y regresar al punto de partida?
 \begin{figure}[H]
@@ -1310,6 +1313,9 @@ struct Dinic {
 };
 \end{lstlisting}
 \subsection{Teorema max-flow min-cut}
+
+Ya sabemos calcular el flujo máximo, pero su verdadera utilidad en concurso viene de que ese mismo número responde una pregunta aparentemente distinta: cuál es la forma más barata de desconectar la fuente del sumidero. Esa equivalencia es la que permite modelar como flujo problemas que hablan de eliminar elementos o de romper conflictos, como veremos en los ejercicios.
+
 \begin{definition} Un \textbf{corte $s$-$t$} es una división de los vértices de $V$ en dos partes $(S, T)$ con $s \in S$ y $t \in T$. La \textbf{capacidad del corte} es la suma de las capacidades de los cables que van de $S$ a $T$:
 \[
 \text{cap}(S,T) = \sum_{\substack{u \in S,\, v \in T \\ (u,v)\in E}} c(u,v).
@@ -1705,6 +1711,9 @@ $n$ trabajadores, $n$ tareas, y costos $c_{ij}$ de asignar el trabajador
 $i$ a la tarea $j$, minimizar el costo total. En caso de que al lector le interese aprender más de este tema, un buen recurso para aprender este algoritmo es \url{https://www.topcoder.com/thrive/articles/Assignment%20Problem%20and%20Hungarian%20Algorithm}.
 \newpage
 \section{Ejercicios}
+
+Resolvamos con detalle algunos problemas donde las ideas del capítulo aparecen de forma directa. En cada uno incluimos el enunciado, el razonamiento completo que lleva a la solución y un enlace al código.
+
 \subsection*{9.10.1 \href{https://codeforces.com/problemset/problem/808/F}{Card Game (Codeforces 808F)}}
 
 \begin{center}
@@ -1883,6 +1892,9 @@ de \textbf{aristas} de $a$ a $L$).
  Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/qtree2.cpp}.
 
 \section{Problemas}
+
+Estos problemas quedan propuestos para practicar por cuenta propia y cubren las técnicas vistas en el capítulo. Si alguno se complica, en el capítulo de Soluciones hay una editorial que da \textit{hints} graduales antes de revelar la solución completa.
+
 \begin{itemize}
   \item[9.11.1] \href{https://cses.fi/problemset/task/2079}{Finding a Centroid (Codeforces 2079)}
   \item[9.11.2] \href{https://codeforces.com/group/DH4HPwQlLU/contest/689800/problem/I}{Zuko vs Aang (Autoría $\filledstar$)}
