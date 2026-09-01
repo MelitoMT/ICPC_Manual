@@ -933,7 +933,6 @@ long long babyStepGiantStep(long long a, long long b, long long m) {
 
 Para módulo no primo o cuando $\gcd(a,m) > 1$, hay variantes que reducen al caso coprimo; véase la referencia \cite{cpalg-discrete-log-general}.
 
-\newpage
 \section{Ejercicios}
 
 Resolvamos con detalle algunos problemas donde las ideas del capítulo aparecen de forma directa. En cada uno incluimos el enunciado, el razonamiento completo que lleva a la solución y un enlace al código.
@@ -959,7 +958,13 @@ The first line contains a single integer $t$ ($1 \leq t \leq 10^4$), the number 
 
 The only line of each test case contains a single integer $n$ ($1 \leq n \leq 10^{16}$).
 
-\vspace{0.5em}
+\end{minipage}
+}
+\end{center}
+\begin{center}
+\fbox{
+\begin{minipage}{0.95\linewidth}
+
 \textbf{Output}\\
 For each test case, output a single integer $ans$, where $ans=\sum_{i=1}^n f(i)$ modulo $10^9+7$.
 
@@ -1033,12 +1038,8 @@ Dr. Chanek has $N$ magical stones with $N$ being an even number. Those magical s
 Define $\text{concat}(x,y)$ for two integers $x$ and $y$ as the result of concatenating the digits of $x$ to the left of $y$ in their decimal representation without changing the order. As an example, $\text{concat}(10,24)$ will result in $1024$.
 
 For a magic box with a magic coefficient $Z$, magical stone $i$ will react with magical stone $j$ if the colours of both stones are different and $\text{concat}(A_i, A_j) \times \text{concat}(A_j, A_i) + A_i \times A_j \equiv Z \mod 3$. A magical stone that is reacting will be very hot and dangerous. Because of that, you must colour the magical stones and determine the magic coefficient $Z$ of the magic box in a way such that there is no magical stone that reacts, or report if it is impossible.
-\end{minipage}
-}
-\end{center}
-\begin{center}
-\fbox{
-\begin{minipage}{0.95\linewidth}
+
+\vspace{0.5em}
 \textbf{Input}\\
 The first line contains a single even integer $N$ ($2 \leq N \leq 10^5$), the number of magical stones Dr. Chanek has.
 
@@ -1047,7 +1048,6 @@ The second line contains $N$ integers $A_1, A_2, \ldots, A_N$ ($1 \leq A_i \leq 
 \vspace{0.5em}
 \textbf{Output}\\
 If it is not possible to satisfy the condition of the problem, output $-1$.
-
 Otherwise, output two lines. The first line contains an integer $Z$ denoting the magic coefficient of the magic box. The second line contains a string $S$ of length $N$. $S_i$ is $0$ if magical stone $i$ is coloured black or $1$ if magical stone $i$ is coloured white. If there are more than one possibilities of colouring and choosing the magic coefficient $Z$, output any of them.
 
 \vspace{0.5em}
@@ -1055,7 +1055,12 @@ Otherwise, output two lines. The first line contains an integer $Z$ denoting the
 \textbf{Input}\\
 \texttt{4}\\
 \texttt{4 10 9 14}
-
+\end{minipage}
+}
+\end{center}
+\begin{center}
+\fbox{
+\begin{minipage}{0.95\linewidth}
 \textbf{Output}\\
 \texttt{0}\\
 \texttt{1001}
@@ -1074,7 +1079,6 @@ Otherwise, output two lines. The first line contains an integer $Z$ denoting the
     \\\\
     Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/1725H.cpp}.
 \subsection*{5.9.3 \href{https://lightoj.com/problem/monkey-tradition}{Monkey Tradition (Light OJ)}}
-
 \begin{center}
 \fbox{
 \begin{minipage}{0.95\linewidth}
@@ -1093,7 +1097,13 @@ In `MonkeyLand', there is a traditional game called ``Bamboo Climbing''. The rul
     \item And before the game, each monkey is assigned a distinct $p_i$.
     \item The monkey, who has the lowest $r_i$, wins.
 \end{enumerate}
+\end{minipage}
+}
+\end{center}
 
+\begin{center}
+\fbox{
+\begin{minipage}{0.95\linewidth}
 Now, the organizers have found all the information of the game last year, but unluckily they haven't found the height of the bamboo. To be more exact, they know $N$, all $p_i$ and corresponding $r_i$, but not $L$. So, you came forward and found the task challenging and so, you want to find $L$, from the given information.
 
 \vspace{0.5em}

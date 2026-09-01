@@ -273,8 +273,20 @@ La demostración completa puede consultarse en~\cite{youkn0wwho_burnside}.
 Usemos este lema en el caso del problema de collares de $n$ cuentas con $k$ colores donde dos collares son iguales si uno se obtiene del otro por rotación. En este caso, $X$ son todas las coloraciones: $|X| = k^n$.
 \\\\Nótese que si tenemos un collar con $n$ cuentas numeradas $1,2,\dots, n$ en círculo con $k$ colores diferentes. La rotación por $r$ posiciones envía la cuenta $i$ a la posición $i+r (\mod n)$ por lo que hay $n$ rotaciones distintas, es decir, una por cada valor diferente que puede tomar $r$ del conjunto $\{0,1,\dots, n-1\}$ donde $r=0$ es la identidad, es decir, no rotar. Dos formas de colorear las cuentas son la misma si alguna se obtiene de la otra bajo alguna rotación. Estas rotaciones serán precisamente nuestro grupo $G$ que actuará sobre $X$.
 
-Ahora, notemos que nos interesa saber el número de órbitas porque nos interesa la cantidad de collares diferentes y cada órbita es un collar diferente. Sabiendo esto, queremos entonces aplicar el lema de Burnside y para ello nos interesa saber cuántos objetos fija la rotación por $r$ posiciones. Notemos entonces que la rotación $r$ fija una coloración si y solo si esta es periódica con periodo $gcd(r,n)$ ya que la cuenta $i$ debe tener el mismo color que la cuenta $i+r$ y esto agrupa las cuentas en exactamente $gcd(r,n)$ clases donde todas las cuentas deben tener el mismo color. Y ya que cada una puede tener $k$ colores diferentes, tenemos que hay $k^{gcd(r,n)}$ coloraciones fijas.
-\\\\
+Ahora, notemos que nos interesa saber el número de órbitas porque no interesa la cantidad de collares diferentes y cada órbita es un collar diferente. Sabiendo esto, queremos entonces aplicar el lema de Burnside y para ello nos interesa saber cuántos objetos fija la rotación por $r$ posiciones.
+
+\textbf{Lema.} Sea $r \in \{0,\dots,n-1\}$ y $d = \gcd(r,n)$. Para cada posición $i$, el conjunto de posiciones alcanzables desde $i$ aplicando la rotación por $r$ repetidamente,
+\[
+\{i,\ i+r,\ i+2r,\ \dots\} \pmod n,
+\]
+tiene exactamente $n/d$ elementos. En consecuencia, las $n$ posiciones quedan agrupadas en exactamente $d = \gcd(r,n)$ de estos conjuntos, cada uno de tamaño $n/d$.
+
+Como cada posición pertenece a exactamente uno de estos conjuntos (si dos se intersectan, son el mismo conjunto, ya que se puede ir de una posición a otra sumando o restando múltiplos de $r$), y cada uno tiene tamaño $n/d$, el total de $n$ posiciones se reparte en $n / (n/d) = d$ conjuntos.
+
+Con este lema, notemos que la rotación por $r$ fija una coloración $c$ si y solo si $c(i) = c(i+r)$ para toda $i$, y aplicando esto repetidamente, $c(i) = c(i+mr)$ para todo entero $m \geq 0$: es decir, $c$ debe ser constante en cada uno de los conjuntos $\{i, i+r, i+2r, \dots\} \pmod n$ descritos arriba. Por el lema, hay exactamente $\gcd(r,n)$ de estos conjuntos, así que las $n$ cuentas quedan agrupadas en exactamente $\gcd(r,n)$ clases, cada una debiendo tener un único color. Como cada clase puede tomar cualquiera de los $k$ colores independientemente, el número de coloraciones fijas por la rotación $r$ es
+\[
+|X^g| = k^{\gcd(r,n)}.
+\]
 Entonces por el lema de Burnside tenemos que:
 \[
 |X/G| = \frac{1}{n} \sum_{r=0}^{n-1} k^{\gcd(r,n)}.
@@ -659,8 +671,13 @@ Print the number of sequences modulo $10^9+7$.
 \vspace{0.5em}
 \textbf{Constraints}\\
 $1 \leq n \leq 10^6$
+\end{minipage}
+}
+\end{center}
 
-\vspace{0.5em}
+\begin{center}
+\fbox{
+\begin{minipage}{0.95\linewidth}
 \textbf{Example}\\
 \textbf{Input}\\
 \texttt{6}
@@ -670,7 +687,6 @@ $1 \leq n \leq 10^6$
 \end{minipage}
 }
 \end{center}
-
   Nótese que una sucesión de $n=2m$ paréntesis es válida si tiene $m$ paréntesis de apertura, $m$ de cierre y para cualquier posición la cantidad de paréntesis de apertura hasta esa posición, es decir en el prefijo, es mayor o igual a la de cierre.
   \\\\Si no tuvieramos ninguna restricción sobre los prefijos entonces la cantidad total de secuencias sería simplemente la forma de colocar $m$ aperturas en $n$ posiciones, es decir: $\binom{n}{m}$. Entonces nos interesa encontrar cuál es la cantidad de secuencias inválidas para restarlas de las secuencias totales y encontrar cuántas secuencias válidas hay. Tomemos una secuencia de paréntesis inválida cualquiera, notemos que entonces esta tiene un prefijo donde los cierres son mayores a las aperturas. En ese prefijo, cambiemos todos los paréntesis de apertura por los de cierre y los de cierre por los de apertura. Notemos que entonces la secuencia nueva tiene $m+1$ aperturas y $m-1$ cierres. Esto nos da una biyección entre las secuencias inválidas de $m$ aperturas y $m$ cierres y todas las secuencias posibles con $m+1$ aperturas y $m-1$ cierres que son $\binom{n}{m+1}$ de donde tenemos que:
   \[
