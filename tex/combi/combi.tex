@@ -1,4 +1,4 @@
-Desde inicios de la civilización el contar ha sido de utilidad, y aunque para cosas simples como contar el cambio de una compra basta con contar moneda por moneda, cuando queremos contar cosas más grandes como el número de placas posibles en la ciudad de México o la cantidad de diferentes manos de póker que puedes tener, contar una por una no es un método eficiente ni confiable, pues, lo más probable es que cometamos un error. Es aquí donde entra la necesidad de otras técnicas que estudiaremos a continuación.
+Desde inicios de la civilización el contar ha sido de utilidad, y aunque para cosas simples como contar el cambio de una compra basta con contar moneda por moneda, cuando queremos contar cosas más grandes como el número de placas posibles en la ciudad de México o la cantidad de diferentes manos de póker que puedes tener, contar una por una no es un método eficiente ni confiable, pues, lo más probable es que cometamos un error. Es aquí donde entra la necesidad de otras técnicas que estudiaremos a continuación. Algunos resultados de este capítulo se presentan sin demostración, pues el objetivo es su uso en programación competitiva; el lector interesado puede consultarlos en las referencias indicadas en cada sección.
 \section{Bases}
 
 Casi cualquier conteo complicado se arma combinando dos reglas muy simples: multiplicar cuando las decisiones son independientes y sumar cuando los casos son ajenos. En esta sección las presentamos con ejemplos cotidianos y luego las usamos para deducir las fórmulas de permutaciones y combinaciones.
@@ -18,7 +18,7 @@ Ahora, ¿qué sucede si no nos gusta el chicle?, ¿de cuántas formas podemos co
  
 \subsection*{Principio del palomar}
 
- En la heladería además hay una promoción para motivar la convivencia. Si llegan dos personas juntas con el mismo cumpleaños, se les regalará a ambas personas un helado. ¿Cuántas personas mínimas se necesitan para asegurar que alguien tendrá un helado gratis? Podríamos pensar que se necesitan muchisimas, pero en realidad solo necesitamos 367, esto porque en el peor caso cada una de las primeras 366 personas va a cumplir un día diferente (incluyendo 29 de febrero) y cuando llegue la persona número 367 como todos los cumpleaños ya tienen una persona que cumple ese día, forzosamente compartirá cumpleaños con alguien. Con la misma lógica, en una escuela de 5000 estudiantes no basta con saber que ``algún'' par comparte cumpleaños: el principio del palomar también nos dice cuántas personas pueden caer, como mínimo, en el \emph{mismo} día. Hay $366$ ``casillas'' posibles (los días del año, contando 29 de febrero); si repartimos $5000$ estudiantes lo más parejo posible entre esas casillas, a cada día le tocan al menos $\lfloor 5000/366\rfloor = 13$ personas, pero sobran $5000 - 366\cdot 13 = 242$ estudiantes que obligan a que al menos $242$ días tengan una persona extra. En consecuencia, \textbf{algún} cumpleaños concentra al menos $14$ personas ($\lceil 5000/366\rceil = 14$): en el peor reparto posible habrá un día con catorce estudiantes que cumplen ese mismo día (y por tanto comparten cumpleaños entre sí). A esta idea se le llama \textbf{principio del palomar} o \textbf{principio de casillas}.
+ En la heladería además hay una promoción para motivar la convivencia. Si llegan juntas dos personas con el mismo cumpleaños, se les regalará a ambas personas un helado. ¿Cuántas personas mínimas se necesitan para asegurar que alguien tendrá un helado gratis? Podríamos pensar que se necesitan muchisimas, pero en realidad solo necesitamos 367, esto porque en el peor caso cada una de las primeras 366 personas va a cumplir un día diferente (incluyendo 29 de febrero) y cuando llegue la persona número 367 como todos los cumpleaños ya tienen una persona que cumple ese día, forzosamente compartirá cumpleaños con alguien. Con la misma lógica, en una escuela de 5000 estudiantes no basta con saber que \emph{algún} par comparte cumpleaños: el principio del palomar también nos dice cuántas personas pueden caer, como mínimo, en el \emph{mismo} día. Hay $366$ ``casillas'' posibles (los días del año, contando 29 de febrero); si repartimos $5000$ estudiantes lo más parejo posible entre esas casillas, a cada día le tocan al menos $\lfloor 5000/366\rfloor = 13$ personas, pero sobran $5000 - 366\cdot 13 = 242$ estudiantes que obligan a que al menos $242$ días tengan una persona extra. En consecuencia, \textbf{algún} cumpleaños concentra al menos $14$ personas ($\lceil 5000/366\rceil = 14$): en el peor reparto posible habrá un día con catorce estudiantes que cumplen ese mismo día (y por tanto comparten cumpleaños entre sí). A esta idea se le llama \textbf{principio del palomar} (o de las casillas).
 
 \section{Ordenaciones}
 
@@ -93,7 +93,7 @@ Algunas propiedades útiles para recordar son (se recomienda al lector intentar 
     \item Factorización: $\binom{n}{r} = \frac{n}{r}\binom{n-1}{r-1}$,
     \item Identidad de Pascal: $\binom{n-1}{r-1} + \binom{n-1}{r} = \binom{n}{r}$,
     \item Suma sobre $k$: $\sum_{k=0}^{n}\binom{n}{k}=2^n$,
-    \item Suma sobre $m$: $\sum_{m=k}^{n}\binom{m}{k}=\binom{n+1}{k+1}$,
+    \item Suma sobre $m$: $\sum_{m=k}^{n}\binom{m}{k}=\binom{n+1}{k+1}$ para $0\le k\le n$,
     \item Suma alternada: $\sum_{r=0}^{n} (-1)^r\binom{n}{r} = 0$,
     \item Suma de cuadrados: $\binom{n}{0}^2+\binom{n}{1}^2+\cdots+\binom{n}{n}^2=\binom{2n}{n}$.
 \end{itemize}
@@ -172,11 +172,11 @@ long long binomialPrecomputed(int n, int k) {
 En ocasiones cuando tenemos conjuntos querremos saber cuántos elementos tiene su unión. Podríamos pensar que si los conjuntos son $A$ y $B$,  basta con hacer la suma $|A| +|B|$, donde $|A|$ es la cardinalidad o número de elementos de un conjunto $A$, sin embargo, es probable que los conjuntos no sean disjuntos, es decir, que haya elementos que pertenezcan tanto a $A$ como $B$, en ese caso, les estaríamos contando doble.
 
 \textit{Ejemplo.} Si $A=\{1,2,3,4\}$ y $B=\{3,4,5,6\}$, entonces $|A|+|B|=8$, pero $A\cup B=\{1,2,3,4,5,6\}$ solo tiene $6$ elementos: el $3$ y el $4$ aparecieron una vez al contar $A$ y otra al contar $B$. Es por esto que en realidad $|A \cup B|=|A| + |B| - |A \cap B|$, es decir, restamos una vez los que se están contando doble (aquí $|A\cap B|=|\{3,4\}|=2$ y $6=8-2$).
-\\\\Similarmente si tuviésemos tres conjuntos $A,B,C$, notemos que al sumar $|A|+|B|+|C|$ estamos contando los elementos que están en dos de los conjuntos doble como en el caso de dos conjuntos. Más aún, los elementos que están en los tres conjuntos, están siendo contados tres veces. Al restar las intersecciones de las parejas de conjuntos, esos mismos elementos (los que están en los tres a la vez) se están restando tres veces adicionales. Para contar correctamente los elementos de la unión, habrá que sumar de vuelta los elementos en la intersección de los tres conjuntos, es decir:
+\\\\Similarmente, si tuviésemos tres conjuntos $A,B,C$, al sumar $|A|+|B|+|C|$ los elementos que están exactamente en dos de los conjuntos se cuentan dos veces, como en el caso de dos conjuntos, así que restamos $|A\cap B|+|A\cap C|+|B\cap C|$. Sin embargo, los elementos en la intersección de los tres conjuntos se cuentan tres veces en la primera suma y se restan tres veces al quitar las intersecciones de las parejas de conjuntos, así que en ese momento no se están contando. Para contar todos los elementos de la unión hay que sumar también los elementos de la intersección de los tres conjuntos, es decir:
 \[
 |A \cup B \cup C|=|A|+|B|+|C|-|A \cap B|-|A \cap C|-|B \cap C|+|A \cap B \cap C|.
 \]
-Usando esta misma lógica para $n$ conjuntos obtenemos el llamado \textbf{principio de inclusión-exclusión}~\cite{cf_incexc}. Este nos dice que si tenemos conjuntos $A_1,\cdots, A_n$ entonces tenemos que
+Usando esta misma lógica para $n$ conjuntos obtenemos el llamado \textbf{principio de inclusión-\hspace{0pt}exclusión}~\cite{cf_incexc}. Este nos dice que si tenemos conjuntos $A_1,\cdots, A_n$ entonces tenemos que
 \[
 |\bigcup_{i=1}^{n}A_i|=\sum_{i=1}^{n}|A_i|-\sum_{i<j}|A_i \cap A_j|+\cdots+(-1)^{n+1}|A_1\cap \cdots \cap A_n|.
 \]
@@ -187,11 +187,11 @@ Esta fórmula general puede parecer abstracta; la aplicamos en el ejercicio sigu
 \textit{Solución.} Nótese que si hacemos $f(X)$ el número de $x$ coprimos con $N$ en el intervalo $[1,X]$, la respuesta será $f(R)-f(L-1)$. Si bien podríamos intentar calcular la cantidad de números coprimos con $N$ en el intervalo, es más fácil calcular lo opuesto, es decir, cuántos comparten un factor primo con $N$.
 \\\\Con la criba podemos encontrar todos los factores primos $p_1,p_2,\cdots,p_r$ de $N$. Ahora, sea $D_i$ los números divisibles por $p_i$ en el intervalo $[1,X]$, entonces $|D_i|=\lfloor \frac{X}{p_i} \rfloor$ por inclusión exclusión tenemos que:
 \[
-|D_1 \cup D_2 \cup \cdots \cup D_r|=\sum_{i}\lfloor \frac{X}{p_i} \rfloor - \sum_{i < j}\lfloor \frac{X}{p_i p_j} \rfloor + \sum_{i < j < k}\lfloor \frac{X}{p_i p_j p_k} \rfloor - \cdots,
+|D_1 \cup D_2 \cup \cdots \cup D_r|=\sum_{i}\lfloor \frac{X}{p_i} \rfloor - \sum_{i < j}\lfloor \frac{X}{p_i p_j} \rfloor + \sum_{i < j < k}\lfloor \frac{X}{p_i p_j p_k} \rfloor - \cdots + (-1)^{r+1}\left\lfloor \frac{X}{p_1 p_2 \cdots p_r} \right\rfloor,
 \]
 y así tenemos que:
 \[
-f(X)=X-|D_1 \cup \cdots \cup D_r|.
+f(X)=X-|D_1 \cup \cdots \cup D_r|,
 \]
 de forma que ya solo tenemos que implementarlo. Para esto, iteraremos sobre los $2^r$ subconjuntos de factores primos de $N$. Para este tipo de problemas es importante analizar la complejidad. Nótese que $2 \times 3 \times 5 \times 7 \times 11 \times 13 \times 17 \times 19 > 10^6$, de forma que si $N \leq 10^9$, este tendrá a lo más $9$ factores primos distintos, por lo que iterar sobre los $2^9=512$ subconjuntos sí es algo que se puede hacer rapidamente. En el código, el número de bits encendidos de la máscara indica cuántos primos hay en el subconjunto (y por tanto el signo en inclusión-exclusión).
 \begin{lstlisting}[language=C++]
@@ -222,18 +222,19 @@ long long countCoprimeUpTo(long long limit, const vector<long long>& primes) {
 \end{lstlisting}
 Complete el programa principal usando \texttt{countCoprimeUpTo} para responder en el intervalo $[L,R]$.
 \section{Barras y estrellas}
- Supongamos que tenemos $r$ niños y $n$ juguetes, ¿de cuántas formas podemos distribuir los juguetes entre los niños?. En este problema no hay restricciones, un niño puede tener 0 o todos los juguetes. Para resolver este problema usaremos ''palitos'' que separen los juguetes idénticos en secciones. Por ejemplo, supongamos que tenemos 3 niños y 5 juguetes, entonces un acomodo donde el primer niño reciba dos juguetes, el segundo dos y tercero uno se puede representar de la siguiente forma
+ Supongamos que tenemos $r$ niños y $n$ juguetes idénticos, ¿de cuántas formas podemos distribuir los juguetes entre los niños? En este problema no hay restricciones, un niño puede tener 0 o todos los juguetes. Para resolver este problema usaremos ''palitos'' que separen los juguetes en secciones. Por ejemplo, supongamos que tenemos 3 niños y 5 juguetes, entonces un acomodo donde el primer niño reciba dos juguetes, el segundo dos y tercero uno se puede representar de la siguiente forma
  \[\includegraphics[scale=0.7]{imgs/image.png}\]
- De la misma forma si quisiéramos $r$ regiones, ocuparíamos $r-1$ palitos. Al colocar los $r-1$ palitos con  los $n$ juguetes tenemos en total $n+r-1$ objetos que hay que acomodar en una fila. Si todos los objetos fueran distinguibles tendríamos un total de $(n+r-1)!$ formas de acomodarlos; sin embargo, notemos que no hay forma de distinguir un palito de los demás, así como un juguete de los otros juguetes, por lo tanto, usando permutaciones con repetición debemos quitar las  permutaciones generadas al permutar los juguetes entre sí $n!$ y los palitos entre sí $(r-1)!$. Así, la cantidad de formas de distribuir los juguetes es~\cite{cf_stars}:
+ De la misma forma si quisiéramos $r$ regiones, ocuparíamos $r-1$ palitos. Al colocar los $r-1$ palitos con  los $n$ juguetes tenemos en total $n+r-1$ objetos que hay que acomodar en una fila. Si todos los objetos fueran distinguibles tendríamos un total de $(n+r-1)!$ formas de acomodarlos; sin embargo, notemos que no hay forma de distinguir un palito de los demás, así como un juguete de los otros juguetes, por lo tanto, usando permutaciones con repetición debemos quitar las  permutaciones generadas al permutar los juguetes entre sí $n!$ y los palitos entre sí $(r-1)!$. Así, la cantidad de formas de distribuir los juguetes es~\cite{cf_stars}
  \[
-\frac{(n+r-1)!}{n!(r-1)!}.
+\frac{(n+r-1)!}{n!(r-1)!}=\binom{n+r-1}{r-1}.
  \]
+ Equivalentemente, de las $n+r-1$ posiciones de la fila basta elegir las $r-1$ que ocuparán los palitos, lo cual se puede hacer de $\binom{n+r-1}{r-1}$ formas.
  Esto también nos deja un resultado interesante y es que la ecuación $x_1+x_2+\cdots+x_r=n$ donde $0\leq x_i$ tiene una cantidad de soluciones $\frac{(n+r-1)!}{n!(r-1)!}$.
 
-\section{Lema de Burnside\adv}
+\section{Lema de Burnside\adv}\label{sec:burnside}
 \advnote{Formaliza el conteo bajo simetría con acciones de grupo. Basta con la intuición de ``órbitas'' y ``puntos fijos''; no se asume un curso de álgebra abstracta. Puede omitirse en una primera lectura.}
 
-Hay una clase de problemas de conteo donde la respuesta no es simplemente contar objetos, sino contar objetos \textbf{distintos bajo simetría}. Tomemos el ejemplo clásico: ¿cuántos collares distintos se pueden hacer con $n$ cuentas de $k$ colores, si dos collares son el mismo cuando uno se obtiene del otro por rotación? Si numeramos las posiciones de cuentas de $1$ a $n$ y contamos cada asignación de colores a esas posiciones numeradas como una coloración distinta, obtendremos $k^n$ coloraciones, pero este método sobrecuenta el mismo collar $n$ veces (una por cada rotación). 
+Hay una clase de problemas de conteo donde la respuesta no es simplemente contar objetos, sino contar objetos \textbf{distintos bajo simetría}. Tomemos el ejemplo clásico: ¿cuántos collares distintos se pueden hacer con $n$ cuentas de $k$ colores, si dos collares son el mismo cuando uno se obtiene del otro por rotación?  Si contamos las $k^n$ coloraciones de las posiciones numeradas, un mismo collar aparece varias veces (una vez por cada rotación distinta de él), y cuántas veces aparece depende del collar, así que no basta con dividir entre $n$. 
 
 \textit{Ejemplo.} Con $n=3$ cuentas y $k=2$ colores (digamos rojo $R$ y verde $G$) hay $2^3=8$ coloraciones si numeramos las posiciones, pero varias son el mismo collar al rotar: \texttt{R-R-G}, \texttt{G-R-R} y \texttt{R-G-R} describen un solo collar; lo mismo \texttt{R-G-G}, \texttt{G-G-R} y \texttt{G-R-G}. En total solo hay $4$ collares distintos (\texttt{RRR} y \texttt{GGG}, además de los dos tipos mixtos mencionados anteriormente), no $8$. El lema de Burnside resuelve exactamente esta clase de problemas.
 
@@ -502,7 +503,7 @@ vector<long long> catalanNumbers(int n) {
 }
 \end{lstlisting}
 
-Esta secuencia de números se llama \textbf{números de Catalan} y se denota $C_n = T_n$. Otra forma de expresar estos números es:
+Esta secuencia de números se llama \textbf{números de Catalan} y se denota $C_n$. Otra forma de expresar estos números es:
 \[
 C_n = \frac{1}{n+1}\binom{2n}{n}.
 \]
@@ -638,9 +639,9 @@ Print one integer, the number of valid colorings with maximum possible weight, t
     \[
     \binom{\frac{n}{3}}{\frac{n}{6}}\prod_{i=1}^{\frac{n}{3}}c_i.
     \]
-    Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/1795D.cpp}.
+    Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/blob/master/tex/codes/editorial/1795D.cpp}.
 
-\subsection*{7.10.2 \href{https://cses.fi/problemset/task/2064}{Bracket Squences I (CSES 2064)}}
+\subsection*{7.10.2 \href{https://cses.fi/problemset/task/2064}{Bracket Sequences I (CSES 2064)}}
 
 \begin{center}
 \fbox{
@@ -688,13 +689,15 @@ $1 \leq n \leq 10^6$
 }
 \end{center}
   Nótese que una sucesión de $n=2m$ paréntesis es válida si tiene $m$ paréntesis de apertura, $m$ de cierre y para cualquier posición la cantidad de paréntesis de apertura hasta esa posición, es decir en el prefijo, es mayor o igual a la de cierre.
-  \\\\Si no tuvieramos ninguna restricción sobre los prefijos entonces la cantidad total de secuencias sería simplemente la forma de colocar $m$ aperturas en $n$ posiciones, es decir: $\binom{n}{m}$. Entonces nos interesa encontrar cuál es la cantidad de secuencias inválidas para restarlas de las secuencias totales y encontrar cuántas secuencias válidas hay. Tomemos una secuencia de paréntesis inválida cualquiera, notemos que entonces esta tiene un prefijo mínimo (el más corto posible) donde los cierres son mayores a las aperturas. En ese prefijo, cambiemos todos los paréntesis de apertura por los de cierre y los de cierre por los de apertura. Notemos que entonces la secuencia nueva tiene $m+1$ aperturas y $m-1$ cierres. Recíprocamente, toda secuencia con $m+1$ aperturas y $m-1$ cierres tiene algún prefijo mínimo donde el exceso de aperturas sobre los cierres alcanza por primera vez el valor de $2$. Si reflejamos ese prefijo, se obtiene una secuencia con $m$ aperturas y $m$ cierres que es inválida. Es así como tenemos una biyección entre las secuencias inválidas de $m$ aperturas y $m$ cierres y todas las secuencias posibles con $m+1$ aperturas y $m-1$ cierres que son $\binom{n}{m+1}$ de donde tenemos que:
+  \\\\Si no tuvieramos ninguna restricción sobre los prefijos entonces la cantidad total de secuencias sería simplemente la forma de colocar $m$ aperturas en $n$ posiciones, es decir: $\binom{n}{m}$. Entonces nos interesa encontrar cuál es la cantidad de secuencias inválidas para restarlas de las secuencias totales y encontrar cuántas secuencias válidas hay. Tomemos una secuencia de paréntesis inválida cualquiera con $m$ aperturas y $m$ cierres. Entonces tiene al menos un prefijo donde los cierres superan a las aperturas; como puede haber varios, tomemos el \textbf{más corto}. En ese prefijo mínimo hay exactamente un cierre más que aperturas (digamos $t$ aperturas y $t+1$ cierres), pues al agregar un carácter la diferencia cambia en uno. En ese prefijo cambiemos todos los paréntesis de apertura por los de cierre y los de cierre por los de apertura. El prefijo pasa a tener $t+1$ aperturas y $t$ cierres, así que la secuencia nueva tiene $m+1$ aperturas y $m-1$ cierres.
+
+  Esta transformación se puede deshacer. Si partimos de una secuencia cualquiera con $m+1$ aperturas y $m-1$ cierres, como hay más aperturas que cierres existe un prefijo donde las aperturas superan a los cierres; tomemos de nuevo el más corto, que tiene exactamente una apertura más que cierres. Al intercambiar aperturas y cierres en ese prefijo obtenemos una secuencia con $m$ aperturas y $m$ cierres que es inválida, porque el prefijo intercambiado tiene un cierre más que aperturas. Además, el prefijo más corto que elegimos en cada sentido es el mismo, así que las dos transformaciones son inversas una de la otra. Esto nos da una biyección entre las secuencias inválidas de $m$ aperturas y $m$ cierres y todas las secuencias posibles con $m+1$ aperturas y $m-1$ cierres, que son $\binom{n}{m+1}$, de donde tenemos que:
   \[
   \binom{2m}{m}-\binom{2m}{m+1}=\frac{1}{m+1}\binom{2m}{m}.
   \]
-  Notemos que esta fórmula es exactamente la fórmula de los números de Catalán, por lo que para calcular las secuencias válidas de $n$ paréntesis, basta con calcular el $n$-ésimo número de Catalán.
+  Notemos que esta fórmula es exactamente la fórmula de los números de Catalan, por lo que para calcular las secuencias válidas de $n$ paréntesis, basta con calcular el $m$-ésimo número de Catalan, $C_m$, con $m=n/2$.
 \\\\
-Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/cses2064.cpp}.
+Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/blob/master/tex/codes/editorial/cses2064.cpp}.
 \section{Problemas}
 
 Estos problemas quedan propuestos para practicar por cuenta propia y cubren las técnicas vistas en el capítulo. Si alguno se complica, en el capítulo de Soluciones hay una editorial que da \textit{hints} graduales antes de revelar la solución completa.

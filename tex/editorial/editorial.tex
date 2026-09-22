@@ -8,7 +8,7 @@ En este capítulo se recogen las editoriales de los problemas propuestos en el m
 Notemos que para cualquier número $x$, si su último dígito no es $9$ entonces $f(x+1)=f(x)+1$. En el caso en el que el último dígito sea $9$, tendremos que al sumarle $1$, el último dígito se convertirá en $0$, de forma que $f(x+1)< f(x)$. Solamente tenemos que contar cuántos números terminan en $9$ de $1$ a $n$. Como solo hay uno cada $10$ tenemos que la respuesta es:
 \[\lfloor \frac{n+1}{10} \rfloor.\]
 \subsection*{Código}
-Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/1553A.cpp}.
+Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/blob/master/tex/codes/editorial/1553A.cpp}.
 
 \editorialproblem{Problema 5.10.2 Two Divisors (Codeforces 1916B)}
 \subsection*{Hint1}
@@ -17,7 +17,7 @@ Si $b$ es el mayor divisor de $x$ diferente de $x$, entonces $\frac{x}{b}$ es el
 Primero veamos el caso donde $a$ no divide a $b$. Podemos sacar $m=lcm(a,b)$, este será el entero más pequeño que es divisible tanto por $a$ como por $b$. Como $b$ no es múltiplo de $a$, $m$ es más grande que ambos. Además, como $a$ y $b$ son los mayores divisores de $x$ el siguiente número que ambos dividan es $x$ mismo, por lo que $m$ es la respuesta.
 \\\\Para el caso donde $a$ divide a $b$, tenemos que $b=ap$ con $p$ el primo más pequeño que divide a $x$ de donde $x=bp=b\frac{b}{a}$.
 \subsection*{Código}
-Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/1916B.cpp}.
+Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/blob/master/tex/codes/editorial/1916B.cpp}.
 
 \editorialproblem{Problema 5.10.3 Exponentiation II (CSES 712)}
 \subsection*{Hint 1}
@@ -27,13 +27,13 @@ Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/edit
 \subsection*{Solución}
 La primera observación importante es que $a,b,c$ son a lo más $10^9$, por lo que $b^c$ puede ser enorme, de forma que calcular $a^{b^c}$ directamente usando exponenciación binaria sería muy lento.
 \\\\
-Notemos que $a\leq 10^9$, dado que $10^9+7$ es primo, $a$ y $10^9+7$ son coprimos. Lo anterior, nos permite usar el pequeño teorema de fermat~\cite{perez_numeros} que nos dice que si $\text{lcm}(a,p)=1$:
-\[a^{p-1}\equiv 1 \,\mod p.\]
+Notemos que $a\leq 10^9$, dado que $10^9+7$ es primo, $a$ y $10^9+7$ son coprimos. Lo anterior, nos permite usar el pequeño teorema de Fermat~\cite{perez_numeros}, que nos dice que si $p$ es primo y $\gcd(a,p)=1$, entonces
+\[a^{p-1}\equiv 1 \pmod p.\]
 De lo anterior tenemos que
 \[a^{b^c} \equiv a^{b^c \mod (p-1)} \mod p.\]
 Ahora, podemos calcular $b^c \, \mod (p-1)$, con exponenciación binaria, de forma que nos queda un número $x\leq 10^9+6$, y ahora podemos calcular $a^x$ de la misma forma. Debemos tener cuidado con el caso $a=0$, en este caso $a^{b^c}=0$.
 \subsection*{Código}
-Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/cses712.cpp}.
+Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/blob/master/tex/codes/editorial/cses712.cpp}.
 
 \editorialproblem{Problema 5.10.4 Short Task (Codeforces 1512G)}
 \subsection*{Hint1}
@@ -43,7 +43,7 @@ Notemos que calcular $n$ para cada querie es muy costoso en cuestión de tiempo.
 \\\\
 En lugar de calcular $d(n)$ para cada $n$ individualmente, podemos calcularlo para todos a la vez, es decir, para $k \in [1, 10^7]$ sumaremos $k$ a todos sus múltiplos porque eso es lo que contribuye a $d()$ de cada múltiplo. Este proceso es una idea parecida a la criba de Eratóstenes, y similarmente su complejidad es $O(n \log n)$.
 \subsection*{Código}
-Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/1512G.cpp}.
+Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/blob/master/tex/codes/editorial/1512G.cpp}.
 
 \editorialproblem{Problema 5.10.5 Fantastic Beasts (Latin American Regional 2018)}
 \subsection*{Hint 1}
@@ -60,7 +60,7 @@ Para cada zoológico $z_i$ revisaremos que todas las bestias pasen por él en al
 \\\\
 La idea del problema es sencilla; sin embargo se recomienda tener cuidado con la implementación para poder indicar correctamente cuando un zoológico no aparece en un ciclo.
 \subsection*{Código}
-Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/9547.cpp}.
+Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/blob/master/tex/codes/editorial/9547.cpp}.
 
 \editorialproblem{Problema 5.10.6 Sushi Lovers (Autoría $\filledstar$)}
 \subsection*{Hint 1}
@@ -80,8 +80,8 @@ Para que un rollo con chefs $c_1, \ldots, c_p$ pueda prepararse,
 necesitamos $t$ que satisfaga todas las congruencias simultáneamente.
 Esto es un sistema de congruencias que podemos resolver con el teorema chino del residuo~\cite{cf_crt}.
  \\\\
-Nótese que como todos los $d_i$ son potencias de 2, el $\text{lcm}$ del sistema es simplemente $L = \max(d_{c_1}, \ldots, d_{c_p})$, también potencia de 2. La condición para que el sistema tenga solución es ver que si $d_{c_j} = \max(d_{c_1}, \ldots, d_{c_p})$ entonces debe suceder que para todo $i \in \{1,\cdots, p\}$ :
-\[r_{c_j} \equiv r_{c_i} \mod d_{c_j}.\]
+Nótese que como todos los $d_i$ son potencias de 2, el $\text{lcm}$ del sistema es simplemente $L = \max(d_{c_1}, \ldots, d_{c_p})$, también potencia de 2. Sea $j$ tal que $d_{c_j} = L$ es el máximo. Como cada $d_{c_i}$ divide a $d_{c_j}$, una solución $t$ debe cumplir $t \equiv r_{c_j} \pmod{d_{c_j}}$ y, por lo tanto, también $t \equiv r_{c_j} \pmod{d_{c_i}}$. Así, el sistema tiene solución si y solo si para todo $i \in \{1,\dots, p\}$
+\[r_{c_j} \equiv r_{c_i} \pmod{d_{c_i}}.\]
 \\\\
 Si el sistema tiene solución entonces existe $t \in [0, L)$ tal que
 satisface todas las congruencias, por la condición anterior este es simplemente $r_{c_j}$. Si el sistema no tiene solución, el rollo no se puede preparar.
@@ -118,7 +118,7 @@ Verificar esto para cada query y cada rollo tendría una complejidad de $O(MQ) \
           
 \end{itemize}
 \subsection*{Código}
-Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/sushiLovers.cpp}.
+Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/blob/master/tex/codes/editorial/sushiLovers.cpp}.
 
 \editorialproblem{Problema 5.10.7 Pociones Locas (Autoría $\filledstar$)}
 \subsection*{Hint1}
@@ -128,11 +128,11 @@ Los libros se comportan de forma ciclica módulo $lcm(p_1, p_2, p_3, p_4)$.
 \subsection*{Solución}
 Para resolver este prpblema en tiempo, tenemos que precalcular información.  Para cada uno de los $n$ libros podemos calcular $S(x)$ en $\log(n)$ simplemente sumando cada dígito. Si guardamos un arreglo $f$ de días por cada tipo de libro, podemos sumar $1$ a la posición $f[t][S(x) \mod p[t]]$.
 \\\\
-Ahora notemos que los libros se van a comportar de forma cíclica módulo $p_t$ donde $t$ es el tipo de cada libro. Sin embargo, nos intersa encontrar un periodo en el cuál todos los libros se muevan de forma cíclica con respecto a él. Este periodo será $L=gcd(p_1, p_2, p_3, p_4)$, nótese que como los $p_i$ pueden compartir divisores esto es mucho de forma general a $p_1p_2p_3p_4$. Véase el caso para $p=(4,6,4,6)$, si hacemos el producto es $576$, pero $L=12$.
+Ahora notemos que los libros se van a comportar de forma cíclica módulo $p_t$ donde $t$ es el tipo de cada libro. Sin embargo, nos intersa encontrar un periodo en el cuál todos los libros se muevan de forma cíclica con respecto a él. Este periodo será $L=\gcd(p_1, p_2, p_3, p_4)$, nótese que como los $p_i$ pueden compartir divisores esto es mucho de forma general a $p_1p_2p_3p_4$. Véase el caso para $p=(4,6,4,6)$, si hacemos el producto es $576$, pero $L=12$.
 \\\\Podemos mantener un arreglo $m[i]$ que acumule para cada día $i$ el índice donde se ha alcanzado el máximo hasta el día $i$. Este arreglo tiene longitud $L$ pues después se comportará igual módulo $L$, es decir, no se alcanzará un máximo que no se haya alcanzado ya.
 \\\\Para cada consulta $k$ revisaremos, si $k \geq L$ entonces se alcanza el máximo de todo el ciclo, es decir $m[L-1]$ nos dará en índice de día donde se alcanza el máximo. En otro caso, simplemente revisaremos $m[k-1]$ pues ya lo tenemos calculado. Una vez obtenido el día donde se alcanza el máximo simplemente multiplicaremos cuántos hay de cada tipo ese día, es decir, lo que guardamos en nuestro arreglo $f$.
 \subsection*{Código}
-Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/pociones.cpp}.
+Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/blob/master/tex/codes/editorial/pociones.cpp}.
 
 \editorialproblem{Problema 6.5.1 Throwing Dice (CSES 1092)}
 \subsection*{Hint1}
@@ -172,7 +172,7 @@ Sólo hay $1$ forma de obtener $1$ como suma (y $0$ formas para números negativ
 \]
 La complejidad es $O(6^3 \log n) = O(\log n)$.
 \subsection*{Código}
-Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/cses1092.cpp}.
+Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/blob/master/tex/codes/editorial/cses1092.cpp}.
 
 \editorialproblem{Problema 6.5.2 Cowmpany Compensation (Codeforces 995F)}
 \subsection*{Hint1}
@@ -199,7 +199,7 @@ Notemos que la respuesta final es $g(1,d)$.
 \textbf{¿Qué grado tiene este polinomio?} Si $v$ es una hoja,
 $f(v,x)=1$ (grado 0) y $g(v,x)=x$ (grado 1). En general:
 \[
-f(v,x)=\prod_{i=1}^{k}g(s_i,x).
+f(v,x)=\prod_{i=1}^{k}g(s_i,x)
 \]
 los grados de los $g(s_i,x)$ se suman, entonces:
 \[
@@ -212,7 +212,7 @@ Por lo tanto $\deg(g(1,x)) = n$ el número total de vértices.
 Podemos calcular $g(1,1), g(1,2), \ldots, g(1,n+1)$ en $O(n^2)$, con DP procesando los vértices de hojas a raíz. Para cada vértice $v$ y cada $x$, calculamos $f(v,x) = \prod_{i=1}^{k} g(s_i,x)$ y luego $g(v,x) = g(v,x-1) + f(v,x)$, guardando ambos valores en memoria
 para evitar repetir cálculos. Con $n+1$ puntos evaluados en $x=1,2,\ldots,n+1$ (puntos consecutivos), aplicamos interpolación de Lagrange con la simplificación para puntos consecutivos para evaluar el polinomio en $d$ en $O(n)$.
 \subsection*{Código}
-Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/995F.cpp}.
+Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/blob/master/tex/codes/editorial/995F.cpp}.
 
 \editorialproblem{Problema 6.5.3 Hail Mary (Autoría $\filledstar$)}
 \subsection*{Hint1}
@@ -239,12 +239,12 @@ Si consideramos el cambio de variable $u = m-1-j$ podemos simplificar la expresi
 \]
 Notemos entonces que si $i = k-m+1$ (es decir $k = m-1+i$):
 \[
-= \sum_u s[u] \cdot r[i+u] = \text{IDF}[i].
+= \sum_u s[u] \cdot r[i+u] = \text{IDF}[i],
 \]
 lo que se ve como una convolución tradicional para calcular con FFT. Tenemos entonces que $\text{IDF}[i] = (s^{\text{rev}} * r)[m-1+i]$. Calculamos
 todos los valores de IDF con una sola FFT en $O((n+m)\log(n+m))$. Finalmente evaluamos para cada indice $i$ si cae en  $[\,F, \infty)$ (feliz), en $[1, E]$ (enojado) o ninguna.
 \subsection*{Código}
-Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/hailMary.cpp}.
+Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/blob/master/tex/codes/editorial/hailMary.cpp}.
 
 \editorialproblem{Problema 6.5.4 Nikita and Order Statistics (Codeforces 993E)}
 \subsection*{Hint1}
@@ -278,7 +278,7 @@ cuenta todos los pares $(i,j)$ con $s_i = s_j$ sin restricción de orden incluye
 \text{ans}[0] = \frac{(f * \tilde{f})[n] - (n+1)}{2}.
 \]
 \subsection*{Código}
-Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/993E.cpp}.
+Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/blob/master/tex/codes/editorial/993E.cpp}.
 
 \editorialproblem{Problema 6.5.5 Running Competition (Codeforces 1398G)}
 \subsection*{Hint1}
@@ -295,7 +295,7 @@ con $a_j - a_i = d$. Encontrar esto para todas las diferencias $d \in \{1, \ldot
 \\\\
 Finalmente, tenemos que responder las queries, para cada etapa $l_t$, queremos el mayor divisor de $l_t' = l_t/2$ de la forma $d + y$ donde $d$ es una diferencia válida. Llamemosle $D = d + y$, entonces $D$ es un divisor válido si $D-y=d$ es una diferencia válida. Este último cambio de variable nos permite buscar directamente divisores de $l_t'$ y verificar en $O(1)$ si son válidos.\\\\A continuación, iteraremos sobre los divisores de $l_t'$ en orden decreciente, esto lo hacemos revisando los enteros de $1$ a $\sqrt{l_t'}$ y agregando los que le dividan a un arreglo, recordemos que es mejor usar la condición $i*i<l_t'$ que $i<\sqrt{l_t'}$ para no meternos con decimales. Tras esto, verificaremos en $O(1)$ si $D - y$ es diferencia válida usando el arreglo obtenido de la convolucion. Es decir, revisaremos que $D>y$ y que la posición $D-y$ no sea $0$.
 \subsection*{Código}
-Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/1398G.cpp}.
+Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/blob/master/tex/codes/editorial/1398G.cpp}.
 
 \editorialproblem{Problema 6.5.6 Rumbo al Mundial (Autoría $\filledstar$)}
 \subsection*{Hint1}
@@ -325,7 +325,7 @@ Esto nos sugiere que dado un conjunto de semáforos $S={t_1,t_2,\cdots,t_m}$, po
 \\\\
 Finalmente iteramos un contador $j$ de $1$ a $T$ y acumulamos en una suma cuántas formas tienen suma $j$, así, podemos refilledstarlo a $W$ y obtener cuántas formas tienen suma mayor a $T$.
 \subsection*{Código}
-Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/mundial.cpp}.
+Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/blob/master/tex/codes/editorial/mundial.cpp}.
  
 \editorialproblem{Problema 7.11.1 String Distribution (CSES 1715)}
 \subsection*{Hint 1}
@@ -346,7 +346,7 @@ n! \cdot \left(\prod_{i} f_i!\right)^{-1} \bmod p,
 usando el inverso modular $a^{-1} \equiv a^{p-2} \pmod{p}$ por el
 pequeño teorema de Fermat~\cite{perez_numeros}, que recordemos es válido siempre que $a \neq 0$.
 \subsection*{Código}
-Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/cses1715.cpp}.
+Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/blob/master/tex/codes/editorial/cses1715.cpp}.
  
 \editorialproblem{Problema 7.11.2 Buildings (2017-2018 ACM-ICPC GCPC)}
 \subsection*{Hint1}
@@ -357,14 +357,14 @@ Cada pared se puede colorear de $c^{n^2}$ formas.
 En este problema tenemos un polígono de $m$ lados, cada pared tiene $n\times n$ cuadros coloreados de $c$ colores. Llamemos $X$ a todas las combinaciones posibles de asignar los colores a todos los cuadros de los $m$ lados. Por el lema de Burnside~\cite{cf_burnside} tenemos que los diseños distintos serán:
 \[\frac{1}{m} \sum_{r=0}^{m-1}|X^{g_r}|,\]
 donde $|X^{g_r}|$ son la cantidad de diseños fijos bajo la rotación de $r$ posiciones.
-\\\\Notemos que similar al problema de collares, una rotación de $r$ posiciones fija una coloración si y solo si esta es periódica con periodo $gcd(r,m)$ ya que la pared $i$ debe ser igual a la pared $i+r$ y así se agrupan las paredes en $gcd(r,m)$ clases. Ahora, como cada pared puede tener $c^{n^2}$ coloraciones diferentes tenemos entonces que:
-\[|X^{g_r}|=(c^{n^2})^{gcd(m,r)},\]
+\\\\Notemos que similar al problema de collares, una rotación de $r$ posiciones fija una coloración si y solo si la pared $i$ es igual a la pared $i+r$ para toda $i$; aplicando esto repetidamente, la coloración debe ser constante en cada conjunto $\{i, i+r, i+2r, \dots\} \pmod m$, y por el lema de la sección~\ref{sec:burnside} las paredes quedan agrupadas en exactamente $\gcd(r,m)$ de estos conjuntos. (Equivalentemente, el periodo de la coloración debe \emph{dividir} a $\gcd(r,m)$, no necesariamente ser igual a él.) Ahora, como cada pared puede tener $c^{n^2}$ coloraciones diferentes tenemos entonces que:
+\[|X^{g_r}|=(c^{n^2})^{\gcd(m,r)},\]
 por lo que la respuesta es
-\[\frac{1}{m}\sum_{r=0}^{m-1}(c^{n^2})^{gcd(r,m)}.\]
-Ahora, notemos que varios valores de $r$ tendrán el mismo $gcd(r,m)$, entonces $r=d\cdot k$ con $gcd(k,m/d)=1$ y $0 < k <m/d$, la cantidad de esos $k$ es exactamente $\phi(m/d)$, por lo que podemos agrupar por $gcd$, es decir:
+\[\frac{1}{m}\sum_{r=0}^{m-1}(c^{n^2})^{\gcd(r,m)}.\]
+Ahora, notemos que varios valores de $r$ tendrán el mismo $\gcd(r,m)$: si $\gcd(r,m)=d$, entonces $r=d\cdot k$ con $0 \le k <m/d$ y $\gcd(k,m/d)=1$, y la cantidad de esos $k$ es exactamente $\phi(m/d)$. Por lo tanto podemos agrupar por el valor $d$ de $\gcd(r,m)$, es decir:
 \[\frac{1}{m}\sum_{d|m}\phi(m/d)\cdot c^{n^2 \cdot d}.\]
 \subsection*{Código}
-Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/101873B.cpp}.
+Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/blob/master/tex/codes/editorial/101873B.cpp}.
 
 \editorialproblem{Problema 7.11.3 Blue Lock Gone Wild (Autoría $\filledstar$)}
 \subsection*{Hint1}
@@ -374,9 +374,9 @@ Pensemos que los duelos ganados y perdidos de Isagi se pueden representar en el 
 \\\\
 Usemos una estrategia similar a la que usamos en el problema de los paréntesis, tomemos cualquier camino no válido y consideremos el primer punto $p$ donde toca la diagonal $y=x+1$. Reflejemos la secuencia de direcciones desde ese punto al final del camino, es decir, cada paso hacia arriba (duelo perdido) por paso hacia la derecha (duelo ganado) y viceversa. Nótese que la parte final del camino original va de $p=(k,k+1)$ para algún $k$ a $(n,n)$ usando $n-k$ pasos a la derecha y $n-k-1$ pasos hacia arriba. Después de reflejar, como se invirtieron los pasos, tendremos que llegamos a $(k+(n-k-1,k+1+(n-k)))=(n-1,n+1)$. Esto nos da una biyección entre los caminos no válidos y los caminos de $(0,0)$ a $(n-1,n+1)$, los cuales son $\binom{2n}{n-1}$. Entonces la respuesta es el total de caminos de $(0,0)$ a $(n,n)$ quitándole los inválidos, es decir:
 \[\binom{2n}{n}-\binom{2n}{n-1}=\binom{2n}{n}-\frac{n}{n+1}\binom{2n}{n}=\frac{1}{n+1}\binom{2n}{n}.\]
-Nótese que entonces tenemos que calcular el $n$-ésimo número de Catalán~\cite{cf_catalan}.
+Nótese que entonces tenemos que calcular el $n$-ésimo número de Catalan~\cite{cf_catalan}.
 \subsection*{Código}
-Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/bluelock.cpp}.
+Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/blob/master/tex/codes/editorial/bluelock.cpp}.
 
 \editorialproblem{Problema 7.11.4 El torneo de los 3 magos (here we go again) (Autoría $\filledstar$)}
 \subsection*{Solución}
@@ -435,7 +435,7 @@ dp[j+1][\pi'] \mathrel{+}= dp[j][\pi].
 \]
 
 \subsection*{Código}
-Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/magos.cpp}.
+Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/blob/master/tex/codes/editorial/magos.cpp}.
 
 \editorialproblem{Problema 7.11.5 The Wall (medium) (Helvetic Coding Contest 2016)}
 \subsection*{Hint 1}
@@ -453,7 +453,7 @@ El número de soluciones sin la restricción $\sum x_i \geq 1$ es $\binom{n+C}{C
 \]
 Notemos que $\binom{n+C}{C} = \frac{(n+C)!}{n! \cdot C!}$. Como $p = 10^6+3$ es primo y $n+C \leq 700000 < p$, $(n+C)!$, $n!$ y $C!$ no son divisibles por $p$. Entonces podemos calcular la división modular usando el pequeño Teorema de Fermat~\cite{perez_numeros}.
 \subsection*{Código}
-Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/690D2.cpp}.
+Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/blob/master/tex/codes/editorial/690D2.cpp}.
 
 \editorialproblem{Problema 8.7.1 Balloons (2013-2014 ICPC Brazil Subregional)}
 \subsection*{Hint 1}
@@ -501,13 +501,13 @@ Una optimización que podemos hacer es notar que la cadena de ''siguientes'' es 
 queries que pasan por un mismo segmento. Podemos guardar el resultado final de cada segmento la primera vez que lo calculamos, para no recorrer la misma cadena más de una vez.
 
 \subsection*{Código}
-Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/101473B.cpp}.
+Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/blob/master/tex/codes/editorial/101473B.cpp}.
  
 \editorialproblem{Problema 8.7.2 Beyblades por decena (Autoría $\filledstar$)}
 \subsection*{Hint1}
 El estadio mínimo que contiene todas las trayectorias de todos los beyblades es el casco convexo de cierta unión de polígonos. ¿Cuáles?
 \subsection*{Hint2}
-En un segmento de línea con extremos enteros hay $gcd(|x_2-x_1|,|y_2-y_1|)+1$ puntos enteros.
+En un segmento de línea con extremos enteros hay $\gcd(|x_2-x_1|,|y_2-y_1|)+1$ puntos enteros.
 \subsection*{Solución}
 Para que el interior del beyblade $i$ no choque con el estadio en ningún momento de su trayectoria, el estadio debe contener al beyblade en todas sus posiciones posibles. La trayectoria es un segmento de $p_1$ a $p_2$,
 entonces las posiciones extremas del beyblade son el polígono $b_i$
@@ -544,14 +544,14 @@ borde. Despejando:
 \[
 I = A - \frac{B}{2} + 1 = \frac{2A - B + 2}{2}.
 \]
-Notemos que el número de puntos con coordenadas enteras en un segmento de $(x_1,y_1)$ a $(x_2,y_2)$ sin contar los extremos es $gcd(|x_2-x_1|,|y_2-y_1|)-1$, esto debido a que los puntos enteros son de la forma:
+Notemos que el número de puntos con coordenadas enteras en un segmento de $(x_1,y_1)$ a $(x_2,y_2)$ sin contar los extremos es $\gcd(|x_2-x_1|,|y_2-y_1|)-1$, esto debido a que los puntos enteros son de la forma:
 \[(x_1+t\frac{x_2-x_1}{d},y_1+t\frac{y_2-y_1}{d}),\]
-en donde $d=gcd(|x_2-x_1|,|y_2-y_1|)$ y $t\in \{1,\ldots d\}$. Es decir, hay $d+1$ puntos en total contando ambos extremos, es decir $d-1$ más $2$ extremos. Podemos calcular esto para cada arista del polígono convexo del estadio para calcular $B$. $A$ lo podemos calcular con la fórmula de shoelace.
+en donde $d=\gcd(|x_2-x_1|,|y_2-y_1|)$ y $t\in \{0,1,\ldots, d\}$. Los extremos corresponden a $t=0$ y $t=d$, así que hay $d+1$ puntos en total y $d-1$ sin contar los extremos. Podemos calcular esto para cada arista del polígono convexo del estadio para calcular $B$. $A$ lo podemos calcular con la fórmula de shoelace.
 
 La complejidad es $O(nk \log(nk))$ donde $n$ es el número de beyblades y $k$ el número máximo de vértices por beyblade.
 
 \subsection*{Código}
-Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/beyblade.cpp}.
+Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/blob/master/tex/codes/editorial/beyblade.cpp}.
 
 \editorialproblem{Problema 8.7.3 Poligon.io (Autoría $\filledstar$)}
 \subsection*{Hint 1}
@@ -583,7 +583,7 @@ dentro del polígono $j$. Esto requiere dos condiciones:
 Un jugador sobrevive si no es conquistado por ningún otro. La
 respuesta es el número de jugadores no conquistados.
 \subsection*{Código}
-Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/paper.cpp}.
+Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/blob/master/tex/codes/editorial/paper.cpp}.
 
 \editorialproblem{Problema 8.7.4 Birthday Cake (2024 ICPC Gran Premio de México 2da Fecha)}
 
@@ -634,7 +634,7 @@ punto entero, si su clase tiene conteo $\geq 2$, se cuenta como válida.
 
 La complejidad es $O(5000 \cdot m)$ para ambas pasadas.
 \subsection*{Código}
-Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/105216.cpp}.
+Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/blob/master/tex/codes/editorial/105216B.cpp}.
 
 \editorialproblem{Problema 9.11.1 Finding a centroid (CSES 2079)}
 \subsection*{Hint1}
@@ -644,7 +644,7 @@ Un vértice $c$ es centroide si cada subárbol tiene a lo más $\frac{n}{2}$ vé
 
 El subárbol hacia arriba de $u$ tiene $n-sz[u] < \frac{n}{2}$, donde $sz[u]$ es el tamaño de subárbol de $u$ que dijimos era mayor a $\frac{n}{2}$, por lo que si elegimos a $u$ como candidato para centroide, ya no tenemos que preocuparnos por todos los vértices que no estaban en su subárbol, pues ya cumplen la condición, simplemente volveremos a evaluar considerando solo los vértices en el subárbol de $u$ y de encontrar algún subárbol con más de $\frac{n}{2}$ vértices, volvemos a realizar el mismo procedimiento hasta encontrar el centroide.
 \subsection*{Código}
-Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/cses2079.cpp}.
+Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/blob/master/tex/codes/editorial/cses2079.cpp}.
 
 \editorialproblem{Problema 9.11.2 Zuko vs Aang (Autoría $\filledstar$)}
 \subsection*{Hint 1}
@@ -753,7 +753,7 @@ Para cada par $(u,v)$ estamos agregando a la respuesta la probabilidad de llegar
 \\\\
 Nótese que cada que pasemos a un nuevo subárbol, debemos reconstruir las sumas de prefijos porque agregamos nuevos elementos a \texttt{prev} que deben incluirse en las búsquedas siguientes.
 \subsection*{Código}
-Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/avatar.cpp}.
+Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/blob/master/tex/codes/editorial/avatar.cpp}.
 
 \editorialproblem{Problema 9.11.3 Pursuit For Artifacts (Codeforces 652E)}
 
@@ -775,7 +775,7 @@ Marcamos cada vértice del árbol de componentes con $1$ si esa componente conti
 Nota de implementación: con $n$ hasta $3\times10^5$, las DFS recursivas (para encontrar puentes) pueden causar \textit{stack overflow} en gráficas tipo cadena. Conviene implementarlas \textbf{iterativamente} con una pila explícita. La complejidad es $O(n+m)$.
 
 \subsection*{Código}
-Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/625E.cpp}.
+Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/blob/master/tex/codes/editorial/625E.cpp}.
 
 \editorialproblem{Problema 9.11.4 Brick Walls (Codeforces 1404E)}
 
@@ -798,6 +798,6 @@ vértices quitando los vértices en la cobertura mínima. En una gráfica bipart
 
 Por lo tanto la respuesta es la cantidad total de bordes menos el tamaño del matching máximo.
 \subsection*{Código}
-Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/1404E.cpp}.
+Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/blob/master/tex/codes/editorial/1404E.cpp}.
 
 

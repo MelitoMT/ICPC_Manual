@@ -1,5 +1,5 @@
-En la programación competitiva es muy común que ideas de soluciones se basen en propiedades algebraicas que veremos en esta sección.
-\\\\ Supongamos que queremos sumar los $n$ primeros números naturales. Claramente si $N$ es un número pequeño como $4$, rápidamente sumaríamos los números del $1$ al $4$ y diríamos que la respuesta es $10$. Sin embargo, el sumar número por número no resulta práctico cuando $n$ es un número muy grande como podría ser un millón. ¿Habrá alguna forma de saber rápidamente la respuesta para cualquier $n$? La respuesta es sí. Llamemos $S$ a la suma de todos los números de $1$ a $n$, supongamos que ponemos en una fila todos los números a sumar, es decir
+En la programación competitiva es muy común que ideas de soluciones se basen en propiedades algebraicas que veremos en este capítulo. Algunos resultados se presentan sin demostración, pues el objetivo es su uso en programación competitiva; el lector interesado puede consultarlos en~\cite{perez_algebra} y en las referencias indicadas en cada sección.
+\\\\ Supongamos que queremos sumar los $n$ primeros números naturales. Claramente si $n$ es un número pequeño como $4$, rápidamente sumaríamos los números del $1$ al $4$ y diríamos que la respuesta es $10$. Sin embargo, el sumar número por número no resulta práctico cuando $n$ es un número muy grande como podría ser un millón. ¿Habrá alguna forma de saber rápidamente la respuesta para cualquier $n$? La respuesta es sí. Llamemos $S$ a la suma de todos los números de $1$ a $n$, supongamos que ponemos en una fila todos los números a sumar, es decir
 \[
 1 + 2 + 3 + 4 + 5 + \cdots + n.
 \]
@@ -78,22 +78,22 @@ La sucesión ${0,1,1,2,3,5,8,\dots}$ es muy famosa y es conocida como la sucesi�
 \[
 F_n=F_{n-1}+F_{n-2}.
 \]
-Más generalmente una recurrencia lineal se ve de la siguiente forma
+Más generalmente, una \textbf{recurrencia lineal de orden $n$} con coeficientes constantes $C_1,\dots,C_n$ es una sucesión $R_1, R_2, \dots$ en la que se conocen los primeros $n$ términos $R_1,\dots,R_n$ y los siguientes se obtienen como
 \[
-R_k=\sum_{i=1}^{n}C_iR_{i}.
+R_k=\sum_{i=1}^{n}C_iR_{k-i}=C_1R_{k-1}+C_2R_{k-2}+\cdots+C_nR_{k-n}, \qquad k>n.
 \]
-Esto significa que $R_k$ es una combinación lineal de orden $n$. Por ejemplo, la recurrencia de Fibonacci es de orden $2$ y la constante en cada uno de los términos es $1$.
+Es decir, cada término es una combinación lineal de los $n$ términos anteriores. Por ejemplo, la recurrencia de Fibonacci es de orden $2$ y la constante en cada uno de los términos es $1$.
 \\\\Ahora nos surge una pregunta natural, dada una recurrencia lineal de orden $n$, ¿cómo encontramos el término $k$-ésimo?
 \\\\Existen varias formas de solucionar este problema, y cada uno nos arroja una complejidad diferente. No es que exista una mejor o peor forma de calcular la respuesta, porque todo dependerá de qué tan grandes son $k$ y $n$. 
 \subsection{Solución DP}
-Si programáramos Fibonacci directamente con la recurrencia $F_n=F_{n-1}+F_{n-2}$ de forma recursiva, notaríamos algo ineficiente: para calcular $f(5)$ necesitamos $f(4)$ y $f(3)$, pero para calcular $f(4)$ volvemos a necesitar $f(3)$ es decir, estamos calculando $f(3)$ dos veces. Si seguimos bajando en la recursión, este problema se repite una y otra vez, y el número de cálculos redundantes crece exponencialmente.
+Si programáramos Fibonacci directamente con la recurrencia $F_n=F_{n-1}+F_{n-2}$ de forma recursiva, notaríamos algo ineficiente: para calcular $F_5$ necesitamos $F_4$ y $F_3$, pero para calcular $F_4$ volvemos a necesitar $F_3$, es decir, estamos calculando $F_3$ dos veces. Si seguimos bajando en la recursión, este problema se repite una y otra vez, y el número de cálculos redundantes crece exponencialmente.
 
 La \textbf{programación dinámica} (o \textbf{DP}, por sus siglas en inglés) 
 es la técnica de \textit{recordar} (memorizar) los resultados de subproblemas 
 que ya resolvimos, para no tener que calcularlos de nuevo. En el caso de 
-Fibonacci, basta con guardar cada $f(i)$ en un arreglo conforme lo vamos 
+Fibonacci, basta con guardar cada $F_i$ en un arreglo conforme lo vamos 
 calculando; así, cuando lo necesitemos de nuevo, simplemente lo consultamos 
-en tiempo $O(1)$ en lugar de recalcularlo. En el diagrama de abajo, si no se usará DP tendríamos que calcular 15 valores diferentes de Fibonacci; en cambio, gracias a la DP podemos reutilizar valores ya calculados y solamente calcular 6 diferentes con 3 accesos al arreglo de DP ($F_1,F_2,F_3$).
+en tiempo $O(1)$ en lugar de recalcularlo. En el diagrama de abajo, si no se usara DP tendríamos que calcular 15 valores diferentes de Fibonacci; en cambio, gracias a la DP podemos reutilizar valores ya calculados y solamente calcular 6 diferentes con 3 accesos al arreglo de DP ($F_1,F_2,F_3$).
 \begin{center}
 \begin{tikzpicture}[
     level distance=1.6cm,
@@ -146,7 +146,7 @@ Para que esta técnica funcione, el problema debe tener dos características:
 
 \begin{itemize}
     \item \textbf{Subproblemas traslapados:} el mismo subproblema aparece 
-    muchas veces al resolver el problema original (como $f(3)$ en el 
+    muchas veces al resolver el problema original (como $F_3$ en el 
     ejemplo anterior).
     \item \textbf{Subestructura óptima:} la solución del problema completo 
     se puede construir a partir de las soluciones de sus subproblemas.
@@ -158,16 +158,18 @@ recalcular todo desde cero cada vez.
 
 En el caso de una recurrencia lineal general la forma de implementarlo con DP es bastante simple. Es como hacer fuerza bruta, pero memorizando lo que ya calculamos:
 \begin{lstlisting}[language=C++]
-//Nos saltamos los primeros n terminos que son fijos
-for(int i = n; i <= k; i ++){
+// dp[1], ..., dp[n] ya contienen los terminos iniciales R_1, ..., R_n,
+// y c[1], ..., c[n] los coeficientes C_1, ..., C_n.
+for (int i = n + 1; i <= k; i++) {
     dp[i] = 0;
-    //para cada uno de los terminos anteriores j sumamos el termino multiplicado por su constante
-    for(int j = 1; j <= n; j++){
-        dp[i] += c[j] * dp[i-j];
+
+    // R_i = C_1 R_{i-1} + C_2 R_{i-2} + ... + C_n R_{i-n}
+    for (int j = 1; j <= n; j++) {
+        dp[i] += c[j] * dp[i - j];
     }
 }
 \end{lstlisting}
-Este procedimiento tiene una complejidad $O(nk)$, es recomendable por simplicidad usarse en casos donde $nk<1e7$ para evitar TLE (Time Limit Exceeded).
+Este procedimiento tiene una complejidad $O(nk)$, es recomendable por simplicidad usarse en casos donde $nk<10^7$ para evitar TLE (Time Limit Exceeded).
 \subsection{Solución con Matrices}
 De la solución con programación dinámica notemos que para cada paso solo nos importa tener la información de los $n$ últimos términos, y todos los demás podemos olvidarlos. Si guardamos los $n$ últimos elementos en una matriz columna, podemos aplicarle una transformación lineal para obtener los siguientes elementos. Si originalmente teníamos los elementos $\{R_1,R_2,\cdots,R_n\}$, después de la transformación lineal tendremos los elementos $\{R_{2},R_{3},\cdots,R_{n+1}\}$. La transformación lineal es relativamente sencilla y consiste en multiplicar por una matriz cuadrada como sigue
 
@@ -198,7 +200,7 @@ R_2\\
 Podríamos entonces pensar que, ya que cada multiplicación cambia los índices en uno, tendríamos que hacer $k-n$ multiplicaciones para obtener el término $k$, podríamos hacerlo, pero hacer esto
 nos implicaría una complejidad $O(n^3(k-n))$ (el algoritmo más sencillo para multiplicar dos
 matrices de $n\times n$ es el trivial por definición, que consiste en calcular cada una de las
-$n^2$ entradas del producto como una suma de $n$ productos, dando una complejidad $O(n^3)$). En realidad podemos multiplicar la matriz cuadrada por si misma $k-n$ veces usando exponenciación rápida\footnote{Ver sección de exponenciación rápida}, de esta forma obtenemos el $k$ ésimo término en tiempo $O(n^3log(k-n))$.
+$n^2$ entradas del producto como una suma de $n$ productos, dando una complejidad $O(n^3)$). En realidad podemos multiplicar la matriz cuadrada por si misma $k-n$ veces usando exponenciación rápida\footnote{Ver sección de exponenciación rápida}, de esta forma obtenemos el $k$-ésimo término en tiempo $O(n^3\log(k-n))$.
 
 %https://codeforces.com/gym/103443/problem/E
 \section{Polinomios e interpolación de Lagrange}
@@ -212,48 +214,53 @@ p(x) = a_0 + x(a_1 + x(a_2 + \cdots + x(a_{n-1} + x \cdot (0 + a_n))\cdots)).
 \]
 Es decir, se empezará a calcular desde el coeficiente de mayor grado y se va acumulando de adentro hacia afuera:
 \begin{lstlisting}[language=C++]
-ll horner(vector<ll> a, ll x) {
-    ll res = 0;
-    for (int i = a.size()-1; i >= 0; i--)
-        res = res * x + a[i];
-    return res;
+// Evalua p(x) = coefficients[0] + coefficients[1] x + ... + coefficients[n] x^n.
+long long horner(const vector<long long>& coefficients, long long x) {
+    long long result = 0;
+
+    // Recorremos desde el coeficiente de mayor grado hasta el de menor grado.
+    for (int i = (int)coefficients.size() - 1; i >= 0; i--) {
+        result = result * x + coefficients[i];
+    }
+
+    return result;
 }
 \end{lstlisting}
 Frecuentemente este algoritmo se hace módulo algún número (por ejemplo cuando los coeficientes o
-$x$ pueden ser muy grandes). Basta con agregar la operación \texttt{\% mod} en la línea 4.
+$x$ pueden ser muy grandes). Basta con reducir módulo ese número el resultado de la línea 7.
 
-Ahora que sabemos cómo evaluar un polinomio, el resto de esta sección queremos resolver el problema de: dados $n$ puntos cualesquiera (con $x$ distintas), encontrar un polinomio que pasa por todos ellos. A esto se le llama interpolación de Lagrange. 
-\\\\Es importante mencionar que dados  $n+1$ puntos distintos $(x_0, y_0), (x_1, y_1), \ldots, (x_n, y_n)$, existe un \textbf{único} polinomio de grado a lo más $n$ que pasa por todos ellos.
-\\\\El razonamiento detrás de por qué esto es cierto es sencillo. Supongamos que no se cumple, es decir, que hay dos polinomios diferentes $p$ y $q$ de grado menor o igual a $n$ que pasan por todos los puntos dados. Entonces tendremos que $p-q$ es un polinomio de grado $\leq n$ que tiene $n+1$ raíces (los $x_i$), pero sabemos que un polinomio no nulo de grado $\leq n$ tiene a lo más $n$ raíces\footnote{https://www.matem.unam.mx/~max/AS2/N6.pdf}, de donde tenemos que debe ser nulo, es decir $p-q=0$, por lo que $p=q$.
-\\\\
-Esto nos dice que $n+1$ puntos determinan completamente un polinomio de grado $n$. La pregunta es: ¿cómo construirlo? La idea de Lagrange es construir el polinomio interpolante como una suma de piezas, donde cada pieza se encarga de un solo punto.
- 
-Para cada $i$, definimos el \textbf{polinomio base de Lagrange} $\ell_i(x)$ como el único polinomio de grado $n$ que vale $1$ en $x_i$ y $0$ en todos los demás $x_j$~\cite{cf_lagrange}:
+Ahora que sabemos cómo evaluar un polinomio, en el resto de esta sección queremos resolver el siguiente problema: dados $n+1$ puntos $(x_0, y_0), (x_1, y_1), \ldots, (x_n, y_n)$ con las $x_i$ distintas, encontrar un polinomio que pase por todos ellos. A esto se le llama \textbf{interpolación de Lagrange}.
+
+Es importante mencionar que, dados esos $n+1$ puntos, existe un \textbf{único} polinomio de grado a lo más $n$ que pasa por todos ellos. El razonamiento detrás de por qué esto es cierto es sencillo. Supongamos que no se cumple, es decir, que hay dos polinomios diferentes $p$ y $q$ de grado menor o igual a $n$ que pasan por todos los puntos dados. Entonces $p-q$ es un polinomio de grado $\leq n$ que tiene $n+1$ raíces (los $x_i$), pero sabemos que un polinomio no nulo de grado $\leq n$ tiene a lo más $n$ raíces\footnote{\url{https://www.matem.unam.mx/~max/AS2/N6.pdf}}, de donde $p-q$ debe ser el polinomio nulo, es decir, $p=q$.
+
+Esto nos dice que $n+1$ puntos determinan completamente un polinomio de grado a lo más $n$. La pregunta es: ¿cómo construirlo? La idea de Lagrange es construir el polinomio interpolante como una suma de piezas, donde cada pieza se encarga de un solo punto. Para cada $i$, definimos el \textbf{polinomio base de Lagrange} $\ell_i(x)$ como el único polinomio de grado $n$ que vale $1$ en $x_i$ y $0$ en todos los demás $x_j$~\cite{cf_lagrange}:
 \[
 \ell_i(x) = \prod_{j \neq i} \frac{x - x_j}{x_i - x_j}.
 \]
 
-Verifiquemos que cumple lo que queremos. Si evaluamos en $x = x_i$: cada factor del numerador es $x_i - x_j$ y cada factor del denominador es $x_i - x_j$, así que cada fracción vale $1$ y el producto es $1$. Ahora veamos qué pasa si evaluamos en $x=x_k$, con $k\neq i$. Como el producto recorre todos los $j\neq i$, en particular incluye el índice $j=k$. Separamos ese
-término del resto:
-
+Verifiquemos que cumple lo que queremos. Si evaluamos en $x = x_i$, cada factor del numerador es $x_i - x_j$ y cada factor del denominador es $x_i - x_j$, así que cada fracción vale $1$ y el producto es $1$. Ahora veamos qué pasa si evaluamos en $x=x_k$, con $k\neq i$. Como el producto recorre todos los $j\neq i$, en particular incluye el índice $j=k$. Separamos ese término del resto:
 \[
 \ell_i(x_k)=\prod_{j\neq i} \frac{x_k-x_j}{x_i-x_j}
 = \underbrace{\frac{x_k-x_k}{x_i-x_k}}_{j=k} \cdot
 \prod_{\substack{j\neq i \\ j\neq k}} \frac{x_k-x_j}{x_i-x_j}.
 \]
-
 El primer factor (correspondiente a $j=k$) es $\dfrac{x_k-x_k}{x_i-x_k}=\dfrac{0}{x_i-x_k}=0$.
 Como es un producto, basta que un factor sea cero para que todo el producto sea cero,
 sin importar el valor de los demás factores. Por lo tanto $\ell_i(x_k)=0$ para todo $k\neq i$.
 
-Con estas piezas, el polinomio interpolante es simplemente:
-\[
-p(x) = \sum_{i=0}^{n} y_i \cdot \ell_i(x).
-\]
+Con estas piezas, el polinomio interpolante es simplemente
+\begin{equation}\label{eq:lagrange}
+p(x) = \sum_{i=0}^{n} y_i \cdot \ell_i(x) = \sum_{i=0}^{n} y_i \prod_{j \neq i} \frac{x - x_j}{x_i - x_j}.
+\end{equation}
+En efecto, $p(x_k)=y_k\,\ell_k(x_k)=y_k$, pues todos los demás sumandos se anulan. Evaluar directamente \eqref{eq:lagrange} en un punto cuesta $O(n^2)$ operaciones: son $n+1$ sumandos y cada uno es un producto de $n$ factores.
+
 Veamos un ejemplo concreto con los puntos $(0,1)$, $(1,2)$ y $(2,5)$. Aquí $n=2$, así que buscamos un polinomio de grado a lo más $2$. Los polinomios base son
 \[
-\ell_0(x)=\frac{(x-1)(x-2)}{(0-1)(0-2)}=\frac{(x-1)(x-2)}{2},\quad
-\ell_1(x)=\frac{x(x-2)}{(1-0)(1-2)}=-x(x-2)
+\ell_0(x)=\frac{(x-1)(x-2)}{(0-1)(0-2)}=\frac{(x-1)(x-2)}{2},\qquad
+\ell_1(x)=\frac{x(x-2)}{(1-0)(1-2)}=-x(x-2),
+\]
+\[
+\ell_2(x)=\frac{x(x-1)}{(2-0)(2-1)}=\frac{x(x-1)}{2}.
 \]
 \[
 \ell_2(x)=\frac{x(x-1)}{(2-0)(2-1)}=\frac{x(x-1)}{2},
@@ -263,133 +270,167 @@ el polinomio interpolante queda entonces
 p(x)=1\cdot\ell_0(x)+2\cdot\ell_1(x)+5\cdot\ell_2(x)
 =\frac{(x-1)(x-2)}{2}-2x(x-2)+\frac{5x(x-1)}{2}=x^2+1.
 \]
-Podemos comprobar que: $p(0)=1$, $p(1)=2$ y $p(2)=5$, como queríamos.
-\\\\En ocasiones podemos optimizar considerablemente este tiempo para casos en los que se nos pide calcular $f(x)$ dados $f(1),f(2),\cdots,f(n)$, ya que en este caso $x_i=i$, de forma que podemos sustituir para obtener
-\[
-p(x) = \sum_{i=0}^{n} f(i) \cdot \prod_{j \neq i} \frac{x - j}{i - j}.
-\]
-Podríamos preguntarnos por qué esto es una optimización. Nótemos que
-\[
-\prod_{j \neq i} (x-j)=(x-1)(x-2)\cdots(x-(i-1))(x-(i+1))\cdots(x-n),
-\]
-entonces al menos para el numerador podemos precalcular los prefijos, es decir guardamos en un vector $x-1$, $(x-1)(x-2)$, $(x-1)(x-2)(x-3)$, $\cdots$, $(x-1)(x-2)\cdots(x-n)$ y los sufijos $(x-n)$, $(x-n)(x-(n-1))$ y así hasta $(x-n)(x-(n-1))\cdots(x-1)$, de forma que cuando queramos hacer la multiplicación de arriba podamos hacerlo en tiempo $O(1)$ multiplicando el prefijo $(x-1)\cdots(x-(i-1))$ con el prefijo $(x-n)\cdots(x-(i+1))$.
-\\\\Nótese que en el caso de no tener módulo podemos simplemente precalcular $(x-1)(x-2)\cdots (x-n)$ y dividir entre $(x-i)$ cuando necesitemos calcularlo para un $i$.
-\\\\Para el denominador también podemos hacer algo similar, pues
-\[
-\prod_{j \neq i} (i-j)=(i-1)(i-2)\cdots(i-(i-1))(i-(i+1))\cdots(i-n),
-\]
-notemos que dividiendo en dos como arriba ambas partes de la multiplicación se pueden expresar como factoriales, es decir
-\[
-(i-1)!(-1)^{n-i}(n-i)!.
-\]
-Para esto entonces nos interesará poder precalcular los factoriales
-$0!, 1!, \dots, n!$ en un arreglo, de forma que el denominador para cada $i$,
-es decir $(i-1)!(-1)^{n-i}(n-i)!$, se pueda obtener en $O(1)$ simplemente 
-indexando el arreglo. Y así para cada $i$ también lo podemos calcular en $O(1)$.
+Podemos comprobar que $p(0)=1$, $p(1)=2$ y $p(2)=5$, como queríamos.
 
-Como tenemos tanto numerador como denominador para cada $i$, calcular $f(x)$ 
-nos cuesta $O(n)$, lo que es considerablemente mejor que el tiempo cuadrático 
-de arriba.
+\subsection*{Puntos consecutivos}
 
-\textit{Nota:} si se está trabajando módulo un primo $p$, la división no está 
-definida directamente, así que en ese caso conviene precalcular en su lugar 
-los \textbf{inversos modulares} de los factoriales (en vez de los factoriales 
-mismos), de forma que en lugar de dividir se multiplique por el inverso 
-correspondiente.
-
-Como tenemos que calcular tanto numerador como denominador para cada $i$, calcular $f(x)$ nos cuesta $O(n)$.
-\\\\\textbf{Ejercicio.} Para practicar lo visto, resolvamos el siguiente problema: dados $n$ y $k$ tales que $0 \leq k \leq 10^6$ y $1 \leq n \leq 10^9$, calcular
+En ocasiones podemos optimizar considerablemente este tiempo. Un caso muy frecuente es cuando conocemos los valores de una función polinomial $f$ en los enteros consecutivos $0,1,\dots,n$ y queremos calcular $f(x)$ en otro punto. En ese caso $x_i=i$, y \eqref{eq:lagrange} se convierte en
 \[
-f(n)=\sum_{i=1}^{n} i^k.
+f(x) = \sum_{i=0}^{n} f(i) \cdot \prod_{j \neq i} \frac{x - j}{i - j}.
+\]
+Podríamos preguntarnos por qué esto es una optimización. Notemos que el numerador es
+\[
+\prod_{j \neq i} (x-j)=\underbrace{x(x-1)\cdots(x-(i-1))}_{\text{prefijo}}\cdot\underbrace{(x-(i+1))\cdots(x-n)}_{\text{sufijo}}.
+\]
+Si precalculamos en un arreglo los \textbf{prefijos} $x,\ x(x-1),\ \dots,\ x(x-1)\cdots(x-n)$ y en otro los \textbf{sufijos} $(x-n),\ (x-n)(x-(n-1)),\ \dots,\ (x-n)\cdots x$, entonces el numerador para cada $i$ se obtiene en $O(1)$ multiplicando el prefijo que termina en $x-(i-1)$ por el sufijo que empieza en $x-(i+1)$. (Si no trabajamos módulo un número, también podríamos precalcular el producto completo $x(x-1)\cdots(x-n)$ y dividirlo entre $x-i$, siempre que $x$ no sea uno de los nodos.)
+
+Para el denominador, separamos los factores con $j<i$ de los factores con $j>i$:
+\[
+\prod_{j \neq i} (i-j)=\underbrace{i\,(i-1)\cdots 1}_{j<i}\cdot\underbrace{(-1)(-2)\cdots(-(n-i))}_{j>i}=i!\,(-1)^{n-i}\,(n-i)!.
+\]
+Así que basta precalcular los factoriales $0!, 1!, \dots, n!$ para obtener cada denominador en $O(1)$.
+
+Con numerador y denominador en $O(1)$ para cada $i$, evaluar $f(x)$ cuesta $O(n)$, en lugar del $O(n^2)$ de evaluar \eqref{eq:lagrange} directamente.
+
+\textit{Nota:} en la mayoría de los problemas el resultado se pide módulo un primo $p$. En aritmética modular no se puede dividir directamente: dividir entre un entero $a\not\equiv 0 \pmod p$ significa multiplicar por su inverso modular $a^{-1}$ (ver la sección de inverso modular del capítulo~\ref{chap:numeros}). Calcular un inverso cuesta $O(\log p)$, así que en lugar de calcular uno por cada denominador precalculamos los \textbf{inversos de los factoriales} $(0!)^{-1},\dots,(n!)^{-1}$ en $O(n)$: se calcula $(n!)^{-1}$ con una sola exponenciación y los demás con $(i!)^{-1} = ((i+1)!)^{-1}\cdot(i+1)$.
+
+\textbf{Ejercicio.} Para practicar lo visto, resolvamos el siguiente problema: dados $n$ y $k$ tales que $0 \leq k \leq 10^6$ y $1 \leq n \leq 10^9$, calcular
+\[
+S(n)=\sum_{i=1}^{n} i^k
 \]
 e imprimir la respuesta módulo $10^9+7$. Por ejemplo, si $n=4$ y $k=2$, se pide
 \[
-f(4)=1^2+2^2+3^2+4^2=1+4+9+16=30;
+S(4)=1^2+2^2+3^2+4^2=1+4+9+16=30,
 \]
-con módulo $10^9+7$ la salida sería $30$.
-\\\\Nuestro primer instinto probablemente sea calcular el resultado sumando uno a uno los términos de esta suma. Sin embargo, aun si se pudiera calcular las potencias $i^k$ de forma constante, tendríamos que sumar $n$ términos, es decir en el peor caso $\approx 10^9$ operaciones, lo que nos daría como veredicto TLE. 
-\\\\
-En realidad, podemos ver este problema desde otro enfoque. Buscaremos un polinomio tal que $p_k(n)=\sum_{i=1}^{n} i^k$ (la misma función de $f$ del enunciado), lo primero que queremos saber es qué grado tiene el polinomio para saber cuántos puntos necesitamos, esto lo haremos por inducción, nótese que si $k=1$ por lo visto antes $p_1(n)=\frac{n(n+1)}{2}$, es decir, es un polinomio de grado $k+1=2$, supongamos entonces que $p_{k-1}(n)$ tiene grado $k$ y consideremos ahora $p_k(n)$. Recordemos la identidad telescópica
+así que la salida sería $30$.
+
+Nuestro primer instinto probablemente sea calcular el resultado sumando uno a uno los términos de esta suma. Sin embargo, aun si se pudiera calcular las potencias $i^k$ en tiempo constante, tendríamos que sumar $n$ términos, es decir, en el peor caso $\approx 10^9$ operaciones, lo que nos daría como veredicto TLE.
+
+En realidad, podemos ver este problema desde otro enfoque. Para cada $k \ge 0$ definimos $p_k(n)=\sum_{i=1}^{n} i^k$ para los enteros $n \ge 0$ (con $p_k(0)=0$). Veremos que $p_k$ coincide con un polinomio en $n$ de grado $k+1$; así, si conocemos $k+2$ de sus valores, podemos usar la interpolación de Lagrange para evaluarlo en cualquier $n$.
+
+\textbf{Proposición.} Para todo $k\ge 0$, $p_k(n)$ es un polinomio en $n$ de grado $k+1$.
+
+\textit{Demostración.} Por inducción fuerte sobre $k$. Para $k=0$, $p_0(n)=n$ tiene grado $1$. Supongamos que $p_j$ es un polinomio de grado $j+1$ para todo $j<k$. Por el binomio de Newton,
 \[
-(n+1)^{k+1} - 1 = \sum_{i=1}^{n}\left[(i+1)^{k+1}-i^{k+1}\right].
+(i+1)^{k+1}-i^{k+1}=\sum_{j=0}^{k}\binom{k+1}{j} i^j .
 \]
-Expandiendo $(i+1)^{k+1}$ por el binomio de Newton y sumando en $i$, obtenemos
+Sumando esta igualdad para $i=1,\dots,n$, del lado izquierdo los términos se cancelan de forma telescópica y queda $(n+1)^{k+1}-1$; del lado derecho, cada potencia $i^j$ sumada da $p_j(n)$. Es decir,
 \[
-(n+1)^{k+1}-1 = (k+1)\,p_k(n) + \sum_{j=0}^{k-1}\binom{k+1}{j}p_j(n).
+(n+1)^{k+1}-1=\sum_{j=0}^{k}\binom{k+1}{j}\,p_j(n).
 \]
-Por hipótesis de inducción, cada $p_j(n)$ con $j<k$ tiene grado $j+1\le k$, y $(n+1)^{k+1}$ tiene grado $k+1$. Como ningún otro término aporta grado $k+1$, concluimos que $p_k(n)$ es un polinomio de grado $k+1$.
-\\\\
-De lo anterior concluimos que necesitamos $k+2$ puntos por los que pase el polinomio $p_k$ para evaluarlo de forma eficiente (recordemos $p_k = f$). Estos podemos encontrarlos fácilmente, pues $f(0)=\sum_{i=1}^{0} i^k = 0$ (suma vacía, ya que el límite superior es menor al inferior) y de ahí $f(x) = f(x-1) + x^k$. Tras esto ocuparemos la interpolación vista arriba para calcular $f(n)$, de forma que la implementación nos quedaría
+Despejando el término $j=k$ (cuyo coeficiente es $\binom{k+1}{k}=k+1$),
+\[
+p_k(n)=\frac{1}{k+1}\left((n+1)^{k+1}-1-\sum_{j=0}^{k-1}\binom{k+1}{j}\,p_j(n)\right).
+\]
+Por la hipótesis de inducción cada $p_j$ con $j<k$ es un polinomio de grado $j+1\le k$, mientras que $(n+1)^{k+1}$ tiene grado $k+1$. Por lo tanto $p_k(n)$ es un polinomio de grado exactamente $k+1$ (con coeficiente principal $\frac{1}{k+1}$). $\square$
+
+Por ejemplo, para $k=1$ la fórmula da $p_1(n)=\frac12\left((n+1)^2-1-n\right)=\frac{n(n+1)}{2}$, que es la suma que calculamos al inicio del capítulo.
+
+Como $p_k$ tiene grado $k+1$, lo determinan $k+2$ puntos, y estos son fáciles de obtener: $p_k(0)=0$ y $p_k(i)=p_k(i-1)+i^k$ para $i=1,\dots,k+1$. Con estos valores en los nodos consecutivos $0,1,\dots,k+1$ aplicamos la interpolación optimizada de arriba (con $k+1$ en el papel de $n$) para evaluar $p_k$ en $n$. Si $n\le k+1$ basta sumar directamente. La implementación queda así:
 \begin{lstlisting}[language=C++]
-const ll mod = 1e9 + 7;
-ll lagrangeInter(int n, int k) {
-	if (k == 0) {
-        return n;
-    }
-  ll res = 0;
-	if (n <= k + 1) {
-		for (int i = 1; i <= n; i ++) {
-			res = (res + power(i, k)) % mod;
-		}
-		return res;
-	}
-	vector<ll> pre(k + 2), suf(k + 2), inv(k + 2);
-	inv[0] = 1;
-	pre[0] = n;
-	suf[k + 1] = n - (k + 1);
-    //precalcular prefijos
-	for (int i = 1; i <= k; i ++){
-        pre[i] = pre[i - 1] * (n - i) % mod;
-    }
-    //precalcular sufijos
-	for (int i = k; i >= 1; i --){
-        suf[i] = suf[i + 1] * (n - i) % mod;
-    }
-    //precalcular inversos
-	for (int i = 1; i <= k + 1; i ++){
-        inv[i] = inv[i - 1] * inv[i] % mod;
+#include <iostream>
+#include <vector>
+using namespace std;
+
+const long long MOD = 1000000007;
+
+// Exponenciacion rapida, igual que en el capitulo de Teoria de numeros.
+long long power(long long base, long long exponent, long long mod) {
+    long long result = 1;
+    base %= mod;
+
+    while (exponent > 0) {
+        if (exponent % 2 == 1) {
+            result = result * base % mod;
+        }
+        base = base * base % mod;
+        exponent /= 2;
     }
 
-	int yi = 0;
-	int num, denom;
-	for (int i = 0; i <= k + 1; i ++) {
-		yi = (yi + power(i, k)) % mod;
-
-        //calcular numerador
-		if (i == 0){
-            num = suf[1];
-        }
-		else if (i == k + 1){
-            num = pre[k];
-        }
-		else{
-            num = pre[i - 1] * suf[i + 1] % mod;
-        }
- 
-        //calcular denominador
-		denom = inv[i] * inv[k + 1 - i] % mod;
- 
-
-		if ((i + k) % 2 == 1){
-            res += (yi * num % mod) * denom % mod; 
-        }
-		else{
-            res -= (yi * num % mod) * denom % mod;
-        }
- 
-        //evitar que el resultado sea negativo
-		res = (res % mod + mod) % mod;
-	}
-	return res;
+    return result;
 }
- 
+
+// Calcula 1^k + 2^k + ... + n^k modulo MOD.
+long long sumOfPowers(long long n, int k) {
+    // p_k tiene grado k + 1, asi que usamos los k + 2 nodos 0, 1, ..., k + 1.
+    int lastNode = k + 1;
+
+    // Si n es uno de los nodos, basta con sumar directamente.
+    if (n <= lastNode) {
+        long long sum = 0;
+        for (long long i = 1; i <= n; i++) {
+            sum = (sum + power(i, k, MOD)) % MOD;
+        }
+        return sum;
+    }
+
+    long long x = n % MOD;
+
+    // prefix[i] = (x - 0)(x - 1)...(x - i)
+    vector<long long> prefix(lastNode + 1);
+    prefix[0] = x;
+    for (int i = 1; i <= lastNode; i++) {
+        prefix[i] = prefix[i - 1] * ((x - i + MOD) % MOD) % MOD;
+    }
+
+    // suffix[i] = (x - i)(x - (i + 1))...(x - lastNode), y suffix[lastNode + 1] = 1.
+    vector<long long> suffix(lastNode + 2);
+    suffix[lastNode + 1] = 1;
+    for (int i = lastNode; i >= 0; i--) {
+        suffix[i] = suffix[i + 1] * ((x - i + MOD) % MOD) % MOD;
+    }
+
+    // Factoriales y sus inversos modulares (MOD es primo).
+    vector<long long> factorial(lastNode + 1);
+    vector<long long> inverseFactorial(lastNode + 1);
+    factorial[0] = 1;
+    for (int i = 1; i <= lastNode; i++) {
+        factorial[i] = factorial[i - 1] * i % MOD;
+    }
+    inverseFactorial[lastNode] = power(factorial[lastNode], MOD - 2, MOD);
+    for (int i = lastNode; i >= 1; i--) {
+        inverseFactorial[i - 1] = inverseFactorial[i] * i % MOD;
+    }
+
+    long long answer = 0;
+    long long valueAtNode = 0;  // p_k(i) = 1^k + 2^k + ... + i^k
+
+    for (int i = 0; i <= lastNode; i++) {
+        if (i > 0) {
+            valueAtNode = (valueAtNode + power(i, k, MOD)) % MOD;
+        }
+
+        // Numerador: producto de (x - j) para todo j distinto de i.
+        long long numerator = suffix[i + 1];
+        if (i > 0) {
+            numerator = numerator * prefix[i - 1] % MOD;
+        }
+
+        // Dividimos entre i! (lastNode - i)! multiplicando por sus inversos.
+        long long term = valueAtNode * numerator % MOD;
+        term = term * inverseFactorial[i] % MOD;
+        term = term * inverseFactorial[lastNode - i] % MOD;
+
+        // El denominador tiene signo (-1)^(lastNode - i).
+        if ((lastNode - i) % 2 == 1) {
+            answer = (answer - term + MOD) % MOD;
+        } else {
+            answer = (answer + term) % MOD;
+        }
+    }
+
+    return answer;
+}
+
 int main() {
-	int n, k; cin >> n >> k;
-	cout << lagrangeInt(n, k) << endl;
+    long long n;
+    int k;
+    cin >> n >> k;
+    cout << sumOfPowers(n, k) << "\n";
 }
 \end{lstlisting}
-
-\textbf{Ejercicio} Optimizar la interpolación de Lagrange como lo hicimos cuando los puntos son $1, 2, 3, \dots, n$, para cualquier progresión aritmética.
+El precálculo y el ciclo principal son $O(k)$, más $O(k \log k)$ por las potencias $i^k$, así que el programa corre sin problema para $k\le 10^6$.
+\textbf{Ejercicio} Optimizar la interpolación de Lagrange como lo hicimos cuando los puntos son $0, 1, \dots, n$, para nodos en cualquier progresión aritmética $x_i = a + i\,d$ con $d \neq 0$.
 \\
  
 \section{Transformada rápida de Fourier (FFT) y NTT}
@@ -400,17 +441,49 @@ c_k = \sum_{i+j=k} a_i b_j.
 \]
 Esta operación se llama \textbf{convolución} y calcularla directamente cuesta $O(n^2)$, cuando $n \approx 10^5$, esto es alrededor de $10^{10}$ operaciones, tiempo que nos daría TLE al intentar solucionar un problema de esta forma en la ICPC. El objetivo de $FFT$ será poder hacer esta multiplicación en $O(n \log n)$.
 
-De la sección de arriba sabemos que si tenemos un polinomio de grado $n-1$, este lo podemos determinar evaluando $n$ puntos diferentes. Basado en esto, nos gustaría tener para ambos polinomios $A$ y $B$ sus valores en $n$ puntos estratégicos para entonces multiplicar estos valores y obtener valores del polinomio $C$. 
+De la sección anterior sabemos que un polinomio de grado a lo más $N-1$ queda determinado por sus valores en $N$ puntos distintos. Como $C=A\cdot B$ tiene grado a lo más $2n-2$, basta conocer $C$ en $N \ge 2n-1$ puntos, y en cada punto $C(x)=A(x)\,B(x)$. La estrategia es entonces: (1) evaluar $A$ y $B$ en $N$ puntos, (2) multiplicar los valores punto por punto, en $O(N)$, y (3) recuperar los coeficientes de $C$ a partir de sus valores (interpolar).
 
-La elección de los $n$ puntos es lo que hace eficiente el algoritmo. FFT elige las \textbf{raíces $n$-ésimas de la unidad} $\omega^k = e^{2\pi ik/n}$, que tienen una estructura recursiva que permite hacer la evaluación e interpolación en $O(n \log n)$ en lugar de $O(n^2)$.
- 
-Para la demostración completa del algoritmo y todos los detalles de implementación, referimos al blog de Codeforces de \texttt{leanderKortmann}, que tras leer bastantes recursos, parece ser la referencia más clara y amigable disponible para competencia.\footnote{\url{https://codeforces.com/blog/entry/111371}}
+Hacer (1) y (3) con los métodos de la sección anterior cuesta $O(N^2)$, así que no ganaríamos nada. La elección de los puntos es lo que hace eficiente el algoritmo: la FFT evalúa en las \textbf{raíces $N$-ésimas de la unidad} $1, \omega, \omega^2, \dots, \omega^{N-1}$ con $\omega = e^{2\pi i/N}$. Es decir, calcula la \textbf{transformada discreta de Fourier} (DFT) del vector de coeficientes $a=(a_0,\dots,a_{N-1})$ (completado con ceros),
+\[
+\hat a_k = \sum_{j=0}^{N-1} a_j\,\omega^{jk} = A(\omega^k), \qquad k = 0, 1, \dots, N-1.
+\]
+Cuando $N$ es potencia de $2$, al separar $A$ en sus coeficientes pares e impares, $A(x)=A_{\mathrm{par}}(x^2)+x\,A_{\mathrm{impar}}(x^2)$, y usar que $\omega^2$ es una raíz $N/2$-ésima de la unidad, el problema de tamaño $N$ se reduce a dos problemas de tamaño $N/2$ más $O(N)$ operaciones. Esto da una complejidad de $O(N\log N)$ tanto para la evaluación como para la interpolación, en lugar de $O(N^2)$.
+
+Para la demostración completa del algoritmo y todos los detalles de implementación, referimos al blog de Codeforces de \href{https://codeforces.com/blog/entry/111371}{\texttt{leanderKortmann}}, que tras leer bastantes recursos, parece ser la referencia más clara y amigable disponible para competencia.\footnote{\url{https://codeforces.com/blog/entry/111371}}
 
 $FFT$ aparece disfrazado en muchos problemas de competencia, especialmente cuando hay que contar pares con cierta suma. Reconocer que el problema se reduce a multiplicar polinomios es lo más importante en este tipo de problemas, ya que, usualmente, basta con usar la misma plantilla de $FFT$.
 
-En muchos problemas la respuesta se pide \textbf{módulo un primo} $p$ (típicamente $998244353$). La FFT opera en $\mathbb{C}$ y puede acumular errores de redondeo; en esos casos conviene la \textbf{NTT} (\emph{Number Theoretic Transform}, transformada teórica de números): la misma idea algorítmica de la FFT, pero trabajando en $\mathbb{Z}_p$ en lugar de los complejos.
+En muchos problemas la respuesta se pide \textbf{módulo un primo} $p$ (típicamente $998244353$). La FFT opera en $\mathbb{C}$ con aritmética de punto flotante y puede acumular errores de redondeo. En esos casos se usa la \textbf{NTT} (\emph{Number Theoretic Transform}, transformada teórica de números), que es la misma construcción pero con aritmética módulo $p$. Para enunciarla necesitamos primero el análogo modular de $e^{2\pi i/N}$.
 
-La \textbf{transformada teórica de números} es una variante de la FFT que evalúa e interpola polinomios en aritmética modular. Sustituye las raíces $n$-ésimas de la unidad $\omega = e^{2\pi i/n}$ por una \textbf{raíz primitiva $n$-ésima módulo $p$}: un entero $g$ tal que $g^n \equiv 1 \pmod{p}$ y $g^k \not\equiv 1 \pmod{p}$ para $0 < k < n$. Esto es posible cuando $p$ es primo de la forma $p = c \cdot 2^k + 1$ con $2^k \geq n$; el primo más usado en competencia es $p = 998244353 = 119 \cdot 2^{23} + 1$. Al operar solo con enteros módulo $p$, la NTT calcula convoluciones en $O(n \log n)$ con resultados exactos. Las raíces primitivas módulo $p$ son el mismo concepto que aparece en teoría de números (Cap.~6).
+\begin{definition}[Raíz primitiva $N$-ésima de la unidad módulo $p$]
+Sean $p$ primo y $N \ge 1$. Un entero $\omega$ es una \textbf{raíz primitiva $N$-ésima de la unidad módulo $p$} si $\omega^N \equiv 1 \pmod p$ y $\omega^j \not\equiv 1 \pmod p$ para $0 < j < N$.
+\end{definition}
+
+\begin{definition}[NTT]
+Sean $p$ primo, $N\ge1$ y $\omega$ una raíz primitiva $N$-ésima de la unidad módulo $p$. La \textbf{transformada teórica de números} de un vector $a=(a_0,\dots,a_{N-1})$ con entradas en $\mathbb{Z}_p$ es el vector $\hat a=(\hat a_0,\dots,\hat a_{N-1})$ dado por~\cite{wiki_dft_ring}
+\[
+\hat a_k = \sum_{j=0}^{N-1} a_j\,\omega^{jk} \bmod p, \qquad k=0,1,\dots,N-1.
+\]
+\end{definition}
+
+Es la misma fórmula que la DFT, cambiando $e^{2\pi i/N}$ por $\omega$ y los números complejos por enteros módulo $p$. Si $a$ son los coeficientes de $A(x)=\sum_{j}a_jx^j$, entonces $\hat a_k \equiv A(\omega^k) \pmod p$: la NTT evalúa $A$ en los $N$ puntos $1,\omega,\dots,\omega^{N-1}$, que son distintos módulo $p$ porque $\omega$ es primitiva. Las siguientes propiedades se presentan sin demostración; pueden consultarse en~\cite{wiki_dft_ring,cpalgos_fft}.
+
+\begin{enumerate}
+  \item \textbf{Inversa.} Si $N<p$, entonces $N$ tiene inverso módulo $p$ y
+  \[
+  a_j \equiv N^{-1}\sum_{k=0}^{N-1} \hat a_k\,\omega^{-jk} \pmod p, \qquad j=0,1,\dots,N-1.
+  \]
+  Es decir, la inversa es otra NTT, con $\omega^{-1}$ en lugar de $\omega$, multiplicada por $N^{-1}$.
+  \item \textbf{Convolución.} Si $A$ y $B$ tienen grado menor que $n$, $N\ge 2n-1$ y $C=A\cdot B$, entonces $\hat c_k \equiv \hat a_k\,\hat b_k \pmod p$ para todo $k$. Así, para multiplicar polinomios basta con transformar ambos, multiplicar entrada por entrada y aplicar la inversa.
+  \item \textbf{Existencia de $\omega$.} Existe una raíz primitiva $N$-ésima de la unidad módulo $p$ si y solo si $N \mid p-1$. Para usar la división en pares e impares, $N$ debe ser potencia de $2$, así que se eligen primos de la forma $p=c\cdot 2^s+1$, que permiten cualquier $N=2^t$ con $t \le s$. Por ejemplo, $998244353 = 119\cdot 2^{23}+1$ permite $N$ hasta $2^{23}\approx 8\cdot10^6$, y en este caso basta tomar $\omega = 3^{(p-1)/N} \bmod p$.
+  \item \textbf{Complejidad.} Con la misma división en pares e impares que la FFT, la NTT y su inversa se calculan en $O(N\log N)$ operaciones módulo $p$, y el resultado es exacto (no hay redondeo).
+\end{enumerate}
+
+\textit{Ejemplo.} Tomemos $p=17$ y $N=4$. Como $4^1=4$, $4^2=16$, $4^3=64\equiv 13$ y $4^4=256\equiv 1 \pmod{17}$, $\omega=4$ es una raíz primitiva cuarta de la unidad módulo $17$ (y en efecto $4 \mid 17-1$). Multipliquemos $A(x)=1+2x$ por $B(x)=3+x$, con vectores $a=(1,2,0,0)$ y $b=(3,1,0,0)$:
+\[
+\hat a = (A(1),A(4),A(16),A(13)) \equiv (3,9,16,10), \qquad \hat b = (B(1),B(4),B(16),B(13)) \equiv (4,7,2,16).
+\]
+Multiplicando entrada por entrada, $\hat c \equiv (12,63,32,160) \equiv (12,12,15,7)$. Para la inversa usamos $\omega^{-1}\equiv 13$ y $N^{-1}\equiv 13$ (pues $4\cdot 13 = 52 \equiv 1 \pmod{17}$) y obtenemos $c \equiv (3,7,2,0)$, es decir, $C(x)=3+7x+2x^2$, que efectivamente es $(1+2x)(3+x)$.
  
 \subsection*{FFT vs NTT: cuándo usar cada una}
  
@@ -435,113 +508,168 @@ Se recomienda usar $FFT$ cuando los coeficientes pueden superar el módulo de $N
 Las implementaciones de FFT y NTT que se usan en los problemas de este capítulo se dejan aquí para referencia:
 \\\\FFT
 \begin{lstlisting}[language=C++]
-
+#include <cmath>
 #include <complex>
-using ld = long double;
-using cd = complex<ld>;
-const ld PI = acosl(-1.0L);
- 
-void fft(vector<cd>& a, bool inv) {
+#include <vector>
+using namespace std;
+
+const long double PI = acosl(-1.0L);
+
+// Reemplaza a por su DFT (si invert es true, por la transformada inversa).
+// El tamano de a debe ser una potencia de 2.
+void fft(vector<complex<long double>>& a, bool invert) {
     int n = a.size();
+
+    // Reordenamos las posiciones segun sus bits invertidos; asi los coeficientes
+    // pares e impares de cada subproblema quedan juntos y no se necesita recursion.
     for (int i = 1, j = 0; i < n; i++) {
-        int bit = n >> 1;
-        for (; j & bit; bit >>= 1) j ^= bit;
+        int bit = n / 2;
+        while (j & bit) {
+            j ^= bit;
+            bit /= 2;
+        }
         j ^= bit;
-        if (i < j) swap(a[i], a[j]);
+        if (i < j) {
+            swap(a[i], a[j]);
+        }
     }
-    for (int len = 2; len <= n; len <<= 1) {
-        ld ang = 2 * PI / len * (inv ? -1 : 1);
-        cd wlen(cosl(ang), sinl(ang));
-        for (int i = 0; i < n; i += len) {
-            cd w(1);
-            for (int j = 0; j < len / 2; j++) {
-                cd u = a[i + j];
-                cd v = a[i + j + len / 2] * w;
-                a[i + j]           = u + v;
-                a[i + j + len / 2] = u - v;
-                w *= wlen;
+
+    // Combinamos bloques de tamano 2, 4, 8, ..., n.
+    for (int length = 2; length <= n; length *= 2) {
+        long double angle = 2 * PI / length * (invert ? -1 : 1);
+        complex<long double> rootStep(cosl(angle), sinl(angle));
+
+        for (int start = 0; start < n; start += length) {
+            complex<long double> root = 1;
+
+            for (int j = 0; j < length / 2; j++) {
+                complex<long double> evenPart = a[start + j];
+                complex<long double> oddPart = a[start + j + length / 2] * root;
+                a[start + j] = evenPart + oddPart;
+                a[start + j + length / 2] = evenPart - oddPart;
+                root *= rootStep;
             }
         }
     }
-    if (inv)
-        for (auto& x : a) x /= n;
+
+    if (invert) {
+        for (complex<long double>& value : a) {
+            value /= n;
+        }
+    }
 }
 \end{lstlisting}
 NTT
 \begin{lstlisting}[language=C++]
-const ll MOD = 998244353;
-const ll PRIM = 3;
- 
-void ntt(vector<ll>& a, bool inv) {
+const long long NTT_MOD = 998244353;   // 119 * 2^23 + 1
+const long long PRIMITIVE_ROOT = 3;    // raiz primitiva modulo NTT_MOD
+
+// Reemplaza a por su NTT (si invert es true, por la transformada inversa).
+// El tamano de a debe ser una potencia de 2.
+// Usa la funcion power del capitulo de Teoria de numeros.
+void ntt(vector<long long>& a, bool invert) {
     int n = a.size();
+
+    // Mismo reordenamiento por bits invertidos que en la FFT.
     for (int i = 1, j = 0; i < n; i++) {
-        int bit = n >> 1;
-        for (; j & bit; bit >>= 1) j ^= bit;
+        int bit = n / 2;
+        while (j & bit) {
+            j ^= bit;
+            bit /= 2;
+        }
         j ^= bit;
-        if (i < j) swap(a[i], a[j]);
+        if (i < j) {
+            swap(a[i], a[j]);
+        }
     }
-    for (int len = 2; len <= n; len <<= 1) {
-        ll w = inv
-            ? power(PRIM, MOD - 1 - (MOD - 1) / len, MOD)
-            : power(PRIM, (MOD - 1) / len, MOD);
-        for (int i = 0; i < n; i += len) {
-            ll wn = 1;
-            for (int j = 0; j < len / 2; j++) {
-                ll u = a[i + j];
-                ll v = a[i + j + len / 2] * wn % MOD;
-                a[i + j]           = (u + v) % MOD;
-                a[i + j + len / 2] = (u - v + MOD) % MOD;
-                wn = wn * w % MOD;
+
+    for (int length = 2; length <= n; length *= 2) {
+        // rootStep es una raiz primitiva length-esima de la unidad modulo NTT_MOD
+        // (o su inverso, para la transformada inversa).
+        long long rootStep = power(PRIMITIVE_ROOT, (NTT_MOD - 1) / length, NTT_MOD);
+        if (invert) {
+            rootStep = power(rootStep, NTT_MOD - 2, NTT_MOD);
+        }
+
+        for (int start = 0; start < n; start += length) {
+            long long root = 1;
+
+            for (int j = 0; j < length / 2; j++) {
+                long long evenPart = a[start + j];
+                long long oddPart = a[start + j + length / 2] * root % NTT_MOD;
+                a[start + j] = (evenPart + oddPart) % NTT_MOD;
+                a[start + j + length / 2] = (evenPart - oddPart + NTT_MOD) % NTT_MOD;
+                root = root * rootStep % NTT_MOD;
             }
         }
     }
-    if (inv) {
-        ll ni = power(n, MOD - 2, MOD);
-        for (auto& x : a) x = x * ni % MOD;
+
+    // La inversa se multiplica por n^{-1}.
+    if (invert) {
+        long long inverseOfN = power(n, NTT_MOD - 2, NTT_MOD);
+        for (long long& value : a) {
+            value = value * inverseOfN % NTT_MOD;
+        }
     }
 }
 \end{lstlisting}
-En la práctica, lo que se llama desde el problema es simplemente \texttt{multiply(a, b)},
-que devuelve el vector de coeficientes del producto. Las funciones \texttt{ntt} y \texttt{fft}
-son internas.
+En la práctica, lo que se llama desde el problema es \texttt{multiplyNtt(a, b)} o \texttt{multiplyFft(a, b)},
+que devuelven el vector de coeficientes del producto; las funciones \texttt{ntt} y \texttt{fft}
+solo se usan dentro de ellas. La NTT usa la función \texttt{power} de exponenciación rápida de la sección~\ref{sec:expbin}.
  
 \begin{lstlisting}[language=C++]
-vector<ll> multiply_ntt(vector<ll> a, vector<ll> b) {
-    int result_size = a.size() + b.size() - 1;
+// Menor potencia de 2 mayor o igual a size.
+int nextPowerOfTwo(int size) {
     int n = 1;
-    while (n < result_size){
-        n <<= 1;
+    while (n < size) {
+        n *= 2;
     }
-    a.resize(n); b.resize(n);
-    ntt(a, false); ntt(b, false);
-    for (int i = 0; i < n; i++){
-        a[i] = a[i] * b[i] % MOD;
+    return n;
+}
+
+// Coeficientes de A(x) B(x) modulo NTT_MOD.
+vector<long long> multiplyNtt(vector<long long> a, vector<long long> b) {
+    int resultSize = a.size() + b.size() - 1;
+    int n = nextPowerOfTwo(resultSize);
+    a.resize(n);
+    b.resize(n);
+
+    ntt(a, false);
+    ntt(b, false);
+    for (int i = 0; i < n; i++) {
+        a[i] = a[i] * b[i] % NTT_MOD;
     }
     ntt(a, true);
-    a.resize(result_size);
+
+    a.resize(resultSize);
     return a;
 }
-vector<ll> multiply_fft(vector<ll> a, vector<ll> b) {
-    int result_size = a.size() + b.size() - 1;
-    int n = 1;
-    while (n < result_size) n <<= 1;
-    vector<cd> fa(n), fb(n);
-    for (int i = 0; i < (int)a.size(); i++){
+
+// Coeficientes exactos de A(x) B(x), siempre que no superen ~10^14.
+vector<long long> multiplyFft(const vector<long long>& a, const vector<long long>& b) {
+    int resultSize = a.size() + b.size() - 1;
+    int n = nextPowerOfTwo(resultSize);
+    vector<complex<long double>> fa(n), fb(n);
+    for (int i = 0; i < (int)a.size(); i++) {
         fa[i] = a[i];
     }
-    for (int i = 0; i < (int)b.size(); i++){
+    for (int i = 0; i < (int)b.size(); i++) {
         fb[i] = b[i];
     }
-    fft(fa, false); fft(fb, false);
-    for (int i = 0; i < n; i++){
+
+    fft(fa, false);
+    fft(fb, false);
+    for (int i = 0; i < n; i++) {
         fa[i] *= fb[i];
     }
     fft(fa, true);
-    vector<ll> res(result_size);
-    for (int i = 0; i < result_size; i++){
-        res[i] = llroundl(fa[i].real());
-    }     
-    return res;
+
+    // Redondeamos para eliminar el error de punto flotante.
+    vector<long long> result(resultSize);
+    for (int i = 0; i < resultSize; i++) {
+        result[i] = llroundl(fa[i].real());
+    }
+    return result;
 }
 \end{lstlisting}
 \section{Ejercicios}
@@ -621,7 +749,7 @@ La potencia se calcula de la misma forma que la exponenciación rápida (secció
 Notemos que como  $n \leq 10^{18}$, todas las multiplicaciones deben hacerse módulo $10^9 + 7$ usando \texttt{long long} para evitar
 overflow.
 \\\\
-Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/1722.cpp}.
+Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/blob/master/tex/codes/editorial/1722.cpp}.
 
 \subsection*{6.4.2 \href{https://cses.fi/problemset/task/1723}{Graph Paths I (CSES 1723)}}
 
@@ -682,7 +810,7 @@ Se va a sumar $M[i][k] \cdot M[k][j]$ por vértice $k$ tal que exista la arista 
 Notemos que $M^k$ suma para cada posible penúltimo vértice $m$ en el camino de $i$ a $j$, el número de caminos de longitud $k-1$ de $i$ a $m$ multiplicado por $M[m][j]$ es decir, solo se cuentan los caminos si existe alguna arista $m$-$j$, pues de lo contrario no podría existir ese camino.
 \\\\La respuesta al problema es entonces $M^k[1][n]$, que se calcula con exponenciación de matrices. Como los valores pueden ser grandes, se calculan módulo $10^9+7$.
 \\\\
-Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/1723.cpp}.
+Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/blob/master/tex/codes/editorial/1723.cpp}.
 \section{Problemas}
 
 Estos problemas quedan propuestos para practicar por cuenta propia y cubren las técnicas vistas en el capítulo. Si alguno se complica, en el capítulo de Soluciones hay una editorial que da \textit{hints} graduales antes de revelar la solución completa.

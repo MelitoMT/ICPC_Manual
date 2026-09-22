@@ -1,4 +1,4 @@
-Una gráfica $G = (V, E)$ consiste en un conjunto de \textbf{vértices} $V$ y un conjunto de \textbf{aristas} $E \subseteq \binom{V}{2}$. Partimos de las nociones elementales de vecindad, grado, caminos, ciclos y conectividad, sin repetirlas aquí. Esta sección se enfoca en resultados matemáticos que fundamentan el resto del capítulo y que raramente se ven en cursos de computación.
+Una gráfica $G = (V, E)$ consiste en un conjunto de \textbf{vértices} $V$ y un conjunto de \textbf{aristas} $E \subseteq \binom{V}{2}$. Recordemos brevemente las nociones elementales que usaremos. Dos vértices $u$ y $v$ son \textbf{vecinos} (o adyacentes) si $\{u,v\}\in E$, y el \textbf{grado} $\deg(v)$ de un vértice es su número de vecinos. Un \textbf{camino} de $u$ a $v$ es una sucesión de vértices $u=v_0, v_1, \dots, v_k=v$ tal que $\{v_{i-1},v_i\}\in E$ para cada $i$; su \textbf{longitud} es $k$, el número de aristas que recorre. Un camino es \textbf{simple} si no repite vértices. Un \textbf{ciclo} es un camino de longitud al menos $3$ que empieza y termina en el mismo vértice y no repite ningún otro vértice. Una gráfica es \textbf{conexa} si entre cualquier par de vértices existe un camino. En una gráfica \textbf{dirigida} las aristas son pares ordenados $(u,v)$ y los caminos deben respetar su dirección. Esta sección se enfoca en resultados matemáticos que fundamentan el resto del capítulo y que raramente se ven en cursos de computación.
 \\\\
 Existen dos representaciones estándar de una gráfica, con complejidades muy distintas:
 \begin{itemize}
@@ -48,11 +48,51 @@ Nos preguntamos ahora si es posible recorrer una gráfica pasando por cada arist
 
 \subsection*{Los puentes de Königsberg}
 En 1736, Leonhard Euler resolvió el siguiente problema planteado por los habitantes de la ciudad de Königsberg. La ciudad tenía 7 puentes que conectaban 4 zonas de tierra. ¿Es posible dar un paseo cruzando cada puente exactamente una vez y regresar al punto de partida?
+Para modelarlo, Euler representó cada zona de tierra con un punto y cada puente con una línea entre las dos zonas que conecta. En la figura, a la izquierda aparece un esquema de la ciudad, con el río, las zonas de tierra $A$, $B$, $C$, $D$ y los puentes numerados del 1 al 7, y a la derecha la gráfica que se obtiene: un vértice por zona y una arista por puente.
 \begin{figure}[H]
 \centering
+\begin{minipage}{0.49\linewidth}
+\centering
+\begin{tikzpicture}[scale=0.58]
+  \begin{scope}
+    \clip (0,-2.4) rectangle (8.4,2.4);
+    % tierra
+    \fill[green!15] (0,-2.4) rectangle (8.4,2.4);
+    % rio
+    \fill[blue!25] (-1,-0.7) -- (-1,0.7) -- (5.2,0.7) -- (9.2,3.7) -- (9.8,3.0)
+      -- (5.8,0) -- (9.8,-3.0) -- (9.2,-3.7) -- (5.2,-0.7) -- cycle;
+    % puentes
+    \begin{scope}[line width=2.2pt, brown!70!black]
+      \draw (2.2,0.2) -- (2.2,0.9);   \draw (3.8,0.2) -- (3.8,0.9);
+      \draw (2.2,-0.2) -- (2.2,-0.9); \draw (3.8,-0.2) -- (3.8,-0.9);
+      \draw (4.3,0) -- (6.0,0);
+      \draw (6.75,0.45) -- (5.85,1.5);
+      \draw (6.75,-0.45) -- (5.85,-1.5);
+    \end{scope}
+    % isla
+    \fill[green!15] (3,0) ellipse (1.6 and 0.4);
+    \draw[green!40!black] (3,0) ellipse (1.6 and 0.4);
+  \end{scope}
+  \draw (0,-2.4) rectangle (8.4,2.4);
+  % etiquetas
+  \node at (3,0) {$A$};
+  \node at (1.2,1.7) {$B$};
+  \node at (1.2,-1.7) {$C$};
+  \node at (7.7,0) {$D$};
+  \begin{scope}[font=\scriptsize]
+    \node[above] at (2.2,0.9) {1};  \node[above] at (3.8,0.9) {2};
+    \node[below] at (2.2,-0.9) {3}; \node[below] at (3.8,-0.9) {4};
+    \node[above] at (5.15,0) {5};
+    \node[above right] at (6.3,1.0) {6};
+    \node[below right] at (6.3,-1.0) {7};
+  \end{scope}
+\end{tikzpicture}
+\end{minipage}\hfill
+\begin{minipage}{0.49\linewidth}
+\centering
 \begin{tikzpicture}[
-  every node/.style={circle,draw,minimum size=0.8cm,font=\small},
-  scale=1.2
+  every node/.style={circle,draw,minimum size=0.7cm,font=\small},
+  scale=0.75
 ]
   \node (A) at (0, 0)    {$A$};
   \node (B) at (3, 1.2)  {$B$};
@@ -67,6 +107,7 @@ En 1736, Leonhard Euler resolvió el siguiente problema planteado por los habita
   \draw (B) to[bend left=15]  node[draw=none,above,font=\scriptsize]{6}(D);
   \draw (C) to[bend right=15] node[draw=none,below,font=\scriptsize]{7}(D);
 \end{tikzpicture}
+\end{minipage}
 \end{figure}
  
 Euler demostró que tal paseo es \textbf{imposible} y al hacerlo fundó
@@ -134,8 +175,8 @@ de forma no obvia. El patrón general es construir una gráfica donde lo
 que se quiere recorrer son las \textbf{aristas}, no los vértices. Imaginemos que nos dan un conjunto de palabras y nos preguntan, ¿es posible ordenarlas en una sucesión tal que la última letra de cada palabra sea la primera de la siguiente? Podemos modelar cada letra como un vértice, cada palabra como una arista dirigida de su primera letra a su última. La
 sucesión existe si y solo si la gráfica tiene un camino euleriano.
 \section{Componentes fuertemente conexas}
-En una gráfica \textbf{no dirigido}, la conectividad es simple, hay un
-camino entre dos vértices o no. Pero en una gráfica \textbf{dirigido} la
+En una gráfica \textbf{no dirigida}, la conectividad es simple, hay un
+camino entre dos vértices o no. Pero en una gráfica \textbf{dirigida} la
 situación es más complicada, pues puede haber un camino de $u$ a $v$ sin que
 haya uno de $v$ a $u$.
  
@@ -370,7 +411,7 @@ Para resolver el problema entonces basta con construir la gráfica, correr Kosar
 \textbf{Ejercicio.} Implementar la solución del problema \href{https://codeforces.com/problemset/problem/776/D}{The door problem}.
  
 \section{Puentes y puntos de articulación}
-Para esta sección, pensemos el siguiente problema llamado \href{https://onlinejudge.org/external/3/315.pdfL}{Network}. En este problema, nos dicen que hay $n$ centrales de telefonía conectadas por cables bidireccionales de forma que desde cualquier central se puede llegar a otra no necesariamente de forma directa. En ocasiones, puede haber un apagón en alguna central por lo que deja de operar. Esto puede causar que otras centrales queden incomunicadas entre sí, en tal caso se dice son centrales críticas. Nos piden encontrar cuántas centrales son críticas.
+Para esta sección, pensemos el siguiente problema llamado \href{https://onlinejudge.org/external/3/315.pdf}{Network}. En este problema, nos dicen que hay $n$ centrales de telefonía conectadas por cables bidireccionales de forma que desde cualquier central se puede llegar a otra no necesariamente de forma directa. En ocasiones, puede haber un apagón en alguna central por lo que deja de operar. Esto puede causar que otras centrales queden incomunicadas entre sí, en tal caso se dice son centrales críticas. Nos piden encontrar cuántas centrales son críticas.
 \\\\
 Nótese el siguiente ejemplo, si la central $4$ falla, las centrales
   $\{5,6\}$ quedan incomunicadas de $\{1,2,3\}$.
@@ -398,7 +439,7 @@ Nótese el siguiente ejemplo, si la central $4$ falla, las centrales
 \end{figure}
   
 \begin{definition}[Puente y punto de articulación]
-En una gráfica conexo $G$:
+En una gráfica conexa $G$:
 \begin{itemize}
     \item Una arista es un \textbf{puente} si al eliminarla la gráfica
           se desconecta.
@@ -523,14 +564,14 @@ void dfs(int u, int parent) {
     }
 }
 \end{lstlisting}
-\textbf{Ejercicio.} Implementar la solución completa de \href{https://onlinejudge.org/external/3/315.pdfL}{Network} usando
+\textbf{Ejercicio.} Implementar la solución completa de \href{https://onlinejudge.org/external/3/315.pdf}{Network} usando
 este algoritmo.
  
 \section{Árboles}
  
 Un \textbf{árbol} es una gráfica conexa (es decir, todos sus vértices están conectados por un camino) y acíclico (sin ciclos). Esta definición es solo una de varias caracterizaciones equivalentes, todas igualmente válidas como definición y útiles en distintos contextos.
  
-Para un gráfica $G$ con $n$ vértices, las siguientes afirmaciones son equivalentes:
+Para una gráfica $G$ con $n$ vértices, las siguientes afirmaciones son equivalentes:
 \begin{enumerate}
     \item $G$ es conexa y acíclica;
     \item $G$ es conexa y tiene exactamente $n-1$ aristas;
@@ -842,7 +883,7 @@ Notemos que para calcular la distancia entre dos vértices $u$ y $v$, el camino 
 \centering
 \begin{tikzpicture}[
   every node/.style={circle, draw, minimum size=0.7cm, font=\small},
-  scale=1.15
+  scale=0.95
 ]
  
 \node (r) at (4.0, 5.0) {$r$};
@@ -943,7 +984,7 @@ que satisface:
           arista, no se puede superar el ancho de banda del cable;
     \item \textbf{Conservación}: para todo $v \neq s, t$:
           \[
-          \sum_{u} f(u,v) = \sum_{w} f(v,w).
+          \sum_{u} f(u,v) = \sum_{w} f(v,w),
           \]
           lo que llega a un servidor intermedio también sale de él.
 \end{itemize}
@@ -1665,7 +1706,7 @@ En una gráfica bipartita con lados $L$ y $R$, existe un emparejamiento que
 empareja todos los vértices de $L$ si y solo si para todo
 $S \subseteq L$:
 \[
-|N(S)| \geq |S|.
+|N(S)| \geq |S|,
 \]
 donde $N(S)$ es el conjunto de vecinos de $S$ en $R$.
  
@@ -1791,7 +1832,7 @@ P - \text{maxFlow} \geq k
  
 La complejidad es $O(\log n)$ para las iteraciones de búsqueda binaria, cada una con un max flow en una red de $O(n)$ vértices y $O(n^2)$ aristas.
 \\\\
-Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/808F.cpp}.
+Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/blob/master/tex/codes/editorial/808F.cpp}.
 
 \subsection*{9.10.2 \href{https://www.spoj.com/problems/QTREE2/}{Query on a tree II (SPOJ)}}
 
@@ -1883,7 +1924,7 @@ de \textbf{aristas} de $a$ a $L$).
 \end{itemize}
  Para ambos casos es eficiente recuperar el ancestro con binary lifting (la técnica de descomponer los niveles que queremos subir en potencias de dos).
 
- Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/qtree2.cpp}.
+ Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/blob/master/tex/codes/editorial/qtree2.cpp}.
 
 \section{Problemas}
 
