@@ -31,7 +31,7 @@ En toda gráfica $G = (V, E)$:
 
 $Demostración$. Cada arista $\{u, v\}$ contribuye exactamente $1$ al grado de $u$ y $1$ al grado de $v$, es decir, contribuye $2$ a la suma total de grados. Sumando sobre todas las aristas: $\sum_v \deg(v) = 2|E|$. 
 
-En toda gráfica, el número de vértices de grado impar es par.
+Como corolario, tenemos que, en toda gráfica, el número de vértices de grado impar es par.
 \\\\
 $Demostración$.
 Sea $I$ el conjunto de vértices de grado impar y $P$ el de grado par. Entonces:
@@ -297,7 +297,7 @@ Para resolver este problema, usaremos componentes fuertemente conexas, en este m
 Supongamos que tenemos $n$ variables booleanas, cada una puede ser verdadera ($V$) o falsa ($F$). Las \textbf{restricciones} exigen que ciertas condiciones se cumplan; cada una involucra dos literales (una variable o su negación) unidos por ``o''. Por ejemplo, con $n = 3$:
 \begin{itemize}
     \item $(x_1 \lor x_2)$: al menos uno de $x_1$, $x_2$ debe ser verdadero.
-    \item $(\neg x_1 \lor x_3)$: si $x_1$ es falso, entonces $x_3$ debe ser verdadero.
+    \item $(\neg x_1 \lor x_3)$: si $x_1$ es verdadero, entonces $x_3$ debe ser verdadero.
     \item $(\neg x_2 \lor \neg x_3)$: $x_2$ y $x_3$ no pueden ser verdaderos a la vez.
 \end{itemize}
 La asignación $x_1 = V,\; x_2 = F,\; x_3 = V$ satisface las tres. En general, la pregunta es: ¿existe una asignación de verdadero/falso a \emph{todas} las variables que cumpla \emph{todas} las restricciones?
@@ -528,13 +528,13 @@ este algoritmo.
  
 \section{Árboles}
  
-Un \textbf{árbol} es una gráfica conexa, es decir, todos sus vértices están conectados por un camino, sin ciclos. Esta definición es solo una de varias caracterizaciones equivalentes, todas igualmente válidas como definición y útiles en distintos contextos.
+Un \textbf{árbol} es una gráfica conexa (es decir, todos sus vértices están conectados por un camino) y acíclico (sin ciclos). Esta definición es solo una de varias caracterizaciones equivalentes, todas igualmente válidas como definición y útiles en distintos contextos.
  
 Para un gráfica $G$ con $n$ vértices, las siguientes afirmaciones son equivalentes:
 \begin{enumerate}
     \item $G$ es conexa y acíclica;
     \item $G$ es conexa y tiene exactamente $n-1$ aristas;
-    \item Entre todo par de vértices existe exactamente un camino simple.
+    \item Entre todo par de vértices existe exactamente un camino simple (no repite vértices).
 \end{enumerate}
  
 La caracterización (3), camino único entre todo par, será importante porque convierte preguntas sobre caminos en preguntas sobre estructura del árbol. Es la base del LCA y de la mayoría de técnicas sobre árboles.
@@ -1806,7 +1806,7 @@ Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/edit
 
 You are given a tree (an undirected acyclic connected graph) with $N$ nodes, and edges numbered $1, 2, 3 \dots N-1$. Each edge has an integer value assigned to it, representing its length.
 
-We will ask you to perfrom some instructions of the following form:
+We will ask you to perform some instructions of the following form:
 \begin{itemize}
     \item \texttt{DIST a b}: ask for the distance between node $a$ and node $b$, or
     \item \texttt{KTH a b k}: ask for the $k$-th node on the path from node $a$ to node $b$.

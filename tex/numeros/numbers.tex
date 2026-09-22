@@ -1,9 +1,9 @@
-En programación competitiva, dominar o al menos tener buenas nociones de los conceptos principales de teoría de números no es un lujo, sino una necesidad. A lo largo de este texto y en la práctica dentro de la ICPC, el lector encontrará problemas donde aparecen de manera natural ideas como divisibilidad, números primos, residuos, máximo común divisor y aritmética modular. En términos generales, la teoría de números estudia las propiedades de los enteros, y por ello ofrece un lenguaje muy útil para describir, simplificar y resolver muchos problemas clásicos de concurso.
+En programación competitiva, dominar o al menos tener buenas nociones de los conceptos principales de teoría de números no es un lujo, sino una necesidad. A lo largo de este texto y en la práctica dentro de la ICPC, el lector encontrará problemas donde aparecen de manera natural ideas como divisibilidad, números primos, residuos, máximo común divisor y aritmética modular. En términos generales, la teoría de números estudia las propiedades de los enteros, y por ello ofrece un lenguaje muy útil para describir, simplificar y resolver muchos problemas clásicos de concurso. A menos que se indique lo contrario, todas las variables y números mencionados en este capítulo se asumen enteros.
 \section{Bases}
 
 Empezamos fijando el vocabulario mínimo que usaremos durante todo el capítulo: divisibilidad, máximo común divisor y mínimo común múltiplo. Son ideas sencillas y probablemente conocidas, pero vale la pena establecer la notación, porque casi todos los resultados posteriores se enuncian en estos términos.
 
-\textbf{Definición.} Decimos que $a$ \textbf{divide} a $b$ (y escribimos $a \mid b$) si existe un entero $k$ tal que $b = ka$. Escribimos $a \nmid b$ si $a$ no divide a $b$.
+\textbf{Definición.} Dados dos enteros $a$ y $b$, decimos que $a$ \textbf{divide} a $b$ (y escribimos $a \mid b$) si existe un entero $k$ tal que $b = ka$. Escribimos $a \nmid b$ si $a$ no divide a $b$.
 
 \textit{Ejemplo.} Se cumple $4 \mid 20$ porque $20 = 4 \cdot 5$ (aquí $k = 5$). En cambio, $6 \nmid 20$, pues no existe ningún entero $k$ con $20 = 6k$.
 
@@ -80,10 +80,10 @@ Hasta aquí relacionamos $\text{lcm}(a,b)$ con $\gcd(a,b)$. Para \emph{calcular}
 \[
 \gcd(a, b) = \gcd(b, a \bmod b).
 \]
-Cualquier divisor común de $a$ y $b$ también divide a $a \bmod b = a - \lfloor a/b \rfloor \cdot b$, y viceversa.
+Cualquier divisor común de $a$ y $b$ también divide a $a \bmod b = a - \lfloor a/b \rfloor \cdot b$, y viceversa. Esta observación es la que hace posible el siguiente algoritmo.
 
 \textbf{Algoritmo de Euclides.} 
-El lema anterior sugiere un procedimiento recursivo. Mientras $ b \neq 0$, sustituimos $(a,b)$ por $(b, a \bmod b)$, cuando $b=0$ el algoritmo termina y devuelve $a$, pues $\gcd(a,0)=a$.
+Es un procedimiento recursivo para encontrar el máximo común divisor de dos enteros. Mientras $ b \neq 0$, sustituimos $(a,b)$ por $(b, a \bmod b)$, cuando $b=0$ el algoritmo termina y devuelve $a$, ya que $\gcd(a,0)=a$.
 
 \textit{Ejemplo.} Si $a = 30$ y $b = 18$, entonces
 \[
@@ -323,7 +323,7 @@ tiene solución $(x,y)$ en enteros si y solo si $\gcd(a,b) \mid c$.
 \[
 ax + by = \gcd(a,b).
 \] 
-La idea del algoritmo extendido es seguir los mismos pasos del Algoritmo de Euclides, pero rastrear cómo se expresa cada residuo como combinación lineal de $a$ y $m$. En cada paso de la división $r_{i-1} = q_i \cdot r_i + r_{i+1}$ se actualizan los coeficientes:
+La idea del algoritmo extendido es seguir los mismos pasos del Algoritmo de Euclides, pero rastrear cómo se expresa cada residuo como combinación lineal de $a$ y $m$. Formalmente, si definimos $r_0=a$ $r_1=b$ y en cada paso $r_{i-1} = q_i \cdot r_i + r_{i+1}$ (donde $q_i$ y $r_{i+1}$ son el cociente y residuo de dividir $r_{i-1}$ entre $r_i$), entonces se actualizan los coeficientes:
 \[
 x_{i+1} = x_{i-1} - q_i \cdot x_i, \qquad y_{i+1} = y_{i-1} - q_i \cdot y_i.
 \]
@@ -622,9 +622,15 @@ Si conocemos $f$ en potencias de primos, podemos calcular $f(n)$ para cualquier 
 
 \subsection*{Función $\phi$ de Euler}
 
-La función $\phi(n)$ de Euler cuenta cuántos enteros del conjunto $\{1,2,\ldots,n\}$ son coprimos con $n$ (es decir, $\gcd(k,n)=1$). Equivale al orden del grupo multiplicativo $(\mathbb{Z}/n\mathbb{Z})^\times$ cuando $n\ge 2$.
+La función $\phi(n)$ de Euler cuenta cuántos enteros del conjunto $\{1,2,\ldots,n\}$ son coprimos con $n$ (es decir, $\gcd(k,n)=1$).
 
 \textbf{Propiedad (multiplicatividad).} Si $\gcd(a,b)=1$, entonces $\phi(ab)=\phi(a)\phi(b)$.
+
+\textbf{Propiedad (primos y potencias).} Si $p$ es primo y $k\ge 1$, entonces~\cite{cpalgos_phi}
+\[
+\phi(p) = p-1, \qquad \phi(p^k) = p^k - p^{k-1} = p^{k-1}(p-1).
+\]
+En efecto, en $\{1,\ldots,p^k\}$ hay exactamente $p^{k-1}$ múltiplos de $p$, que son precisamente los enteros que \emph{no} son coprimos con $p^k$.
 
 \textit{Ejemplo.} Como $12 = 2^2\cdot 3$ y $\gcd(4,3)=1$, por multiplicatividad
 \[
@@ -639,12 +645,6 @@ de modo que
 \phi(12)=2\cdot 2=4.
 \]
 En efecto, los coprimos con $12$ entre $1$ y $12$ son $1$, $5$, $7$ y $11$.
-
-\textbf{Propiedad (primos y potencias).} Si $p$ es primo y $k\ge 1$, entonces~\cite{cpalgos_phi}
-\[
-\phi(p) = p-1, \qquad \phi(p^k) = p^k - p^{k-1} = p^{k-1}(p-1).
-\]
-En efecto, en $\{1,\ldots,p^k\}$ hay exactamente $p^{k-1}$ múltiplos de $p$, que son precisamente los enteros que \emph{no} son coprimos con $p^k$.
 
 \textbf{Propiedad (suma sobre divisores).} Para todo entero $n\ge 1$,
 \[
@@ -748,7 +748,7 @@ La función de Möbius $\mu:\mathbb{Z}^+\to\{-1,0,1\}$ se define por
 \]
 Es multiplicativa: si $\gcd(a,b)=1$, entonces $\mu(ab)=\mu(a)\mu(b)$.
 
-\textit{Ejemplo.} Veamos que \(\mu(1)=1\). Además, \(\mu(30)=\mu(2\cdot 3\cdot 5)=(-1)^3=-1\) porque es producto de \(3\) primos distintos. En cambio, \(\mu(12)=0\), ya que \(12\) es divisible por \(2^2\).
+\textit{Ejemplo.} Veamos que \(\mu(1)=1\), además, \(\mu(30)=\mu(2\cdot 3\cdot 5)=(-1)^3=-1\) porque es producto de \(3\) primos distintos. En cambio, \(\mu(12)=0\), ya que \(12\) es divisible por \(2^2\).
 
 \textbf{Propiedad (inversión de Möbius).} Si $g(n)=\sum_{d\mid n} f(d)$ para todo $n$, entonces~\cite{cf_mobius}
 \[
@@ -758,13 +758,17 @@ Recíprocamente, esta fórmula determina $f$ a partir de $g$.
 
 \textit{Ejemplo (inversión en un caso sencillo).} Si \(f(n)=1\) para todo \(n\), entonces
 \[
-g(n)=\sum_{d\mid n} f(d)=\sum_{d\mid n} 1=\tau(n).
+g(n)=\sum_{d\mid n} f(d)=\sum_{d\mid n} 1=\tau(n)\text{, donde $\tau(n)$ denota la cantidad de divisores de $n$.} 
 \]
-la cantidad de divisores de \(n\). Aplicando inversión de Möbius,
+Por la propiedad de inversión de Möbius tenemos que:
 \[
-f(n)=\sum_{d\mid n}\mu(d)\,g(n/d)=\sum_{d\mid n}\mu(d)\,\tau(n/d)=1.
+f(n)=\sum_{d\mid n}\mu(d)\,g(n/d)=\sum_{d\mid n}\mu(d)\,\tau(n/d),
 \]
-lo cual recupera exactamente la función original.
+y como $f(n)=1$ para todo $n$, tenemos que
+\[
+\sum_{d\mid n}\mu(d)\,\tau(n/d)=1.
+\]
+ lo cual recupera exactamente la función original.
 
 \textbf{Propiedad (suma de $\mu$ sobre divisores).} Para todo $n\ge 1$,
 \[

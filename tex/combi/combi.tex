@@ -18,19 +18,19 @@ Ahora, ¿qué sucede si no nos gusta el chicle?, ¿de cuántas formas podemos co
  
 \subsection*{Principio del palomar}
 
- En la heladería además hay una promoción para motivar la convivencia. Si llegan dos personas con el mismo cumpleaños juntas, se les regalará a ambas personas un helado. ¿Cuántas personas mínimas se necesitan para asegurar que alguien tendrá un helado gratis? Podríamos pensar que se necesitan muchisimas, pero en realidad solo necesitamos 367, esto porque en el peor caso cada una de las primeras 366 personas va a cumplir un día diferente (incluyendo 29 de febrero) y cuando llegue la persona número 367 como todos los cumpleaños ya tienen una persona que cumple ese día, forzosamente compartirá cumpleaños con alguien. Con la misma lógica, en una escuela de 5000 estudiantes no basta con saber que \emph{algún} par comparte cumpleaños: el principio del palomar también nos dice cuántas personas pueden caer, como mínimo, en el \emph{mismo} día. Hay $366$ ``casillas'' posibles (los días del año, contando 29 de febrero); si repartimos $5000$ estudiantes lo más parejo posible entre esas casillas, a cada día le tocan al menos $\lfloor 5000/366\rfloor = 13$ personas, pero sobran $5000 - 366\cdot 13 = 242$ estudiantes que obligan a que al menos $242$ días tengan una persona extra. En consecuencia, \textbf{algún} cumpleaños concentra al menos $14$ personas ($\lceil 5000/366\rceil = 14$): en el peor reparto posible habrá un día con catorce estudiantes que cumplen ese mismo día (y por tanto comparten cumpleaños entre sí). A esta idea se le llama \textbf{principio del palomar}.
+ En la heladería además hay una promoción para motivar la convivencia. Si llegan dos personas juntas con el mismo cumpleaños, se les regalará a ambas personas un helado. ¿Cuántas personas mínimas se necesitan para asegurar que alguien tendrá un helado gratis? Podríamos pensar que se necesitan muchisimas, pero en realidad solo necesitamos 367, esto porque en el peor caso cada una de las primeras 366 personas va a cumplir un día diferente (incluyendo 29 de febrero) y cuando llegue la persona número 367 como todos los cumpleaños ya tienen una persona que cumple ese día, forzosamente compartirá cumpleaños con alguien. Con la misma lógica, en una escuela de 5000 estudiantes no basta con saber que ``algún'' par comparte cumpleaños: el principio del palomar también nos dice cuántas personas pueden caer, como mínimo, en el \emph{mismo} día. Hay $366$ ``casillas'' posibles (los días del año, contando 29 de febrero); si repartimos $5000$ estudiantes lo más parejo posible entre esas casillas, a cada día le tocan al menos $\lfloor 5000/366\rfloor = 13$ personas, pero sobran $5000 - 366\cdot 13 = 242$ estudiantes que obligan a que al menos $242$ días tengan una persona extra. En consecuencia, \textbf{algún} cumpleaños concentra al menos $14$ personas ($\lceil 5000/366\rceil = 14$): en el peor reparto posible habrá un día con catorce estudiantes que cumplen ese mismo día (y por tanto comparten cumpleaños entre sí). A esta idea se le llama \textbf{principio del palomar} o \textbf{principio de casillas}.
 
 \section{Ordenaciones}
 
 Supongamos que queremos escoger el nuevo CEO y VP de una lista de 5 candidatos y queremos saber de cuántas formas diferentes se puede hacer. A esto se le llama \textbf{ordenaciones sin repetición}: estamos \emph{ordenando} una selección de $2$ personas distintas entre $5$, porque el cargo importa (CEO $\neq$ VP).
 
-\textit{Ejemplo (cómo agrupar las opciones).} Si los candidatos son $A,B,C,D,E$, una forma natural de organizar las $20$ parejas es \textbf{fijar primero al CEO} y listar quién puede ser VP:
+\textit{Ejemplo (cómo agrupar las opciones).} Si los candidatos son $A,B,C,D,E$, una forma natural de organizar las parejas es \textbf{fijar primero al CEO} y listar quién puede ser VP:
 \begin{itemize}
   \item CEO $A$: VP puede ser $B,C,D,E$ $\to$ \texttt{(A,B), (A,C), (A,D), (A,E)} (4 parejas);
   \item CEO $B$: VP puede ser $A,C,D,E$ $\to$ 4 parejas;
   \item y así con CEO $C$, $D$ o $E$.
 \end{itemize}
-Son $5$ grupos de $4$ parejas cada uno, o sea $5\cdot 4 = 20$ en total. Otra agrupación equivalente es fijar al VP y contar cuántos CEOs quedan; el resultado es el mismo porque en una permutación \emph{el orden de las etapas sí importa}: escoger primero CEO y después VP no es lo mismo que contar combinaciones, donde el par $\{A,B\}$ no distingue quién va en cada puesto.
+Son $5$ grupos de $4$ parejas cada uno, o sea $5\cdot 4 = 20$ en total. Otra agrupación equivalente es fijar al VP y contar cuántos CEOs posibles quedan, también resultan $5$ grupos de $4$ parejas cada uno (ahora agrupados por VP), y el total sigue siendo $20$, sin importar en qué orden fijes los puestos para contar. Esto no debe confundirse con contar combinaciones, en una permutación \emph{el orden de las etapas de elección sí importa} en el sentido que el par $(A,B)$ es distinto de $(B,A)$, contar combinaciones trataría al par $\{A,B\}$ como una sola opción, sin distinguir quién va en cada puesto.
 
 El número de ordenaciones sin repetición de tomar $r$ elementos tomados de un conjunto de $n$ distintos es:
 \[
@@ -81,7 +81,7 @@ Si ahora quisieramos de los 5 empleados elegir 2 para que formen parte de una br
 \end{tikzpicture}
 \end{figure}
  
-A las combinaciones también se les llama coeficientes binomiales porque son los coeficientes de la expresión $(a+b)^n$ de la siguiente forma:
+A las combinaciones también se les llama coeficientes binomiales porque son los coeficientes de $(a+b)^n$ al expresarle de la siguiente forma:
 \[
 (a+b)^n=\binom{n}{0}a^n+\binom{n}{1}a^{n-1}b+\binom{n}{2}a^{n-2}b^2+\cdots + \binom{n}{n}b^n.
 \]
@@ -93,7 +93,7 @@ Algunas propiedades útiles para recordar son (se recomienda al lector intentar 
     \item Factorización: $\binom{n}{r} = \frac{n}{r}\binom{n-1}{r-1}$,
     \item Identidad de Pascal: $\binom{n-1}{r-1} + \binom{n-1}{r} = \binom{n}{r}$,
     \item Suma sobre $k$: $\sum_{k=0}^{n}\binom{n}{k}=2^n$,
-    \item Suma sobre $m$: $\sum_{m=0}^{n}\binom{m}{k}=\binom{n+1}{k+1}$,
+    \item Suma sobre $m$: $\sum_{m=k}^{n}\binom{m}{k}=\binom{n+1}{k+1}$,
     \item Suma alternada: $\sum_{r=0}^{n} (-1)^r\binom{n}{r} = 0$,
     \item Suma de cuadrados: $\binom{n}{0}^2+\binom{n}{1}^2+\cdots+\binom{n}{n}^2=\binom{2n}{n}$.
 \end{itemize}
@@ -172,7 +172,7 @@ long long binomialPrecomputed(int n, int k) {
 En ocasiones cuando tenemos conjuntos querremos saber cuántos elementos tiene su unión. Podríamos pensar que si los conjuntos son $A$ y $B$,  basta con hacer la suma $|A| +|B|$, donde $|A|$ es la cardinalidad o número de elementos de un conjunto $A$, sin embargo, es probable que los conjuntos no sean disjuntos, es decir, que haya elementos que pertenezcan tanto a $A$ como $B$, en ese caso, les estaríamos contando doble.
 
 \textit{Ejemplo.} Si $A=\{1,2,3,4\}$ y $B=\{3,4,5,6\}$, entonces $|A|+|B|=8$, pero $A\cup B=\{1,2,3,4,5,6\}$ solo tiene $6$ elementos: el $3$ y el $4$ aparecieron una vez al contar $A$ y otra al contar $B$. Es por esto que en realidad $|A \cup B|=|A| + |B| - |A \cap B|$, es decir, restamos una vez los que se están contando doble (aquí $|A\cap B|=|\{3,4\}|=2$ y $6=8-2$).
-\\\\Similarmente si tuviésemos tres conjuntos $A,B,C$, notemos que al sumar $|A|+|B|+|C|$ estamos contando los elementos que están en dos de los conjuntos doble como en el caso de dos conjuntos. Más aún, los elementos que están en los tres conjuntos, están siendo contados tres veces, y al restar todas las intersecciones de dos conjuntos se están restando tres veces, por lo que habrá que sumarlos, es decir:
+\\\\Similarmente si tuviésemos tres conjuntos $A,B,C$, notemos que al sumar $|A|+|B|+|C|$ estamos contando los elementos que están en dos de los conjuntos doble como en el caso de dos conjuntos. Más aún, los elementos que están en los tres conjuntos, están siendo contados tres veces. Al restar las intersecciones de las parejas de conjuntos, esos mismos elementos (los que están en los tres a la vez) se están restando tres veces adicionales. Para contar correctamente los elementos de la unión, habrá que sumar de vuelta los elementos en la intersección de los tres conjuntos, es decir:
 \[
 |A \cup B \cup C|=|A|+|B|+|C|-|A \cap B|-|A \cap C|-|B \cap C|+|A \cap B \cap C|.
 \]
@@ -222,7 +222,7 @@ long long countCoprimeUpTo(long long limit, const vector<long long>& primes) {
 \end{lstlisting}
 Complete el programa principal usando \texttt{countCoprimeUpTo} para responder en el intervalo $[L,R]$.
 \section{Barras y estrellas}
- Supongamos que tenemos $r$ niños y $n$ juguetes, ¿de cuántas formas podemos distribuir los juguetes entre los niños?. En este problema no hay restricciones, un niño puede tener 0 o todos los juguetes. Para resolver este problema usaremos ''palitos'' que separen los juguetes en secciones. Por ejemplo, supongamos que tenemos 3 niños y 5 juguetes, entonces un acomodo donde el primer niño reciba dos juguetes, el segundo dos y tercero uno se puede representar de la siguiente forma
+ Supongamos que tenemos $r$ niños y $n$ juguetes, ¿de cuántas formas podemos distribuir los juguetes entre los niños?. En este problema no hay restricciones, un niño puede tener 0 o todos los juguetes. Para resolver este problema usaremos ''palitos'' que separen los juguetes idénticos en secciones. Por ejemplo, supongamos que tenemos 3 niños y 5 juguetes, entonces un acomodo donde el primer niño reciba dos juguetes, el segundo dos y tercero uno se puede representar de la siguiente forma
  \[\includegraphics[scale=0.7]{imgs/image.png}\]
  De la misma forma si quisiéramos $r$ regiones, ocuparíamos $r-1$ palitos. Al colocar los $r-1$ palitos con  los $n$ juguetes tenemos en total $n+r-1$ objetos que hay que acomodar en una fila. Si todos los objetos fueran distinguibles tendríamos un total de $(n+r-1)!$ formas de acomodarlos; sin embargo, notemos que no hay forma de distinguir un palito de los demás, así como un juguete de los otros juguetes, por lo tanto, usando permutaciones con repetición debemos quitar las  permutaciones generadas al permutar los juguetes entre sí $n!$ y los palitos entre sí $(r-1)!$. Así, la cantidad de formas de distribuir los juguetes es~\cite{cf_stars}:
  \[
@@ -233,9 +233,9 @@ Complete el programa principal usando \texttt{countCoprimeUpTo} para responder e
 \section{Lema de Burnside\adv}
 \advnote{Formaliza el conteo bajo simetría con acciones de grupo. Basta con la intuición de ``órbitas'' y ``puntos fijos''; no se asume un curso de álgebra abstracta. Puede omitirse en una primera lectura.}
 
-Hay una clase de problemas de conteo donde la respuesta no es simplemente contar objetos, sino contar objetos \textbf{distintos bajo simetría}. Tomemos el ejemplo clásico: ¿cuántos collares distintos se pueden hacer con $n$ cuentas de $k$ colores, si dos collares son el mismo cuando uno se obtiene del otro por rotación? Contar directamente sobrecuenta el mismo collar $n$ veces (una por cada rotación). 
+Hay una clase de problemas de conteo donde la respuesta no es simplemente contar objetos, sino contar objetos \textbf{distintos bajo simetría}. Tomemos el ejemplo clásico: ¿cuántos collares distintos se pueden hacer con $n$ cuentas de $k$ colores, si dos collares son el mismo cuando uno se obtiene del otro por rotación? Si numeramos las posiciones de cuentas de $1$ a $n$ y contamos cada asignación de colores a esas posiciones numeradas como una coloración distinta, obtendremos $k^n$ coloraciones, pero este método sobrecuenta el mismo collar $n$ veces (una por cada rotación). 
 
-\textit{Ejemplo.} Con $n=3$ cuentas y $k=2$ colores (digamos rojo $R$ y verde $G$) hay $2^3=8$ coloraciones si numeramos las posiciones, pero varias son el mismo collar al rotar: \texttt{R-R-G}, \texttt{G-R-R} y \texttt{R-G-R} describen un solo collar; lo mismo \texttt{R-G-G}, \texttt{G-G-R} y \texttt{G-R-G}. En total solo hay $4$ collares distintos (\texttt{RRR}, \texttt{GGG} y esos dos tipos mixtos), no $8$. El lema de Burnside resuelve exactamente esta clase de problemas.
+\textit{Ejemplo.} Con $n=3$ cuentas y $k=2$ colores (digamos rojo $R$ y verde $G$) hay $2^3=8$ coloraciones si numeramos las posiciones, pero varias son el mismo collar al rotar: \texttt{R-R-G}, \texttt{G-R-R} y \texttt{R-G-R} describen un solo collar; lo mismo \texttt{R-G-G}, \texttt{G-G-R} y \texttt{G-R-G}. En total solo hay $4$ collares distintos (\texttt{RRR} y \texttt{GGG}, además de los dos tipos mixtos mencionados anteriormente), no $8$. El lema de Burnside resuelve exactamente esta clase de problemas.
 
 Para formalizar ``dos objetos son el mismo si uno se obtiene del otro por alguna simetría'', necesitamos el concepto de \textbf{acción de grupo}.
 
@@ -256,7 +256,7 @@ La \textbf{órbita} de un objeto $x \in X$, denotada $G \dot x$ es el conjunto d
 G \cdot x = \{g \cdot x \mid g \in G\}.
 \]
 
-Esta es la noción clave, dos objetos son \emph{equivalentes} si están en la misma órbita. Nuestro objetivo es contar el número de órbitas $|X/G|$.
+Esta es la noción clave, dos objetos son \emph{equivalentes} si están en la misma órbita. Nuestro objetivo es contar el número de órbitas, que denotamos $|X/G|$.
 
 Para cada operación $g \in G$, sus \textbf{puntos fijos} son los objetos que no cambian al aplicarla:
 \[
@@ -412,7 +412,7 @@ Para los primeros casos podemos revisar la cantidad a mano:
 
 Aunque pudimos hacer estos casos a mano, entre más lados tenga el polígono, el número de triangulaciones se puede hacer muy grande. Debido a esto es conveniente para nosotros buscar alguna otra forma de calcularlos.
 \\\\
-Sea $T_n$ el número de triangulaciones de un polígono de $n+2$ lados. Fijamos la arista que va del vértice $0$ al vértice $n+1$. Esa arista pertenece a exactamente un triángulo de cualquier triangulación, llamemos $k$ al tercer vértice de ese triángulo, con $k \in \{1, 2, \ldots, n\}$. Por ejemplo para $n=3$:
+Sea $C_n$ el número de triangulaciones de un polígono de $n+2$ lados. Fijamos la arista que va del vértice $0$ al vértice $n+1$. Esa arista pertenece a exactamente un triángulo de cualquier triangulación, llamemos $k$ al tercer vértice de ese triángulo, con $k \in \{1, 2, \ldots, n\}$. Por ejemplo para $n=3$:
  \begin{figure}[H]
 \centering
 \begin{tikzpicture}[scale=1.2]
@@ -437,17 +437,17 @@ Sea $T_n$ el número de triangulaciones de un polígono de $n+2$ lados. Fijamos 
   \node[below left]  at (V3) {$3$};
   \node[left]        at (V4) {$n+1=4$};
  
-  \node[black, font=\small]   at ( 0.60, 0.2)  {$T_{k-1}$};
-  \node[black, font=\small]  at (-0.35, -0.4)   {$T_{n-k}$};
+  \node[black, font=\small]   at ( 0.60, 0.2)  {$C_{k-1}$};
+  \node[black, font=\small]  at (-0.35, -0.4)   {$C_{n-k}$};
   \node[font=\scriptsize, orange] at (-1.0, 1.0) {arista fijada};
  
 \end{tikzpicture}
 \end{figure}
-Al fijar el triángulo que contiene la arista fijada con tercer vértice $k=2$, el polígono se divide en dos subpolígonos independientes: el subpolígono izquierdo (vértices $0,1,\ldots,k$) con $T_{k-1}$ triangulaciones, y el derecho (vértices $k, k+1,\ldots, n+1$) con $T_{n-k}$ triangulaciones.
+Al fijar el triángulo que contiene la arista fijada con tercer vértice $k=2$, el polígono se divide en dos subpolígonos independientes: el subpolígono izquierdo (vértices $0,1,\ldots,k$) con $C_{k-1}$ triangulaciones, y el derecho (vértices $k, k+1,\ldots, n+1$) con $C_{n-k}$ triangulaciones.
 \\\\
-Notemos que los dos subpolígonos son independientes, es decir, la triangulación de uno no afecta al otro. Por lo tanto el número de triangulaciones con tercer vértice $k$ es exactamente su producto $T_{k-1} \cdot T_{n-k}$. Sumando sobre todas las elecciones posibles de $k$, tenemos que~\cite{cf_catalan}:
+Notemos que los dos subpolígonos son independientes, es decir, la triangulación de uno no afecta al otro. Por lo tanto el número de triangulaciones con tercer vértice $k$ es exactamente su producto $C_{k-1} \cdot C_{n-k}$. Sumando sobre todas las elecciones posibles de $k$, tenemos que~\cite{cf_catalan}:
 \[
-T_n = \sum_{k=1}^{n} T_{k-1} \cdot T_{n-k}.
+C_n = \sum_{k=1}^{n} C_{k-1} \cdot C_{n-k}.
 \]
 En programación competitiva esta recurrencia casi siempre se resuelve con \textbf{programación dinámica} o \textbf{memorización}: guardamos $C_0,C_1,\ldots,C_n$ en un arreglo (una ``tabla'' de una fila) y vamos llenándolo de izquierda a derecha, porque para calcular $C_n$ solo hacen falta valores $C_0,\ldots,C_{n-1}$ ya conocidos. La base es $C_0=1$ (el polígono degenerado con $0$ triángulos internos).
 
@@ -537,7 +537,7 @@ con $S(0,0) = 1$ y $S(n,0) = S(0,k) = 0$ para $n,k > 0$.
 La intuición detrás de esta recurrencia consiste en observar que el elemento $n$ tiene 2 opciones:
 \begin{itemize}
     \item $n$ forma un subconjunto solo, en este caso partimos $\{1,\ldots,n-1\}$ en $k-1$ subconjuntos de $S(n-1,k-1)$ formas, y $\{n\}$ es el $k$-ésimo subconjunto.
-    \item $n$ comparte subconjunto con otros elementos, en este caso partimos $\{1,\ldots,n-1\}$ en $k$ subconjuntos de $S(n-1,k)$ formas, y agregamos $n$ a cualquiera de los $k$ subconjuntos existentes.
+    \item $n$ forma parte de un subconjunto con otros elementos, en este caso partimos $\{1,\ldots,n-1\}$ en $k$ subconjuntos de $S(n-1,k)$ formas, y agregamos $n$ a cualquiera de los $k$ subconjuntos existentes.
 \end{itemize}
 
 Volviendo al problema de tareas en la oficina al inicio de la sección, notemos que justamente queremos repartir 10 elementos en 5 subconjuntos no vacíos, por lo que la respuesta es simplemente $S(10,5)=42,525$, que se puede calcular con la recurrencia anterior en tiempo $O(n\cdot k)$.
@@ -688,7 +688,7 @@ $1 \leq n \leq 10^6$
 }
 \end{center}
   Nótese que una sucesión de $n=2m$ paréntesis es válida si tiene $m$ paréntesis de apertura, $m$ de cierre y para cualquier posición la cantidad de paréntesis de apertura hasta esa posición, es decir en el prefijo, es mayor o igual a la de cierre.
-  \\\\Si no tuvieramos ninguna restricción sobre los prefijos entonces la cantidad total de secuencias sería simplemente la forma de colocar $m$ aperturas en $n$ posiciones, es decir: $\binom{n}{m}$. Entonces nos interesa encontrar cuál es la cantidad de secuencias inválidas para restarlas de las secuencias totales y encontrar cuántas secuencias válidas hay. Tomemos una secuencia de paréntesis inválida cualquiera, notemos que entonces esta tiene un prefijo donde los cierres son mayores a las aperturas. En ese prefijo, cambiemos todos los paréntesis de apertura por los de cierre y los de cierre por los de apertura. Notemos que entonces la secuencia nueva tiene $m+1$ aperturas y $m-1$ cierres. Esto nos da una biyección entre las secuencias inválidas de $m$ aperturas y $m$ cierres y todas las secuencias posibles con $m+1$ aperturas y $m-1$ cierres que son $\binom{n}{m+1}$ de donde tenemos que:
+  \\\\Si no tuvieramos ninguna restricción sobre los prefijos entonces la cantidad total de secuencias sería simplemente la forma de colocar $m$ aperturas en $n$ posiciones, es decir: $\binom{n}{m}$. Entonces nos interesa encontrar cuál es la cantidad de secuencias inválidas para restarlas de las secuencias totales y encontrar cuántas secuencias válidas hay. Tomemos una secuencia de paréntesis inválida cualquiera, notemos que entonces esta tiene un prefijo mínimo (el más corto posible) donde los cierres son mayores a las aperturas. En ese prefijo, cambiemos todos los paréntesis de apertura por los de cierre y los de cierre por los de apertura. Notemos que entonces la secuencia nueva tiene $m+1$ aperturas y $m-1$ cierres. Recíprocamente, toda secuencia con $m+1$ aperturas y $m-1$ cierres tiene algún prefijo mínimo donde el exceso de aperturas sobre los cierres alcanza por primera vez el valor de $2$. Si reflejamos ese prefijo, se obtiene una secuencia con $m$ aperturas y $m$ cierres que es inválida. Es así como tenemos una biyección entre las secuencias inválidas de $m$ aperturas y $m$ cierres y todas las secuencias posibles con $m+1$ aperturas y $m-1$ cierres que son $\binom{n}{m+1}$ de donde tenemos que:
   \[
   \binom{2m}{m}-\binom{2m}{m+1}=\frac{1}{m+1}\binom{2m}{m}.
   \]

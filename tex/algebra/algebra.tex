@@ -224,7 +224,7 @@ $x$ pueden ser muy grandes). Basta con agregar la operación \texttt{\% mod} en 
 
 Ahora que sabemos cómo evaluar un polinomio, el resto de esta sección queremos resolver el problema de: dados $n$ puntos cualesquiera (con $x$ distintas), encontrar un polinomio que pasa por todos ellos. A esto se le llama interpolación de Lagrange. 
 \\\\Es importante mencionar que dados  $n+1$ puntos distintos $(x_0, y_0), (x_1, y_1), \ldots, (x_n, y_n)$, existe un \textbf{único} polinomio de grado a lo más $n$ que pasa por todos ellos.
-\\\\El razonamiento detrás de por qué esto es cierto es sencillo. Supongamos que no se cumple, es decir, que hay dos polinomios diferentes $p$ y $q$ de grado menor o igual a $n$ que pasan por todos los puntos dados. Entonces tendremos que $p-q$ es un polinomio de grado $\leq n$ que tiene $n+1$ raíces (los $x_i$), pero sabemos que un polinomio no nulo de grado $\leq n$ tiene a lo más $n$ raíces \footnote{https://www.matem.unam.mx/~max/AS2/N6.pdf}, de donde tenemos que debe ser nulo, es decir $p-q=0$, por lo que $p=q$.
+\\\\El razonamiento detrás de por qué esto es cierto es sencillo. Supongamos que no se cumple, es decir, que hay dos polinomios diferentes $p$ y $q$ de grado menor o igual a $n$ que pasan por todos los puntos dados. Entonces tendremos que $p-q$ es un polinomio de grado $\leq n$ que tiene $n+1$ raíces (los $x_i$), pero sabemos que un polinomio no nulo de grado $\leq n$ tiene a lo más $n$ raíces\footnote{https://www.matem.unam.mx/~max/AS2/N6.pdf}, de donde tenemos que debe ser nulo, es decir $p-q=0$, por lo que $p=q$.
 \\\\
 Esto nos dice que $n+1$ puntos determinan completamente un polinomio de grado $n$. La pregunta es: ¿cómo construirlo? La idea de Lagrange es construir el polinomio interpolante como una suma de piezas, donde cada pieza se encarga de un solo punto.
  
@@ -253,10 +253,12 @@ p(x) = \sum_{i=0}^{n} y_i \cdot \ell_i(x).
 Veamos un ejemplo concreto con los puntos $(0,1)$, $(1,2)$ y $(2,5)$. Aquí $n=2$, así que buscamos un polinomio de grado a lo más $2$. Los polinomios base son
 \[
 \ell_0(x)=\frac{(x-1)(x-2)}{(0-1)(0-2)}=\frac{(x-1)(x-2)}{2},\quad
-\ell_1(x)=\frac{x(x-2)}{(1-0)(1-2)}=-x(x-2),\quad
-\ell_2(x)=\frac{x(x-1)}{(2-0)(2-1)}=\frac{x(x-1)}{2}.
+\ell_1(x)=\frac{x(x-2)}{(1-0)(1-2)}=-x(x-2)
 \]
-El polinomio interpolante queda entonces
+\[
+\ell_2(x)=\frac{x(x-1)}{(2-0)(2-1)}=\frac{x(x-1)}{2},
+\]
+el polinomio interpolante queda entonces
 \[
 p(x)=1\cdot\ell_0(x)+2\cdot\ell_1(x)+5\cdot\ell_2(x)
 =\frac{(x-1)(x-2)}{2}-2x(x-2)+\frac{5x(x-1)}{2}=x^2+1.
@@ -307,8 +309,17 @@ f(4)=1^2+2^2+3^2+4^2=1+4+9+16=30;
 con módulo $10^9+7$ la salida sería $30$.
 \\\\Nuestro primer instinto probablemente sea calcular el resultado sumando uno a uno los términos de esta suma. Sin embargo, aun si se pudiera calcular las potencias $i^k$ de forma constante, tendríamos que sumar $n$ términos, es decir en el peor caso $\approx 10^9$ operaciones, lo que nos daría como veredicto TLE. 
 \\\\
-En realidad, podemos ver este problema desde otro enfoque. Buscaremos un polinomio tal que $p_k(n)=\sum_{i=1}^{n} i^k$, lo primero que queremos saber es qué grado tiene el polinomio para saber cuántos puntos necesitamos, esto lo haremos por inducción, nótese que si $k=1$, por lo visto antes, $p_1(n)=\frac{n(n+1)}{2}$, es decir es un polinomio de grado $k+1=2$, supongamos entonces que $p_{k-1}(n)$ tiene grado $k$, ahora consideremos $p_{k}(n)$ y saquemos su derivada, es decir $p^{'}_{k}(n)=kp_{k-1}(n)$ de donde como la derivada baja un grado, tenemos que $p_{k}(n)$ tiene grado $k+1$.
-\\\\De lo anterior concluimos que teniendo $k+2$ puntos por los que pase el polinomio podemos evaluarlo de forma eficiente. Estos podemos encontrarlos fácilmente, pues $f(0)=0$ y de ahí $f(x)=f(x-1)+x^k$. Tras esto ocuparemos la interpolación vista arriba para calcular $f(n)$, de forma que la implementación nos quedaría
+En realidad, podemos ver este problema desde otro enfoque. Buscaremos un polinomio tal que $p_k(n)=\sum_{i=1}^{n} i^k$ (la misma función de $f$ del enunciado), lo primero que queremos saber es qué grado tiene el polinomio para saber cuántos puntos necesitamos, esto lo haremos por inducción, nótese que si $k=1$ por lo visto antes $p_1(n)=\frac{n(n+1)}{2}$, es decir, es un polinomio de grado $k+1=2$, supongamos entonces que $p_{k-1}(n)$ tiene grado $k$ y consideremos ahora $p_k(n)$. Recordemos la identidad telescópica
+\[
+(n+1)^{k+1} - 1 = \sum_{i=1}^{n}\left[(i+1)^{k+1}-i^{k+1}\right].
+\]
+Expandiendo $(i+1)^{k+1}$ por el binomio de Newton y sumando en $i$, obtenemos
+\[
+(n+1)^{k+1}-1 = (k+1)\,p_k(n) + \sum_{j=0}^{k-1}\binom{k+1}{j}p_j(n).
+\]
+Por hipótesis de inducción, cada $p_j(n)$ con $j<k$ tiene grado $j+1\le k$, y $(n+1)^{k+1}$ tiene grado $k+1$. Como ningún otro término aporta grado $k+1$, concluimos que $p_k(n)$ es un polinomio de grado $k+1$.
+\\\\
+De lo anterior concluimos que necesitamos $k+2$ puntos por los que pase el polinomio $p_k$ para evaluarlo de forma eficiente (recordemos $p_k = f$). Estos podemos encontrarlos fácilmente, pues $f(0)=\sum_{i=1}^{0} i^k = 0$ (suma vacía, ya que el límite superior es menor al inferior) y de ahí $f(x) = f(x-1) + x^k$. Tras esto ocuparemos la interpolación vista arriba para calcular $f(n)$, de forma que la implementación nos quedaría
 \begin{lstlisting}[language=C++]
 const ll mod = 1e9 + 7;
 ll lagrangeInter(int n, int k) {
@@ -399,9 +410,7 @@ $FFT$ aparece disfrazado en muchos problemas de competencia, especialmente cuand
 
 En muchos problemas la respuesta se pide \textbf{módulo un primo} $p$ (típicamente $998244353$). La FFT opera en $\mathbb{C}$ y puede acumular errores de redondeo; en esos casos conviene la \textbf{NTT} (\emph{Number Theoretic Transform}, transformada teórica de números): la misma idea algorítmica de la FFT, pero trabajando en $\mathbb{Z}_p$ en lugar de los complejos.
 
-\begin{definition}[NTT]
 La \textbf{transformada teórica de números} es una variante de la FFT que evalúa e interpola polinomios en aritmética modular. Sustituye las raíces $n$-ésimas de la unidad $\omega = e^{2\pi i/n}$ por una \textbf{raíz primitiva $n$-ésima módulo $p$}: un entero $g$ tal que $g^n \equiv 1 \pmod{p}$ y $g^k \not\equiv 1 \pmod{p}$ para $0 < k < n$. Esto es posible cuando $p$ es primo de la forma $p = c \cdot 2^k + 1$ con $2^k \geq n$; el primo más usado en competencia es $p = 998244353 = 119 \cdot 2^{23} + 1$. Al operar solo con enteros módulo $p$, la NTT calcula convoluciones en $O(n \log n)$ con resultados exactos. Las raíces primitivas módulo $p$ son el mismo concepto que aparece en teoría de números (Cap.~6).
-\end{definition}
  
 \subsection*{FFT vs NTT: cuándo usar cada una}
  

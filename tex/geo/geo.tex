@@ -42,13 +42,13 @@ Mide qué tan alineados están: si $a\cdot b>0$ apuntan a direcciones parecidas;
 \[
 a\cdot b = 2\cdot 3 + 1\cdot(-1) = 5 > 0,
 \]
-así que el ángulo entre $a$ y $b$ es agudo. Si $c=(-1,2)$, entonces $a\cdot c = 2\cdot(-1)+1\cdot 2 = 0$, luego $a$ y $c$ son perpendiculares. Si $d=(-3,0)$, se tiene $a\cdot d = -6 < 0$ (ángulo obtuso).
+así que el ángulo entre $a$ y $b$ es agudo o llano. Si $c=(-1,2)$, entonces $a\cdot c = 2\cdot(-1)+1\cdot 2 = 0$, luego $a$ y $c$ son perpendiculares. Si $d=(-3,0)$, se tiene $a\cdot d = -6 < 0$ (ángulo obtuso).
 
 \lstinputlisting[language=C++, firstline=36, lastline=38]{./tex/geo/codes/geo.cpp}
 
 \textbf{Observación.} Con la implementación anterior, $a\cdot a$ es el cuadrado de la norma euclídea de $a$ (sin raíz).
 
-\textit{Ejemplo.} Si $a=(3,4)$, entonces $a\cdot a = 3^2+4^2 = 25 = \|a\|^2$. La norma euclídea es $\|a\|=\sqrt{25}=5$, pero en código suele bastar comparar distancias con $a\cdot a$ y evitar la raíz.
+\textit{Ejemplo.} Si $a=(3,4)$, entonces $a\cdot a = 3^2+4^2 = 25 = \|a\|^2$. La norma euclideana es $\|a\|=\sqrt{25}=5$, pero en código suele bastar comparar distancias con $a\cdot a$ y evitar la raíz.
 
 \subsection*{Producto cruz en el plano}
 
@@ -56,7 +56,7 @@ así que el ángulo entre $a$ y $b$ es agudo. Si $c=(-1,2)$, entonces $a\cdot c 
 \[
 a \times b := a_x b_y - a_y b_x,
 \]
-es el área \emph{orientada} del paralelogramo generado por $a$ y $b$ (equivalentemente, el doble del área orientada del triángulo con vértices $O$, $a$ y $b$). En particular, $a\times b$ cambia de signo al intercambiar $a$ y $b$, lo que codifica ``$b$ a la izquierda o a la derecha de $a$''.
+es el área \emph{orientada} del paralelogramo generado por $a$ y $b$ (equivalentemente, el doble del área orientada del triángulo con vértices $O$, $a$ y $b$). En particular, $a\times b$ cambia de signo al intercambiar $a$ y $b$, lo que codifica si $b$ está a la izquierda o la derecha de $a$, entendiendo por esto el lado que queda al recorrer, desde $a$ a $b$, el ángulo menor o igual a $180$ grados entre ambos vectores.
 
 \textit{Ejemplo.} Sean $a=(2,0)$ y $b=(1,2)$. Entonces
 \[
@@ -90,7 +90,7 @@ b \times a = 1\cdot 0 - 2\cdot 2 = -4 = -(a\times b).
     \draw[->, dashed, green!60!black] (2,0) -- (3,2);
 \end{tikzpicture}
 \end{center}
-Si $c=(3,0)$ es colineal con $a$, entonces $a\times c = 2\cdot 0 - 0\cdot 3 = 0$ (tres puntos en una misma recta por el origen).
+En general, tres puntos $a$, $b$, $c$ son colineales si y solo si $(b-a)\times (c-a)=0$. En particular, cuando $a$ es el origen, esto se reduce a $b \times c=0$. Por ejemplo con $a=(0,0)$, $b=(2,0)$ y $c=(3,0)$, tenemos que $a\times c = 2\cdot 0 - 0\cdot 3 = 0$, lo que confirma que están sobre la misma recta.
 
 La implementación es corta y permite comprobar si tres puntos son colineales.
 
@@ -424,7 +424,7 @@ Simplificando tenemos que $I=1$, de donde concluimos que adentro del cuadrado da
 
 Esta fórmula es útil en ICPC cuando se pide el conteo de puntos con coordenadas enteras.
 \section{Casco Convexo}
-Dado un conjunto de puntos $S \subset \mathbb{R}^2$, su \textbf{casco convexo} (\textit{convex hull}) intuitivamente es la figura que se formaría si colocamos una liga estirada alrededor de todos los puntos. Más formalmente es el polígono convexo más pequeño que los contiene a todos. En la imagen siguiente $S$ son todos los puntos negros y el casco convexo es el polígono dibujado de verde.
+Dado un conjunto de puntos $S \subset \mathbb{R}^2$, su \textbf{casco convexo} (\textit{convex hull}) intuitivamente es la figura que se formaría si colocamos una liga estirada alrededor de todos los puntos. Más formalmente es el polígono convexo más pequeño que los contiene a todos. En la imagen siguiente, $S$ son todos los puntos negros y el casco convexo es el polígono dibujado de verde.
 
 \begin{figure}[H]
   \centering
@@ -451,7 +451,7 @@ Dado un conjunto de puntos $S \subset \mathbb{R}^2$, su \textbf{casco convexo} (
 \end{tikzpicture}
  \end{figure}
  
-Existen varios algoritmos para calcularlo~\cite{cpalgos_convex}. El más conocido es \textbf{Graham Scan}; sin embargo, este ordena los puntos por ángulo por lo que hay que tener cuidado con los casos delicados cuando varios puntos tienen el mismo ángulo polar. Por ello preferimos \textbf{Andrew's Monotone Chain}, ambos algoritmos tienen la misma complejidad $O(n \log n)$ y misma idea para construir el casco convexo, pero el algoritmo de Andrew ordena por coordenada $x$ en lugar de ángulo, esto lo hace más fácil de implementar sin errores en un concurso.
+Existen varios algoritmos para calcularlo~\cite{cpalgos_convex}. El más conocido es \textbf{Graham Scan}; sin embargo, éste ordena los puntos por ángulo por lo que hay que tener cuidado con los casos delicados cuando varios puntos tienen el mismo ángulo polar. Por ello preferimos \textbf{Andrew's Monotone Chain}, ambos algoritmos tienen la misma complejidad $O(n \log n)$ y misma idea para construir el casco convexo, pero el algoritmo de Andrew ordena por coordenada $x$ en lugar de ángulo, esto lo hace más fácil de implementar sin errores en un concurso.
 \\\\Nótese que para saber qué polígono es el casco convexo, sólo tenemos que saber qué puntos forman parte de él y en qué orden. El algoritmo de Andrew construye el casco convexo en dos pasadas sobre los puntos ordenados por $x$, primero se construye la parte inferior y luego la superior.
 \\\\Para la parte inferior se deben recorrer los puntos de izquierda a derecha, para obtener un vector \texttt{hull} con la característica que los últimos tres puntos siempre van a tener producto cruz positivo, es decir dados $A,B,C$ tenemos que $(B-A)\times(C-A)>0$. Inicialmente se agregan los dos primeros puntos a un vector \texttt{hull} que usaremos como una pila (una estructura donde solo se agrega o quita el último elemento insertado) y después cada que lleguemos a un nuevo punto $P$, si este cumple la condición se agrega, de lo contrario, se descarta el tope de la pila (puede ser necesario descartar más de un punto) y después se agrega $P$ a \texttt{hull}. Para la parte superior es exactamente el mismo procedimiento con la única diferencia que se recorre de derecha a izquierda. La implementación quedaría:
 \lstinputlisting[language=C++, firstline=84, lastline=119]{./tex/geo/codes/geo.cpp}
