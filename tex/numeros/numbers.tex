@@ -966,15 +966,8 @@ Compute $\sum_{i=1}^n f(i)$ modulo $10^9+7$. In other words, compute $f(1)+f(2)+
 \vspace{0.5em}
 \textbf{Input}\\
 The first line contains a single integer $t$ ($1 \leq t \leq 10^4$), the number of test cases. Then $t$ cases follow.
-
+\vspace{0.5em}
 The only line of each test case contains a single integer $n$ ($1 \leq n \leq 10^{16}$).
-
-\end{minipage}
-}
-\end{center}
-\begin{center}
-\fbox{
-\begin{minipage}{0.95\linewidth}
 
 \textbf{Output}\\
 For each test case, output a single integer $ans$, where $ans=\sum_{i=1}^n f(i)$ modulo $10^9+7$.
@@ -1066,12 +1059,7 @@ Otherwise, output two lines. The first line contains an integer $Z$ denoting the
 \textbf{Input}\\
 \texttt{4}\\
 \texttt{4 10 9 14}
-\end{minipage}
-}
-\end{center}
-\begin{center}
-\fbox{
-\begin{minipage}{0.95\linewidth}
+\vspace{0.5em}
 \textbf{Output}\\
 \texttt{0}\\
 \texttt{1001}
@@ -1108,6 +1096,15 @@ In `MonkeyLand', there is a traditional game called ``Bamboo Climbing''. The rul
     \item And before the game, each monkey is assigned a distinct $p_i$.
     \item The monkey, who has the lowest $r_i$, wins.
 \end{enumerate}
+Now, the organizers have found all the information of the game last year, but unluckily they haven't found the height of the bamboo. To be more exact, they know $N$, all $p_i$ and corresponding $r_i$, but not $L$. So, you came forward and found the task challenging and so, you want to find $L$, from the given information.
+
+\vspace{0.5em}
+\textbf{Input}
+
+Input starts with an integer $T$ ($\leq 10000$), denoting the number of test cases.
+
+Each case starts with a line containing an integer $n$ ($1 \leq n \leq 12$). Each of the next $n$ lines contains two integers $p_i$ ($1 < p_i < 40$, $p_i$ is a prime) and $r_i$ ($0 < r_i < p_i$). All $p_i$ will be distinct.
+
 \end{minipage}
 }
 \end{center}
@@ -1115,18 +1112,8 @@ In `MonkeyLand', there is a traditional game called ``Bamboo Climbing''. The rul
 \begin{center}
 \fbox{
 \begin{minipage}{0.95\linewidth}
-Now, the organizers have found all the information of the game last year, but unluckily they haven't found the height of the bamboo. To be more exact, they know $N$, all $p_i$ and corresponding $r_i$, but not $L$. So, you came forward and found the task challenging and so, you want to find $L$, from the given information.
-
-\vspace{0.5em}
-\textbf{Input}\\
-Input starts with an integer $T$ ($\leq 10000$), denoting the number of test cases.
-
-Each case starts with a line containing an integer $n$ ($1 \leq n \leq 12$). Each of the next $n$ lines contains two integers $p_i$ ($1 < p_i < 40$, $p_i$ is a prime) and $r_i$ ($0 < r_i < p_i$). All $p_i$ will be distinct.
-
-\vspace{0.5em}
 \textbf{Output}\\
 For each case, print the case number and the minimum possible value of $L$ that satisfies the above conditions. If there is no solution, print \texttt{Impossible}.
-
 \vspace{0.5em}
 \textbf{Example}\\
 \begin{minipage}[t]{0.48\linewidth}
