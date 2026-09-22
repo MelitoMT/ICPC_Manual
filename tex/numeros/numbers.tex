@@ -1,9 +1,11 @@
 En programación competitiva, dominar o al menos tener buenas nociones de los conceptos principales de teoría de números no es un lujo, sino una necesidad. A lo largo de este texto y en la práctica dentro de la ICPC, el lector encontrará problemas donde aparecen de manera natural ideas como divisibilidad, números primos, residuos, máximo común divisor y aritmética modular. En términos generales, la teoría de números estudia las propiedades de los enteros, y por ello ofrece un lenguaje muy útil para describir, simplificar y resolver muchos problemas clásicos de concurso.
+
+A lo largo de este capítulo, salvo que se indique lo contrario, todas las variables (como $a$, $b$, $c$, $d$, $k$, $m$, $n$, $p$, $x$ o $y$) denotan números enteros. Algunas propiedades se presentan sin demostración, pues el objetivo es su uso en programación competitiva; el lector interesado puede consultar las demostraciones en~\cite{perez_numeros}.
 \section{Bases}
 
 Empezamos fijando el vocabulario mínimo que usaremos durante todo el capítulo: divisibilidad, máximo común divisor y mínimo común múltiplo. Son ideas sencillas y probablemente conocidas, pero vale la pena establecer la notación, porque casi todos los resultados posteriores se enuncian en estos términos.
 
-\textbf{Definición.} Decimos que $a$ \textbf{divide} a $b$ (y escribimos $a \mid b$) si existe un entero $k$ tal que $b = ka$. Escribimos $a \nmid b$ si $a$ no divide a $b$.
+\textbf{Definición.} Dados dos enteros $a$ y $b$, decimos que $a$ \textbf{divide} a $b$ (y escribimos $a \mid b$) si existe un entero $k$ tal que $b = ka$. Escribimos $a \nmid b$ si $a$ no divide a $b$.
 
 \textit{Ejemplo.} Se cumple $4 \mid 20$ porque $20 = 4 \cdot 5$ (aquí $k = 5$). En cambio, $6 \nmid 20$, pues no existe ningún entero $k$ con $20 = 6k$.
 
@@ -64,13 +66,13 @@ El primero que aparece en ambas listas es $36$, por lo que $\text{lcm}(12,18) = 
 
 Podría parecer que esto nos da una implementación directa de $\text{lcm}$, pero aquí aparece una diferencia importante entre la teoría y la práctica. Matemáticamente,
 \[
-\text{lcm}(a,b) = \frac{a \cdot b}{\gcd(a,b)} = \left(\frac{a}{\gcd(a,b)}\right) \cdot b.
+\text{lcm}(a,b) = \frac{a \cdot b}{\gcd(a,b)} = \left(\frac{a}{\gcd(a,b)}\right) \cdot b
 \]
 son expresiones equivalentes. Sin embargo, en una implementación real el orden de las operaciones sí importa. Si se usa un \texttt{int} de $32$ bits, normalmente se pueden representar valores entre $-2^{31}$ y $2^{31}-1$, es decir, aproximadamente hasta $10^9$ en magnitud. Con \texttt{long long}, que usualmente ocupa $64$ bits, el rango llega de $-2^{63}$ a $2^{63}-1$, aproximadamente hasta $10^{18}$.
 
 \textit{Ejemplo (\textit{overflow} en $\text{lcm}$).} Si $a = 10^{10}$ y $b = 10^9$, el producto $ab = 10^{19}$ ya no cabe en un \texttt{long long}, y si se hace esa multiplicación primero aparece un \textit{overflow}.\footnote{En programación, \textit{overflow} significa que el resultado de una operación queda fuera del rango que el tipo de dato puede representar. Cuando eso ocurre, el valor almacenado deja de ser confiable.} Aunque la fórmula sea correcta en el papel, conviene implementar
 \[
-\boxed{\texttt{lcm(a, b) = a / gcd(a, b) * b}}.
+\boxed{\texttt{lcm(a, b) = a / gcd(a, b) * b}}
 \]
 dividiendo antes de multiplicar para mantener los valores en el rango.
 
@@ -82,9 +84,6 @@ Hasta aquí relacionamos $\text{lcm}(a,b)$ con $\gcd(a,b)$. Para \emph{calcular}
 \]
 Cualquier divisor común de $a$ y $b$ también divide a $a \bmod b = a - \lfloor a/b \rfloor \cdot b$, y viceversa.
 
-\textbf{Algoritmo de Euclides.} 
-El lema anterior sugiere un procedimiento recursivo. Mientras $ b \neq 0$, sustituimos $(a,b)$ por $(b, a \bmod b)$, cuando $b=0$ el algoritmo termina y devuelve $a$, pues $\gcd(a,0)=a$.
-
 \textit{Ejemplo.} Si $a = 30$ y $b = 18$, entonces
 \[
 30 \bmod 18 = 12 = 30 - 1 \cdot 18.
@@ -93,7 +92,26 @@ Los divisores comunes de $30$ y $18$ son $\{1,2,3,6\}$, y esos mismos números t
 \[
 \gcd(30,18) = \gcd(18,12) = 6.
 \]
-Repitiendo el proceso, $\gcd(18,12)=\gcd(12,6)=\gcd(6,0)=6$.
+
+El lema no es por sí mismo un algoritmo, pero permite construir uno: aplicándolo repetidamente obtenemos un procedimiento para encontrar el máximo común divisor.
+
+\textbf{Algoritmo de Euclides.}\label{sec:euclides} Sean $a \ge b > 0$. Definimos $r_0 = a$, $r_1 = b$ y, mientras $r_i \neq 0$, usamos el algoritmo de la división para obtener enteros $q_i$ y $r_{i+1}$ tales que
+\[
+r_{i-1} = q_i \cdot r_i + r_{i+1}, \qquad 0 \le r_{i+1} < r_i .
+\]
+Como los residuos $r_1 > r_2 > \cdots \ge 0$ decrecen estrictamente, en algún paso $m$ obtenemos $r_{m+1} = 0$. Por el lema,
+\[
+\gcd(a,b) = \gcd(r_0, r_1) = \gcd(r_1, r_2) = \cdots = \gcd(r_m, 0) = r_m,
+\]
+es decir, el máximo común divisor es el último residuo no nulo. La hipótesis $a\ge b>0$ no es restrictiva: si $a<b$ basta intercambiarlos, y si alguno es negativo se usa $\gcd(a,b)=\gcd(|a|,|b|)$.
+
+\textit{Ejemplo.} Para $a=30$ y $b=18$ tenemos $r_0=30$, $r_1=18$ y
+\[
+30 = 1 \cdot 18 + 12, \qquad 18 = 1 \cdot 12 + 6, \qquad 12 = 2 \cdot 6 + 0,
+\]
+así que $q_1=1$, $r_2=12$, $q_2=1$, $r_3=6$, $q_3=2$, $r_4=0$ y $\gcd(30,18)=r_3=6$.
+
+Dicho de forma recursiva: mientras $b \neq 0$ sustituimos $(a,b)$ por $(b, a \bmod b)$; cuando $b=0$ devolvemos $a$, pues $\gcd(a,0)=a$.
 
 \paragraph{Implementación.} Una versión recursiva típica es la siguiente:
 
@@ -115,7 +133,7 @@ La aritmética modular es la herramienta de teoría de números que más aparece
 
 \subsection*{Motivación: ciclos y residuos}
 
-El ejercicio \textbf{[3.1]} al final del capítulo pide: si hoy es lunes, ¿qué día será dentro de $300$ días?
+Consideremos la siguiente pregunta: si hoy es lunes, ¿qué día será dentro de $300$ días?
 
 Los días se repiten cada $7$, así que basta el residuo de $300$ entre $7$. Como $300 = 7\cdot 42 + 6$, después de $294$ días volvemos a lunes y faltan $6$ días más, que desembocan en \emph{domingo}. Si en lugar de $300$ fueran $314$ días, $314 = 7\cdot 44 + 6$ deja el mismo residuo $6$, así que la respuesta es la misma: dos cantidades que coinciden en resto módulo $7$ representan el mismo ``desfase'' dentro del ciclo semanal.
 
@@ -153,7 +171,7 @@ Las congruencias ayudan a evitar \textit{overflow}: si trabajamos módulo $m$, c
 \label{sec:expbin}
 \paragraph{Aplicación: Exponenciación modular.} El problema de calcular $a^b \bmod m$ aparece constantemente. Por ejemplo, para $2^7$ una forma ingenua es
 \[
-2 \cdot 2 \cdot 2 \cdot 2 \cdot 2 \cdot 2 \cdot 2.
+2 \cdot 2 \cdot 2 \cdot 2 \cdot 2 \cdot 2 \cdot 2,
 \]
 lo cual requiere $6$ multiplicaciones. En cambio, si reutilizamos resultados intermedios, podemos hacer
 \[
@@ -163,7 +181,7 @@ Esta es la idea detrás de la \textbf{exponenciación rápida}: en lugar de cons
 
 \textbf{Exponenciación rápida.} Para $b \ge 1$ se puede escribir (en la práctica con división entera de $b$ entre $2$ en cada paso):
 \[
-a^b = \begin{cases} (a^{b/2})^2 & \text{si } b \text{ es par}, \\ a \cdot a^{b-1} & \text{si } b \text{ es impar}. \end{cases}.
+a^b = \begin{cases} (a^{b/2})^2 & \text{si } b \text{ es par}, \\ a \cdot a^{b-1} & \text{si } b \text{ es impar}. \end{cases}
 \]
 Con ello tenemos un algoritmo que reduce el número de multiplicaciones de $\text{O}(b)$ a $\text{O}(\log(b))$. Para calcular $a^{128}$ necesitaríamos $127$ operaciones de la forma ingenua, mientras que con la exponenciación rápida solo necesitamos $7$ (duplicando el exponente en cada caso).
 
@@ -295,25 +313,25 @@ El lema de Bézout es el resultado que conecta el máximo común divisor con las
 
 \textbf{Lema (Bézout)}~\cite{perez_numeros}. Para cualesquiera enteros $a$ y $b$ no ambos cero, existen enteros $x$ y $y$ tales que
 \[
-ax + by = \gcd(a, b).
+ax + by = \gcd(a, b),
 \]
 es decir, $\gcd(a,b)$ se puede escribir como combinación lineal de $a$ y $b$.
 
 \textit{Ejemplo (coeficientes).} Si $a = 12$ y $b = 18$, entonces $\gcd(12,18) = 6$ y una elección es
 \[
-12(-1) + 18(1) = 6.
+12(-1) + 18(1) = 6,
 \]
 es decir $x = -1$, $y = 1$. Otra elección válida es $12(2) + 18(-1) = 6$, o sea $x = 2$, $y = -1$. Los enteros $x$ e $y$ no son únicos.
 
 \textbf{Propiedad (familia de soluciones).} Si $(x_0,y_0)$ satisface $ax_0 + by_0 = \gcd(a,b)$ y $g = \gcd(a,b)$, entonces para todo $k \in \mathbb{Z}$,
 \[
-\bigl(x_0 + k\,\tfrac{b}{g},\; y_0 - k\,\tfrac{a}{g}\bigr).
+\bigl(x_0 + k\,\tfrac{b}{g},\; y_0 - k\,\tfrac{a}{g}\bigr)
 \]
 también es solución de $ax + by = g$.
 
 \textbf{Propiedad (solubilidad de $ax+by=c$).} La ecuación
 \[
-ax + by = c.
+ax + by = c
 \]
 tiene solución $(x,y)$ en enteros si y solo si $\gcd(a,b) \mid c$.
 
@@ -323,11 +341,11 @@ tiene solución $(x,y)$ en enteros si y solo si $\gcd(a,b) \mid c$.
 \[
 ax + by = \gcd(a,b).
 \] 
-La idea del algoritmo extendido es seguir los mismos pasos del Algoritmo de Euclides, pero rastrear cómo se expresa cada residuo como combinación lineal de $a$ y $m$. En cada paso de la división $r_{i-1} = q_i \cdot r_i + r_{i+1}$ se actualizan los coeficientes:
+La idea del algoritmo extendido es seguir los mismos pasos del algoritmo de Euclides (sección~\ref{sec:euclides}), pero rastrear cómo se expresa cada residuo como combinación lineal de $a$ y $b$. Con la notación de esa sección, en cada paso de la división $r_{i-1} = q_i \cdot r_i + r_{i+1}$ se actualizan los coeficientes
 \[
-x_{i+1} = x_{i-1} - q_i \cdot x_i, \qquad y_{i+1} = y_{i-1} - q_i \cdot y_i.
+x_{i+1} = x_{i-1} - q_i \cdot x_i, \qquad y_{i+1} = y_{i-1} - q_i \cdot y_i,
 \]
-partiendo de $(x_0, y_0) = (1, 0)$ para $a$ y $(x_1, y_1) = (0, 1)$ para $b$.
+partiendo de $(x_0, y_0) = (1, 0)$ y $(x_1, y_1) = (0, 1)$. Así se mantiene $r_i = a\,x_i + b\,y_i$ para cada $i$: se cumple para $i=0,1$, y si se cumple para $i-1$ e $i$, entonces $r_{i+1} = r_{i-1} - q_i r_i = a\,x_{i+1} + b\,y_{i+1}$. Al final, $\gcd(a,b) = r_m = a\,x_m + b\,y_m$.
 
 \textit{Ejemplo (Euclides extendido, $a=30$, $b=18$).}
 
@@ -404,7 +422,7 @@ a \cdot a^{-1} \equiv 1 \pmod{m}.
 
 En problemas suele aparecer la necesidad de ``dividir'' módulo $m$. Interpretamos $\frac{a}{b} \pmod{m}$ como el producto
 \[
-a \cdot b^{-1} \pmod{m}.
+a \cdot b^{-1} \pmod{m},
 \]
 cuando $b^{-1}$ exista módulo $m$.
 
@@ -418,7 +436,7 @@ Ahora llevamos la misma idea a módulo $7$: como no dividimos directamente en ar
 \]
 Aquí $5! \equiv 1$, $(2!)^{-1} \equiv 2^{-1} \equiv 4$ y $(3!)^{-1} \equiv 6^{-1} \equiv 6 \pmod{7}$, luego
 \[
-\binom{5}{2} \equiv 1\cdot 4\cdot 6 = 24 \equiv 3 \pmod{7}.
+\binom{5}{2} \equiv 1\cdot 4\cdot 6 = 24 \equiv 3 \pmod{7}
 \]
 y coincide con $10 \equiv 3 \pmod{7}$.
 
@@ -429,7 +447,7 @@ Este enfoque aparece con frecuencia en la ICPC con módulos primos grandes (por 
 2 \cdot 0 \equiv 0,\quad
 2 \cdot 1 \equiv 2,\quad
 2 \cdot 2 \equiv 0,\quad
-2 \cdot 3 \equiv 2 \pmod{4}.
+2 \cdot 3 \equiv 2 \pmod{4}
 \]
 y el residuo $1$ nunca aparece al multiplicar por $2$ módulo $4$.
 
@@ -466,15 +484,15 @@ A veces necesitamos el inverso de cada $i \in \{1,\ldots,m-1\}$ a la vez. Llamar
 
 Cuando el módulo es un primo $p$, existe un método lineal $O(p)$ que rellena \texttt{inv[i]}. Partimos de $\texttt{inv}[1]=1$. Para $i \ge 2$, la división euclidiana
 \[
-p = \left\lfloor \frac{p}{i} \right\rfloor \cdot i + (p \bmod i).
+p = \left\lfloor \frac{p}{i} \right\rfloor \cdot i + (p \bmod i)
 \]
 y manipulación módulo $p$ llevan a la recurrencia usual (equivalente a la que implementa el código de abajo).
 
 \textbf{Propiedad (recurrencia de inversos módulo $p$ primo).} Para $2 \le i < p$,
 \[
-i^{-1} \equiv -\left\lfloor \frac{p}{i} \right\rfloor \cdot (p \bmod i)^{-1} \pmod{p}.
+i^{-1} \equiv -\left\lfloor \frac{p}{i} \right\rfloor \cdot (p \bmod i)^{-1} \pmod{p},
 \]
-dónde $(p \bmod i)^{-1}$ ya está en \texttt{inv}[$p \bmod i$]. Esto funciona porque $p \bmod i$ siempre cae entre $1$ e $i-1$ (cuando $2 \le i < p$), así que ese índice corresponde a un valor ya calculado en iteraciones anteriores. Necesitamos que $p$ sea primo para que esta recurrencia esté bien definida todo el rango $\{1,\dots, p_1\}$. Si $p$ no fuera primo, algún $i$ podría no tener inverso y la recurrencia fallaría. 
+donde $(p \bmod i)^{-1}$ ya está en \texttt{inv}[$p \bmod i$]. Esto funciona porque $p \bmod i$ siempre cae entre $1$ e $i-1$ (cuando $2 \le i < p$), así que ese índice corresponde a un valor ya calculado en iteraciones anteriores. Necesitamos que $p$ sea primo para que esta recurrencia esté bien definida en todo el rango $\{1,\dots, p-1\}$. Si $p$ no fuera primo, algún $i$ podría no tener inverso y la recurrencia fallaría. 
 
 \textit{Ejemplo ($p=7$).} La tabla queda:
 
@@ -561,7 +579,7 @@ x \equiv b\,a^{-1} \pmod{m}.
 
 Si $g > 1$, pero $g \mid b$, escribimos $a = g a'$, $m = g m'$ y $b = g b'$ con enteros $a'$, $m'$ y $b'$. Se cumple $\gcd(a',m') = 1$ (al dividir $a$ y $m$ por su máximo común divisor). Además, $m \mid (ax-b)$ si y solo si $m' \mid (a'x-b')$, es decir
 \[
-a' x \equiv b' \pmod{m'}.
+a' x \equiv b' \pmod{m'}
 \]
 que es el caso coprimo y se resuelve multiplicando por el inverso de $a'$ módulo $m'$.
 
@@ -622,23 +640,9 @@ Si conocemos $f$ en potencias de primos, podemos calcular $f(n)$ para cualquier 
 
 \subsection*{Función $\phi$ de Euler}
 
-La función $\phi(n)$ de Euler cuenta cuántos enteros del conjunto $\{1,2,\ldots,n\}$ son coprimos con $n$ (es decir, $\gcd(k,n)=1$). Equivale al orden del grupo multiplicativo $(\mathbb{Z}/n\mathbb{Z})^\times$ cuando $n\ge 2$.
+Para un entero $n \ge 1$, la función $\phi(n)$ de Euler cuenta cuántos enteros $k \in \{1,2,\ldots,n\}$ cumplen $\gcd(k,n)=1$, es decir, cuántos son coprimos con $n$.
 
-\textbf{Propiedad (multiplicatividad).} Si $\gcd(a,b)=1$, entonces $\phi(ab)=\phi(a)\phi(b)$.
-
-\textit{Ejemplo.} Como $12 = 2^2\cdot 3$ y $\gcd(4,3)=1$, por multiplicatividad
-\[
-\phi(12) = \phi(4)\phi(3).
-\]
-Usando las fórmulas de potencias primas,
-\[
-\phi(4)=2^2-2^1=2,\qquad \phi(3)=3-1=2.
-\]
-de modo que
-\[
-\phi(12)=2\cdot 2=4.
-\]
-En efecto, los coprimos con $12$ entre $1$ y $12$ son $1$, $5$, $7$ y $11$.
+\textbf{Propiedad (multiplicatividad).} Si $\gcd(a,b)=1$, entonces $\phi(ab)=\phi(a)\phi(b)$. Este hecho no es inmediato a partir de la definición; su demostración puede consultarse en~\cite{cpalgos_phi}.
 
 \textbf{Propiedad (primos y potencias).} Si $p$ es primo y $k\ge 1$, entonces~\cite{cpalgos_phi}
 \[
@@ -646,7 +650,18 @@ En efecto, los coprimos con $12$ entre $1$ y $12$ son $1$, $5$, $7$ y $11$.
 \]
 En efecto, en $\{1,\ldots,p^k\}$ hay exactamente $p^{k-1}$ múltiplos de $p$, que son precisamente los enteros que \emph{no} son coprimos con $p^k$.
 
-\textbf{Propiedad (suma sobre divisores).} Para todo entero $n\ge 1$,
+\textbf{Fórmula general.} Si $n = p_1^{k_1}\cdots p_r^{k_r}$ con los $p_i$ primos distintos, las potencias $p_i^{k_i}$ son coprimas dos a dos, así que combinando las dos propiedades anteriores,
+\[
+\phi(n) = \prod_{i=1}^{r} p_i^{k_i-1}(p_i-1) = n\prod_{i=1}^{r}\left(1-\frac{1}{p_i}\right).
+\]
+
+\textit{Ejemplo.} Como $12 = 2^2\cdot 3$,
+\[
+\phi(12) = \phi(2^2)\,\phi(3) = (2^2-2^1)(3-1) = 2\cdot 2 = 4,
+\]
+o, con la segunda forma, $\phi(12)=12\left(1-\frac12\right)\left(1-\frac13\right)=4$. En efecto, los coprimos con $12$ entre $1$ y $12$ son $1$, $5$, $7$ y $11$.
+
+\textbf{Propiedad (suma sobre divisores).} Para todo entero $n\ge 1$~\cite{cpalgos_phi},
 \[
 \sum_{d \mid n} \phi(d) = n.
 \]
@@ -661,7 +676,7 @@ Entonces
 =1+1+2+2+2+4=12.
 \]
 
-\paragraph{Cálculo de $\phi(n)$ por factorización.} El siguiente código recorre los primos que dividen a $n$ y actualiza un acumulador según $\phi(p^k)=p^k-p^{k-1}$ implícitamente (resta una fracción por cada $p$). Tiene complejidad $O(\sqrt{n})$.
+\paragraph{Cálculo de $\phi(n)$ por factorización.} El siguiente código recorre los primos que dividen a $n$ y aplica la fórmula general $\phi(n)=n\prod_{p\mid n}\left(1-\frac{1}{p}\right)$: empieza con \texttt{result} $=n$ y, por cada primo $p$ que divide a $n$, multiplica por $1-\frac1p$, que en enteros es \texttt{result -= result / p} (la división es exacta porque en ese momento $p$ divide a \texttt{result}). Tiene complejidad $O(\sqrt{n})$.
 \begin{lstlisting}[language=C++]
 long long eulerPhi(long long n) {
     long long result = n;
@@ -744,27 +759,23 @@ La función de Möbius $\mu:\mathbb{Z}^+\to\{-1,0,1\}$ se define por
 1 & \text{si } n = 1, \\
 (-1)^k & \text{si } n \text{ es producto de } k \text{ primos distintos}, \\
 0 & \text{si } n \text{ es divisible por un cuadrado } > 1.
-\end{cases}.
+\end{cases}
 \]
 Es multiplicativa: si $\gcd(a,b)=1$, entonces $\mu(ab)=\mu(a)\mu(b)$.
 
-\textit{Ejemplo.} Veamos que \(\mu(1)=1\). Además, \(\mu(30)=\mu(2\cdot 3\cdot 5)=(-1)^3=-1\) porque es producto de \(3\) primos distintos. En cambio, \(\mu(12)=0\), ya que \(12\) es divisible por \(2^2\).
+\textit{Ejemplo.} Por definición \(\mu(1)=1\); \(\mu(30)=\mu(2\cdot 3\cdot 5)=(-1)^3=-1\) porque es producto de \(3\) primos distintos. En cambio, \(\mu(12)=0\), ya que \(12\) es divisible por \(2^2\).
 
 \textbf{Propiedad (inversión de Möbius).} Si $g(n)=\sum_{d\mid n} f(d)$ para todo $n$, entonces~\cite{cf_mobius}
 \[
 f(n) = \sum_{d\mid n} \mu(d)\,g(n/d).
 \]
-Recíprocamente, esta fórmula determina $f$ a partir de $g$.
+Recíprocamente, si $f(n)=\sum_{d\mid n}\mu(d)\,g(n/d)$ para todo $n$, entonces $g(n)=\sum_{d\mid n} f(d)$.
 
-\textit{Ejemplo (inversión en un caso sencillo).} Si \(f(n)=1\) para todo \(n\), entonces
+\textit{Ejemplo (fórmula de $\phi$ por inversión).} Tomemos $f=\phi$. Por la propiedad de suma sobre divisores de la función $\phi$, $g(n)=\sum_{d\mid n}\phi(d)=n$. Aplicando la inversión de Möbius con $g(n/d)=n/d$ obtenemos
 \[
-g(n)=\sum_{d\mid n} f(d)=\sum_{d\mid n} 1=\tau(n).
+\phi(n)=\sum_{d\mid n}\mu(d)\,\frac{n}{d}.
 \]
-la cantidad de divisores de \(n\). Aplicando inversión de Möbius,
-\[
-f(n)=\sum_{d\mid n}\mu(d)\,g(n/d)=\sum_{d\mid n}\mu(d)\,\tau(n/d)=1.
-\]
-lo cual recupera exactamente la función original.
+Por ejemplo, para $n=12$ los divisores con $\mu(d)\neq 0$ son $1,2,3,6$, con $\mu$ igual a $1,-1,-1,1$, así que $\phi(12)=12-6-4+2=4$, que coincide con el cálculo anterior. Esta fórmula es otra forma de escribir $\phi(n)=n\prod_{p\mid n}\left(1-\frac1p\right)$: al desarrollar el producto aparece un término $\pm\frac{n}{d}$ por cada $d$ producto de primos distintos que dividen a $n$, con el signo $\mu(d)$.
 
 \textbf{Propiedad (suma de $\mu$ sobre divisores).} Para todo $n\ge 1$,
 \[
@@ -772,13 +783,13 @@ lo cual recupera exactamente la función original.
 \begin{cases}
 1 & \text{si } n = 1, \\
 0 & \text{si } n > 1.
-\end{cases}.
+\end{cases}
 \]
 Usaremos la notación de \textbf{Iverson}: $[P]$ vale $1$ si la afirmación $P$ es verdadera y $0$ si no; por ejemplo $[\gcd(4,8)=4]=1$. Entonces $\sum_{d \mid n} \mu(d) = [n=1]$.
 
 \textit{Ejemplo (pares coprimos).} Contemos los pares $(x,y)$ con $1\le x,y\le n$ y $\gcd(x,y)=1$. La respuesta es
 \[
-f(n)=\sum_{j=1}^{n} \sum_{i=1}^{n} [\gcd(i,j)=1].
+P(n)=\sum_{j=1}^{n} \sum_{i=1}^{n} [\gcd(i,j)=1].
 \]
 Un barrido doble sería $O(n^2)$. En cambio, usando $\sum_{d\mid \gcd(i,j)}\mu(d)=[\gcd(i,j)=1]$ y el hecho de que $d\mid \gcd(i,j)$ equivale a $d\mid i$ y $d\mid j$,
 \[
@@ -786,7 +797,7 @@ Un barrido doble sería $O(n^2)$. En cambio, usando $\sum_{d\mid \gcd(i,j)}\mu(d
 \]
 Sustituyendo e intercambiando el orden de las sumas,
 \[
-f(n)=\sum_{d=1}^{n} \mu(d)\left(\sum_{i=1}^{n} [d\mid i]\right)\left(\sum_{j=1}^{n} [d\mid j]\right)
+P(n)=\sum_{d=1}^{n} \mu(d)\left(\sum_{i=1}^{n} [d\mid i]\right)\left(\sum_{j=1}^{n} [d\mid j]\right)
 = \sum_{d=1}^{n} \mu(d)\left\lfloor \frac{n}{d} \right\rfloor^2.
 \]
 Con una criba para $\mu$ en $[1,n]$ (como la de abajo) y un ciclo sobre $d$, la complejidad es $O(n)$.
@@ -1018,7 +1029,7 @@ For each test case, output a single integer $ans$, where $ans=\sum_{i=1}^n f(i)$
     Esta suma puede parecer muy grande, sin embargo, $L_j$ crece muy rápido, pues por definición $L_j$ es divisible por todos los números hasta $j$. Para $n \leq 10^{16}$, basta calcular hasta $j = 40$, pues $L_{41} > 10^{16}$, haciendo que
     los demás términos sean $0$. En la implementación, haremos la suma hasta encontrar el primer término $0$, ahí pararemos y ya tendremos el resultado.
     \\\\
-    Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/1542C.cpp}.
+    Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/blob/master/tex/codes/editorial/1542C.cpp}.
 
 \subsection*{5.9.2 \href{https://codeforces.com/problemset/problem/1725/H}{Hot Black Hot White (COMPFEST 14)}}
 
@@ -1077,7 +1088,7 @@ Otherwise, output two lines. The first line contains an integer $Z$ denoting the
     \end{align*}
     Notemos que $0^2\equiv 0  \mod 3$, $1^2 \equiv 1  \mod 3$ y $2^2 \equiv 1 \, \mod 3$. Si tenemos al menos $\frac{n}{2}$ piedras tal que $A_i^2\equiv 0  \mod 3$, entonces podemos colorear $\frac{n}{2}$ de esas de un solo color, así cuando haya dos colores diferentes tendremos que $A_i^2+A_j^2\equiv 0^2 +A_j^2 \equiv A_j^2  \mod 3$ y como ningún número al cuadrado es congruente con $2$ módulo $3$, podemos hacer $Z=2$. Por otro lado, si no hay al menos $\frac{n}{2}$ que lo cumplan, significa que hay al menos $\frac{n}{2}$ tal que $A_i^2 \equiv 1  \mod 3$, entonces coloreamos $\frac{n}{2}$ de ellas de un mismo color y así no habrá ningún par de rocas de diferente color tal que ambas tengan $A_j^2 \equiv 0$. De donde podemos hacer $Z=0$.
     \\\\
-    Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/1725H.cpp}.
+    Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/blob/master/tex/codes/editorial/1725H.cpp}.
 \subsection*{5.9.3 \href{https://lightoj.com/problem/monkey-tradition}{Monkey Tradition (Light OJ)}}
 \begin{center}
 \fbox{
@@ -1150,7 +1161,7 @@ Notemos que si a un monito, le faltó $r_i$ para llegar a la cima de su bambú d
 \end{align*}
 el cual podemos resolver con el teorema chino del residuo directamente. La única observación relevante es que como todos son primos distintos, todos los módulos son coprimos entre sí, lo que nos garantiza existe siempre la solución.
 \\\\
-Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/monkeyTradition.cpp}.
+Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/blob/master/tex/codes/editorial/monkeyTradition.cpp}.
 \section{Problemas}
 
 Estos problemas quedan propuestos para practicar por cuenta propia y cubren las técnicas vistas en el capítulo. Si alguno se complica, en el capítulo de Soluciones hay una editorial que da \textit{hints} graduales antes de revelar la solución completa.

@@ -36,7 +36,7 @@ Casi toda la geometría de concurso se reduce a dos operaciones entre vectores: 
 \[
 a \cdot b = a_x b_x + a_y b_y.
 \]
-Mide qué tan alineados están: si $a\cdot b>0$ apuntan a direcciones parecidas; si $a\cdot b=0$ son perpendiculares; si $a\cdot b<0$ forman un ángulo obtuso.
+Mide qué tan alineados están: si $a\cdot b>0$ apuntan a direcciones parecidas; si $a\cdot b=0$ son perpendiculares; si $a\cdot b<0$ forman un ángulo obtuso o llano (este último cuando apuntan en direcciones opuestas).
 
 \textit{Ejemplo.} Sean $a=(2,1)$ y $b=(3,-1)$. Entonces
 \[
@@ -46,9 +46,9 @@ así que el ángulo entre $a$ y $b$ es agudo. Si $c=(-1,2)$, entonces $a\cdot c 
 
 \lstinputlisting[language=C++, firstline=36, lastline=38]{./tex/geo/codes/geo.cpp}
 
-\textbf{Observación.} Con la implementación anterior, $a\cdot a$ es el cuadrado de la norma euclídea de $a$ (sin raíz).
+\textbf{Observación.} Con la implementación anterior, $a\cdot a$ es el cuadrado de la norma euclidiana de $a$ (sin raíz).
 
-\textit{Ejemplo.} Si $a=(3,4)$, entonces $a\cdot a = 3^2+4^2 = 25 = \|a\|^2$. La norma euclídea es $\|a\|=\sqrt{25}=5$, pero en código suele bastar comparar distancias con $a\cdot a$ y evitar la raíz.
+\textit{Ejemplo.} Si $a=(3,4)$, entonces $a\cdot a = 3^2+4^2 = 25 = \|a\|^2$. La norma euclidiana es $\|a\|=\sqrt{25}=5$, pero en código suele bastar comparar distancias con $a\cdot a$ y evitar la raíz.
 
 \subsection*{Producto cruz en el plano}
 
@@ -56,7 +56,7 @@ así que el ángulo entre $a$ y $b$ es agudo. Si $c=(-1,2)$, entonces $a\cdot c 
 \[
 a \times b := a_x b_y - a_y b_x,
 \]
-es el área \emph{orientada} del paralelogramo generado por $a$ y $b$ (equivalentemente, el doble del área orientada del triángulo con vértices $O$, $a$ y $b$). En particular, $a\times b$ cambia de signo al intercambiar $a$ y $b$, lo que codifica ``$b$ a la izquierda o a la derecha de $a$''.
+es el área \emph{orientada} del paralelogramo generado por $a$ y $b$ (equivalentemente, el doble del área orientada del triángulo con vértices $O$, $a$ y $b$). En particular, $a\times b$ cambia de signo al intercambiar $a$ y $b$, lo que codifica ``$b$ a la izquierda o a la derecha de $a$''. Más precisamente, consideremos el ángulo entre $0^\circ$ y $180^\circ$ que forman $a$ y $b$: si $a\times b>0$, $b$ se obtiene girando la dirección de $a$ ese ángulo en sentido antihorario (decimos que $b$ está a la \emph{izquierda} de $a$); si $a\times b<0$, el giro es en sentido horario ($b$ está a la \emph{derecha} de $a$); y si $a\times b=0$, el ángulo es $0^\circ$ o $180^\circ$, es decir, $a$ y $b$ son colineales.
 
 \textit{Ejemplo.} Sean $a=(2,0)$ y $b=(1,2)$. Entonces
 \[
@@ -90,7 +90,7 @@ b \times a = 1\cdot 0 - 2\cdot 2 = -4 = -(a\times b).
     \draw[->, dashed, green!60!black] (2,0) -- (3,2);
 \end{tikzpicture}
 \end{center}
-Si $c=(3,0)$ es colineal con $a$, entonces $a\times c = 2\cdot 0 - 0\cdot 3 = 0$ (tres puntos en una misma recta por el origen).
+En general, $a\times c=0$ si y solo si $a$ y $c$ son colineales, es decir, si los puntos $O$, $a$ y $c$ están en una misma recta. Por ejemplo, $c=(3,0)$ está sobre la misma recta que $a=(2,0)$ y, en efecto, $a\times c = 2\cdot 0 - 0\cdot 3 = 0$.
 
 La implementación es corta y permite comprobar si tres puntos son colineales.
 
@@ -451,7 +451,7 @@ Dado un conjunto de puntos $S \subset \mathbb{R}^2$, su \textbf{casco convexo} (
 \end{tikzpicture}
  \end{figure}
  
-Existen varios algoritmos para calcularlo~\cite{cpalgos_convex}. El más conocido es \textbf{Graham Scan}; sin embargo, este ordena los puntos por ángulo por lo que hay que tener cuidado con los casos delicados cuando varios puntos tienen el mismo ángulo polar. Por ello preferimos \textbf{Andrew's Monotone Chain}, ambos algoritmos tienen la misma complejidad $O(n \log n)$ y misma idea para construir el casco convexo, pero el algoritmo de Andrew ordena por coordenada $x$ en lugar de ángulo, esto lo hace más fácil de implementar sin errores en un concurso.
+Existen varios algoritmos para calcularlo~\cite{cpalgos_convex}. El más conocido es \textbf{Graham Scan}; sin embargo, éste ordena los puntos por ángulo por lo que hay que tener cuidado con los casos delicados cuando varios puntos tienen el mismo ángulo polar. Por ello preferimos \textbf{Andrew's Monotone Chain}, ambos algoritmos tienen la misma complejidad $O(n \log n)$ y misma idea para construir el casco convexo, pero el algoritmo de Andrew ordena por coordenada $x$ en lugar de ángulo, esto lo hace más fácil de implementar sin errores en un concurso.
 \\\\Nótese que para saber qué polígono es el casco convexo, sólo tenemos que saber qué puntos forman parte de él y en qué orden. El algoritmo de Andrew construye el casco convexo en dos pasadas sobre los puntos ordenados por $x$, primero se construye la parte inferior y luego la superior.
 \\\\Para la parte inferior se deben recorrer los puntos de izquierda a derecha, para obtener un vector \texttt{hull} con la característica que los últimos tres puntos siempre van a tener producto cruz positivo, es decir dados $A,B,C$ tenemos que $(B-A)\times(C-A)>0$. Inicialmente se agregan los dos primeros puntos a un vector \texttt{hull} que usaremos como una pila (una estructura donde solo se agrega o quita el último elemento insertado) y después cada que lleguemos a un nuevo punto $P$, si este cumple la condición se agrega, de lo contrario, se descarta el tope de la pila (puede ser necesario descartar más de un punto) y después se agrega $P$ a \texttt{hull}. Para la parte superior es exactamente el mismo procedimiento con la única diferencia que se recorre de derecha a izquierda. La implementación quedaría:
 \lstinputlisting[language=C++, firstline=84, lastline=119]{./tex/geo/codes/geo.cpp}
@@ -580,7 +580,7 @@ llegaran a intersecar existe un momento durante el barrido en el que son vecinos
 \textit{Ejemplo (cómo leer la estructura).} \textbf{Nota:} lo que sigue interpreta \emph{la misma figura que queda inmediatamente arriba} (la secuencia de paneles \textbf{(a)}--\textbf{(f)} con los segmentos $S1$--$S4$, la vertical roja del barrido y la franja inferior con la leyenda \texttt{barrido} / \texttt{cruce} / \texttt{revisión}). En cada uno de esos paneles, entre corchetes se muestra el contenido del \texttt{set} en el instante en que la línea de barrido coincide con la vertical roja \emph{de ese} panel. La lista enumera los segmentos que \emph{cruzan} esa recta vertical, ordenados de \emph{abajo hacia arriba} según la ordenada del punto de corte con $X=x$ (los puntos resaltados sobre la vertical, unidos por trazos amarillos). En \textbf{(a)} solo $S1$ es activo: \texttt{[S1]}. En \textbf{(b)}, en $x=1$, el corte de $S1$ queda debajo del de $S2$, luego \texttt{[S1,S2]}. En \textbf{(c)} entra $S3$ por la izquierda y su intersección con la vertical es la más baja, después la de $S1$ y por último la de $S2$, de ahí \texttt{[S3,S1,S2]}. En \textbf{(d)} los cuatro segmentos ya cortan la vertical y se leen de abajo arriba como \texttt{[S3,S1,S2,S4]}. En \textbf{(e)} el evento de fin saca a $S2$; en \texttt{[S3,S1,S2,S4]} los vecinos de $S2$ eran $S1$ por abajo y $S4$ por arriba, y al retirarlo $S1$ y $S4$ quedan \emph{adyacentes} en \texttt{[S3,S1,S4]}, justo el par que el paso de borrado debe volver a examinar. En \textbf{(f)} $S1$ ya no es activo y solo quedan $S3$ y $S4$, adyacentes en \texttt{[S3,S4]}; al revisar ese par se encuentra la intersección.
 
 Si en cualquier punto encontramos una intersección, entonces terminamos el algoritmo pues ya resolvimos el problema. Es importante mencionar que, si hay varios eventos en un mismo $x$, primero procesaremos los inicios y después los finales, así lograremos también comprobar intersecciones si los segmentos comparten vértices.
-\\\\La estructura que nos convendrá para este problema es un \texttt{set} de segmentos (\texttt{Segment = pair<Point,Point>}) de C++ ordenado por la coordenada $y$ de cada segmento en la posición actual $x$ de la línea. El comparador para ordenar evalúa para cada segmento
+\\\\La estructura que nos convendrá para este problema es un \texttt{set} de C++ que guarda segmentos (cada uno representado como \texttt{pair<Point,Point>}), ordenado por la coordenada $y$ de cada segmento en la posición actual $x$ de la línea. El comparador para ordenar evalúa para cada segmento
 \[y(x) = y_1 + \frac{(y_2 - y_1)(x - x_1)}{x_2 - x_1}.\] Al implementarlo hay que ser cuidadosos pues como estaremos trabajando con decimales al hacer comparaciones debemos agregar una tolerancia $\varepsilon$.
 \lstinputlisting[language=C++, firstline=121, lastline=220]{./tex/geo/codes/geo.cpp}
 Nótese que hay $2n$ eventos y cada evento realiza a lo más dos verificaciones de intersección que cada uno tiene complejidad de $O(1)$ y una adición o eliminación con complejidad  $O(\log n)$. Además ordenar inicialmente los segmentos tiene complejidad $O(n\log n)$ entonces la complejidad del algoritmo es $O(n\log n)$ que en efecto es más rápido que $O(n^2)$.
@@ -642,7 +642,7 @@ Este problema es una aplicación directa del algoritmo de \textit{Shamos-Hoey} d
 Para esto basta guardar el índice de cada segmento en la
 estructura y retornarlo cuando se detecta la intersección.
  
-Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/tim1469.cpp}.
+Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/blob/master/tex/codes/editorial/tim1469.cpp}.
 
 \subsection*{8.7.2 \href{https://acm.timus.ru/problem.aspx?space=1&num=1418}{Military Story (Ural State University Championship 2005)}}
 \begin{center}
@@ -689,7 +689,7 @@ Un detalle importante de implementación es que el convex hull debe incluir los 
 
 No olvidar verificar que el área de cada polígono es no nula.
 
-Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/tree/master/tex/codes/editorial/tim1418.cpp}.
+Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/blob/master/tex/codes/editorial/tim1418.cpp}.
 \section{Problemas}
 
 Estos problemas quedan propuestos para practicar por cuenta propia y cubren las técnicas vistas en el capítulo. Si alguno se complica, en el capítulo de Soluciones hay una editorial que da \textit{hints} graduales antes de revelar la solución completa.
