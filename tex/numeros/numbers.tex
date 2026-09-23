@@ -345,7 +345,7 @@ La idea del algoritmo extendido es seguir los mismos pasos del algoritmo de Eucl
 \[
 x_{i+1} = x_{i-1} - q_i \cdot x_i, \qquad y_{i+1} = y_{i-1} - q_i \cdot y_i,
 \]
-partiendo de $(x_0, y_0) = (1, 0)$ y $(x_1, y_1) = (0, 1)$. Así se mantiene $r_i = a\,x_i + b\,y_i$ para cada $i$: se cumple para $i=0,1$, y si se cumple para $i-1$ e $i$, entonces $r_{i+1} = r_{i-1} - q_i r_i = a\,x_{i+1} + b\,y_{i+1}$. Al final, $\gcd(a,b) = r_m = a\,x_m + b\,y_m$.
+partiendo de $(x_0, y_0) = (1, 0)$ y $(x_1, y_1) = (0, 1)$. Así se obtiene $r_i = a\,x_i + b\,y_i$ para cada $i$. Podemos probar esta afirmación mediante inducción: se cumple para $i=0,1$, y si se cumple para $i-1$ e $i$, entonces $r_{i+1} = r_{i-1} - q_i r_i = a\,x_{i+1} + b\,y_{i+1}$. Al final, $\gcd(a,b) = r_m = a\,x_m + b\,y_m$.
 
 \textit{Ejemplo (Euclides extendido, $a=30$, $b=18$).}
 

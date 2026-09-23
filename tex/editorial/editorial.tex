@@ -27,7 +27,7 @@ Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/blob/master/tex/codes/edit
 \subsection*{Solución}
 La primera observación importante es que $a,b,c$ son a lo más $10^9$, por lo que $b^c$ puede ser enorme, de forma que calcular $a^{b^c}$ directamente usando exponenciación binaria sería muy lento.
 \\\\
-Notemos que $a\leq 10^9$, dado que $10^9+7$ es primo, $a$ y $10^9+7$ son coprimos. Lo anterior, nos permite usar el pequeño teorema de Fermat~\cite{perez_numeros}, que nos dice que si $p$ es primo y $\gcd(a,p)=1$, entonces
+Notemos que $a\leq 10^9$. Dado que $10^9+7$ es primo, $a$ y $10^9+7$ son coprimos, podemos usar el pequeño teorema de Fermat~\cite{perez_numeros}, que nos dice que si $p$ es primo y $\gcd(a,p)=1$, entonces
 \[a^{p-1}\equiv 1 \pmod p.\]
 De lo anterior tenemos que
 \[a^{b^c} \equiv a^{b^c \mod (p-1)} \mod p.\]
@@ -207,7 +207,7 @@ los grados de los $g(s_i,x)$ se suman, entonces:
 \]
 Y como $g(v,x)=\sum_{j=1}^{x}f(v,j)$ sube el grado en 1, el grado
 de $g(v,x)$ es igual al \textbf{número de vértices en el subárbol de $v$}.
-Por lo tanto $\deg(g(1,x)) = n$ el número total de vértices.
+Por lo tanto $\deg(g(1,x)) = n$, el número total de vértices.
 \\\\
 Podemos calcular $g(1,1), g(1,2), \ldots, g(1,n+1)$ en $O(n^2)$, con DP procesando los vértices de hojas a raíz. Para cada vértice $v$ y cada $x$, calculamos $f(v,x) = \prod_{i=1}^{k} g(s_i,x)$ y luego $g(v,x) = g(v,x-1) + f(v,x)$, guardando ambos valores en memoria
 para evitar repetir cálculos. Con $n+1$ puntos evaluados en $x=1,2,\ldots,n+1$ (puntos consecutivos), aplicamos interpolación de Lagrange con la simplificación para puntos consecutivos para evaluar el polinomio en $d$ en $O(n)$.
@@ -344,7 +344,7 @@ Como se nos pide la respuesta módulo $10^9+7$ que es primo, la división $\frac
 n! \cdot \left(\prod_{i} f_i!\right)^{-1} \bmod p,
 \]
 usando el inverso modular $a^{-1} \equiv a^{p-2} \pmod{p}$ por el
-pequeño teorema de Fermat~\cite{perez_numeros}, que recordemos es válido siempre que $a \neq 0$.
+pequeño teorema de Fermat~\cite{perez_numeros}; que recordemos es válido siempre que $a \neq 0 \bmod p$.
 \subsection*{Código}
 Ver \codelink{https://github.com/MelitoMT/ICPC_Manual/blob/master/tex/codes/editorial/cses1715.cpp}.
  

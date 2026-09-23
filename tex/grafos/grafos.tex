@@ -575,7 +575,7 @@ Para una gráfica $G$ con $n$ vértices, las siguientes afirmaciones son equival
 \begin{enumerate}
     \item $G$ es conexa y acíclica;
     \item $G$ es conexa y tiene exactamente $n-1$ aristas;
-    \item Entre todo par de vértices existe exactamente un camino simple (no repite vértices).
+    \item Entre todo par de vértices existe exactamente un camino.
 \end{enumerate}
  
 La caracterización (3), camino único entre todo par, será importante porque convierte preguntas sobre caminos en preguntas sobre estructura del árbol. Es la base del LCA y de la mayoría de técnicas sobre árboles.
@@ -614,7 +614,7 @@ El \textbf{centroide} de un árbol es un vértice $c$ tal que al eliminarlo, nin
  
 \subsubsection*{Descomposición por centroides}
 
-Tomemos un árbol más grande que el anterior y tomemos su centroide $c$. Al eliminarlo, el árbol se divide en varias componentes, cada una de tamaño $\leq \lfloor n/2 \rfloor$. Nótese que entonces cualquier camino de un vértice $v$ en una componente a otro $u$ en otra componente, este pasa por $c$. Por tanto, la distancia entre $u$ y $v$ podemos sumar la distancia entre $c$ y $v$ y la distancia entre $c$ y $u$.
+Tomemos un árbol más grande que el anterior y tomemos su centroide $c$. Al eliminarlo, el árbol se divide en varias componentes, cada una de tamaño $\leq \lfloor n/2 \rfloor$. Nótese que entonces cualquier camino de un vértice $v$ en una componente a otro $u$ en otra componente, este pasa por $c$. Por tanto, la distancia entre $u$ y $v$ la podemos calcular como la suma de la distancia entre $c$ y $v$ y la distancia entre $c$ y $u$.
 
 \begin{figure}[H]
 \centering
